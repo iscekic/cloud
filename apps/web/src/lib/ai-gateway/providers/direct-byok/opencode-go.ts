@@ -8,9 +8,7 @@ export default {
   supported_chat_apis: ['chat_completions', 'messages', 'responses'],
   default_ai_sdk_provider: 'openai-compatible',
   transformRequest(context) {
-    if (context.request.kind === 'messages') {
-      context.extraHeaders['x-api-key'] = context.provider.apiKey;
-    }
+    context.provider.apiKeyHeader = context.request.kind === 'messages' ? 'x-api-key' : null;
   },
   models: cachedEnhancedDirectByokModelList({
     providerId: 'opencode-go',

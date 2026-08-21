@@ -1,8 +1,25 @@
 import { getAiSdkProvider } from '../model-settings';
+import type { GatewayRequest } from '../openrouter/types';
+import type { Provider, TransformRequestContext } from '../types';
 import openCodeGo from './opencode-go';
 
 test('allows the Responses API for OpenCode Go', () => {
   expect(openCodeGo.supported_chat_apis).toContain('responses');
+});
+
+test.each([
+  ['messages', 'x-api-key'],
+  ['chat_completions', null],
+  ['responses', null],
+] as const)('uses the expected API key header for %s requests', (kind, apiKeyHeader) => {
+  const provider = { apiKeyHeader: null } as Provider;
+  const request = { kind, body: {} } as GatewayRequest;
+  const extraHeaders = {};
+
+  openCodeGo.transformRequest({ provider, request, extraHeaders } as TransformRequestContext);
+
+  expect(provider.apiKeyHeader).toBe(apiKeyHeader);
+  expect(extraHeaders).toEqual({});
 });
 
 describe('getAiSdkProvider', () => {
