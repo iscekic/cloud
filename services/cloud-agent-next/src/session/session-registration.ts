@@ -45,7 +45,6 @@ import {
 } from '../telemetry/session-reports.js';
 import {
   generateSandboxRoutingTarget,
-  isOrgInList,
   selectSandboxProvider,
   type SandboxSelection,
 } from '../sandbox-id.js';
@@ -408,31 +407,21 @@ function deriveCanonicalRepositoryUrl(repository: SessionRepositoryRequest): str
 }
 
 /**
- * Credential containment for a create, derived from the repository type, the
- * devcontainer flag, and the organization containment lists. Shared by the
- * fresh allocation and the clone rebuild so both compute it identically.
+ * Credential containment for a create, derived from the repository type and
+ * the devcontainer flag. Shared by the fresh allocation and the clone rebuild
+ * so both compute it identically.
  */
 function computeCredentialContainment(
   input: SessionRegistrationInput,
-  ctx: SessionRegistrationContext
+  env: Env
 ): CredentialContainment {
-  const orgId = input.options?.kilocodeOrganizationId;
-  const devcontainerRequested = input.runtime?.devcontainer === true;
+  const containmentEnabled =
+    env.CREDENTIAL_CONTAINMENT_ENABLED !== 'false' && input.runtime?.devcontainer !== true;
   return {
-    github:
-      !devcontainerRequested &&
-      input.repository.type === 'github' &&
-      isOrgInList(ctx.env.GITHUB_TOKEN_CONTAINMENT_ORG_IDS, orgId),
-    gitlab:
-      !devcontainerRequested &&
-      input.repository.type === 'gitlab' &&
-      isOrgInList(ctx.env.GITLAB_TOKEN_CONTAINMENT_ORG_IDS, orgId),
-    bitbucket:
-      !devcontainerRequested &&
-      input.repository.type === 'bitbucket' &&
-      isOrgInList(ctx.env.BITBUCKET_TOKEN_CONTAINMENT_ORG_IDS, orgId),
-    kilocode:
-      !devcontainerRequested && isOrgInList(ctx.env.KILOCODE_TOKEN_CONTAINMENT_ORG_IDS, orgId),
+    github: containmentEnabled && input.repository.type === 'github',
+    gitlab: containmentEnabled && input.repository.type === 'gitlab',
+    bitbucket: containmentEnabled && input.repository.type === 'bitbucket',
+    kilocode: containmentEnabled,
   };
 }
 
@@ -479,7 +468,7 @@ async function allocateNewSession(
     rethrowAllocationFailure(ledger, 'report', error);
   }
 
-  const credentialContainment = computeCredentialContainment(input, ctx);
+  const credentialContainment = computeCredentialContainment(input, ctx.env);
   let sandboxId: SandboxId;
   let sandboxRoute: SharedSandboxRouteMetadata | undefined;
   let sandboxProvider: SandboxSelection['provider'] = 'cloudflare';
@@ -732,7 +721,7 @@ function rebuildCloneAllocation(
     sandboxRoute: route,
     sandboxProvider,
     initialTurn,
-    credentialContainment: computeCredentialContainment(input, ctx),
+    credentialContainment: computeCredentialContainment(input, ctx.env),
     sessionService,
     rollbackCliSession: async () => {
       try {
