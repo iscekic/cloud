@@ -62,6 +62,7 @@ function makeStored(over: Partial<StoredSession> = {}): StoredSession {
     session_id: 's1',
     title: 'Untitled',
     cloud_agent_session_id: null,
+    cloud_agent_worktree_id: null,
     parent_session_id: null,
     organization_id: null,
     created_on_platform: 'cli',

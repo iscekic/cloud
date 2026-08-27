@@ -76,6 +76,16 @@ function makeStorageFake() {
   const store = new Map<string, unknown>();
   return {
     store,
+    kv: {
+      get: (key: string) => store.get(key),
+      put: (key: string, value: unknown) => {
+        store.set(key, value);
+      },
+      delete: (key: string) => store.delete(key),
+      list: (opts?: { prefix?: string }) =>
+        new Map([...store].filter(([key]) => key.startsWith(opts?.prefix ?? ''))),
+    },
+    deleteAlarm: vi.fn(async () => undefined),
     put: vi.fn(async (key: string, value: unknown) => {
       store.set(key, value);
     }),
@@ -444,6 +454,7 @@ describe('UserConnectionDO', () => {
         gitUrl: null,
         gitBranch: null,
         parentSessionId: null,
+        worktreeId: 'worktree_11111111-1111-4111-8111-111111111111',
         status: 'idle' as const,
         statusUpdatedAt: null,
       };

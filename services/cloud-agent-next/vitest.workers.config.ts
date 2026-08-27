@@ -1,10 +1,24 @@
+import { createRequire } from 'node:module';
+
 import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
 import { defineConfig } from 'vitest/config';
+
+function fixPgProtocolCjs() {
+  return {
+    name: 'fix-pg-protocol-cjs',
+    enforce: 'pre' as const,
+    resolveId(source: string, importer?: string) {
+      if (source !== 'pg-protocol' || importer === undefined) return undefined;
+      return createRequire(importer).resolve('pg-protocol/dist/index.js');
+    },
+  };
+}
 
 // Integration tests - run in Cloudflare Workers runtime via Miniflare
 // Use cloudflare:test utilities: env, runInDurableObject, createMessageBatch, etc.
 export default defineConfig({
   plugins: [
+    fixPgProtocolCjs(),
     cloudflareTest({
       wrangler: {
         // Use test-specific wrangler config that excludes Sandbox DO
