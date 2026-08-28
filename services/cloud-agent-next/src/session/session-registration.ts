@@ -31,7 +31,11 @@ import { normalizeGitUrl } from '@kilocode/worker-utils';
 
 import type { Env, SandboxId } from '../types.js';
 import type { CloudAgentSession } from '../persistence/CloudAgentSession.js';
-import type { CredentialContainment, SessionMetadata } from '../persistence/session-metadata.js';
+import {
+  getControlPlaneCredentialContainment,
+  type CredentialContainment,
+  type SessionMetadata,
+} from '../persistence/session-metadata.js';
 import { logger } from '../logger.js';
 import { withDORetry } from '../utils/do-retry.js';
 import { resolveSessionStub } from '../sandbox-session/session-stub.js';
@@ -406,15 +410,13 @@ function deriveCanonicalRepositoryUrl(repository: SessionRepositoryRequest): str
   return normalizeGitUrl(repository.url);
 }
 
-/**
- * Credential containment for a create, derived from the repository type and
- * the devcontainer flag. Shared by the fresh allocation and the clone rebuild
- * so both compute it identically.
- */
 function computeCredentialContainment(
+  sessionId: string,
   input: SessionRegistrationInput,
   env: Env
 ): CredentialContainment {
+  const controlPlaneContainment = getControlPlaneCredentialContainment(sessionId, input.repository);
+  if (controlPlaneContainment) return controlPlaneContainment;
   const containmentEnabled =
     env.CREDENTIAL_CONTAINMENT_ENABLED !== 'false' && input.runtime?.devcontainer !== true;
   return {
@@ -468,7 +470,7 @@ async function allocateNewSession(
     rethrowAllocationFailure(ledger, 'report', error);
   }
 
-  const credentialContainment = computeCredentialContainment(input, ctx.env);
+  const credentialContainment = computeCredentialContainment(cloudAgentSessionId, input, ctx.env);
   let sandboxId: SandboxId;
   let sandboxRoute: SharedSandboxRouteMetadata | undefined;
   let sandboxProvider: SandboxSelection['provider'] = 'cloudflare';
@@ -721,7 +723,7 @@ function rebuildCloneAllocation(
     sandboxRoute: route,
     sandboxProvider,
     initialTurn,
-    credentialContainment: computeCredentialContainment(input, ctx.env),
+    credentialContainment: computeCredentialContainment(cloudAgentSessionId, input, ctx.env),
     sessionService,
     rollbackCliSession: async () => {
       try {
