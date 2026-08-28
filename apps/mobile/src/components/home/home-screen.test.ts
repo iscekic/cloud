@@ -45,7 +45,7 @@ vi.mock('@/components/ui/skeleton', () => ({
   Skeleton: () => null,
 }));
 vi.mock('@/lib/hooks/use-agent-sessions', () => ({
-  useAgentSessions: () => ({ activeSessions: [], isLoading: false, storedSessions: [] }),
+  useLiveAgentSessions: () => ({ activeSessions: [], hasAcceptedSuccess: false }),
 }));
 vi.mock('@/lib/organization-context', () => ({
   useOrganization: () => ({ organizationId: null }),

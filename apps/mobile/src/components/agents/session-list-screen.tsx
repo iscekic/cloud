@@ -14,7 +14,11 @@ import { useTranslation } from 'react-i18next';
 import { Bot, Plus } from '@/components/ui/icons';
 
 import { EmptyState } from '@/components/empty-state';
-import { QueryError } from '@/components/query-error';
+import {
+  liveSessionContent,
+  LiveSessionFeedback,
+  useLiveSessionContext,
+} from '@/components/home/agent-sessions-section';
 import { getNewAgentSessionPath } from '@/components/agents/session-list-routes';
 import { RemoteSessionRow } from '@/components/agents/remote-session-row';
 import { FAB_MARGIN, FAB_SIZE } from '@/components/agents/session-list-content';
@@ -23,8 +27,6 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Text } from '@/components/ui/text';
 import { ScreenHeader } from '@/components/screen-header';
-import { announcingToast } from '@/lib/a11y/announcing-toast';
-import { useOrganization } from '@/lib/organization-context';
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { getRevisionSnapshot } from '@/lib/session-attention';
 import { getEffectiveTabBarHeight } from '@/lib/tab-bar-layout';
@@ -48,15 +50,12 @@ export function AgentSessionListScreen() {
     [bottom, fontScale]
   );
 
-  const { organizationId, isLoaded: orgLoaded } = useOrganization();
-  const { activeSessions, isLoading, isError, refetch } = useLiveAgentSessions({
-    organizationId,
-    enabled: orgLoaded,
-  });
-
-  // Treat !orgLoaded as loading so the empty state cannot flash before skeletons.
-  const loading = isLoading || !orgLoaded;
-  const hasLiveRows = activeSessions.length > 0;
+  const context = useLiveSessionContext();
+  const { organizationId } = context;
+  const sessions = useLiveAgentSessions({ organizationId, enabled: context.isReady });
+  const { activeSessions, refetch } = sessions;
+  const content = liveSessionContent(context, sessions);
+  const hasLiveRows = content === 'rows';
 
   const refetchRef = useRef(refetch);
   useEffect(() => {
@@ -85,11 +84,7 @@ export function AgentSessionListScreen() {
     }, [])
   );
 
-  // App-foreground refresh for the live Agents list. The live query keeps its
-  // own poll interval; an OS foreground transition re-reads focus live via
-  // `navigation.isFocused()` because a frozen (unfocused) tab does not
-  // re-render. Only the focused tab refetches live sessions and invalidates
-  // the active-sessions tray — no stored queries are touched.
+  // Preserve the focused foreground refresh and the active-sessions tray invalidation.
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'active' && navigation.isFocused()) {
@@ -128,15 +123,13 @@ export function AgentSessionListScreen() {
     void (async () => {
       setRefreshing(true);
       try {
-        const ok = await refetch();
-        if (!ok && hasLiveRows) {
-          announcingToast.error(t('common.couldNotRefresh'));
-        }
+        // LiveSessionFeedback retains and announces failures without a duplicate toast.
+        await refetch();
       } finally {
         setRefreshing(false);
       }
     })();
-  }, [refetch, hasLiveRows, t]);
+  }, [refetch]);
 
   const renderItem = useCallback(
     ({ item }: { item: ActiveSession }) => (
@@ -175,7 +168,7 @@ export function AgentSessionListScreen() {
   );
 
   let body: ReactNode = null;
-  if (loading && !hasLiveRows) {
+  if (content === 'pending') {
     body = (
       <View className="pt-[18px]">
         {Array.from({ length: SKELETON_ROW_COUNT }, (_, i) => (
@@ -185,16 +178,7 @@ export function AgentSessionListScreen() {
         ))}
       </View>
     );
-  } else if (isError && !hasLiveRows) {
-    body = (
-      <QueryError
-        message={t('agents.sessionList.couldNotLoadActive')}
-        onRetry={() => {
-          void refetch();
-        }}
-      />
-    );
-  } else if (!hasLiveRows) {
+  } else if (content === 'empty') {
     body = (
       <EmptyState
         icon={Bot}
@@ -203,6 +187,7 @@ export function AgentSessionListScreen() {
         action={
           <Button
             variant="outline"
+            accessibilityLabel={t('home.newCodingTask')}
             onPress={() => {
               router.push(getNewAgentSessionPath(organizationId) as Href);
             }}
@@ -213,7 +198,7 @@ export function AgentSessionListScreen() {
         }
       />
     );
-  } else {
+  } else if (hasLiveRows) {
     body = (
       <FlatList
         ref={listRef}
@@ -237,9 +222,16 @@ export function AgentSessionListScreen() {
         className="px-[22px]"
         headerRight={headerRight}
       />
+      <View className="px-[22px]">
+        <LiveSessionFeedback
+          context={context}
+          sessions={sessions}
+          failureLabel={t('agents.sessionList.couldNotLoadActive')}
+        />
+      </View>
       {body}
-      {/* FAB visible when there are live rows — empty state already owns the creation CTA. */}
-      {hasLiveRows && (
+      {/* Empty content owns its creation action; other admitted states keep the FAB. */}
+      {context.isReady && content !== 'empty' && (
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t('agentChat.newSession.title')}
