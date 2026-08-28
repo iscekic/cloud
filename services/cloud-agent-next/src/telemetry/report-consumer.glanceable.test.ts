@@ -326,7 +326,7 @@ describe('committed cloud eligibility refresh', () => {
 
   it('keeps a committed report acknowledged when refresh fails without logging credentials', async () => {
     fixture = setup({
-      refreshError: new Error('Bearer private-token postgres://user:password@host/db'),
+      refreshError: new Error('upstream-error-body-must-not-be-logged'),
     });
     await fixture.seed();
     expect(await fixture.consume()).toBe('ack');
