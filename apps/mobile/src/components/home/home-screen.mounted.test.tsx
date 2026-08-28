@@ -30,6 +30,7 @@ const state = vi.hoisted(() => ({
   },
   internet: 'online' as BannerState,
   connection: { isConnected: true, reconnectExhausted: false },
+  prReviewEnabled: true,
   refetch: vi.fn<() => Promise<boolean>>(),
   boundaryRefetch: vi.fn(),
   socketRetry: vi.fn(),
@@ -48,6 +49,7 @@ vi.mock('react-native', () => ({
   Pressable: 'Pressable',
   RefreshControl: 'RefreshControl',
   View: 'View',
+  useWindowDimensions: () => ({ fontScale: 1 }),
 }));
 vi.mock('react-native-reanimated', () => ({
   default: { View: 'Animated.View' },
@@ -55,6 +57,9 @@ vi.mock('react-native-reanimated', () => ({
 }));
 vi.mock('expo-router', () => ({
   useRouter: () => ({
+    push: (path: string) => {
+      state.destination = path;
+    },
     replace: (path: string) => {
       state.destination = path;
     },
@@ -62,7 +67,6 @@ vi.mock('expo-router', () => ({
 }));
 vi.mock('@/components/home/greeting', () => ({ buildTimedGreeting: () => 'Good morning' }));
 vi.mock('@/components/home/new-task-button', () => ({ NewTaskButton: 'NewTaskButton' }));
-vi.mock('@/components/home/product-choices', () => ({ ProductChoices: 'ProductChoices' }));
 vi.mock('@/components/home/section-header', () => ({ SectionHeader: 'SectionHeader' }));
 vi.mock('@/components/screen-header', () => ({ ScreenHeader: 'ScreenHeader' }));
 vi.mock('@/components/tab-screen', () => ({ TabScreenScrollView: 'ScrollView' }));
@@ -73,10 +77,19 @@ vi.mock('@/components/ui/text', async () => {
 });
 vi.mock('@/components/ui/icons', () => ({
   AlertCircle: 'AlertCircle',
+  GitMerge: 'GitMerge',
+  GitPullRequest: 'GitPullRequest',
   Lock: 'Lock',
   SearchX: 'SearchX',
   ServerCrash: 'ServerCrash',
+  ShieldCheck: 'ShieldCheck',
   WifiOff: 'WifiOff',
+}));
+vi.mock('@/components/ui/directional-icons', () => ({ DirectionalChevronRight: 'ChevronRight' }));
+vi.mock('@/lib/analytics/posthog', () => ({
+  FEATURE_FLAG_PR_REVIEW: 'mobile-pr-review',
+  useFeatureFlag: (flag: string, fallback: boolean) =>
+    flag === 'mobile-pr-review' ? state.prReviewEnabled : fallback,
 }));
 vi.mock('@/components/agents/remote-session-row', () => ({ RemoteSessionRow: 'RemoteSessionRow' }));
 vi.mock('@/components/agents/use-agent-session-navigator', () => ({
@@ -141,7 +154,12 @@ function text() {
     .join('\n');
 }
 function action(label: string) {
-  const button = nodes('Pressable').find(node => node.props.accessibilityLabel === label);
+  const button = nodes('Pressable').find(
+    node =>
+      node.props.accessibilityLabel === label ||
+      (node.props.accessibilityLabel == null &&
+        node.findAll(child => child.type === 'Text' && child.children.includes(label)).length > 0)
+  );
   if (!button) {
     throw new Error(`Missing action: ${label}`);
   }
@@ -182,6 +200,7 @@ beforeEach(() => {
   });
   Object.assign(state.connection, { isConnected: true, reconnectExhausted: false });
   state.internet = 'online';
+  state.prReviewEnabled = true;
   state.destination = '';
   state.announcements = [];
   state.refetch.mockReset().mockResolvedValue(true);
@@ -244,9 +263,12 @@ describe('Home live presentation', () => {
     expect(text().includes('Nothing running right now')).toBe(Boolean(test.empty));
     expect(text().includes("Couldn't load active sessions")).toBe(Boolean(test.error));
     expect(text().includes('Updating')).toBe(Boolean(test.updating));
+    expect(text().includes('Loading…')).toBe(Boolean(test.skeleton));
     expect(nodes('RemoteSessionRow')).toHaveLength(test.rows ? 1 : 0);
     expect(nodes('NewTaskButton')).toHaveLength(1);
-    expect(nodes('ProductChoices')).toHaveLength(1);
+    expect(text()).toContain('Code Reviewer');
+    expect(text()).toContain('Security Agent');
+    expect(text()).toContain('PR Review');
     expect(state.owners).toBe(1);
     expect(text()).toContain('Personal');
   });
@@ -424,9 +446,58 @@ describe('Home live presentation', () => {
       unsubscribe();
     }
   });
+
+  it('keeps cold-loading feedback stable until an accepted result', async () => {
+    state.live.isLoading = true;
+    state.live.isFetching = true;
+    await renderHome();
+    const loading = nodes('Text').find(node => node.children.includes('Loading…'));
+    const skeleton = nodes('Skeleton')[0];
+    expect(loading).toBeDefined();
+    expect(skeleton).toBeDefined();
+    expect(text()).not.toContain('Updating');
+    expect(text()).not.toContain('Nothing running right now');
+    expect(state.announcements).toEqual(['Loading…']);
+
+    await renderHome();
+    state.live.isLoading = false;
+    state.live.isFetching = false;
+    await renderHome();
+    expect(nodes('Text').find(node => node.children.includes('Loading…'))).toBe(loading);
+    expect(nodes('Skeleton')[0]).toBe(skeleton);
+    expect(state.announcements).toEqual(['Loading…']);
+    expect(text()).not.toContain('Nothing running right now');
+
+    state.live.hasAcceptedSuccess = true;
+    await renderHome();
+    expect(text()).not.toContain('Loading…');
+    expect(nodes('Skeleton')).toHaveLength(0);
+    expect(text()).toContain('Nothing running right now');
+    expect(state.announcements).toEqual(['Loading…']);
+  });
 });
 
 describe('Home admission', () => {
+  it.each(['unresolved', 'failed', 'missing'] as const)(
+    'keeps PR Review behind its own flag and route while membership is %s',
+    async mode => {
+      state.organization.organizationId = 'org-1';
+      state.boundary.isResolving = mode === 'unresolved';
+      state.boundary.isError = mode === 'failed';
+      state.boundary.orgs = mode === 'missing' ? [] : undefined;
+      await renderHome();
+      expect(nodes('NewTaskButton')).toHaveLength(0);
+      expect(text()).not.toContain('Code Reviewer');
+      expect(text()).not.toContain('Security Agent');
+      press('PR Review');
+      expect(state.destination).toBe('/(app)/pr-review');
+
+      state.prReviewEnabled = false;
+      await renderHome();
+      expect(text()).not.toContain('PR Review');
+      expect(nodes('SectionHeader').some(node => node.props.label === 'Explore')).toBe(false);
+    }
+  );
   it.each(['pending', 'failed'] as const)(
     'admits personal actions while membership is %s',
     async mode => {
@@ -434,7 +505,9 @@ describe('Home admission', () => {
       state.boundary.isError = mode === 'failed';
       await renderHome();
       expect(nodes('NewTaskButton')).toHaveLength(1);
-      expect(nodes('ProductChoices')).toHaveLength(1);
+      expect(text()).toContain('Code Reviewer');
+      expect(text()).toContain('Security Agent');
+      expect(text()).toContain('PR Review');
       expect(text()).toContain('Personal');
       expect(text()).not.toContain("Couldn't load your organizations");
     }
@@ -484,8 +557,13 @@ describe('Home admission', () => {
     expect(nodes('RemoteSessionRow')).toHaveLength(0);
     expect(text()).not.toContain('Nothing running right now');
     expect(text()).not.toContain('Old organization');
+    expect(text().includes('PR Review')).toBe(
+      mode !== 'account pending' && mode !== 'signed out' && mode !== 'signing out'
+    );
     if (mode !== 'permission denied') {
       expect(nodes('NewTaskButton')).toHaveLength(0);
+      expect(text()).not.toContain('Code Reviewer');
+      expect(text()).not.toContain('Security Agent');
       expect(text()).not.toContain('Engineering');
     }
     if (mode === 'membership paused') {

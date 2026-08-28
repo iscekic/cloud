@@ -27,7 +27,7 @@ const HOME_LIVE_SLOT_MIN_CLASS = 'min-h-[72px]';
 const AGENTS_INDEX_HREF = '/(app)/(tabs)/(2_agents)/' as const;
 const MAX_ROWS = 3;
 type LiveSessions = ReturnType<typeof useLiveAgentSessions>;
-type LiveSessionContext = ReturnType<typeof useLiveSessionContext>;
+type LiveSessionContext = Omit<ReturnType<typeof useLiveSessionContext>, 'accountReady'>;
 
 /** Both live surfaces use the same admission rules, independent of session queries. */
 export function useLiveSessionContext() {
@@ -51,7 +51,15 @@ export function useLiveSessionContext() {
   const contextLabel =
     organizationId === null ? t('profile.personal') : boundary.org?.organizationName;
   const label = isReady ? contextLabel : undefined;
-  return { organizationId, isReady, isResolving, isError, label, refetch: boundary.refetch };
+  return {
+    organizationId,
+    accountReady,
+    isReady,
+    isResolving,
+    isError,
+    label,
+    refetch: boundary.refetch,
+  };
 }
 
 export function liveSessionContent(context: LiveSessionContext, sessions: LiveSessions) {
@@ -206,6 +214,11 @@ export function LiveSessionFeedback({
           </Button>
         )}
       </View>
+      <AccessibleStatus
+        message={content === 'pending' ? t('agentChat.instancePicker.loading') : null}
+        tone="status"
+        className="text-xs"
+      />
       {content === 'rows' && sessions.isFetching && !sessions.isPaused && (
         <AccessibleStatus
           message={t('agents.sessionList.updating')}
