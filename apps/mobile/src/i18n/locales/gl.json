@@ -2067,7 +2067,8 @@
       "couldNotSearch": "Non se puido buscar nas sesións",
       "completedWillAppear": "As sesións completadas aparecerán aquí.",
       "noPastSessions": "Sen sesións pasadas",
-      "live": "EN DIRECTO"
+      "live": "EN DIRECTO",
+      "updating": "Actualizando"
     },
     "sessionRow": {
       "deleteTitle": "Eliminar sesión?",

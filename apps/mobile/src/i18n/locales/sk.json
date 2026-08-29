@@ -2093,7 +2093,8 @@
       "couldNotSearch": "Sedenie sa nepodarilo vyhľadať",
       "completedWillAppear": "Dokončené sedenia sa zobrazia tu.",
       "noPastSessions": "Žiadne minulé sedenia",
-      "live": "NAŽIVO"
+      "live": "NAŽIVO",
+      "updating": "Aktualizuje sa"
     },
     "sessionRow": {
       "deleteTitle": "Odstrániť sedenie?",

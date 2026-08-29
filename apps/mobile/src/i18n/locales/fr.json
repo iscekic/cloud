@@ -2470,7 +2470,8 @@
       "couldNotSearch": "Impossible de rechercher des sessions",
       "completedWillAppear": "Les sessions terminées apparaîtront ici.",
       "noPastSessions": "Aucune session passée",
-      "live": "EN DIRECT"
+      "live": "EN DIRECT",
+      "updating": "Mise à jour en cours"
     },
     "sessionRow": {
       "deleteTitle": "Supprimer la session ?",

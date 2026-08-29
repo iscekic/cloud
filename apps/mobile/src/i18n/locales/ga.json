@@ -2106,7 +2106,8 @@
       "couldNotSearch": "Níorbh fhéidir seisiúin a chuardach",
       "completedWillAppear": "Beidh seisiúin chríochnaithe le feiceáil anseo.",
       "noPastSessions": "Níl aon seisiúin roimhe seo",
-      "live": "BEO"
+      "live": "BEO",
+      "updating": "Ag nuashonrú"
     },
     "sessionRow": {
       "deleteTitle": "An scriosfar an seisiún?",

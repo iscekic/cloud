@@ -2080,7 +2080,8 @@
       "couldNotSearch": "Neizdevās meklēt sesijas",
       "completedWillAppear": "Pabeigtās sesijas parādīsies šeit.",
       "noPastSessions": "Nav pagājušo sesiju",
-      "live": "TIŠRAIDĒ"
+      "live": "TIŠRAIDĒ",
+      "updating": "Atjaunina"
     },
     "sessionRow": {
       "deleteTitle": "Dzēst sesiju?",

@@ -2067,7 +2067,8 @@
       "couldNotSearch": "Akukwazanga ukusesha iziseshini",
       "completedWillAppear": "Iziseshini eziqediwe zizovela lapha.",
       "noPastSessions": "Akukho ziseshini ezidlule",
-      "live": "LIVE"
+      "live": "LIVE",
+      "updating": "Kuyabuyekezwa"
     },
     "sessionRow": {
       "deleteTitle": "Isula iseshini?",
