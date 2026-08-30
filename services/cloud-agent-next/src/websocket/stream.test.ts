@@ -563,101 +563,179 @@ describe('stream handler handleStreamRequest', () => {
     }
   );
 
-  it('projects accepted work and pending child interactions after historical failures', async () => {
-    const serverWs = makeFakeWebSocket();
-    mockWebSocketPair(serverWs);
-    const state = createServiceState({ rootSessionId: 'ses_root' });
-    const pendingInteractions = {
-      questions: [
-        {
-          id: 'question-child',
-          sessionID: 'ses_child',
-          questions: [{ question: 'Continue?', header: 'Approval', options: [] }],
-        },
-      ],
-      permissions: [],
-    };
-    const handler = createStreamHandler(makeFakeState(), makeFakeEventQueries([]), SESSION_ID, {
-      reconcileMaterializedEvents: true,
-      deriveCloudStatus: async () => ({ type: 'ready' }),
-      deriveSessionStatus: async () => ({ type: 'busy' }),
-      derivePendingInteractions: async () => pendingInteractions,
-      deriveQueuedMessages: async () => [
-        {
-          messageId: 'old',
-          content: 'Old prompt',
-          timestamp: 1000,
-          terminalFailure: {
-            messageId: 'old',
-            status: 'failed',
-            delivery: 'sent',
-            accepted: true,
-            error: 'Execution failed',
-            reason: 'execution',
-            timestamp: 2000,
+  it.each(['fromId=20', 'replay=false', 'replay=true'])(
+    'projects accepted work and pending child interactions after historical failures: %s',
+    async query => {
+      const serverWs = makeFakeWebSocket();
+      mockWebSocketPair(serverWs);
+      const state = createServiceState({ rootSessionId: 'ses_root' });
+      const pendingInteractions = {
+        questions: [
+          {
+            id: 'question-child',
+            sessionID: 'ses_child',
+            questions: [{ question: 'Continue?', header: 'Approval', options: [] }],
           },
+        ],
+        permissions: [],
+      };
+      const handler = createStreamHandler(makeFakeState(), makeFakeEventQueries([]), SESSION_ID, {
+        reconcileMaterializedEvents: true,
+        deriveCloudStatus: async () => ({ type: 'ready' }),
+        deriveSessionStatus: async () => ({ type: 'busy' }),
+        derivePendingInteractions: async () => pendingInteractions,
+        deriveQueuedMessages: async () => [
+          {
+            messageId: 'old',
+            content: 'Old prompt',
+            timestamp: 1000,
+            terminalFailure: {
+              messageId: 'old',
+              status: 'failed',
+              delivery: 'sent',
+              accepted: true,
+              error: 'Execution failed',
+              reason: 'execution',
+              timestamp: 2000,
+            },
+          },
+          { messageId: 'current', content: 'Current prompt', timestamp: 3000, delivery: 'sent' },
+        ],
+      });
+
+      await handler.handleStreamRequest(
+        new Request(`https://example.com/stream?${query}`, {
+          headers: { Upgrade: 'websocket' },
+        })
+      );
+
+      const frames = serverWs.sentMessages.map(message => JSON.parse(message));
+      expect(frames.find(frame => frame.streamEventType === 'connected')?.data).toEqual({
+        cloudStatus: { type: 'ready' },
+        sessionStatus: { type: 'busy' },
+        activeMessageId: 'current',
+        pendingInteractions,
+      });
+      const sentIndex = frames.findIndex(frame => frame.streamEventType === 'cloud.message.sent');
+      const failureIndex = frames.findIndex(
+        frame => frame.streamEventType === 'cloud.message.failed'
+      );
+      const connectedIndex = frames.findIndex(frame => frame.streamEventType === 'connected');
+      expect(failureIndex).toBeGreaterThan(-1);
+      expect(failureIndex).toBeLessThan(connectedIndex);
+      expect(connectedIndex).toBeLessThan(sentIndex);
+      expect(frames[sentIndex].data).toEqual({ messageId: 'current', delivery: 'sent' });
+      expect(
+        frames
+          .filter(frame => frame.streamEventType === 'cloud.message.queued')
+          .every(frame => frame.data.delivery === 'queued')
+      ).toBe(true);
+      expect(frames.at(-1).streamEventType).toBe('cloud.message.sent');
+      for (const frame of frames) processSdkFrame(state, frame);
+      expect(state.getCloudStatus()).toEqual({ type: 'ready' });
+      expect(state.getActivity()).toEqual({ type: 'busy' });
+      expect(state.getStatus()).toEqual({ type: 'idle' });
+      expect(state.getQuestion()).toEqual({
+        requestId: 'question-child',
+        questions: pendingInteractions.questions[0].questions,
+      });
+      expect(frames[connectedIndex + 1]).toMatchObject({
+        eventId: 0,
+        sessionId: SESSION_ID,
+        streamEventType: 'kilocode',
+        data: {
+          type: 'question.asked',
+          event: 'question.asked',
+          properties: pendingInteractions.questions[0],
         },
-        { messageId: 'current', content: 'Current prompt', timestamp: 3000, delivery: 'sent' },
-      ],
-    });
+      });
+      expect(state.getPendingMessages().get('old')).toMatchObject({
+        status: 'failed',
+        error: 'Execution failed',
+      });
+      processSdkFrame(
+        state,
+        formatStreamEvent(
+          {
+            ...makeEvent(
+              22,
+              JSON.stringify({ messageId: 'current', accepted: true, error: 'Current turn failed' })
+            ),
+            stream_event_type: 'cloud.message.failed',
+          },
+          SESSION_ID
+        )
+      );
+      expect(state.getPendingMessages().get('current')).toMatchObject({
+        status: 'failed',
+        error: 'Current turn failed',
+      });
+    }
+  );
 
-    await handler.handleStreamRequest(
-      new Request('https://example.com/stream?fromId=20', {
-        headers: { Upgrade: 'websocket' },
-      })
-    );
+  it.each([
+    { query: 'eventTypes=kilocode', expectedCount: 1 },
+    { query: 'fromId=99&eventTypes=kilocode', expectedCount: 1 },
+    { query: 'eventTypes=output', expectedCount: 0 },
+    { query: 'executionIds=exec_other', expectedCount: 0 },
+    { query: 'startTime=8640000000000000', expectedCount: 0 },
+    { query: 'endTime=0', expectedCount: 0 },
+  ])(
+    'filters pending question replay on the connecting socket: $query',
+    async ({ query, expectedCount }) => {
+      const serverWs = makeFakeWebSocket();
+      const existingWs = Object.assign(makeFakeWebSocket(), {
+        deserializeAttachment: () => ({ filters: { sessionId: SESSION_ID } }),
+      });
+      mockWebSocketPair(serverWs);
+      const durableState = makeFakeState();
+      vi.spyOn(durableState, 'getWebSockets').mockReturnValue([existingWs, serverWs]);
+      const question = {
+        id: 'question-root',
+        sessionID: 'ses_root',
+        tool: { callID: 'call-question', messageID: 'message-question' },
+        questions: [{ question: 'Continue?', header: 'Approval', options: [] }],
+      };
+      const derivePendingInteractions = vi.fn(async () => ({
+        questions: [question],
+        permissions: [{ id: 'permission-root', sessionID: 'ses_root' }],
+      }));
+      const eventQueries = makeFakeEventQueries([]);
+      const insert = vi.spyOn(eventQueries, 'insert');
+      const handler = createStreamHandler(durableState, eventQueries, SESSION_ID, {
+        reconcileMaterializedEvents: true,
+        derivePendingInteractions,
+      });
 
-    const frames = serverWs.sentMessages.map(message => JSON.parse(message));
-    expect(frames.find(frame => frame.streamEventType === 'connected')?.data).toEqual({
-      cloudStatus: { type: 'ready' },
-      sessionStatus: { type: 'busy' },
-      activeMessageId: 'current',
-      pendingInteractions,
-    });
-    const sentIndex = frames.findIndex(frame => frame.streamEventType === 'cloud.message.sent');
-    const failureIndex = frames.findIndex(
-      frame => frame.streamEventType === 'cloud.message.failed'
-    );
-    const connectedIndex = frames.findIndex(frame => frame.streamEventType === 'connected');
-    expect(failureIndex).toBeGreaterThan(-1);
-    expect(failureIndex).toBeLessThan(connectedIndex);
-    expect(connectedIndex).toBeLessThan(sentIndex);
-    expect(frames[sentIndex].data).toEqual({ messageId: 'current', delivery: 'sent' });
-    expect(
-      frames
-        .filter(frame => frame.streamEventType === 'cloud.message.queued')
-        .every(frame => frame.data.delivery === 'queued')
-    ).toBe(true);
-    expect(frames.at(-1).streamEventType).toBe('cloud.message.sent');
-    for (const frame of frames) processSdkFrame(state, frame);
-    expect(state.getCloudStatus()).toEqual({ type: 'ready' });
-    expect(state.getActivity()).toEqual({ type: 'busy' });
-    expect(state.getStatus()).toEqual({ type: 'idle' });
-    expect(state.getPendingMessages().get('old')).toMatchObject({
-      status: 'failed',
-      error: 'Execution failed',
-    });
-    processSdkFrame(
-      state,
-      formatStreamEvent(
-        {
-          ...makeEvent(
-            22,
-            JSON.stringify({ messageId: 'current', accepted: true, error: 'Current turn failed' })
-          ),
-          stream_event_type: 'cloud.message.failed',
-        },
-        SESSION_ID
-      )
-    );
-    expect(state.getPendingMessages().get('current')).toMatchObject({
-      status: 'failed',
-      error: 'Current turn failed',
-    });
-  });
+      await handler.handleStreamRequest(
+        new Request(`https://example.com/stream?replay=false&${query}`, {
+          headers: { Upgrade: 'websocket' },
+        })
+      );
 
-  it.each([undefined, { questions: [], permissions: [] }])(
-    'distinguishes unknown interactions from an authoritative empty snapshot: %j',
+      const frames = parseSentMessages(serverWs);
+      const replayedQuestions = frames.filter(frame => frame.streamEventType === 'kilocode');
+      expect(replayedQuestions).toHaveLength(expectedCount);
+      if (expectedCount > 0) {
+        expect(frames[1]).toMatchObject({
+          eventId: 0,
+          sessionId: SESSION_ID,
+          streamEventType: 'kilocode',
+          data: { type: 'question.asked', event: 'question.asked', properties: question },
+        });
+      }
+      expect(existingWs.sentMessages).toEqual([]);
+      expect(insert).not.toHaveBeenCalled();
+      expect(derivePendingInteractions).toHaveBeenCalledOnce();
+    }
+  );
+
+  it.each([
+    undefined,
+    { questions: [], permissions: [] },
+    { questions: [], permissions: [{ id: 'permission-root', sessionID: 'ses_root' }] },
+  ])(
+    'does not replay questions for unknown or question-free interactions: %j',
     async pendingInteractions => {
       const serverWs = makeFakeWebSocket();
       mockWebSocketPair(serverWs);
@@ -675,6 +753,7 @@ describe('stream handler handleStreamRequest', () => {
 
       const frames = serverWs.sentMessages.map(message => JSON.parse(message));
       const connected = frames.find(frame => frame.streamEventType === 'connected');
+      expect(frames).toHaveLength(1);
       expect(connected.data.activeMessageId).toBeNull();
       if (pendingInteractions)
         expect(connected.data.pendingInteractions).toEqual(pendingInteractions);
