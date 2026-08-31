@@ -132,6 +132,13 @@ type ChildSessionHydrationState =
       olderError: OlderMessagesError | null;
       /** Total items omitted across every page loaded for this child so far. */
       omittedItemCount: number;
+      /**
+       * True while the first page is being fetched in the background after
+       * cached content was shown (or on a re-open revalidate). Optional so
+       * pre-existing consumers that only need the pagination fields keep
+       * compiling; the manager always writes it on ready states.
+       */
+      isRefreshing?: boolean;
     }
   | { status: 'error'; message: string };
 
@@ -412,7 +419,10 @@ type SessionManagerAtoms = {
 
 type SessionManager = {
   switchSession(kiloSessionId: KiloSessionId): Promise<void>;
-  hydrateChildSession(childSessionId: KiloSessionId): Promise<void>;
+  hydrateChildSession(
+    childSessionId: KiloSessionId,
+    options?: { priority?: 'user' | 'background' }
+  ): Promise<void>;
   /**
    * Load the next page of older messages for a hydrated child session using
    * that child's own cursor. Replays through the child apply path, updates
@@ -901,7 +911,10 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
   let stateUnsub: (() => void) | null = null;
   let indicatorTimer: ReturnType<typeof setTimeout> | null = null;
   let childSessionHydrationGeneration = 0;
-  const childSessionHydrationRequests = new Map<string, Promise<void>>();
+  const childSessionHydrationRequests = new Map<
+    string,
+    { promise: Promise<void>; priority: 'user' | 'background' }
+  >();
   // Pagination state for `loadOlderMessages`. Reset on every switchSession.
   let olderMessagesCursor: string | null = null;
   // Monotonically increasing per-session generation; older-page results
@@ -1064,52 +1077,69 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
     }
   }
 
-  async function hydrateChildSession(childSessionId: KiloSessionId): Promise<void> {
-    const existingState = store.get(childSessionHydrationStatesAtom).get(childSessionId);
-    if (existingState?.status === 'ready') return;
-
-    const inFlightRequest = childSessionHydrationRequests.get(childSessionId);
-    if (inFlightRequest) {
-      await inFlightRequest;
-      return;
+  function finishChildSessionRevalidate(childSessionId: KiloSessionId): void {
+    const current = store.get(childSessionHydrationStatesAtom).get(childSessionId);
+    if (current?.status === 'ready') {
+      setChildSessionHydrationState(childSessionId, { ...current, isRefreshing: false });
     }
+  }
 
-    const storage = store.get(sessionStorageAtom);
-    const rootSessionId = activeSessionId;
-    if (!storage || !rootSessionId) return;
+  /**
+   * Fetch the first page (or legacy full snapshot) for a child session and
+   * replay it into the active storage. `revalidate` marks a background refresh
+   * of an already-ready child: instead of resetting pagination or surfacing a
+   * terminal error, it only clears `isRefreshing`, preserving the current
+   * cursor/hasOlder/omittedItemCount and the existing transcript.
+   */
+  async function fetchChildSessionFirstPage(args: {
+    childSessionId: KiloSessionId;
+    generation: number;
+    rootSessionId: KiloSessionId;
+    storage: JotaiSessionStorage;
+    hadCachedMessages: boolean;
+    revalidate: boolean;
+  }): Promise<void> {
+    const { childSessionId, generation, rootSessionId, storage, hadCachedMessages, revalidate } =
+      args;
+    try {
+      if (config.fetchSnapshotPage) {
+        const networkStart = Date.now();
+        const page = await config.fetchSnapshotPage(childSessionId, {});
+        const networkMs = Date.now() - networkStart;
+        if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
 
-    const generation = childSessionHydrationGeneration;
-    const hadCachedMessages = store.get(childMessagesAtom)(childSessionId).length > 0;
-    setChildSessionHydrationState(childSessionId, { status: 'loading' });
-
-    const request = (async () => {
-      try {
-        if (config.fetchSnapshotPage) {
-          const networkStart = Date.now();
-          const page = await config.fetchSnapshotPage(childSessionId, {});
-          const networkMs = Date.now() - networkStart;
-          if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
-
-          // A null page (worker 404) or any typed failure on the first page is
-          // a terminal hydration error for this child.
-          if (page === null) {
+        // A null page (worker 404) or any typed failure on the first page is a
+        // terminal hydration error — except on a revalidate, which keeps the
+        // already-shown transcript and only clears the refresh flag.
+        if (page === null) {
+          if (revalidate) {
+            finishChildSessionRevalidate(childSessionId);
+          } else {
             setChildSessionHydrationState(childSessionId, {
               status: 'error',
               message: CHILD_SESSION_NOT_FOUND_MESSAGE,
             });
-            return;
           }
-          if (page.kind !== 'success') {
+          return;
+        }
+        if (page.kind !== 'success') {
+          if (revalidate) {
+            finishChildSessionRevalidate(childSessionId);
+          } else {
             setChildSessionHydrationState(childSessionId, {
               status: 'error',
               message: formatError(page),
             });
-            return;
           }
+          return;
+        }
 
-          const storageStart = Date.now();
-          replayChildMessages(storage, page.messages);
-          const storageMs = Date.now() - storageStart;
+        const storageStart = Date.now();
+        replayChildMessages(storage, page.messages);
+        const storageMs = Date.now() - storageStart;
+        if (revalidate) {
+          finishChildSessionRevalidate(childSessionId);
+        } else {
           setChildSessionHydrationState(childSessionId, {
             status: 'ready',
             cursor: page.nextCursor,
@@ -1117,20 +1147,25 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
             isLoadingOlder: false,
             olderError: null,
             omittedItemCount: page.omittedItemCount,
+            isRefreshing: false,
           });
-          reportChildSessionOpenTiming(childSessionId, networkMs, storageMs, hadCachedMessages);
-          return;
         }
+        reportChildSessionOpenTiming(childSessionId, networkMs, storageMs, hadCachedMessages);
+        return;
+      }
 
-        // Legacy fallback: full snapshot, no pagination state.
-        const networkStart = Date.now();
-        const snapshot = await config.fetchSnapshot(childSessionId);
-        const networkMs = Date.now() - networkStart;
-        if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
+      // Legacy fallback: full snapshot, no pagination state.
+      const networkStart = Date.now();
+      const snapshot = await config.fetchSnapshot(childSessionId);
+      const networkMs = Date.now() - networkStart;
+      if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
 
-        const storageStart = Date.now();
-        replayChildMessages(storage, snapshot.messages);
-        const storageMs = Date.now() - storageStart;
+      const storageStart = Date.now();
+      replayChildMessages(storage, snapshot.messages);
+      const storageMs = Date.now() - storageStart;
+      if (revalidate) {
+        finishChildSessionRevalidate(childSessionId);
+      } else {
         setChildSessionHydrationState(childSessionId, {
           status: 'ready',
           cursor: null,
@@ -1138,22 +1173,114 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
           isLoadingOlder: false,
           olderError: null,
           omittedItemCount: 0,
+          isRefreshing: false,
         });
-        reportChildSessionOpenTiming(childSessionId, networkMs, storageMs, hadCachedMessages);
-      } catch (err) {
-        if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
+      }
+      reportChildSessionOpenTiming(childSessionId, networkMs, storageMs, hadCachedMessages);
+    } catch (err) {
+      if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
+      if (revalidate) {
+        finishChildSessionRevalidate(childSessionId);
+      } else {
         setChildSessionHydrationState(childSessionId, {
           status: 'error',
           message: formatError(err),
         });
       }
-    })();
+    }
+  }
 
-    childSessionHydrationRequests.set(childSessionId, request);
+  /**
+   * Revalidate an already-ready child in the background: fetch the first page
+   * again and merge any new messages without replacing or clearing the
+   * transcript, then clear the refresh flag while preserving the current
+   * pagination state (a cursor advanced by `loadOlderChildMessages` survives).
+   */
+  async function revalidateChildSession(
+    childSessionId: KiloSessionId,
+    storage: JotaiSessionStorage,
+    rootSessionId: KiloSessionId
+  ): Promise<void> {
+    const generation = childSessionHydrationGeneration;
+    const current = store.get(childSessionHydrationStatesAtom).get(childSessionId);
+    if (!current || current.status !== 'ready') return;
+    if (current.isRefreshing) return;
+
+    setChildSessionHydrationState(childSessionId, { ...current, isRefreshing: true });
+
+    await fetchChildSessionFirstPage({
+      childSessionId,
+      generation,
+      rootSessionId,
+      storage,
+      hadCachedMessages: true,
+      revalidate: true,
+    });
+  }
+
+  async function hydrateChildSession(
+    childSessionId: KiloSessionId,
+    options?: { priority?: 'user' | 'background' }
+  ): Promise<void> {
+    const priority = options?.priority ?? 'user';
+
+    const storage = store.get(sessionStorageAtom);
+    const rootSessionId = activeSessionId;
+    if (!storage || !rootSessionId) return;
+
+    const existingState = store.get(childSessionHydrationStatesAtom).get(childSessionId);
+
+    // Re-open of an already-ready child: revalidate in the background rather
+    // than a pure no-op, without ever replacing or clearing the transcript.
+    if (existingState?.status === 'ready') {
+      void revalidateChildSession(childSessionId, storage, rootSessionId);
+      return;
+    }
+
+    const inFlightRequest = childSessionHydrationRequests.get(childSessionId);
+    if (inFlightRequest) {
+      // A 'user' request is never serialized behind an in-flight 'background'
+      // request: it starts its own fetch immediately. Every other combination
+      // dedupes onto the in-flight request.
+      if (priority !== 'user' || inFlightRequest.priority === 'user') {
+        await inFlightRequest.promise;
+        return;
+      }
+    }
+
+    const generation = childSessionHydrationGeneration;
+    const hadCachedMessages = store.get(childMessagesAtom)(childSessionId).length > 0;
+
+    if (hadCachedMessages) {
+      // Show the cached transcript at once, then refresh in the background.
+      setChildSessionHydrationState(childSessionId, {
+        status: 'ready',
+        cursor: null,
+        hasOlder: true,
+        isLoadingOlder: false,
+        olderError: null,
+        omittedItemCount: 0,
+        isRefreshing: true,
+      });
+    } else {
+      setChildSessionHydrationState(childSessionId, { status: 'loading' });
+    }
+
+    const request = fetchChildSessionFirstPage({
+      childSessionId,
+      generation,
+      rootSessionId,
+      storage,
+      hadCachedMessages,
+      revalidate: false,
+    });
+
+    const entry = { promise: request, priority };
+    childSessionHydrationRequests.set(childSessionId, entry);
     try {
       await request;
     } finally {
-      if (childSessionHydrationRequests.get(childSessionId) === request) {
+      if (childSessionHydrationRequests.get(childSessionId) === entry) {
         childSessionHydrationRequests.delete(childSessionId);
       }
     }

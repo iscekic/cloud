@@ -2854,6 +2854,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: null,
         omittedItemCount: 0,
+        isRefreshing: false,
       });
     });
 
@@ -2986,6 +2987,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: null,
         omittedItemCount: 0,
+        isRefreshing: false,
       });
     });
 
@@ -3055,6 +3057,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: null,
         omittedItemCount: 0,
+        isRefreshing: false,
       });
     });
 
@@ -3106,6 +3109,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: null,
         omittedItemCount: 0,
+        isRefreshing: false,
       });
     });
 
@@ -3209,6 +3213,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: null,
         omittedItemCount: 0,
+        isRefreshing: false,
       });
       // Root pagination state is untouched by the child load.
       expect(atomValue<boolean>(config.store, mgr.atoms.isLoadingOlderMessages)).toBe(false);
@@ -3260,6 +3265,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: { kind: 'retryable' },
         omittedItemCount: 0,
+        isRefreshing: false,
       });
       // Root pagination atoms are untouched by the child's later-page failure.
       expect(atomValue<boolean>(config.store, mgr.atoms.isLoadingOlderMessages)).toBe(false);
@@ -3300,6 +3306,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: { kind: 'retryable' },
         omittedItemCount: 0,
+        isRefreshing: false,
       });
       expect(atomValue<boolean>(config.store, mgr.atoms.isLoadingOlderMessages)).toBe(false);
       expect(atomValue<boolean>(config.store, mgr.atoms.hasOlderMessages)).toBe(false);
@@ -3339,6 +3346,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: { kind: 'invalid_data' },
         omittedItemCount: 0,
+        isRefreshing: false,
       });
       expect(atomValue<boolean>(config.store, mgr.atoms.isLoadingOlderMessages)).toBe(false);
       expect(atomValue<boolean>(config.store, mgr.atoms.hasOlderMessages)).toBe(false);
@@ -3378,6 +3386,7 @@ describe('createSessionManager', () => {
         isLoadingOlder: false,
         olderError: { kind: 'too_large' },
         omittedItemCount: 0,
+        isRefreshing: false,
       });
       expect(atomValue<boolean>(config.store, mgr.atoms.isLoadingOlderMessages)).toBe(false);
       expect(atomValue<boolean>(config.store, mgr.atoms.hasOlderMessages)).toBe(false);
@@ -3407,6 +3416,238 @@ describe('createSessionManager', () => {
       expect(state('child-omit')).toEqual(
         expect.objectContaining({ status: 'ready', omittedItemCount: 5 })
       );
+    });
+
+    it('shows cached child messages immediately, then refreshes with the real page state', async () => {
+      const childMessage = createStoredMessage('msg-child-cached', 'child-cached', 'assistant');
+      const childPart = stubTextPart({
+        id: 'part-child-cached',
+        sessionID: 'child-cached',
+        messageID: childMessage.info.id,
+        text: 'Cached child message',
+      });
+      const freshMessage = createStoredMessage('msg-child-cached-fresh', 'child-cached', 'assistant');
+      const freshPart = stubTextPart({
+        id: 'part-child-cached-fresh',
+        sessionID: 'child-cached',
+        messageID: freshMessage.info.id,
+        text: 'Freshly fetched child message',
+      });
+      const fetchSnapshotPage = createPageFetchMock(async id => {
+        if (id === 'ses-root') return makePage({ kiloSessionId: id, nextCursor: null });
+        return makePage({
+          kiloSessionId: 'child-cached',
+          messages: [
+            { info: childMessage.info, parts: [childPart] },
+            { info: freshMessage.info, parts: [freshPart] },
+          ],
+          nextCursor: 'cursor-A',
+        });
+      });
+      const config = createMockConfig({ fetchSnapshotPage });
+      const mgr = createSessionManager(config);
+
+      await mgr.switchSession(kiloId('ses-root'));
+      if (!latestStorage) throw new Error('expected session storage');
+      latestStorage.upsertMessage(childMessage.info);
+      latestStorage.upsertPart(childMessage.info.id, childPart);
+
+      const hydration = mgr.hydrateChildSession(kiloId('child-cached'));
+
+      // Cached content paints immediately, with a refresh flag — not a spinner.
+      const refreshingState = atomValue<
+        (childSessionId: string) => {
+          status: string;
+          cursor?: string | null;
+          hasOlder?: boolean;
+          isLoadingOlder?: boolean;
+          olderError?: unknown;
+          omittedItemCount?: number;
+          isRefreshing?: boolean;
+        }
+      >(config.store, mgr.atoms.childSessionHydrationState);
+      expect(refreshingState('child-cached')).toEqual({
+        status: 'ready',
+        cursor: null,
+        hasOlder: true,
+        isLoadingOlder: false,
+        olderError: null,
+        omittedItemCount: 0,
+        isRefreshing: true,
+      });
+      const cachedMessages = atomValue<(childSessionId: string) => StoredMessage[]>(
+        config.store,
+        mgr.atoms.childMessages
+      );
+      expect(cachedMessages('child-cached')).toEqual([
+        { info: childMessage.info, parts: [childPart] },
+      ]);
+
+      await hydration;
+
+      // The background fetch merged its page and wrote the real pagination state.
+      const refreshedState = atomValue<
+        (childSessionId: string) => {
+          status: string;
+          cursor?: string | null;
+          hasOlder?: boolean;
+          isLoadingOlder?: boolean;
+          olderError?: unknown;
+          omittedItemCount?: number;
+          isRefreshing?: boolean;
+        }
+      >(config.store, mgr.atoms.childSessionHydrationState);
+      expect(refreshedState('child-cached')).toEqual({
+        status: 'ready',
+        cursor: 'cursor-A',
+        hasOlder: true,
+        isLoadingOlder: false,
+        olderError: null,
+        omittedItemCount: 0,
+        isRefreshing: false,
+      });
+      const refreshedMessages = atomValue<(childSessionId: string) => StoredMessage[]>(
+        config.store,
+        mgr.atoms.childMessages
+      );
+      expect(refreshedMessages('child-cached')).toEqual([
+        { info: childMessage.info, parts: [childPart] },
+        { info: freshMessage.info, parts: [freshPart] },
+      ]);
+    });
+
+    it('merges a background refresh into the transcript without duplicating messages', async () => {
+      const childMessage = createStoredMessage('msg-child-merge', 'child-merge', 'assistant');
+      const childPart = stubTextPart({
+        id: 'part-child-merge',
+        sessionID: 'child-merge',
+        messageID: childMessage.info.id,
+        text: 'Existing child message',
+      });
+      const fetchSnapshotPage = createPageFetchMock(async id => {
+        if (id === 'ses-root') return makePage({ kiloSessionId: id, nextCursor: null });
+        return makePage({
+          kiloSessionId: 'child-merge',
+          messages: [{ info: childMessage.info, parts: [childPart] }],
+          nextCursor: 'cursor-A',
+        });
+      });
+      const config = createMockConfig({ fetchSnapshotPage });
+      const mgr = createSessionManager(config);
+
+      await mgr.switchSession(kiloId('ses-root'));
+      await mgr.hydrateChildSession(kiloId('child-merge'));
+
+      // Re-open the same child: the background refresh must not duplicate.
+      await mgr.hydrateChildSession(kiloId('child-merge'));
+      await new Promise<void>(resolve => setImmediate(resolve));
+
+      const childMessages = atomValue<(childSessionId: string) => StoredMessage[]>(
+        config.store,
+        mgr.atoms.childMessages
+      );
+      expect(childMessages('child-merge')).toEqual([
+        { info: childMessage.info, parts: [childPart] },
+      ]);
+    });
+
+    it('does not serialize a user request behind an in-flight background request', async () => {
+      let resolveBackground: ((page: SessionSnapshotPageOutcome) => void) | undefined;
+      let childCalls = 0;
+      const fetchSnapshotPage = createPageFetchMock(async id => {
+        if (id === 'ses-root') return makePage({ kiloSessionId: id, nextCursor: null });
+        childCalls += 1;
+        if (childCalls === 1) {
+          return new Promise<SessionSnapshotPageOutcome>(resolve => {
+            resolveBackground = resolve;
+          });
+        }
+        return makePage({ kiloSessionId: 'child-prio', nextCursor: 'cursor-A' });
+      });
+      const config = createMockConfig({ fetchSnapshotPage });
+      const mgr = createSessionManager(config);
+
+      await mgr.switchSession(kiloId('ses-root'));
+
+      const background = mgr.hydrateChildSession(kiloId('child-prio'), { priority: 'background' });
+      const user = mgr.hydrateChildSession(kiloId('child-prio'), { priority: 'user' });
+
+      // The user request starts its own fetch immediately rather than awaiting
+      // the still-pending background request.
+      expect(childCalls).toBe(2);
+
+      resolveBackground?.(makePage({ kiloSessionId: 'child-prio', nextCursor: null }));
+      await Promise.all([background, user]);
+
+      const state = atomValue<(childSessionId: string) => { status: string }>(
+        config.store,
+        mgr.atoms.childSessionHydrationState
+      );
+      expect(state('child-prio').status).toBe('ready');
+    });
+
+    it('preserves an older-page cursor across a background refresh', async () => {
+      const firstMessage = createStoredMessage('msg-child-survive-1', 'child-survive', 'assistant');
+      const olderMessage = createStoredMessage('msg-child-survive-2', 'child-survive', 'assistant');
+      const firstPart = stubTextPart({
+        id: 'part-child-survive-1',
+        sessionID: 'child-survive',
+        messageID: firstMessage.info.id,
+        text: 'First page',
+      });
+      const olderPart = stubTextPart({
+        id: 'part-child-survive-2',
+        sessionID: 'child-survive',
+        messageID: olderMessage.info.id,
+        text: 'Older page',
+      });
+      const fetchSnapshotPage = createPageFetchMock(async (id, options) => {
+        if (id === 'ses-root') return makePage({ kiloSessionId: id, nextCursor: null });
+        if (!options.cursor) {
+          return makePage({
+            kiloSessionId: 'child-survive',
+            messages: [{ info: firstMessage.info, parts: [firstPart] }],
+            nextCursor: 'cursor-A',
+          });
+        }
+        return makePage({
+          kiloSessionId: 'child-survive',
+          messages: [{ info: olderMessage.info, parts: [olderPart] }],
+          nextCursor: 'cursor-B',
+        });
+      });
+      const config = createMockConfig({ fetchSnapshotPage });
+      const mgr = createSessionManager(config);
+
+      await mgr.switchSession(kiloId('ses-root'));
+      await mgr.hydrateChildSession(kiloId('child-survive'));
+      await mgr.loadOlderChildMessages(kiloId('child-survive'));
+
+      // Re-open: the background refresh fetches the first page again but must
+      // not reset the cursor that the older-page load advanced past.
+      await mgr.hydrateChildSession(kiloId('child-survive'));
+      await new Promise<void>(resolve => setImmediate(resolve));
+
+      const state = atomValue<
+        (childSessionId: string) => {
+          status: string;
+          cursor?: string | null;
+          hasOlder?: boolean;
+          isLoadingOlder?: boolean;
+          olderError?: unknown;
+          omittedItemCount?: number;
+          isRefreshing?: boolean;
+        }
+      >(config.store, mgr.atoms.childSessionHydrationState);
+      expect(state('child-survive')).toEqual({
+        status: 'ready',
+        cursor: 'cursor-B',
+        hasOlder: true,
+        isLoadingOlder: false,
+        olderError: null,
+        omittedItemCount: 0,
+        isRefreshing: false,
+      });
     });
   });
 
