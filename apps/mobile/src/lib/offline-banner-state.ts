@@ -8,6 +8,9 @@ import { type ConnectivityState, connectivityStatus } from '@/lib/connectivity-o
  */
 export const OFFLINE_BANNER_SHOW_DELAY_MS = 5000;
 
+/** How long the reachability HEAD probe may run before it counts as down. */
+export const OFFLINE_BANNER_PROBE_TIMEOUT_MS = 3000;
+
 export type OfflineBannerTimer = {
   set(callback: () => void, delayMs: number): { cancel(): void };
 };
@@ -15,6 +18,13 @@ export type OfflineBannerTimer = {
 export type ConnectivitySource = {
   subscribe(listener: (state: ConnectivityState) => void): () => void;
 };
+
+/**
+ * One reachability check. Resolves `true` when the API answers and `false`
+ * (or rejects) when it does not. Injected so the store never touches the
+ * network in tests.
+ */
+export type OfflineBannerProbe = () => Promise<boolean>;
 
 export type OfflineBannerStore = {
   subscribe: (listener: () => void) => () => void;
@@ -29,18 +39,24 @@ export type BannerState = 'online' | 'offline' | 'unknown';
 export function createOfflineBannerStore(options: {
   source: ConnectivitySource;
   timer: OfflineBannerTimer;
+  probe: OfflineBannerProbe;
   showDelayMs?: number;
 }): OfflineBannerStore {
-  const { source, timer } = options;
+  const { source, timer, probe } = options;
   const showDelayMs = options.showDelayMs ?? OFFLINE_BANNER_SHOW_DELAY_MS;
 
   // Start unknown, not online: until NetInfo settles we cannot claim the
   // connection works, but we also must not show the offline banner.
   let state: BannerState = 'unknown';
   let pending: { cancel(): void } | null = null;
+  // Each cancelPending call bumps the epoch, so a newer source state or
+  // destroy() invalidates an in-flight probe: its answer no longer describes
+  // the current attempt and must be discarded.
+  let epoch = 0;
   const listeners = new Set<() => void>();
 
   function cancelPending(): void {
+    epoch += 1;
     pending?.cancel();
     pending = null;
   }
@@ -58,6 +74,21 @@ export function createOfflineBannerStore(options: {
     }
   }
 
+  async function runProbe(): Promise<void> {
+    const attempt = epoch;
+    let reachable = false;
+    try {
+      reachable = await probe();
+    } catch {
+      // A rejected probe counts as not reachable.
+      reachable = false;
+    }
+    if (attempt !== epoch) {
+      return;
+    }
+    commit(reachable ? 'online' : 'offline');
+  }
+
   function handleSourceState(sourceState: ConnectivityState): void {
     const status = connectivityStatus(sourceState);
     cancelPending();
@@ -72,7 +103,7 @@ export function createOfflineBannerStore(options: {
     }
     pending = timer.set(() => {
       pending = null;
-      commit('offline');
+      void runProbe();
     }, showDelayMs);
   }
 

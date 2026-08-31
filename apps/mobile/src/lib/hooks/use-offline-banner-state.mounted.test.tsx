@@ -25,9 +25,13 @@ const netinfo = vi.hoisted(() => {
   };
 });
 
+const fetchMock = vi.hoisted(() => vi.fn());
+
 vi.mock('@react-native-community/netinfo', () => ({
   addEventListener: netinfo.addEventListener,
 }));
+
+vi.mock('@/lib/config', () => ({ API_BASE_URL: 'https://gateway.test' }));
 
 type Hooks = {
   useOfflineBannerState: () => boolean;
@@ -71,6 +75,15 @@ async function renderProbe(hooks: Hooks): Promise<TestRenderer.ReactTestRenderer
   return renderer;
 }
 
+// Fire the show-delay timer and drain the probe's fetch microtask inside act,
+// so the async commit lands before the assertion.
+async function advanceShowDelay(): Promise<void> {
+  await act(async () => {
+    vi.advanceTimersByTime(OFFLINE_BANNER_SHOW_DELAY_MS);
+    await Promise.resolve();
+  });
+}
+
 describe('useOfflineBannerState and useCommittedConnectivityStatus mounted', () => {
   beforeEach(() => {
     // React 19 requires the act environment flag before `act` supports
@@ -79,14 +92,18 @@ describe('useOfflineBannerState and useCommittedConnectivityStatus mounted', () 
     // A fresh module per test gives a fresh module-level store singleton.
     vi.resetModules();
     netinfo.listeners.clear();
+    fetchMock.mockReset();
+    vi.stubGlobal('fetch', fetchMock);
   });
   afterEach(() => {
     netinfo.listeners.clear();
     vi.useRealTimers();
+    vi.unstubAllGlobals();
   });
 
   it('subscribes once, shows after the delay, hides at once, and reports the tri-state', async () => {
     vi.useFakeTimers();
+    fetchMock.mockRejectedValue(new Error('offline'));
 
     const hooks = await loadHooks();
     const renderer = await renderProbe(hooks);
@@ -99,15 +116,35 @@ describe('useOfflineBannerState and useCommittedConnectivityStatus mounted', () 
     });
     expect(textChildren(renderer)).toEqual(['false:unknown']);
 
-    act(() => {
-      vi.advanceTimersByTime(OFFLINE_BANNER_SHOW_DELAY_MS);
-    });
+    await advanceShowDelay();
     expect(textChildren(renderer)).toEqual(['true:offline']);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://gateway.test',
+      expect.objectContaining({ method: 'HEAD' })
+    );
 
     act(() => {
       netinfo.emit({ isConnected: true, isInternetReachable: true });
     });
     expect(textChildren(renderer)).toEqual(['false:online']);
+  });
+
+  it('keeps the banner hidden when the API probe answers (a false offline)', async () => {
+    vi.useFakeTimers();
+    fetchMock.mockResolvedValue({ ok: true });
+
+    const hooks = await loadHooks();
+    const renderer = await renderProbe(hooks);
+
+    act(() => {
+      netinfo.emit({ isConnected: false, isInternetReachable: false });
+    });
+    expect(textChildren(renderer)).toEqual(['false:unknown']);
+
+    await advanceShowDelay();
+    expect(textChildren(renderer)).toEqual(['false:online']);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('reports the unknown → online edge even though the banner stays hidden', async () => {
@@ -126,6 +163,7 @@ describe('useOfflineBannerState and useCommittedConnectivityStatus mounted', () 
 
   it('shares one store and one NetInfo subscription across callers', async () => {
     vi.useFakeTimers();
+    fetchMock.mockRejectedValue(new Error('offline'));
 
     const hooks = await loadHooks();
     const first = await renderProbe(hooks);
@@ -136,9 +174,7 @@ describe('useOfflineBannerState and useCommittedConnectivityStatus mounted', () 
     act(() => {
       netinfo.emit({ isConnected: false, isInternetReachable: false });
     });
-    act(() => {
-      vi.advanceTimersByTime(OFFLINE_BANNER_SHOW_DELAY_MS);
-    });
+    await advanceShowDelay();
 
     expect(textChildren(first)).toEqual(['true:offline']);
     expect(textChildren(second)).toEqual(['true:offline']);

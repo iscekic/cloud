@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- the show-delay, probe, and discard suites share one owned test file */
 import { describe, expect, it, vi } from 'vitest';
 
 import { type ConnectivityState } from '@/lib/connectivity-online';
@@ -5,6 +6,7 @@ import {
   type ConnectivitySource,
   createOfflineBannerStore,
   OFFLINE_BANNER_SHOW_DELAY_MS,
+  type OfflineBannerProbe,
   type OfflineBannerStore,
   type OfflineBannerTimer,
 } from '@/lib/offline-banner-state';
@@ -70,18 +72,65 @@ function createFakeTimer() {
   };
 }
 
+// The default injected probe: no network, always unreachable.
+function createUnreachableProbe(): OfflineBannerProbe {
+  return vi.fn(async () => {
+    await Promise.resolve();
+    return false;
+  });
+}
+
+// A probe whose outcome the test controls, so an in-flight probe can be held
+// open while a newer source state or destroy() lands.
+function createDeferredProbe(): {
+  probe: OfflineBannerProbe;
+  resolve: (reachable: boolean) => void;
+  reject: () => void;
+} {
+  let storedResolve: ((value: boolean) => void) | undefined = undefined;
+  let storedReject: ((reason?: unknown) => void) | undefined = undefined;
+  const probe: OfflineBannerProbe = async () => {
+    const reachable = await new Promise<boolean>((resolve, reject) => {
+      storedResolve = resolve;
+      storedReject = reject;
+    });
+    return reachable;
+  };
+  return {
+    probe,
+    resolve: (reachable: boolean) => {
+      storedResolve?.(reachable);
+    },
+    reject: () => {
+      storedReject?.(new Error('probe failed'));
+    },
+  };
+}
+
+// The fake timer fires synchronously; runProbe then awaits the injected
+// probe, so the commit lands on the microtask queue. A macrotask tick runs
+// after every queued microtask, draining the probe and its commit.
+async function flushProbe(): Promise<void> {
+  await new Promise<void>(resolve => {
+    setTimeout(resolve, 0);
+  });
+}
+
 function createStore(
   source = createFakeSource(),
-  timer = createFakeTimer()
+  timer = createFakeTimer(),
+  probe: OfflineBannerProbe = createUnreachableProbe()
 ): {
   store: OfflineBannerStore;
   source: ReturnType<typeof createFakeSource>;
   timer: ReturnType<typeof createFakeTimer>;
+  probe: OfflineBannerProbe;
 } {
   return {
-    store: createOfflineBannerStore({ source: source.source, timer: timer.timer }),
+    store: createOfflineBannerStore({ source: source.source, timer: timer.timer, probe }),
     source,
     timer,
+    probe,
   };
 }
 
@@ -118,8 +167,8 @@ describe('createOfflineBannerStore', () => {
     expect(listener).toHaveBeenCalledTimes(1);
   });
 
-  it('commits offline only after the show delay and notifies once', () => {
-    const { store, source, timer } = createStore();
+  it('commits offline only after the show delay and notifies once', async () => {
+    const { store, source, timer, probe } = createStore();
     const listener = vi.fn(() => undefined);
     store.subscribe(listener);
 
@@ -127,17 +176,20 @@ describe('createOfflineBannerStore', () => {
 
     expect(store.isOffline()).toBe(false);
     expect(listener).not.toHaveBeenCalled();
+    expect(probe).not.toHaveBeenCalled();
 
     expect(timer.scheduled[0]?.delayMs).toBe(OFFLINE_BANNER_SHOW_DELAY_MS);
 
     timer.firePending();
+    await flushProbe();
 
     expect(store.isOffline()).toBe(true);
+    expect(probe).toHaveBeenCalledTimes(1);
     expect(listener).toHaveBeenCalledTimes(1);
   });
 
   it('cancels the pending offline commit when the state returns online inside the window', () => {
-    const { store, source, timer } = createStore();
+    const { store, source, timer, probe } = createStore();
     const listener = vi.fn(() => undefined);
     store.subscribe(listener);
 
@@ -148,16 +200,18 @@ describe('createOfflineBannerStore', () => {
 
     expect(store.isOffline()).toBe(false);
     expect(store.state()).toBe('online');
+    expect(probe).not.toHaveBeenCalled();
     expect(listener).toHaveBeenCalledTimes(1);
   });
 
-  it('hides immediately when the connection returns after a committed offline', () => {
+  it('hides immediately when the connection returns after a committed offline', async () => {
     const { store, source, timer } = createStore();
     const listener = vi.fn(() => undefined);
     store.subscribe(listener);
 
     source.emit(offlineState);
     timer.firePending();
+    await flushProbe();
     expect(store.isOffline()).toBe(true);
     expect(listener).toHaveBeenCalledTimes(1);
 
@@ -168,7 +222,7 @@ describe('createOfflineBannerStore', () => {
     expect(timer.scheduled.filter(entry => !entry.cancelled)).toEqual([]);
   });
 
-  it('commits exactly once for rapid alternation, matching the final quiet state', () => {
+  it('commits exactly once for rapid alternation, matching the final quiet state', async () => {
     const { store, source, timer } = createStore();
     const listener = vi.fn(() => undefined);
     store.subscribe(listener);
@@ -180,6 +234,7 @@ describe('createOfflineBannerStore', () => {
     source.emit(offlineState);
 
     timer.firePending();
+    await flushProbe();
 
     expect(store.isOffline()).toBe(true);
     // One notification for the unknown → online commit, one for the final
@@ -187,7 +242,7 @@ describe('createOfflineBannerStore', () => {
     expect(listener).toHaveBeenCalledTimes(2);
   });
 
-  it('flapping unknown → offline → online → offline shows only after the debounce and hides immediately on online', () => {
+  it('flapping unknown → offline → online → offline shows only after the debounce and hides immediately on online', async () => {
     const { store, source, timer } = createStore();
     const listener = vi.fn(() => undefined);
     store.subscribe(listener);
@@ -209,12 +264,88 @@ describe('createOfflineBannerStore', () => {
 
     source.emit(offlineState);
     timer.firePending();
+    await flushProbe();
     expect(store.isOffline()).toBe(true);
     expect(store.state()).toBe('offline');
 
     // One notification for the unknown → online commit, one for the final
     // offline commit.
     expect(listener).toHaveBeenCalledTimes(2);
+  });
+
+  it('keeps the banner hidden when the probe reaches the API and commits online', async () => {
+    const reachableProbe: OfflineBannerProbe = vi.fn(async () => {
+      await Promise.resolve();
+      return true;
+    });
+    const { store, source, timer } = createStore(createFakeSource(), createFakeTimer(), reachableProbe);
+    const listener = vi.fn(() => undefined);
+    store.subscribe(listener);
+
+    source.emit(offlineState);
+    timer.firePending();
+    await flushProbe();
+
+    expect(store.isOffline()).toBe(false);
+    expect(store.state()).toBe('online');
+    expect(listener).toHaveBeenCalledTimes(1);
+  });
+
+  it('commits offline when the probe rejects', async () => {
+    const rejectingProbe: OfflineBannerProbe = vi.fn(async () => {
+      await Promise.resolve();
+      throw new Error('network down');
+    });
+    const { store, source, timer } = createStore(createFakeSource(), createFakeTimer(), rejectingProbe);
+    const listener = vi.fn(() => undefined);
+    store.subscribe(listener);
+
+    source.emit(offlineState);
+    timer.firePending();
+    await flushProbe();
+
+    expect(store.isOffline()).toBe(true);
+    expect(store.state()).toBe('offline');
+    expect(listener).toHaveBeenCalledTimes(1);
+  });
+
+  it('discards an in-flight probe result when a newer source state arrives', async () => {
+    const deferred = createDeferredProbe();
+    const { store, source, timer } = createStore(createFakeSource(), createFakeTimer(), deferred.probe);
+    const listener = vi.fn(() => undefined);
+    store.subscribe(listener);
+
+    source.emit(offlineState);
+    timer.firePending();
+    // The probe is now in flight; a newer online state invalidates it.
+    source.emit(onlineState);
+    expect(store.state()).toBe('online');
+    expect(listener).toHaveBeenCalledTimes(1);
+
+    deferred.resolve(true);
+    await flushProbe();
+
+    expect(store.state()).toBe('online');
+    expect(store.isOffline()).toBe(false);
+    expect(listener).toHaveBeenCalledTimes(1);
+  });
+
+  it('discards an in-flight probe result after destroy', async () => {
+    const deferred = createDeferredProbe();
+    const { store, source, timer } = createStore(createFakeSource(), createFakeTimer(), deferred.probe);
+    const listener = vi.fn(() => undefined);
+    store.subscribe(listener);
+
+    source.emit(offlineState);
+    timer.firePending();
+    store.destroy();
+
+    deferred.resolve(true);
+    await flushProbe();
+
+    expect(store.state()).toBe('unknown');
+    expect(store.isOffline()).toBe(false);
+    expect(listener).not.toHaveBeenCalled();
   });
 
   it('destroy with a pending commit cancels the timer and unsubscribes the source', () => {
@@ -257,7 +388,7 @@ describe('createOfflineBannerStore', () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it('exposes the committed state via state()', () => {
+  it('exposes the committed state via state()', async () => {
     const { store, source, timer } = createStore();
 
     expect(store.state()).toBe('unknown');
@@ -267,6 +398,7 @@ describe('createOfflineBannerStore', () => {
 
     source.emit(offlineState);
     timer.firePending();
+    await flushProbe();
     expect(store.state()).toBe('offline');
   });
 });
