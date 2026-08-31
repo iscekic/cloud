@@ -90,6 +90,15 @@ import { workflowRunRequestAtom } from './workflow-settings-state';
 import { activeConversationIdAtom, conversationModeAtom } from './settings-dialog-state';
 import { sanitizeTabContextText, sanitizeTabContextUrl } from '@/src/shared/tab-context-sanitize';
 import { maxAgentToolRounds } from '@/src/shared/agent-tool-round-limit';
+import { createBrowserLifecycleHooks, createUserWebConnection } from '@kilocode/cloud-agent-sdk';
+import { getSessionIngestWsUrl } from '@/src/shared/cloud-agent-config';
+import { createExtensionTrpcClient } from '@/src/shared/extension-trpc-client';
+import {
+  createBrowserTaskPoster,
+  createBrowserTaskRuntime,
+  getOrCreateBrowserProfileId,
+} from '@/src/shared/browser-task-runtime';
+import type { BrowserTaskRuntime, BrowserTaskTurnResult } from '@/src/shared/browser-task-runtime';
 
 const apiBaseUrl = getKiloApiBaseUrl();
 const fetchFromWindow = (input: string, init?: RequestInit): Promise<Response> =>
@@ -202,6 +211,13 @@ export const AgentChatPanel = ({
     selectedTabId: activeConversation.selectedTabId,
   });
   inspectableTabsRef.current = inspectableTabs;
+  /* Latest resolved approved tab and model catalog, readable by the browser-task
+     runtime without re-creating it on every render. */
+  const selectedTabIdRef = useRef(selectedTabId);
+  selectedTabIdRef.current = selectedTabId;
+  const modelOptionsRef = useRef(modelOptions);
+  modelOptionsRef.current = modelOptions;
+  const browserTaskRuntimeRef = useRef<BrowserTaskRuntime | null>(null);
   const model = activeConversation.model ?? '';
   const selectedModel = useMemo(
     () => modelOptions.find(option => option.id === model),
@@ -408,6 +424,9 @@ export const AgentChatPanel = ({
         runState.abort.abort();
       }
     }
+
+    // A running browser task whose bound tab left the approved set settles failed.
+    browserTaskRuntimeRef.current?.onTabsChanged(inspectableTabIds);
   }, [inspectableTabs, isLoadingTabs]);
 
   useEffect(() => {
@@ -749,6 +768,210 @@ export const AgentChatPanel = ({
       }
     }
   };
+
+  /*
+   * Run one browser task turn through the same agent machinery the panel user
+   * already uses. Unlike `startTurn`, this turn is not tied to a stored
+   * conversation: its events are collected for the summary and never rendered.
+   * The fixed `selectedTabId` captured at dispatch is threaded through so a
+   * later active-tab change cannot redirect the running task.
+   */
+  const runBrowserTaskTurn = async ({
+    goal,
+    onProgress,
+    selectedTabId: runSelectedTabId,
+    signal,
+  }: {
+    readonly goal: string;
+    readonly onProgress?: (summary: string) => void;
+    readonly selectedTabId: number;
+    readonly signal: AbortSignal;
+  }): Promise<BrowserTaskTurnResult> => {
+    const conversation = getActiveStoredConversation(conversationStoreRef.current);
+    const runMode = conversation.mode ?? defaultMode;
+    const runModel = conversation.model ?? modelOptionsRef.current[0]?.id ?? '';
+    if (runModel === '') {
+      throw new Error('No model is available for this browser task.');
+    }
+    const runSelectedModel = modelOptionsRef.current.find(option => option.id === runModel);
+    const runThinkingOptions = runSelectedModel?.variants ?? [];
+    const runThinkingEffort = conversation.thinkingEffort ?? runThinkingOptions[0] ?? '';
+    const selectedTab = inspectableTabsRef.current.find(tab => tab.id === runSelectedTabId);
+
+    const remoteMcpServers = store.get(remoteMcpStoreAtom).servers;
+    const { routes: remoteMcpRoutes, tools: remoteMcpTools } = buildRemoteMcpToolDefinitions({
+      mode: runMode,
+      servers: remoteMcpServers,
+    });
+
+    const settings = await loadWorkflowSettings(storage);
+    const { allowWorkflowsInSafeMode } = settings;
+    const workflowTools = createWorkflowToolDefinitions({
+      allowWorkflows: allowWorkflowsInSafeMode,
+      mode: runMode,
+    });
+
+    let allowWebMcpInSafeMode = false;
+    try {
+      ({ allowWebMcpInSafeMode } = await loadWebMcpSettings(storage));
+    } catch {
+      allowWebMcpInSafeMode = false;
+    }
+
+    let summary = '';
+    let didReportProgress = false;
+    const reportProgress = (text: string): void => {
+      if (didReportProgress || text === '') {
+        return;
+      }
+      didReportProgress = true;
+      onProgress?.(text);
+    };
+    const collectAssistantText = (nextEvents: AgentConversationEvent[]): void => {
+      for (const event of nextEvents) {
+        if (event.type === 'message' && event.role === 'assistant') {
+          summary = event.text;
+          reportProgress(event.text);
+        }
+      }
+    };
+    const updateStreamedAssistantMessage = (_eventId: string, text: string): void => {
+      summary = text;
+      reportProgress(text);
+    };
+
+    const userEvent = createUserMessage(
+      goal,
+      formatSystemEnvironment({
+        memories: memoriesRef.current,
+        selectedTab:
+          selectedTab === undefined
+            ? undefined
+            : { title: selectedTab.title, url: selectedTab.url },
+        workflows: workflowsRef.current,
+      })
+    );
+
+    const runTurn = runMode === 'dangerous' ? runDangerousLlmTurn : runSafeLlmTurn;
+    await runTurn({
+      allowWebMcpInSafeMode,
+      apiBaseUrl,
+      appendEvents: collectAssistantText,
+      conversationEvents: [userEvent],
+      executeRemoteMcpToolCall: event =>
+        executeRemoteMcpToolCall({
+          event,
+          fetch: globalThis.fetch,
+          routes: remoteMcpRoutes,
+          servers: remoteMcpServers,
+          signal,
+          storageArea: storage,
+        }),
+      fetch: fetchFromWindow,
+      model: runModel,
+      organizationId,
+      remoteMcpTools,
+      selectedTabId: runSelectedTabId,
+      signal,
+      supportsImages: runSelectedModel?.supportsImages === true,
+      thinkingEffort: runThinkingEffort,
+      toRemoteMcpToolCallEvents: toolCalls => toRemoteMcpToolCallEvents(toolCalls, remoteMcpRoutes),
+      token: auth.token,
+      updateAssistantMessage: updateStreamedAssistantMessage,
+      updateThinkingBlock: () => {},
+      workflowToolContext: {
+        allowWorkflowsInSafeMode,
+        evalInTab,
+        getTabUrl,
+        mode: runMode,
+        navigateTab,
+        requestApproval: (kind, draft) => requestApproval(storage, kind, draft, signal),
+        selectedTabId: runSelectedTabId,
+        selectedTabTitle: selectedTab?.title ?? '',
+        selectedTabUrl: selectedTab?.url ?? '',
+        signal,
+        storage,
+      },
+      workflowTools,
+    });
+
+    return { summary };
+  };
+
+  /*
+   * Wire the browser-task runtime to a dedicated cloud connection while the
+   * browser panel is visible. The panel lives outside ExtensionAgentsProvider,
+   * so it owns its own connection over the same `/api/user/web` transport. It
+   * advertises the stable browser profile id so the s1 relay can deliver
+   * `browser_task` events, and shuts the runtime down (settling `stopped`) on
+   * hide/unmount.
+   */
+  useEffect(() => {
+    if (!isVisible) {
+      return;
+    }
+
+    let cancelled = false;
+    let cleanupRuntime: (() => void) | null = null;
+
+    void (async (): Promise<void> => {
+      const browserProfileId = await getOrCreateBrowserProfileId(storage);
+      if (cancelled) {
+        return;
+      }
+
+      const getToken = (): string | undefined => auth.token;
+      const trpcClient = createExtensionTrpcClient({ apiBaseUrl, getToken });
+      const sessionIngestWebSocketUrl = getSessionIngestWsUrl();
+      const connection = createUserWebConnection({
+        getAuthToken: async () => {
+          const ticket = await trpcClient.activeSessions.createWebTicket.mutate();
+          return ticket.token;
+        },
+        lifecycleHooks: createBrowserLifecycleHooks(),
+        websocketUrl: `${sessionIngestWebSocketUrl}/api/user/web?browserProfileId=${encodeURIComponent(
+          browserProfileId
+        )}`,
+      });
+
+      if (cancelled) {
+        connection.destroy();
+        return;
+      }
+
+      const runtime = createBrowserTaskRuntime({
+        getSelectedTabId: () => selectedTabIdRef.current,
+        postUpdate: createBrowserTaskPoster({
+          fetch: fetchFromWindow,
+          getToken,
+          sessionIngestWebSocketUrl,
+        }),
+        runTurn: runBrowserTaskTurn,
+        store,
+        userWebConnection: connection,
+      });
+      browserTaskRuntimeRef.current = runtime;
+      const unsubscribe = runtime.start();
+      const release = connection.retain();
+
+      cleanupRuntime = (): void => {
+        runtime.shutdown();
+        unsubscribe();
+        release();
+        browserTaskRuntimeRef.current = null;
+      };
+      if (cancelled) {
+        cleanupRuntime();
+        cleanupRuntime = null;
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      cleanupRuntime?.();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- runBrowserTaskTurn reads refs for the latest values; auth.token/organizationId/visibility are the only real triggers.
+  }, [auth.token, isVisible, organizationId, store]);
 
   const submitMessage = (conversationId: string, text: string): void => {
     const conversation = conversationStoreRef.current.conversations.find(
