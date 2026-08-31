@@ -2289,6 +2289,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Loading…",
       "cloudAgentDescription": "Run on Kilo's cloud sandbox",
+      "remotes": "Remotes",
+      "terminals": "Terminals",
       "noCliInstances": "No CLI instances connected",
       "noCliInstancesDescription": "Run `kilo remote` in a project on your computer, or update Kilo CLI if one is already running.",
       "instanceOnProject": "{{name}} on {{project}}",

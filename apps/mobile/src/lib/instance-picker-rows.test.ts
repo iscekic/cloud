@@ -2,76 +2,167 @@ import { describe, expect, it } from 'vitest';
 
 import { type InstancePickerInstance } from '@/lib/picker-bridge';
 
-import { dedupeInstanceLabels, resolveInstancePickerViewState } from './instance-picker-rows';
+import { labelInstances, resolveInstancePickerViewState } from './instance-picker-rows';
+
+// Fixed timestamps so facts formatting is deterministic (2 hours apart).
+const START_1 = Date.UTC(2026, 0, 1, 10, 0);
+const START_2 = Date.UTC(2026, 0, 1, 12, 0);
+
+// Fixed locale so the start-time formatting (and therefore the facts strings
+// the disambiguation rules compare) is deterministic in CI.
+const LOCALE = 'en';
 
 function instance(overrides: Partial<InstancePickerInstance>): InstancePickerInstance {
   return {
-    connectionId: overrides.connectionId ?? 'conn-1',
-    name: overrides.name ?? 'laptop',
-    projectName: overrides.projectName ?? 'kilo',
-    version: overrides.version,
+    connectionId: 'conn-1',
+    name: 'laptop',
+    projectName: 'kilo',
+    ...overrides,
   };
 }
 
-describe('dedupeInstanceLabels', () => {
+/** Returns the first element of a non-empty list, typed without `| undefined`. */
+function first<T>(items: T[]): T {
+  const item = items[0];
+  if (item === undefined) {
+    throw new Error('expected at least one item');
+  }
+  return item;
+}
+
+describe('labelInstances', () => {
   it('returns an empty list for no instances', () => {
-    expect(dedupeInstanceLabels([])).toEqual([]);
+    expect(labelInstances([], LOCALE)).toEqual([]);
   });
 
-  it('does not stamp a suffix when every (name, projectName) pair is unique', () => {
-    const result = dedupeInstanceLabels([
-      instance({ connectionId: 'a', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'b', name: 'desktop', projectName: 'kilo' }),
-      instance({ connectionId: 'c', name: 'laptop', projectName: 'cloud' }),
-    ]);
-    expect(result.map(row => row.dedupSuffix)).toEqual([null, null, null]);
-    expect(result.map(row => row.connectionId)).toEqual(['a', 'b', 'c']);
+  it('groups explicit remotes under remote and everything else under terminal', () => {
+    const result = labelInstances(
+      [
+        instance({ connectionId: 'r', name: 'remote-box', kind: 'remote' }),
+        instance({ connectionId: 'c', name: 'cli-box', kind: 'cli' }),
+        instance({ connectionId: 'l', name: 'legacy-box' }),
+      ],
+      LOCALE
+    );
+    const byConn = new Map(result.map(row => [row.connectionId, row.group]));
+    expect(byConn.get('r')).toBe('remote');
+    expect(byConn.get('c')).toBe('terminal');
+    expect(byConn.get('l')).toBe('terminal');
   });
 
-  it('stamps both rows of a single duplicate pair with stable, distinct suffixes', () => {
-    const result = dedupeInstanceLabels([
-      instance({ connectionId: 'conn-aaa', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'conn-bbb', name: 'laptop', projectName: 'kilo' }),
-    ]);
-    const suffixes = result.map(row => row.dedupSuffix);
-    expect(suffixes).not.toEqual([null, null]);
-    expect(new Set(suffixes).size).toBe(2);
-    // Stability: running it again must produce the same suffixes.
-    const again = dedupeInstanceLabels([
-      instance({ connectionId: 'conn-aaa', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'conn-bbb', name: 'laptop', projectName: 'kilo' }),
-    ]);
-    expect(again.map(row => row.dedupSuffix)).toEqual(suffixes);
+  it('keeps an old instance without kind as a plain terminal (legacy fallback)', () => {
+    const row = first(labelInstances([instance({ connectionId: 'legacy' })], LOCALE));
+    expect(row.group).toBe('terminal');
+    expect(row.facts).toBeNull();
+    expect(row.dedupSuffix).toBeNull();
   });
 
-  it('stamps every row of a 3+ way duplicate cluster', () => {
-    const result = dedupeInstanceLabels([
-      instance({ connectionId: 'c-1', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'c-2', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'c-3', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'c-4', name: 'laptop', projectName: 'kilo' }),
-    ]);
+  it('composes facts from start time and branch, joined with ·', () => {
+    const row = first(
+      labelInstances(
+        [instance({ connectionId: 'a', startedAt: START_1, branch: 'main' })],
+        LOCALE
+      )
+    );
+    expect(row.facts).toContain(' · ');
+    expect(row.facts).toContain('main');
+  });
+
+  it('falls back to workingDirectory when branch is absent', () => {
+    const row = first(
+      labelInstances(
+        [
+          instance({ connectionId: 'a', startedAt: START_1, workingDirectory: '/home/kilo' }),
+        ],
+        LOCALE
+      )
+    );
+    expect(row.facts).toContain('/home/kilo');
+  });
+
+  it('returns null facts when neither start time nor branch/workingDirectory is present', () => {
+    const row = first(labelInstances([instance({ connectionId: 'a' })], LOCALE));
+    expect(row.facts).toBeNull();
+  });
+
+  it('formats the start time with the caller-provided locale', () => {
+    const row = first(
+      labelInstances(
+        [
+          instance({
+            connectionId: 'a',
+            startedAt: START_1,
+            branch: 'main',
+          }),
+        ],
+        LOCALE
+      )
+    );
+    // `en` uses a comma between the weekday-free date and time parts; the
+    // exact string is locale-specific, so assert the stable `en` shape.
+    expect(row.facts).toMatch(/^\w{3} \d{1,2}, \d{1,2}:\d{2} [AP]M · main$/);
+  });
+
+  it('does not stamp a suffix when peers have distinct, present facts', () => {
+    const result = labelInstances(
+      [
+        instance({ connectionId: 'a', startedAt: START_1, branch: 'main' }),
+        instance({ connectionId: 'b', startedAt: START_2, branch: 'feat/x' }),
+      ],
+      LOCALE
+    );
+    expect(result.map(row => row.dedupSuffix)).toEqual([null, null]);
+    expect(new Set(result.map(row => row.facts)).size).toBe(2);
+  });
+
+  it('stamps a suffix when peers share identical facts', () => {
+    const result = labelInstances(
+      [
+        instance({ connectionId: 'a', startedAt: START_1, branch: 'main' }),
+        instance({ connectionId: 'b', startedAt: START_1, branch: 'main' }),
+      ],
+      LOCALE
+    );
     const suffixes = result.map(row => row.dedupSuffix);
     expect(suffixes.every(suffix => suffix !== null)).toBe(true);
-    // All four connectionIds produce distinct 6-char hex suffixes in
-    // practice; even one collision across four random strings would be
-    // extremely unlikely, so asserting full uniqueness guards against a
-    // regression that reuses a single hash.
-    expect(new Set(suffixes).size).toBe(4);
+    expect(new Set(suffixes).size).toBe(2);
   });
 
-  it('mixes stamped and unstamped rows correctly when some pairs duplicate and others do not', () => {
-    const result = dedupeInstanceLabels([
-      instance({ connectionId: 'solo-1', name: 'desktop', projectName: 'kilo' }),
-      instance({ connectionId: 'dup-a', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'dup-b', name: 'laptop', projectName: 'kilo' }),
-      instance({ connectionId: 'solo-2', name: 'laptop', projectName: 'cloud' }),
-    ]);
+  it('stamps only the missing-facts peer when one peer has facts and the other does not', () => {
+    const result = labelInstances(
+      [
+        instance({ connectionId: 'a', startedAt: START_1, branch: 'main' }),
+        instance({ connectionId: 'b' }),
+      ],
+      LOCALE
+    );
+    expect(result[0]?.dedupSuffix).toBeNull();
+    expect(result[1]?.dedupSuffix).not.toBeNull();
+  });
+
+  it('stamps only the colliding peers, leaving a distinct-facts peer unstamped', () => {
+    const result = labelInstances(
+      [
+        instance({ connectionId: 'a', startedAt: START_1, branch: 'main' }),
+        instance({ connectionId: 'b', startedAt: START_1, branch: 'main' }),
+        instance({ connectionId: 'c', startedAt: START_2, branch: 'feat/x' }),
+      ],
+      LOCALE
+    );
     const byConn = new Map(result.map(row => [row.connectionId, row.dedupSuffix]));
-    expect(byConn.get('solo-1')).toBeNull();
-    expect(byConn.get('solo-2')).toBeNull();
-    expect(byConn.get('dup-a')).not.toBeNull();
-    expect(byConn.get('dup-b')).not.toBeNull();
+    expect(byConn.get('a')).not.toBeNull();
+    expect(byConn.get('b')).not.toBeNull();
+    expect(byConn.get('c')).toBeNull();
+  });
+
+  it('is stable: running again with the same input yields the same suffixes', () => {
+    const input = [
+      instance({ connectionId: 'a', startedAt: START_1, branch: 'main' }),
+      instance({ connectionId: 'b', startedAt: START_1, branch: 'main' }),
+    ];
+    const firstSuffixes = labelInstances(input, LOCALE).map(row => row.dedupSuffix);
+    const secondSuffixes = labelInstances(input, LOCALE).map(row => row.dedupSuffix);
+    expect(secondSuffixes).toEqual(firstSuffixes);
   });
 
   it('preserves input order', () => {
@@ -80,7 +171,12 @@ describe('dedupeInstanceLabels', () => {
       instance({ connectionId: 'b' }),
       instance({ connectionId: 'c' }),
     ];
-    expect(dedupeInstanceLabels(input).map(row => row.connectionId)).toEqual(['a', 'b', 'c']);
+    expect(labelInstances(input, LOCALE).map(row => row.connectionId)).toEqual(['a', 'b', 'c']);
+  });
+
+  it('does not stamp a suffix on a lone row even when its facts are missing', () => {
+    const row = first(labelInstances([instance({ connectionId: 'solo' })], LOCALE));
+    expect(row.dedupSuffix).toBeNull();
   });
 });
 

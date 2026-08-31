@@ -1,9 +1,9 @@
 import { useFocusEffect, useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
-import { Check, Cloud, Server } from '@/components/ui/icons';
+import { Check, Cloud, type LucideIcon, Monitor, Server, Terminal } from '@/components/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { FlatList, Pressable, View } from 'react-native';
+import { Pressable, SectionList, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -17,8 +17,8 @@ import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { type InstancePickerInstance } from '@/lib/picker-bridge';
 import { instancePickerSlot, UNFENCED_ROUTE_KEY, useRouteRegistry } from '@/lib/route-registry';
 import {
-  dedupeInstanceLabels,
   type LabeledInstance,
+  labelInstances,
   resolveInstancePickerViewState,
 } from '@/lib/instance-picker-rows';
 import { useTRPC } from '@/lib/trpc';
@@ -26,11 +26,19 @@ import { useTRPC } from '@/lib/trpc';
 const POLL_INTERVAL_MS = 10_000;
 const SKELETON_ROW_COUNT = 4;
 
+/** One grouped section of the picker: Remotes (Monitor) or Terminals (Terminal). */
+type InstancePickerSection = {
+  key: 'remotes' | 'terminals';
+  title: string;
+  icon: LucideIcon;
+  data: LabeledInstance[];
+};
+
 export default function InstancePickerScreen() {
   const router = useRouter();
   const colors = useThemeColors();
   const { bottom } = useSafeAreaInsets();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [bridge, setBridge] = useState(() => instancePickerSlot.get(UNFENCED_ROUTE_KEY));
   const bridgeRef = useRef(bridge);
   useRouteRegistry(UNFENCED_ROUTE_KEY);
@@ -90,7 +98,36 @@ export default function InstancePickerScreen() {
     [instancesData]
   );
 
-  const labeled = useMemo(() => dedupeInstanceLabels(instances), [instances]);
+  const labeled = useMemo(() => labelInstances(instances, i18n.language), [
+    instances,
+    i18n.language,
+  ]);
+
+  // Remotes first, then Terminals. Each section is omitted when empty; the
+  // order of rows within a section is the server list order (filter, not
+  // sort, so the relative order is preserved).
+  const sections = useMemo<InstancePickerSection[]>(() => {
+    const remotes = labeled.filter(row => row.group === 'remote');
+    const terminals = labeled.filter(row => row.group === 'terminal');
+    return [
+      remotes.length > 0
+        ? {
+            key: 'remotes',
+            title: t('agentChat.instancePicker.remotes'),
+            icon: Monitor,
+            data: remotes,
+          }
+        : null,
+      terminals.length > 0
+        ? {
+            key: 'terminals',
+            title: t('agentChat.instancePicker.terminals'),
+            icon: Terminal,
+            data: terminals,
+          }
+        : null,
+    ].filter((section): section is InstancePickerSection => section !== null);
+  }, [labeled, t]);
 
   const viewState = resolveInstancePickerViewState({
     isLoading: isLoadingInstances,
@@ -189,16 +226,10 @@ export default function InstancePickerScreen() {
 
   const renderItem = ({ item }: { item: LabeledInstance }) => {
     const selected = item.connectionId === currentConnectionId;
+    const subtitle = item.facts ?? item.projectName;
     const label = item.dedupSuffix
-      ? t('agentChat.instancePicker.instanceOnProjectSuffix', {
-          name: item.name,
-          project: item.projectName,
-          suffix: item.dedupSuffix,
-        })
-      : t('agentChat.instancePicker.instanceOnProject', {
-          name: item.name,
-          project: item.projectName,
-        });
+      ? `${item.name}, ${subtitle}, #${item.dedupSuffix}`
+      : `${item.name}, ${subtitle}`;
     return (
       <Pressable
         className="flex-row items-center gap-3 border-b border-border px-4 py-3 active:bg-secondary"
@@ -219,11 +250,23 @@ export default function InstancePickerScreen() {
             ) : null}
           </View>
           <Text variant="muted" className="text-sm" numberOfLines={1}>
-            {item.projectName}
+            {subtitle}
           </Text>
         </View>
         {selected ? <Check size={18} color={colors.primary} /> : null}
       </Pressable>
+    );
+  };
+
+  const renderSectionHeader = ({ section }: { section: InstancePickerSection }) => {
+    const Icon = section.icon;
+    return (
+      <View className="flex-row items-center gap-2 border-b border-border bg-background px-4 pb-2 pt-4">
+        <Icon size={14} color={colors.mutedForeground} />
+        <Text variant="muted" className="text-xs font-medium uppercase tracking-wide">
+          {section.title}
+        </Text>
+      </View>
     );
   };
 
@@ -240,12 +283,12 @@ export default function InstancePickerScreen() {
     >
       {/* The list must stay a direct child of the sheet header for native
           formSheet sizing, so the radiogroup role and the visible "Run on"
-          group name live on the FlatList container instead of a wrapper. */}
-      <FlatList
+          group name live on the SectionList container instead of a wrapper. */}
+      <SectionList
         className="flex-1 bg-background"
         accessibilityRole="radiogroup"
         accessibilityLabel={t('agentChat.instancePicker.runOn')}
-        data={labeled}
+        sections={sections}
         keyExtractor={item => item.connectionId}
         contentContainerStyle={{ paddingBottom: bottom }}
         ListHeaderComponent={
@@ -292,6 +335,7 @@ export default function InstancePickerScreen() {
           </View>
         }
         renderItem={renderItem}
+        renderSectionHeader={renderSectionHeader}
       />
     </PickerSheet>
   );

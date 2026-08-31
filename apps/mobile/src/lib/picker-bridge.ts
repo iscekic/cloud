@@ -83,6 +83,14 @@ export type InstancePickerInstance = {
   name: string;
   projectName: string;
   version?: string;
+  /** Spawn kind (`cli` vs `remote`). Omitted when the CLI did not report it. */
+  kind?: 'cli' | 'remote';
+  /** Process start time (Unix ms). Omitted when the CLI did not report it. */
+  startedAt?: number;
+  /** Git branch the CLI is running on. Omitted when the CLI did not report it. */
+  branch?: string;
+  /** Working directory of the CLI process. Omitted when the CLI did not report it. */
+  workingDirectory?: string;
   /** Optional capability map carried through from the tRPC row. */
   capabilities?: { attachments?: boolean; sessionClone?: boolean };
 };
