@@ -11,6 +11,7 @@ import { EmptyState } from '@/components/empty-state';
 import { QueryError } from '@/components/query-error';
 import { MarkdownText } from '@/components/agents/markdown-text';
 import { PrReviewChecksSection } from '@/components/pr-review/pr-review-checks-section';
+import { PrReviewContextSection } from '@/components/pr-review/pr-review-context-section';
 import { PrMergeSection } from '@/components/pr-review/merge/pr-merge-section';
 import {
   describePrState,
@@ -227,6 +228,8 @@ export function PrReviewOverview({
       </View>
 
       <PrReviewChecksSection owner={owner} repo={repo} number={number} headSha={data.headSha} />
+
+      <PrReviewContextSection owner={owner} repo={repo} number={number} overview={data} />
 
       <View className="gap-2">
         <Text variant="small" className="uppercase tracking-wide text-muted-foreground">

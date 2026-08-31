@@ -550,6 +550,26 @@
       "file": "files",
       "file_other": "files"
     },
+    "context": {
+      "title": "Context",
+      "labels": "Labels",
+      "assignees": "Assignees",
+      "reviewers": "Reviewers",
+      "team": "Team",
+      "approved": "Approved",
+      "changesRequested": "Changes requested",
+      "dismissed": "Dismissed",
+      "commented": "Commented",
+      "awaiting": "Awaiting",
+      "opened": "Opened",
+      "updated": "Updated",
+      "closed": "Closed",
+      "merged": "Merged",
+      "mergedBy": "Merged by",
+      "linkedIssues": "Linked issues",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Unknown author"
+    },
     "pendingComment": {
       "editOutdatedA11y": "Edit outdated pending comment on {{location}}",
       "editA11y": "Edit pending comment on {{location}}",
