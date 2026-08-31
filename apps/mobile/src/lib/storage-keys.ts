@@ -13,6 +13,13 @@ export const SESSION_FILTERS_KEY = 'agent-session-filters';
 /** Filter record for the live sessions page. Separate: the pages filter separate lists. */
 export const LIVE_SESSION_FILTERS_KEY = 'live-session-filters';
 export const NOTIFICATION_PROMPT_SEEN_KEY = 'notification-prompt-seen';
+/**
+ * One-time per-install dismissal of the iOS install-attribution pre-prompt.
+ * Set when the user taps "Not now" so the prompt never reappears on this
+ * install; deliberately NOT deleted on sign-out (the flag is device-scoped,
+ * not account-scoped).
+ */
+export const TRACKING_PERMISSION_DISMISSED_KEY = 'tracking-permission-dismissed';
 export const LAST_ACTIVE_INSTANCE_KEY = 'last-active-chat-instance';
 export const CONSENT_USER_KEY_PREFIX = 'consent-accepted-';
 export const AGENT_MODEL_PREFERENCE_KEY = 'agent-model-preference';

@@ -27,7 +27,17 @@ vi.mock('react-native', () => ({
 const { captureException } = vi.hoisted(() => ({ captureException: vi.fn() }));
 vi.mock('@sentry/react-native', () => ({ captureException }));
 
+const { secureStoreGetItemAsync, secureStoreSetItemAsync } = vi.hoisted(() => ({
+  secureStoreGetItemAsync: vi.fn<() => Promise<string | null>>(),
+  secureStoreSetItemAsync: vi.fn<() => Promise<void>>(),
+}));
+vi.mock('expo-secure-store', () => ({
+  getItemAsync: secureStoreGetItemAsync,
+  setItemAsync: secureStoreSetItemAsync,
+}));
+
 import { useTrackingPermissionPrompt } from './use-tracking-permission-prompt';
+import { TRACKING_PERMISSION_DISMISSED_KEY } from '@/lib/storage-keys';
 
 type AlertButton = { text: string; style?: string; onPress?: () => void };
 
@@ -78,6 +88,11 @@ describe('useTrackingPermissionPrompt', () => {
     requestTrackingPermissionsAsync.mockReset();
     alertMock.mockReset();
     captureException.mockReset();
+    secureStoreGetItemAsync.mockReset();
+    secureStoreSetItemAsync.mockReset();
+    // Default: no persisted dismissal, so the status/gating tests below
+    // exercise the prompt path unchanged.
+    secureStoreGetItemAsync.mockResolvedValue(null);
   });
 
   afterEach(() => {
@@ -144,8 +159,8 @@ describe('useTrackingPermissionPrompt', () => {
     renderer.unmount();
   });
 
-  // Not now: proves no tracking system request is made.
-  it('does not request tracking permission when Not now is tapped', async () => {
+  // Not now: persists the dismissal and makes no tracking system request.
+  it('persists the dismissal and does not request tracking permission when Not now is tapped', async () => {
     getTrackingPermissionsAsync.mockResolvedValue({
       status: 'undetermined',
     });
@@ -165,7 +180,69 @@ describe('useTrackingPermissionPrompt', () => {
       await Promise.resolve();
     });
 
+    expect(secureStoreSetItemAsync).toHaveBeenCalledWith(TRACKING_PERMISSION_DISMISSED_KEY, 'true');
     expect(requestTrackingPermissionsAsync).not.toHaveBeenCalled();
+    renderer.unmount();
+  });
+
+  // Dismissed flag set: no pre-prompt and no status check on this install.
+  it('shows no alert when the dismissal flag is already persisted', async () => {
+    secureStoreGetItemAsync.mockResolvedValue('true');
+
+    const renderer = mountHarness(true);
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(secureStoreGetItemAsync).toHaveBeenCalledWith(TRACKING_PERMISSION_DISMISSED_KEY);
+    expect(getTrackingPermissionsAsync).not.toHaveBeenCalled();
+    expect(alertMock).not.toHaveBeenCalled();
+    renderer.unmount();
+  });
+
+  // Dismissal read failure: reported to Sentry, then the prompt still shows
+  // so a transient read failure cannot suppress a fresh install's one prompt.
+  it('falls through to the prompt and reports to Sentry when the dismissal read fails', async () => {
+    const readError = new Error('SecureStore read failed');
+    secureStoreGetItemAsync.mockRejectedValue(readError);
+    getTrackingPermissionsAsync.mockResolvedValue({ status: 'undetermined' });
+
+    const renderer = mountHarness(true);
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(captureException).toHaveBeenCalledWith(readError, {
+      tags: { 'error.subsystem': 'tracking_permission', 'error.operation': 'read_dismissal' },
+    });
+    expect(alertMock).toHaveBeenCalledOnce();
+    renderer.unmount();
+  });
+
+  // Dismissal write failure: reported to Sentry, never rethrown.
+  it('reports to Sentry and does not rethrow when persisting the dismissal fails', async () => {
+    getTrackingPermissionsAsync.mockResolvedValue({
+      status: 'undetermined',
+    });
+    const writeError = new Error('SecureStore write failed');
+    secureStoreSetItemAsync.mockRejectedValue(writeError);
+
+    const renderer = mountHarness(true);
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    const buttons = getAlertButtons();
+    const notNowButton = buttons[0];
+
+    await act(async () => {
+      notNowButton.onPress?.();
+      await Promise.resolve();
+    });
+
+    expect(captureException).toHaveBeenCalledWith(writeError, {
+      tags: { 'error.subsystem': 'tracking_permission', 'error.operation': 'persist_dismissal' },
+    });
     renderer.unmount();
   });
 
