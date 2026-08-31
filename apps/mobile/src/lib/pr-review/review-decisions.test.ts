@@ -12,7 +12,7 @@ describe('deriveReviewDecisions', () => {
         { author: bob, state: 'COMMENTED', submittedAt: '2026-01-01T00:00:00Z' },
         { author: bob, state: 'APPROVED', submittedAt: '2026-01-03T00:00:00Z' },
       ],
-      [bob],
+      [],
       []
     );
 
@@ -32,7 +32,7 @@ describe('deriveReviewDecisions', () => {
         { author: bob, state: 'APPROVED', submittedAt: '2026-01-01T00:00:00Z' },
         { author: bob, state: 'DISMISSED', submittedAt: '2026-01-02T00:00:00Z' },
       ],
-      [bob],
+      [],
       []
     );
 
@@ -82,7 +82,7 @@ describe('deriveReviewDecisions', () => {
     ]);
   });
 
-  it('keeps a submitted review over a newer in-progress PENDING review', () => {
+  it('resolves a re-requested reviewer to awaiting (APPROVED then PENDING)', () => {
     const result = deriveReviewDecisions(
       [
         { author: bob, state: 'APPROVED', submittedAt: '2026-01-02T00:00:00Z' },
@@ -97,9 +97,36 @@ describe('deriveReviewDecisions', () => {
         kind: 'user',
         login: 'bob',
         avatarUrl: 'https://avatars.example/bob',
+        decision: { kind: 'awaiting' },
+      },
+    ]);
+  });
+
+  it('emits a reviewer who submitted and is no longer requested', () => {
+    const result = deriveReviewDecisions(
+      [{ author: bob, state: 'APPROVED', submittedAt: '2026-01-02T00:00:00Z' }],
+      [],
+      []
+    );
+
+    expect(result).toEqual([
+      {
+        kind: 'user',
+        login: 'bob',
+        avatarUrl: 'https://avatars.example/bob',
         decision: { kind: 'approved', submittedAt: '2026-01-02T00:00:00Z' },
       },
     ]);
+  });
+
+  it('skips a PENDING review from a reviewer who is no longer requested', () => {
+    const result = deriveReviewDecisions(
+      [{ author: bob, state: 'PENDING', submittedAt: null }],
+      [],
+      []
+    );
+
+    expect(result).toEqual([]);
   });
 
   it('falls back to array order when submittedAt is null', () => {
@@ -108,7 +135,7 @@ describe('deriveReviewDecisions', () => {
         { author: bob, state: 'COMMENTED', submittedAt: null },
         { author: bob, state: 'APPROVED', submittedAt: null },
       ],
-      [bob],
+      [],
       []
     );
 
@@ -119,6 +146,30 @@ describe('deriveReviewDecisions', () => {
         avatarUrl: 'https://avatars.example/bob',
         decision: { kind: 'approved', submittedAt: null },
       },
+    ]);
+  });
+
+  it('orders submitted decisions first, then awaiting, then teams', () => {
+    const result = deriveReviewDecisions(
+      [{ author: bob, state: 'APPROVED', submittedAt: '2026-01-02T00:00:00Z' }],
+      [alice],
+      [{ name: 'core-team', slug: 'core-team' }]
+    );
+
+    expect(result).toEqual([
+      {
+        kind: 'user',
+        login: 'bob',
+        avatarUrl: 'https://avatars.example/bob',
+        decision: { kind: 'approved', submittedAt: '2026-01-02T00:00:00Z' },
+      },
+      {
+        kind: 'user',
+        login: 'alice',
+        avatarUrl: 'https://avatars.example/alice',
+        decision: { kind: 'awaiting' },
+      },
+      { kind: 'team', name: 'core-team', slug: 'core-team' },
     ]);
   });
 });

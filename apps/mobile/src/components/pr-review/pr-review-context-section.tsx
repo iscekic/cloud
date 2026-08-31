@@ -118,9 +118,12 @@ function ReviewerRow({ decision }: Readonly<{ decision: DerivedReviewDecision }>
       <View className="items-end gap-0.5">
         <Text className="text-sm text-foreground">{t(DECISION_LABEL_KEY[submission.kind])}</Text>
         {submission.kind !== 'awaiting' && submission.submittedAt !== null ? (
-          <Text variant="muted" className="text-xs">
-            {timeAgo(parseTimestamp(submission.submittedAt))}
-          </Text>
+          <>
+            <Text className="text-sm text-foreground">{formatContextDate(submission.submittedAt)}</Text>
+            <Text variant="muted" className="text-xs">
+              {timeAgo(parseTimestamp(submission.submittedAt))}
+            </Text>
+          </>
         ) : null}
       </View>
     </View>

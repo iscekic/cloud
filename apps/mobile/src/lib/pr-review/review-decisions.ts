@@ -79,9 +79,8 @@ function isMoreRecent(candidate: Review, current: Review): boolean {
   if (candidateTime !== null && currentTime !== null) {
     return candidateTime > currentTime;
   }
-  // A submitted review (non-null submittedAt) beats an in-progress PENDING
-  // review (null). Two null timestamps fall back to array order: a later
-  // element wins.
+  // A review with a submittedAt beats one without. Two null timestamps fall
+  // back to array order: a later element wins.
   if (candidateTime !== null) {
     return true;
   }
@@ -96,27 +95,49 @@ export function deriveReviewDecisions(
   requestedReviewers: readonly ReviewAuthor[],
   requestedTeams: readonly RequestedTeam[]
 ): DerivedReviewDecision[] {
-  const decisions: DerivedReviewDecision[] = [];
+  const submitted: UserReviewDecision[] = [];
+  const awaiting: UserReviewDecision[] = [];
+  const teams: TeamReviewDecision[] = [];
+
+  const requestedLogins = new Set(requestedReviewers.map(reviewer => reviewer.login));
+
+  // A reviewer who submitted and is no longer requested still counts: keep
+  // their latest submitted review. Skip PENDING nodes (a review started but
+  // never submitted) and skip reviewers who are still requested — their
+  // outstanding request wins over any earlier decision.
+  const latestByLogin = new Map<string, { author: ReviewAuthor; review: Review }>();
+  for (const review of reviews) {
+    const author = review.author;
+    if (author === null || review.state === 'PENDING' || requestedLogins.has(author.login)) {
+      continue;
+    }
+    const current = latestByLogin.get(author.login);
+    if (current === undefined || isMoreRecent(review, current.review)) {
+      latestByLogin.set(author.login, { author, review });
+    }
+  }
+
+  for (const { author, review } of latestByLogin.values()) {
+    submitted.push({
+      kind: 'user',
+      login: author.login,
+      avatarUrl: author.avatarUrl,
+      decision: decisionFor(review),
+    });
+  }
 
   for (const reviewer of requestedReviewers) {
-    const ownReviews = reviews.filter(review => review.author?.login === reviewer.login);
-    let latest: Review | undefined = undefined;
-    for (const review of ownReviews) {
-      if (latest === undefined || isMoreRecent(review, latest)) {
-        latest = review;
-      }
-    }
-    decisions.push({
+    awaiting.push({
       kind: 'user',
       login: reviewer.login,
       avatarUrl: reviewer.avatarUrl,
-      decision: latest === undefined ? { kind: 'awaiting' } : decisionFor(latest),
+      decision: { kind: 'awaiting' },
     });
   }
 
   for (const team of requestedTeams) {
-    decisions.push({ kind: 'team', name: team.name, slug: team.slug });
+    teams.push({ kind: 'team', name: team.name, slug: team.slug });
   }
 
-  return decisions;
+  return [...submitted, ...awaiting, ...teams];
 }

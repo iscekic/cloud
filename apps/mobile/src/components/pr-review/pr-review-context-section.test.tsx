@@ -28,7 +28,7 @@ vi.mock('@/components/ui/image', () => ({ Image: 'Image' }));
 vi.mock('@/components/ui/text', () => ({ Text: 'Text' }));
 
 vi.mock('@/lib/format', () => ({
-  formatDate: () => 'Jan 1, 2026, 12:00 PM',
+  formatDate: (date: Date) => date.toISOString(),
 }));
 
 vi.mock('@/lib/utils', () => ({
@@ -47,7 +47,7 @@ function makeOverview(): Overview {
       { name: 'needs-review', color: null },
     ],
     assignees: [{ login: 'alice', avatarUrl: 'https://avatars.example/alice' }],
-    requestedReviewers: [{ login: 'bob', avatarUrl: 'https://avatars.example/bob' }],
+    requestedReviewers: [{ login: 'alice', avatarUrl: 'https://avatars.example/alice' }],
     requestedTeams: [{ name: 'core-team', slug: 'core-team' }],
     reviews: [
       {
@@ -116,7 +116,7 @@ describe('PrReviewContextSection', () => {
     expect(hasText(renderer, 'prReview.context.opened')).toBe(true);
     expect(hasText(renderer, 'prReview.context.updated')).toBe(true);
     expect(hasText(renderer, 'prReview.context.merged')).toBe(true);
-    expect(hasText(renderer, 'Jan 1, 2026, 12:00 PM')).toBe(true);
+    expect(hasText(renderer, '2026-01-01T00:00:00.000Z')).toBe(true);
 
     expect(hasText(renderer, 'prReview.context.mergedBy')).toBe(true);
     expect(hasText(renderer, 'carol')).toBe(true);
@@ -147,8 +147,12 @@ describe('PrReviewContextSection', () => {
 
     expect(hasText(renderer, 'prReview.context.reviewers')).toBe(true);
     expect(hasText(renderer, 'prReview.context.approved')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.awaiting')).toBe(true);
     expect(hasText(renderer, 'prReview.context.team')).toBe(true);
     expect(hasText(renderer, 'core-team')).toBe(true);
+    // bob is only in `reviews` (no longer requested), so his approved decision
+    // renders its exact submission time.
+    expect(hasText(renderer, '2026-01-03T00:00:00.000Z')).toBe(true);
 
     renderer.unmount();
   });
