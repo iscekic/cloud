@@ -130,6 +130,9 @@ vi.mock('@/components/agents/platform-filter-modal', () => ({
   SessionFilterChips: 'SessionFilterChips',
   SessionFilterModal: 'SessionFilterModal',
 }));
+vi.mock('@/components/agents/session-list-connection-strip', () => ({
+  SessionListConnectionStrip: 'SessionListConnectionStrip',
+}));
 vi.mock('@/components/agents/active-now-section', () => ({
   ActiveNowSection: 'ActiveNowSection',
 }));
@@ -225,6 +228,13 @@ function requireHeaderAction(renderer: MountedRenderer, testID: string): HeaderE
 
 function findTypeCount(renderer: MountedRenderer, type: string): number {
   return renderer.root.findAll(node => typeof node.type === 'string' && node.type === type).length;
+}
+
+function findStrip(renderer: MountedRenderer) {
+  return renderer.root.find(
+    node =>
+      typeof node.type === 'string' && (node.type as string) === 'SessionListConnectionStrip'
+  );
 }
 
 function fireFocus(): void {
@@ -599,7 +609,7 @@ describe('AgentSessionListScreen live tab', () => {
     expect(typeof list.props.extraData).toBe('number');
   });
 
-  it('announces a refresh failure once on a failed pull with cached rows', async () => {
+  it('sets refreshFailed on the strip and keeps the cached row after a failed pull', async () => {
     sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
     refetchSpy.mockResolvedValue(false);
 
@@ -614,17 +624,25 @@ describe('AgentSessionListScreen live tab', () => {
     act(() => {
       refreshControl.props.onRefresh();
     });
+
+    const updatingStrip = findStrip(renderer);
+    expect(updatingStrip.props.hasLiveRows).toBe(true);
+    expect(updatingStrip.props.updating).toBe(true);
+
     await act(async () => {
       await Promise.resolve();
     });
 
-    expect(toastErrorSpy).toHaveBeenCalledTimes(1);
-    expect(toastErrorSpy).toHaveBeenCalledWith('common.couldNotRefresh');
+    const failedStrip = findStrip(renderer);
+    expect(failedStrip.props.hasLiveRows).toBe(true);
+    expect(failedStrip.props.updating).toBe(false);
+    expect(failedStrip.props.refreshFailed).toBe(true);
+    expect(flatList.props.data).toHaveLength(1);
   });
 
-  it('does not announce on a successful pull with cached rows', async () => {
+  it('clears refreshFailed on the strip after a successful pull', async () => {
     sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
-    refetchSpy.mockResolvedValue(true);
+    refetchSpy.mockResolvedValueOnce(false).mockResolvedValueOnce(true);
 
     const renderer = await renderScreen();
 
@@ -634,6 +652,15 @@ describe('AgentSessionListScreen live tab', () => {
     const refreshControl = flatList.props.refreshControl as {
       props: { onRefresh: () => void };
     };
+
+    act(() => {
+      refreshControl.props.onRefresh();
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(findStrip(renderer).props.refreshFailed).toBe(true);
+
     act(() => {
       refreshControl.props.onRefresh();
     });
@@ -641,7 +668,10 @@ describe('AgentSessionListScreen live tab', () => {
       await Promise.resolve();
     });
 
-    expect(toastErrorSpy).not.toHaveBeenCalled();
+    const strip = findStrip(renderer);
+    expect(strip.props.hasLiveRows).toBe(true);
+    expect(strip.props.updating).toBe(false);
+    expect(strip.props.refreshFailed).toBe(false);
   });
 
   it('refetches live sessions on route focus', async () => {

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- The live Agents list screen keeps its header, filter chips, connection strip, and every body branch together. */
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
@@ -17,6 +18,7 @@ import { EmptyState } from '@/components/empty-state';
 import { QueryError } from '@/components/query-error';
 import { SessionFilterChips, SessionFilterModal } from '@/components/agents/platform-filter-modal';
 import { SessionFilterButton } from '@/components/agents/session-filter-button';
+import { SessionListConnectionStrip } from '@/components/agents/session-list-connection-strip';
 import { SessionListSearchHeader } from '@/components/agents/session-list-search-header';
 import { useLiveSessionQuery } from '@/components/agents/use-live-session-query';
 import { getNewAgentSessionPath } from '@/components/agents/session-list-routes';
@@ -27,7 +29,6 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Text } from '@/components/ui/text';
 import { ScreenHeader } from '@/components/screen-header';
-import { announcingToast } from '@/lib/a11y/announcing-toast';
 import { useOrganization } from '@/lib/organization-context';
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { getRevisionSnapshot } from '@/lib/session-attention';
@@ -67,13 +68,39 @@ export function AgentSessionListScreen() {
   const hasLiveRows = activeSessions.length > 0;
   const hasVisibleRows = visibleSessions.length > 0;
 
-  const refetchRef = useRef(refetch);
-  useEffect(() => {
-    refetchRef.current = refetch;
+  const [updating, setUpdating] = useState(false);
+  const [refreshFailed, setRefreshFailed] = useState(false);
+  // The native RefreshControl spinner is pull-only: focus return and OS
+  // foreground refetch set `updating` (drives the inline strip) but must not
+  // flash the spinner, so only the pull path owns this flag.
+  const [refreshing, setRefreshing] = useState(false);
+
+  const runRefresh = useCallback(async () => {
+    setUpdating(true);
+    try {
+      const ok = await refetch();
+      setRefreshFailed(!ok);
+    } finally {
+      setUpdating(false);
+    }
   }, [refetch]);
+
+  // A stale refresh failure must not outlive a recovery that bypassed
+  // `runRefresh`: the live poll clears `isError` on its own success. Reset the
+  // banner whenever the list is not in error.
+  useEffect(() => {
+    if (!isError) {
+      setRefreshFailed(false);
+    }
+  }, [isError]);
+
+  const runRefreshRef = useRef(runRefresh);
+  useEffect(() => {
+    runRefreshRef.current = runRefresh;
+  }, [runRefresh]);
   useFocusEffect(
     useCallback(() => {
-      void refetchRef.current();
+      void runRefreshRef.current();
     }, [])
   );
 
@@ -102,7 +129,7 @@ export function AgentSessionListScreen() {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'active' && navigation.isFocused()) {
-        void refetchRef.current();
+        void runRefreshRef.current();
         void queryClient.invalidateQueries({ queryKey: [['activeSessions']] });
       }
     });
@@ -143,20 +170,12 @@ export function AgentSessionListScreen() {
     </View>
   );
 
-  const [refreshing, setRefreshing] = useState(false);
   const handleRefresh = useCallback(() => {
-    void (async () => {
-      setRefreshing(true);
-      try {
-        const ok = await refetch();
-        if (!ok && hasLiveRows) {
-          announcingToast.error(t('common.couldNotRefresh'));
-        }
-      } finally {
-        setRefreshing(false);
-      }
-    })();
-  }, [refetch, hasLiveRows, t]);
+    setRefreshing(true);
+    void runRefresh().finally(() => {
+      setRefreshing(false);
+    });
+  }, [runRefresh]);
 
   const renderItem = useCallback(
     ({ item }: { item: ActiveSession }) => (
@@ -212,7 +231,7 @@ export function AgentSessionListScreen() {
       <QueryError
         message={t('agents.sessionList.couldNotLoadActive')}
         onRetry={() => {
-          void refetch();
+          void runRefresh();
         }}
       />
     );
@@ -297,6 +316,14 @@ export function AgentSessionListScreen() {
         projectOptions={query.options.projectOptions}
         onRemovePlatform={query.handleRemovePlatform}
         onRemoveProject={query.handleRemoveProject}
+      />
+      <SessionListConnectionStrip
+        hasLiveRows={hasLiveRows}
+        updating={updating}
+        refreshFailed={refreshFailed}
+        onRetryRefresh={() => {
+          void runRefresh();
+        }}
       />
       {body}
       {/* FAB visible when there are live rows — empty state already owns the creation CTA. */}
