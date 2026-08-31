@@ -45,7 +45,7 @@ import { withDORetry } from '../utils/do-retry.js';
 import { resolveSessionStub } from '../sandbox-session/session-stub.js';
 import { getPgDb } from '../db/pg.js';
 import { generateSessionId, SessionService } from '../session-service.js';
-import { sessionPlaneForNewOwner } from '../session-plane.js';
+import { isWorktreeOwner, sessionPlaneForNewOwner } from '../session-plane.js';
 import { getWorktreeWorkspacePath } from '../workspace.js';
 import {
   createCloudAgentSessionReport,
@@ -203,6 +203,7 @@ type SessionLedgerFailureStage =
 type SessionCreationLedgerHooks = {
   db: WorkerDb;
   rowId: string;
+  worktreeEnabled: boolean;
   /** Settle the row `failed` at the given stage. */
   onFailure: (stage: SessionLedgerFailureStage, outcomeCode: string) => Promise<void>;
   /** The DO RPC threw; the commit outcome is unknown. */
@@ -464,22 +465,41 @@ function isEligibleFirstWorktreeSession(
     input.initialTurn !== undefined &&
     input.clone === undefined &&
     input.runtime?.devcontainer !== true &&
-    ctx.botId === undefined &&
-    sessionPlaneForNewOwner(ctx.env, {
-      userId: ctx.userId,
-      orgId: input.options.kilocodeOrganizationId,
-    }) === 'control'
+    ctx.botId === undefined
   );
+}
+
+function worktreeEnabledForCreate(
+  input: SessionRegistrationInput,
+  ctx: SessionRegistrationContext,
+  row: OperationLedgerRow
+): boolean {
+  const recorded = row.canonical_result?.[SESSION_CREATE_WORKTREE_ENABLED_KEY];
+  if (recorded !== undefined) {
+    if (typeof recorded !== 'boolean') throw creationInProgressError();
+    if (recorded && ctx.botId !== undefined) {
+      throw new TRPCError({ code: 'BAD_REQUEST', message: 'session_creation_failed' });
+    }
+    return recorded;
+  }
+  if (
+    !isEligibleFirstWorktreeSession(input, ctx) ||
+    input.options?.operationKey !== row.operation_key
+  ) {
+    return false;
+  }
+  const recordedIds = canonicalSessionIds(row);
+  if (recordedIds) return recordedIds.cloudAgentSessionId.startsWith('workspace_');
+
+  const owner = { userId: ctx.userId, orgId: input.options?.kilocodeOrganizationId };
+  return sessionPlaneForNewOwner(ctx.env, owner) === 'control' && isWorktreeOwner(ctx.env, owner);
 }
 
 function effectiveSessionRegistrationInput(
   input: SessionRegistrationInput,
-  ctx: SessionRegistrationContext,
-  operationKey: string
+  worktreeEnabled: boolean
 ): SessionRegistrationInput {
-  if (!isEligibleFirstWorktreeSession(input, ctx) || input.options?.operationKey !== operationKey) {
-    return input;
-  }
+  if (!worktreeEnabled) return input;
   return {
     ...input,
     finalization: { ...input.finalization, autoCommit: false },
@@ -500,9 +520,7 @@ async function allocateNewSession(
   );
   const kiloSessionId = generateKiloSessionId();
   const worktreeId =
-    ledger &&
-    isEligibleFirstWorktreeSession(input, ctx) &&
-    cloudAgentSessionId.startsWith('workspace_')
+    ledger?.worktreeEnabled && cloudAgentSessionId.startsWith('workspace_')
       ? cloudAgentWorktreeIdSchema.parse(
           `worktree_${cloudAgentSessionId.slice('workspace_'.length)}`
         )
@@ -523,6 +541,7 @@ async function allocateNewSession(
         cloudAgentSessionId,
         kiloSessionId,
         ...(initialTurn ? { initialMessageId: initialTurn.messageId } : {}),
+        [SESSION_CREATE_WORKTREE_ENABLED_KEY]: worktreeId !== undefined,
         [SESSION_CREATE_INTENT_FINGERPRINT_KEY]: await sessionCreateIntentFingerprint(input),
       });
     }
@@ -754,7 +773,7 @@ function rebuildRecordedSessionAllocation(
   const sandboxId = canonical.sandboxId;
   const sandboxProvider = canonical.sandboxProvider;
   const sandboxRoute = canonical.sandboxRoute;
-  const worktreeCreate = isEligibleFirstWorktreeSession(input, ctx);
+  const worktreeCreate = worktreeEnabledForCreate(input, ctx, row);
 
   if (
     typeof cloudAgentSessionId !== 'string' ||
@@ -1179,6 +1198,7 @@ export async function startNewSession(
  * changed request can never inherit the prior operation's session.
  */
 export const SESSION_CREATE_INTENT_FINGERPRINT_KEY = 'createIntentFingerprint';
+export const SESSION_CREATE_WORKTREE_ENABLED_KEY = 'worktreeEnabled';
 
 /**
  * Deterministic JSON serialization: object keys are sorted and undefined
@@ -1378,11 +1398,10 @@ export async function createSessionWithLedger(
   options: SessionLedgerCreateOptions
 ): Promise<LedgerSessionCreateResult> {
   assertSupportedSandboxAllocation(input, ctx, { billingOrigin: options.billingOrigin });
-  const effectiveInput = effectiveSessionRegistrationInput(input, ctx, options.operationKey);
   const db = getPgDb(ctx.env);
   const admission = await admitOperation(db, {
     userId: ctx.userId,
-    orgId: effectiveInput.options?.kilocodeOrganizationId,
+    orgId: input.options?.kilocodeOrganizationId,
     domain: 'session',
     intent: 'create_cloud',
     operationKey: options.operationKey,
@@ -1392,9 +1411,13 @@ export async function createSessionWithLedger(
   assertSessionOperationIdentity(admission.row, {
     userId: ctx.userId,
     intent: 'create_cloud',
-    organizationId: effectiveInput.options?.kilocodeOrganizationId,
+    organizationId: input.options?.kilocodeOrganizationId,
     resourceKey: null,
   });
+  const effectiveInput = effectiveSessionRegistrationInput(
+    input,
+    worktreeEnabledForCreate(input, ctx, admission.row)
+  );
 
   switch (admission.admission) {
     case 'admitted':
@@ -1461,12 +1484,14 @@ async function buildLedgerHooks(
   row: OperationLedgerRow,
   admissionKind: 'new' | 'takeover'
 ): Promise<SessionCreationLedgerHooks> {
+  const worktreeEnabled = worktreeEnabledForCreate(input, ctx, row);
   const distinctId = await resolveSessionCreateDistinctId(db, ctx.userId);
   const inOrganization = input.options?.kilocodeOrganizationId != null;
 
   return {
     db,
     rowId: row.id,
+    worktreeEnabled,
     onFailure: (stage, outcomeCode) =>
       bestEffortLedgerWrite(() =>
         settleOperation(db, {
@@ -1824,7 +1849,7 @@ async function reconcileLedgerCreate(
     return executeLedgerCreate(input, ctx, options, db, row, 'takeover');
   }
 
-  const worktreeAllocation = isEligibleFirstWorktreeSession(input, ctx)
+  const worktreeAllocation = worktreeEnabledForCreate(input, ctx, row)
     ? rebuildRecordedSessionAllocation(input, ctx, row)
     : undefined;
 
