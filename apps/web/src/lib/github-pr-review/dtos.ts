@@ -52,6 +52,73 @@ export const GitHubPrReviewOverviewSchema = z
         viewerLogin: z.string().nullable(),
       })
       .strict(),
+    labels: z
+      .array(
+        z
+          .object({
+            name: z.string(),
+            color: z.string().nullable(),
+          })
+          .strict()
+      ),
+    assignees: z.array(GitHubPrReviewAuthorSchema),
+    requestedReviewers: z.array(GitHubPrReviewAuthorSchema),
+    requestedTeams: z
+      .array(
+        z
+          .object({
+            name: z.string(),
+            slug: z.string(),
+          })
+          .strict()
+      ),
+    reviews: z
+      .array(
+        z
+          .object({
+            author: GitHubPrReviewAuthorSchema.nullable(),
+            state: z.enum(['APPROVED', 'CHANGES_REQUESTED', 'COMMENTED', 'DISMISSED', 'PENDING']),
+            submittedAt: z.string().nullable(),
+          })
+          .strict()
+      ),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    closedAt: z.string().nullable(),
+    mergedAt: z.string().nullable(),
+    mergedBy: GitHubPrReviewAuthorSchema.nullable(),
+    linkedIssues: z
+      .array(
+        z
+          .object({
+            number: z.number().int().positive(),
+            title: z.string(),
+            state: z.enum(['OPEN', 'CLOSED']),
+            url: z.string().url(),
+          })
+          .strict()
+      ),
+    mergeQueue: z
+      .object({
+        inQueue: z.boolean(),
+        position: z.number().int().nullable(),
+        state: z
+          .enum(['QUEUED', 'AWAITING_CHECKS', 'MERGEABLE', 'UNMERGEABLE', 'LOCKED'])
+          .nullable(),
+        estimatedTimeToMergeSeconds: z.number().int().nonnegative().nullable(),
+        enqueuedAt: z.string().nullable(),
+      })
+      .strict()
+      .nullable(),
+    mergeRequirements: z
+      .object({
+        status: z.enum(['present', 'absent', 'unavailable']),
+        requiredApprovingReviewCount: z.number().int().nonnegative().nullable(),
+        requiredStatusCheckContexts: z.array(z.string()),
+        requireCodeOwnerReviews: z.boolean().nullable(),
+        enforceAdmins: z.boolean().nullable(),
+      })
+      .strict(),
   })
   .strict();
 export type GitHubPrReviewOverview = z.infer<typeof GitHubPrReviewOverviewSchema>;

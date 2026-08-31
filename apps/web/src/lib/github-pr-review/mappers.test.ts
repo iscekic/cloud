@@ -1,6 +1,7 @@
 import {
   buildChecksResult,
   buildFilesPage,
+  buildMergeRequirements,
   buildOverviewDto,
   buildReviewThreadsResult,
   sliceFileLines,
@@ -25,6 +26,32 @@ describe('buildOverviewDto', () => {
     mergeable: true,
     mergeable_state: 'clean',
     auto_merge: { merge_method: 'squash' },
+    labels: [
+      { name: 'bug', color: 'ff0000' },
+      { name: 'needs-review', color: null },
+    ],
+    assignees: [{ login: 'alice', avatar_url: 'https://avatars.example/alice' }],
+    requested_reviewers: [{ login: 'bob', avatar_url: 'https://avatars.example/bob' }],
+    requested_teams: [{ name: 'core-team', slug: 'core-team' }],
+    created_at: '2026-01-01T00:00:00Z',
+    updated_at: '2026-01-02T00:00:00Z',
+    closed_at: null,
+    merged_at: null,
+    merged_by: { login: 'carol', avatar_url: 'https://avatars.example/carol' },
+  };
+
+  const presentBranchProtection = {
+    status: 'present' as const,
+    data: {
+      required_pull_request_reviews: {
+        required_approving_review_count: 2,
+        require_code_owner_reviews: true,
+      },
+      required_status_checks: {
+        checks: [{ context: 'ci' }, { context: 'lint' }],
+      },
+      enforce_admins: { enabled: true },
+    },
   };
 
   it('returns overview DTO with all required fields populated', () => {
@@ -40,10 +67,42 @@ describe('buildOverviewDto', () => {
         permissions: { push: true, admin: false },
       },
       graphQl: {
-        repository: { pullRequest: { reviewDecision: 'APPROVED' } },
+        repository: {
+          pullRequest: {
+            reviewDecision: 'APPROVED',
+            reviews: {
+              nodes: [
+                {
+                  author: { login: 'bob', avatarUrl: 'https://avatars.example/bob' },
+                  state: 'APPROVED' as const,
+                  submittedAt: '2026-01-03T00:00:00Z',
+                },
+              ],
+            },
+            closingIssuesReferences: {
+              nodes: [
+                {
+                  number: 42,
+                  title: 'Fix the flux',
+                  state: 'OPEN' as const,
+                  url: 'https://github.com/kilo/flux/issues/42',
+                },
+              ],
+            },
+            mergeQueueEntry: {
+              position: 1,
+              state: 'QUEUED' as const,
+              estimatedTimeToMerge: 120,
+              enqueuedAt: '2026-01-04T00:00:00Z',
+            },
+            isInMergeQueue: true,
+            isMergeQueueEnabled: true,
+          },
+        },
         viewer: { login: 'octocat' },
       },
       viewer: { login: 'octocat' },
+      branchProtection: presentBranchProtection,
     });
     expect(dto.title).toBe('Fix the flux capacitor');
     expect(dto.state).toBe('open');
@@ -55,6 +114,54 @@ describe('buildOverviewDto', () => {
     expect(dto.repo.viewerCanPush).toBe(true);
     expect(dto.repo.viewerCanAdmin).toBe(false);
     expect(dto.repo.viewerLogin).toBe('octocat');
+    expect(dto.labels).toEqual([
+      { name: 'bug', color: 'ff0000' },
+      { name: 'needs-review', color: null },
+    ]);
+    expect(dto.assignees).toEqual([
+      { login: 'alice', avatarUrl: 'https://avatars.example/alice' },
+    ]);
+    expect(dto.requestedReviewers).toEqual([
+      { login: 'bob', avatarUrl: 'https://avatars.example/bob' },
+    ]);
+    expect(dto.requestedTeams).toEqual([{ name: 'core-team', slug: 'core-team' }]);
+    expect(dto.mergedBy).toEqual({
+      login: 'carol',
+      avatarUrl: 'https://avatars.example/carol',
+    });
+    expect(dto.createdAt).toBe('2026-01-01T00:00:00Z');
+    expect(dto.updatedAt).toBe('2026-01-02T00:00:00Z');
+    expect(dto.closedAt).toBeNull();
+    expect(dto.mergedAt).toBeNull();
+    expect(dto.reviews).toEqual([
+      {
+        author: { login: 'bob', avatarUrl: 'https://avatars.example/bob' },
+        state: 'APPROVED',
+        submittedAt: '2026-01-03T00:00:00Z',
+      },
+    ]);
+    expect(dto.linkedIssues).toEqual([
+      {
+        number: 42,
+        title: 'Fix the flux',
+        state: 'OPEN',
+        url: 'https://github.com/kilo/flux/issues/42',
+      },
+    ]);
+    expect(dto.mergeQueue).toEqual({
+      inQueue: true,
+      position: 1,
+      state: 'QUEUED',
+      estimatedTimeToMergeSeconds: 120,
+      enqueuedAt: '2026-01-04T00:00:00Z',
+    });
+    expect(dto.mergeRequirements).toEqual({
+      status: 'present',
+      requiredApprovingReviewCount: 2,
+      requiredStatusCheckContexts: ['ci', 'lint'],
+      requireCodeOwnerReviews: true,
+      enforceAdmins: true,
+    });
   });
 
   it('maps merged PR to "merged" state regardless of GitHub state', () => {
@@ -63,6 +170,7 @@ describe('buildOverviewDto', () => {
       repo: {},
       graphQl: null,
       viewer: null,
+      branchProtection: { status: 'absent' },
     });
     expect(dto.state).toBe('merged');
   });
@@ -76,6 +184,7 @@ describe('buildOverviewDto', () => {
       repo: {},
       graphQl: null,
       viewer: null,
+      branchProtection: { status: 'absent' },
     });
     expect(dto.isCrossRepo).toBe(true);
     expect(dto.headRepoFullName).toBe('octocat/flux');
@@ -87,10 +196,82 @@ describe('buildOverviewDto', () => {
       repo: {},
       graphQl: { repository: { pullRequest: null }, viewer: null },
       viewer: null,
+      branchProtection: { status: 'absent' },
     });
     expect(dto.author).toBeNull();
     expect(dto.reviewDecision).toBeNull();
     expect(dto.repo.viewerLogin).toBeNull();
+  });
+});
+
+describe('buildMergeRequirements', () => {
+  it('maps a present branch-protection response', () => {
+    const result = buildMergeRequirements({
+      status: 'present',
+      data: {
+        required_pull_request_reviews: {
+          required_approving_review_count: 1,
+          require_code_owner_reviews: false,
+        },
+        required_status_checks: {
+          checks: [{ context: 'ci' }],
+        },
+        enforce_admins: { enabled: true },
+      },
+    });
+    expect(result).toEqual({
+      status: 'present',
+      requiredApprovingReviewCount: 1,
+      requiredStatusCheckContexts: ['ci'],
+      requireCodeOwnerReviews: false,
+      enforceAdmins: true,
+    });
+  });
+
+  it('falls back to legacy contexts when checks is absent', () => {
+    const result = buildMergeRequirements({
+      status: 'present',
+      data: {
+        required_status_checks: {
+          contexts: ['continuous-integration', 'codecov'],
+        },
+        enforce_admins: null,
+      },
+    });
+    expect(result).toEqual({
+      status: 'present',
+      requiredApprovingReviewCount: null,
+      requiredStatusCheckContexts: ['continuous-integration', 'codecov'],
+      requireCodeOwnerReviews: null,
+      enforceAdmins: false,
+    });
+  });
+
+  it('reports enforceAdmins false when admin enforcement is disabled', () => {
+    const result = buildMergeRequirements({
+      status: 'present',
+      data: {
+        enforce_admins: { enabled: false },
+      },
+    });
+    expect(result.enforceAdmins).toBe(false);
+  });
+
+  it('maps absent and unavailable outcomes to the null/empty shape', () => {
+    expect(buildMergeRequirements({ status: 'absent' })).toEqual({
+      status: 'absent',
+      requiredApprovingReviewCount: null,
+      requiredStatusCheckContexts: [],
+      requireCodeOwnerReviews: null,
+      enforceAdmins: null,
+    });
+    expect(buildMergeRequirements({ status: 'unavailable' })).toEqual({
+      status: 'unavailable',
+      requiredApprovingReviewCount: null,
+      requiredStatusCheckContexts: [],
+      requireCodeOwnerReviews: null,
+      enforceAdmins: null,
+    });
   });
 });
 

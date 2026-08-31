@@ -23,6 +23,8 @@ import {
   type GitHubPrReviewOverview,
 } from './dtos';
 
+type PrAuthor = NonNullable<GitHubPrReviewOverview['author']>;
+
 export type PullRequestRestData = {
   number: number;
   title: string;
@@ -41,6 +43,15 @@ export type PullRequestRestData = {
   mergeable: boolean | null;
   mergeable_state?: string | null;
   auto_merge?: { merge_method?: string | null } | null;
+  labels: Array<{ name: string; color: string | null }>;
+  assignees: Array<{ login: string; avatar_url: string } | null>;
+  requested_reviewers: Array<{ login: string; avatar_url: string } | null>;
+  requested_teams: Array<{ name: string; slug: string }>;
+  created_at: string;
+  updated_at: string;
+  closed_at: string | null;
+  merged_at: string | null;
+  merged_by: { login: string; avatar_url: string } | null;
 };
 
 export type RepoRestData = {
@@ -59,10 +70,57 @@ export type OverviewGraphQlData = {
   repository: {
     pullRequest: {
       reviewDecision: string | null;
+      reviews: {
+        nodes: Array<{
+          author: { login: string; avatarUrl: string | null } | null;
+          state: 'PENDING' | 'COMMENTED' | 'APPROVED' | 'CHANGES_REQUESTED' | 'DISMISSED';
+          submittedAt: string | null;
+        }>;
+      } | null;
+      closingIssuesReferences: {
+        nodes: Array<{
+          number: number;
+          title: string;
+          state: 'OPEN' | 'CLOSED';
+          url: string;
+        }>;
+      } | null;
+      mergeQueueEntry: {
+        position: number;
+        state: 'QUEUED' | 'AWAITING_CHECKS' | 'MERGEABLE' | 'UNMERGEABLE' | 'LOCKED';
+        estimatedTimeToMerge: number | null;
+        enqueuedAt: string;
+      } | null;
+      isInMergeQueue: boolean;
+      isMergeQueueEnabled: boolean;
     } | null;
   } | null;
   viewer: { login: string } | null;
 } | null;
+
+/** The branch-protection REST payload fields the merge-requirements mapper reads. */
+export type BranchProtectionRestData = {
+  required_pull_request_reviews?: {
+    required_approving_review_count?: number | null;
+    require_code_owner_reviews?: boolean | null;
+  } | null;
+  required_status_checks?: {
+    checks?: Array<{ context: string }>;
+    contexts?: string[];
+  } | null;
+  enforce_admins?: { enabled?: boolean } | null;
+};
+
+/**
+ * The branch-protection outcome handed to `buildOverviewDto`. The router wraps
+ * `repos.getBranchProtection`: a 404 resolves to `absent`, any other failure
+ * resolves to `unavailable` (a raw 401 rethrows for token rotation), and a
+ * success carries the REST payload as `present`.
+ */
+export type BranchProtectionResult =
+  | { status: 'absent' }
+  | { status: 'unavailable' }
+  | { status: 'present'; data: BranchProtectionRestData };
 
 function normalizeReviewDecision(value: string | null): GitHubPrReviewOverview['reviewDecision'] {
   if (value === 'APPROVED' || value === 'CHANGES_REQUESTED' || value === 'REVIEW_REQUIRED') {
@@ -78,31 +136,78 @@ const GitHubRestUserSchema = z
   })
   .strict();
 
+function parseRestAuthor(
+  user: { login: string; avatar_url: string } | null | undefined
+): PrAuthor | null {
+  if (!user) return null;
+  const parsed = GitHubPrReviewAuthorSchema.safeParse({
+    login: user.login,
+    avatarUrl: user.avatar_url,
+  });
+  return parsed.success ? parsed.data : null;
+}
+
+function parseGraphQlAuthor(
+  author: { login: string; avatarUrl: string | null } | null | undefined
+): PrAuthor | null {
+  if (!author) return null;
+  const parsed = GitHubPrReviewAuthorSchema.safeParse({
+    login: author.login,
+    avatarUrl: author.avatarUrl,
+  });
+  return parsed.success ? parsed.data : null;
+}
+
+/** Map the wrapped branch-protection outcome into the wire mergeRequirements DTO. */
+export function buildMergeRequirements(
+  branchProtection: BranchProtectionResult
+): GitHubPrReviewOverview['mergeRequirements'] {
+  if (branchProtection.status !== 'present') {
+    return {
+      status: branchProtection.status,
+      requiredApprovingReviewCount: null,
+      requiredStatusCheckContexts: [],
+      requireCodeOwnerReviews: null,
+      enforceAdmins: null,
+    };
+  }
+  const data = branchProtection.data;
+  const statusChecks = data.required_status_checks;
+  // GitHub serves required status checks as `checks[]` (current shape) or the
+  // legacy `contexts[]`; fall back to `contexts` when `checks` is absent.
+  const checks = statusChecks?.checks ?? statusChecks?.contexts ?? [];
+  return {
+    status: 'present',
+    requiredApprovingReviewCount:
+      data.required_pull_request_reviews?.required_approving_review_count ?? null,
+    requiredStatusCheckContexts: checks.map(c => (typeof c === 'string' ? c : c.context)),
+    requireCodeOwnerReviews: data.required_pull_request_reviews?.require_code_owner_reviews ?? null,
+    enforceAdmins: Boolean(data.enforce_admins?.enabled),
+  };
+}
+
 export function buildOverviewDto(args: {
   pr: PullRequestRestData;
   repo: RepoRestData;
   graphQl: OverviewGraphQlData;
   viewer: ViewerInfo;
+  branchProtection: BranchProtectionResult;
 }): GitHubPrReviewOverview {
-  const { pr, repo, graphQl, viewer } = args;
+  const { pr, repo, graphQl, viewer, branchProtection } = args;
   const state: GitHubPrReviewOverview['state'] = pr.merged
     ? 'merged'
     : pr.state === 'open'
       ? 'open'
       : 'closed';
-  const authorParsed = pr.user
-    ? GitHubPrReviewAuthorSchema.safeParse({
-        login: pr.user.login,
-        avatarUrl: pr.user.avatar_url,
-      })
-    : null;
-  const author = authorParsed?.success ? authorParsed.data : null;
+  const author = parseRestAuthor(pr.user);
   const headRepoFullName = pr.head.repo?.full_name ?? null;
   const isCrossRepo = Boolean(
     pr.base.repo?.full_name && headRepoFullName && pr.base.repo.full_name !== headRepoFullName
   );
   const autoMerge =
     pr.auto_merge && pr.auto_merge.merge_method ? { method: pr.auto_merge.merge_method } : null;
+  const graphQlPr = graphQl?.repository?.pullRequest ?? null;
+  const mergeQueueEntry = graphQlPr?.mergeQueueEntry ?? null;
   const overview: GitHubPrReviewOverview = {
     number: pr.number,
     title: pr.title,
@@ -125,9 +230,7 @@ export function buildOverviewDto(args: {
     mergeable: pr.mergeable,
     mergeableState: pr.mergeable_state ?? null,
     autoMerge,
-    reviewDecision: normalizeReviewDecision(
-      graphQl?.repository?.pullRequest?.reviewDecision ?? null
-    ),
+    reviewDecision: normalizeReviewDecision(graphQlPr?.reviewDecision ?? null),
     repo: {
       allowMergeCommit: Boolean(repo.allow_merge_commit),
       allowSquashMerge: Boolean(repo.allow_squash_merge),
@@ -139,6 +242,38 @@ export function buildOverviewDto(args: {
       viewerCanAdmin: Boolean(repo.permissions?.admin),
       viewerLogin: viewer?.login ?? null,
     },
+    labels: pr.labels.map(label => ({ name: label.name, color: label.color ?? null })),
+    assignees: pr.assignees.map(parseRestAuthor).filter((a): a is PrAuthor => a !== null),
+    requestedReviewers: pr.requested_reviewers
+      .map(parseRestAuthor)
+      .filter((a): a is PrAuthor => a !== null),
+    requestedTeams: pr.requested_teams.map(team => ({ name: team.name, slug: team.slug })),
+    reviews: (graphQlPr?.reviews?.nodes ?? []).map(review => ({
+      author: parseGraphQlAuthor(review.author),
+      state: review.state,
+      submittedAt: review.submittedAt,
+    })),
+    createdAt: pr.created_at,
+    updatedAt: pr.updated_at,
+    closedAt: pr.closed_at,
+    mergedAt: pr.merged_at,
+    mergedBy: parseRestAuthor(pr.merged_by),
+    linkedIssues: (graphQlPr?.closingIssuesReferences?.nodes ?? []).map(issue => ({
+      number: issue.number,
+      title: issue.title,
+      state: issue.state,
+      url: issue.url,
+    })),
+    mergeQueue: mergeQueueEntry
+      ? {
+          inQueue: true,
+          position: mergeQueueEntry.position,
+          state: mergeQueueEntry.state,
+          estimatedTimeToMergeSeconds: mergeQueueEntry.estimatedTimeToMerge,
+          enqueuedAt: mergeQueueEntry.enqueuedAt,
+        }
+      : null,
+    mergeRequirements: buildMergeRequirements(branchProtection),
   };
   return GitHubPrReviewOverviewSchema.parse(overview);
 }

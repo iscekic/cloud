@@ -26,7 +26,10 @@ import {
   buildOverviewDto,
   buildReviewThreadsResult,
   sliceFileLines,
+  type BranchProtectionResult,
+  type BranchProtectionRestData,
   type GraphQlInboxNode,
+  type OverviewGraphQlData,
 } from '@/lib/github-pr-review/mappers';
 import {
   CONVERSATION_COMMENTS_MAX_PAGES,
@@ -225,6 +228,32 @@ const PULL_REQUEST_FRAGMENT_QUERY = /* GraphQL */ `
     repository(owner: $owner, name: $name) {
       pullRequest(number: $number) {
         reviewDecision
+        reviews(first: 50) {
+          nodes {
+            author {
+              login
+              avatarUrl
+            }
+            state
+            submittedAt
+          }
+        }
+        closingIssuesReferences(first: 10) {
+          nodes {
+            number
+            title
+            state
+            url
+          }
+        }
+        mergeQueueEntry {
+          position
+          state
+          estimatedTimeToMerge
+          enqueuedAt
+        }
+        isInMergeQueue
+        isMergeQueueEnabled
       }
     }
     viewer {
@@ -1425,14 +1454,10 @@ async function runMergeWrite(
   }
 }
 
-type OverviewGraphQl = {
-  repository: {
-    pullRequest: { reviewDecision: string | null } | null;
-  } | null;
-  viewer: { login: string } | null;
-};
+type OverviewGraphQl = NonNullable<OverviewGraphQlData>;
 
-// GraphQL enrichment for the overview (reviewDecision + viewer.login). It keeps
+// GraphQL enrichment for the overview (reviewDecision, reviews, linked issues,
+// merge queue, and viewer.login). It keeps
 // its own try/catch: a TRPCError and any raw 401 are rethrown so
 // withGitHubUserTokenRetry can classify/rotate; everything else degrades to
 // null so a GraphQL 5xx or field error never blocks the rest of the overview.
@@ -1466,6 +1491,41 @@ async function fetchOverviewGraphQl(
     // Other GraphQL failures (5xx, field errors) should not block the rest of
     // the overview — degrade the reviewDecision/viewer enrichment.
     return null;
+  }
+}
+
+// Branch-protection enrichment for the overview merge requirements. A missing
+// rule (404) is not a failure — it resolves to `absent`. A raw 401 must reach
+// withGitHubUserTokenRetry so it can rotate the credential; any other failure
+// degrades to `unavailable` so the branch-protection leg never blocks the rest
+// of the overview.
+async function fetchBranchProtection(
+  octokit: ReturnType<typeof createGitHubPrReviewOctokit>,
+  input: { owner: string; repo: string; branch: string }
+): Promise<BranchProtectionResult> {
+  try {
+    const response = await octokit.repos.getBranchProtection({
+      owner: input.owner,
+      repo: input.repo,
+      branch: input.branch,
+    });
+    return { status: 'present', data: response.data as BranchProtectionRestData };
+  } catch (error) {
+    if (
+      error !== null &&
+      typeof error === 'object' &&
+      (error as { status?: number }).status === 401
+    ) {
+      throw error;
+    }
+    if (
+      error !== null &&
+      typeof error === 'object' &&
+      (error as { status?: number }).status === 404
+    ) {
+      return { status: 'absent' };
+    }
+    return { status: 'unavailable' };
   }
 }
 
@@ -1506,11 +1566,23 @@ export const githubPrReviewRouter = createTRPCRouter({
         const repo = (reposResult.value as { data: unknown }).data;
         const graphQl = graphQlResult.value;
 
+        // The fourth leg — branch protection — depends on the PR's base ref, so
+        // it starts only after pulls.get settles. A 404 resolves to `absent`,
+        // a raw 401 rethrows (so withGitHubUserTokenRetry rotates), and any
+        // other failure resolves to `unavailable`: the leg never rejects the
+        // whole overview.
+        const branchProtection = await fetchBranchProtection(octokit, {
+          owner: input.owner,
+          repo: input.repo,
+          branch: (pr as { base: { ref: string } }).base.ref,
+        });
+
         return buildOverviewDto({
           pr: pr as never,
           repo: repo as never,
           graphQl,
           viewer: graphQl?.viewer ?? null,
+          branchProtection,
         });
       },
     });

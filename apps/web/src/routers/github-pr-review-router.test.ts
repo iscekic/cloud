@@ -69,6 +69,7 @@ type OctokitMock = {
   repos: {
     get: jest.Mock;
     listCommitStatusesForRef: jest.Mock;
+    getBranchProtection: jest.Mock;
   };
   checks: {
     listForRef: jest.Mock;
@@ -120,6 +121,7 @@ function buildOctokit(token: string): OctokitMock {
     repos: {
       get: jest.fn(),
       listCommitStatusesForRef: jest.fn(),
+      getBranchProtection: jest.fn(),
     },
     checks,
     // listChecks calls paginate(checks.listForRef, …) then
@@ -1206,6 +1208,15 @@ describe('githubPrReviewRouter.getPullRequest and listChecks parallel legs (P2-G
     mergeable: true,
     mergeable_state: 'clean',
     auto_merge: null,
+    labels: [],
+    assignees: [],
+    requested_reviewers: [],
+    requested_teams: [],
+    created_at: '2026-01-01T00:00:00Z',
+    updated_at: '2026-01-02T00:00:00Z',
+    closed_at: null,
+    merged_at: null,
+    merged_by: null,
   };
 
   const overviewRepoData = {
@@ -1227,6 +1238,7 @@ describe('githubPrReviewRouter.getPullRequest and listChecks parallel legs (P2-G
     octokit.pulls.get.mockResolvedValueOnce({ data: overviewPrData });
     octokit.repos.get.mockResolvedValueOnce({ data: overviewRepoData });
     octokit.request.mockResolvedValueOnce({ data: { data: graphQl } });
+    octokit.repos.getBranchProtection.mockRejectedValueOnce({ status: 404 });
   }
 
   // Polls an assertion until it passes or the timeout elapses. Used to wait for
@@ -1261,6 +1273,7 @@ describe('githubPrReviewRouter.getPullRequest and listChecks parallel legs (P2-G
     );
     octokit.repos.get.mockResolvedValueOnce({ data: overviewRepoData });
     octokit.request.mockResolvedValueOnce({ data: { data: overviewGraphQlData } });
+    octokit.repos.getBranchProtection.mockRejectedValueOnce({ status: 404 });
 
     const resultPromise = caller.getPullRequest({ owner: 'octocat', repo: 'hello', number: 1 });
 
@@ -1306,6 +1319,7 @@ describe('githubPrReviewRouter.getPullRequest and listChecks parallel legs (P2-G
 
     octokit.pulls.get.mockResolvedValueOnce({ data: overviewPrData });
     octokit.repos.get.mockRejectedValueOnce({ status: 404, message: 'repo not found' });
+    octokit.repos.getBranchProtection.mockRejectedValueOnce({ status: 404 });
     let rejectGraphQl!: (reason: unknown) => void;
     octokit.request.mockReturnValueOnce(
       new Promise((_resolve, reject) => {
@@ -1350,12 +1364,64 @@ describe('githubPrReviewRouter.getPullRequest and listChecks parallel legs (P2-G
     octokit.pulls.get.mockResolvedValueOnce({ data: overviewPrData });
     octokit.repos.get.mockResolvedValueOnce({ data: overviewRepoData });
     octokit.request.mockRejectedValueOnce(new Error('graphql 5xx'));
+    octokit.repos.getBranchProtection.mockRejectedValueOnce({ status: 404 });
 
     const result = await caller.getPullRequest({ owner: 'octocat', repo: 'hello', number: 1 });
 
     expect(result.reviewDecision).toBeNull();
     expect(result.repo.viewerLogin).toBeNull();
     expect(result.number).toBe(1);
+  });
+
+  it('maps a 404 branch-protection response to mergeRequirements.status absent', async () => {
+    getGitHubUserAccessToken.mockResolvedValueOnce(connected('t1', 'auth_1', 1));
+    const caller = createCaller({ user: { id: 'user-1' } as User });
+    const octokit = buildOctokit('t1');
+
+    octokit.pulls.get.mockResolvedValueOnce({ data: overviewPrData });
+    octokit.repos.get.mockResolvedValueOnce({ data: overviewRepoData });
+    octokit.request.mockResolvedValueOnce({ data: { data: overviewGraphQlData } });
+    octokit.repos.getBranchProtection.mockRejectedValueOnce({ status: 404 });
+
+    const result = await caller.getPullRequest({ owner: 'octocat', repo: 'hello', number: 1 });
+
+    expect(result.mergeRequirements).toEqual({
+      status: 'absent',
+      requiredApprovingReviewCount: null,
+      requiredStatusCheckContexts: [],
+      requireCodeOwnerReviews: null,
+      enforceAdmins: null,
+    });
+    expect(octokit.repos.getBranchProtection).toHaveBeenCalledWith({
+      owner: 'octocat',
+      repo: 'hello',
+      branch: 'main',
+    });
+  });
+
+  it('maps a non-404 branch-protection error to unavailable without failing the overview', async () => {
+    getGitHubUserAccessToken.mockResolvedValueOnce(connected('t1', 'auth_1', 1));
+    const caller = createCaller({ user: { id: 'user-1' } as User });
+    const octokit = buildOctokit('t1');
+
+    octokit.pulls.get.mockResolvedValueOnce({ data: overviewPrData });
+    octokit.repos.get.mockResolvedValueOnce({ data: overviewRepoData });
+    octokit.request.mockResolvedValueOnce({ data: { data: overviewGraphQlData } });
+    octokit.repos.getBranchProtection.mockRejectedValueOnce({ status: 500, message: 'boom' });
+
+    const result = await caller.getPullRequest({ owner: 'octocat', repo: 'hello', number: 1 });
+
+    expect(result.mergeRequirements).toEqual({
+      status: 'unavailable',
+      requiredApprovingReviewCount: null,
+      requiredStatusCheckContexts: [],
+      requireCodeOwnerReviews: null,
+      enforceAdmins: null,
+    });
+    // The rest of the overview still resolves.
+    expect(result.number).toBe(1);
+    expect(result.title).toBe('Fix the thing');
+    expect(result.reviewDecision).toBe('APPROVED');
   });
 });
 
