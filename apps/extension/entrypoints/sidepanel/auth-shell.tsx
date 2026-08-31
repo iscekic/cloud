@@ -10,6 +10,7 @@ import {
   setAnalyticsOptOut,
 } from '@/src/shared/analytics';
 import type { StoredAuth } from '@/src/shared/auth';
+import { loadCliTasksSettings, saveCliTasksSettings } from '@/src/shared/cli-tasks-settings';
 import type { KiloOrganizationOption } from '@/src/shared/kilo-api-client';
 import { KiloLogo } from '@/src/shared/kilo-logo';
 import type { AnalyticsSettingsState } from './analytics-settings-logic';
@@ -29,7 +30,7 @@ import { OrganizationCreditAccountSelect } from './organization-credit-account';
 import { RemoteMcpSettings } from './remote-mcp-settings';
 import { settingsDialogOpenAtom } from './settings-dialog-state';
 import { WebMcpSettings } from './web-mcp-settings';
-import { WorkflowSettings } from './workflow-settings';
+import { SettingsToggle, WorkflowSettings } from './workflow-settings';
 
 const emptyOrganizationOptions: KiloOrganizationOption[] = [];
 
@@ -49,6 +50,62 @@ const IconButton = ({
     {children}
   </button>
 );
+
+const CliTasksSettings = (): JSX.Element => {
+  const [enabled, setEnabled] = useState<boolean | undefined>();
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    void loadCliTasksSettings(storage)
+      .then(settings => {
+        setEnabled(settings.enableCliTasks);
+      })
+      .catch(() => {
+        setError(true);
+      });
+  }, []);
+
+  const onToggle = (): void => {
+    if (enabled === undefined || saving) {
+      return;
+    }
+
+    const prior = enabled;
+    const next = !prior;
+    setEnabled(next);
+    setSaving(true);
+    setError(false);
+    void saveCliTasksSettings(storage, { enableCliTasks: next })
+      .catch(() => {
+        setEnabled(prior);
+        setError(true);
+      })
+      .finally(() => {
+        setSaving(false);
+      });
+  };
+
+  return (
+    <section
+      aria-label="CLI tasks"
+      className="min-w-0 rounded-xl border border-border bg-surface-raised p-3"
+    >
+      <SettingsToggle
+        checked={enabled === true}
+        description="Let authenticated CLI sessions send tasks to this browser profile."
+        disabled={enabled === undefined || saving}
+        label="Enable CLI tasks"
+        onToggle={onToggle}
+      />
+      {error ? (
+        <p className="type-body mt-2 text-status-red-400">
+          Couldn&apos;t save or load the setting. Try again.
+        </p>
+      ) : null}
+    </section>
+  );
+};
 
 const AnalyticsSettingsRow = ({ userEmail }: { userEmail: string | undefined }): JSX.Element => {
   const [state, setState] = useState<AnalyticsSettingsState>(createInitialAnalyticsSettingsState);
@@ -203,6 +260,7 @@ const HeaderActions = ({
             </div>
             <MemorySettings />
             <WorkflowSettings />
+            <CliTasksSettings />
             <OrganizationCreditAccountSelect
               onChange={onOrganizationChange}
               organizationOptions={organizationOptions}

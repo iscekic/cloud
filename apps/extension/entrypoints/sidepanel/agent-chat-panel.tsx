@@ -66,6 +66,11 @@ import { formatAgentWorkflowIndex } from '@/src/shared/agent-workflows';
 import type { AgentWorkflow } from '@/src/shared/agent-workflows';
 import { loadWorkflowSettings } from '@/src/shared/agent-workflows-storage';
 import { loadWebMcpSettings } from '@/src/shared/web-mcp-settings';
+import {
+  CLI_TASKS_SETTINGS_STORAGE_KEY,
+  getAdvertisedBrowserProfileId,
+  loadCliTasksSettings,
+} from '@/src/shared/cli-tasks-settings';
 import { executeWorkflowToolCall } from './agent-workflow-tool-runtime';
 import { evalInTab, getTabUrl, navigateTab } from './agent-workflow-runtime';
 import { AUTO_COMPACT_RATIO, getContextRatio } from '@/src/shared/context-usage';
@@ -99,6 +104,7 @@ import {
   getOrCreateBrowserProfileId,
 } from '@/src/shared/browser-task-runtime';
 import type { BrowserTaskRuntime, BrowserTaskTurnResult } from '@/src/shared/browser-task-runtime';
+import { CliTasksPanel } from './cli-tasks-panel';
 
 const apiBaseUrl = getKiloApiBaseUrl();
 const fetchFromWindow = (input: string, init?: RequestInit): Promise<Response> =>
@@ -218,6 +224,7 @@ export const AgentChatPanel = ({
   const modelOptionsRef = useRef(modelOptions);
   modelOptionsRef.current = modelOptions;
   const browserTaskRuntimeRef = useRef<BrowserTaskRuntime | null>(null);
+  const [cliTasksEnabled, setCliTasksEnabled] = useState(false);
   const model = activeConversation.model ?? '';
   const selectedModel = useMemo(
     () => modelOptions.find(option => option.id === model),
@@ -898,6 +905,32 @@ export const AgentChatPanel = ({
     return { summary };
   };
 
+  useEffect(() => {
+    let cancelled = false;
+    const load = async (): Promise<void> => {
+      try {
+        const settings = await loadCliTasksSettings(storage);
+        if (!cancelled) {
+          setCliTasksEnabled(settings.enableCliTasks);
+        }
+      } catch {
+        if (!cancelled) {
+          setCliTasksEnabled(false);
+        }
+      }
+    };
+
+    void load();
+    const unwatch = storage.watch(CLI_TASKS_SETTINGS_STORAGE_KEY, () => {
+      void load();
+    });
+
+    return () => {
+      cancelled = true;
+      unwatch();
+    };
+  }, []);
+
   /*
    * Wire the browser-task runtime to a dedicated cloud connection while the
    * browser panel is visible. The panel lives outside ExtensionAgentsProvider,
@@ -907,7 +940,7 @@ export const AgentChatPanel = ({
    * hide/unmount.
    */
   useEffect(() => {
-    if (!isVisible) {
+    if (!isVisible || !cliTasksEnabled) {
       return;
     }
 
@@ -915,8 +948,14 @@ export const AgentChatPanel = ({
     let cleanupRuntime: (() => void) | null = null;
 
     void (async (): Promise<void> => {
-      const browserProfileId = await getOrCreateBrowserProfileId(storage);
+      const browserProfileId = getAdvertisedBrowserProfileId(
+        { enableCliTasks: cliTasksEnabled },
+        await getOrCreateBrowserProfileId(storage)
+      );
       if (cancelled) {
+        return;
+      }
+      if (browserProfileId === undefined) {
         return;
       }
 
@@ -971,7 +1010,7 @@ export const AgentChatPanel = ({
       cleanupRuntime?.();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- runBrowserTaskTurn reads refs for the latest values; auth.token/organizationId/visibility are the only real triggers.
-  }, [auth.token, isVisible, organizationId, store]);
+  }, [auth.token, cliTasksEnabled, isVisible, organizationId, store]);
 
   const submitMessage = (conversationId: string, text: string): void => {
     const conversation = conversationStoreRef.current.conversations.find(
@@ -1486,6 +1525,14 @@ export const AgentChatPanel = ({
         onCreateConversation={createConversation}
         onSelectConversation={selectConversation}
       />
+      {cliTasksEnabled ? (
+        <CliTasksPanel
+          onStop={taskId => {
+            browserTaskRuntimeRef.current?.stop(taskId);
+          }}
+          owner={auth.userEmail ?? 'Authenticated Kilo user'}
+        />
+      ) : null}
       <ConversationList items={groupedEvents} streamingMessageId={streamingMessageId} />
 
       {remoteMcpToolWarning === undefined ? null : (
