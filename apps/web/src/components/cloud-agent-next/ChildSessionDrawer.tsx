@@ -161,7 +161,7 @@ export function ChildSessionDrawer({
   useEffect(() => {
     if (!selectedSessionId) return;
     performance.mark(`child-open-${selectedSessionId}`);
-    void manager.hydrateChildSession(selectedSessionId);
+    void manager.hydrateChildSession(selectedSessionId, { priority: 'user' });
   }, [manager, selectedSessionId]);
 
   useEffect(() => {
@@ -279,7 +279,7 @@ export function ChildSessionDrawer({
 
   const handleRetry = useCallback(() => {
     if (!selectedSessionId) return;
-    void manager.hydrateChildSession(selectedSessionId);
+    void manager.hydrateChildSession(selectedSessionId, { priority: 'user' });
   }, [manager, selectedSessionId]);
 
   const hasMessages = messages.length > 0;
@@ -358,6 +358,20 @@ export function ChildSessionDrawer({
                 </div>
               )}
 
+              {hydrationState.status === 'ready' &&
+                hydrationState.isRefreshing &&
+                (hasMessages ? (
+                  <div className="text-muted-foreground mb-4 flex items-center gap-2 text-xs">
+                    <Loader2 className="size-3.5 shrink-0 animate-spin" />
+                    <span>Refreshing…</span>
+                  </div>
+                ) : (
+                  <div className="border-border bg-muted/20 text-muted-foreground mb-4 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm">
+                    <Loader2 className="size-4 shrink-0 animate-spin" />
+                    <span>Loading sub-agent messages...</span>
+                  </div>
+                ))}
+
               {hydrationState.status === 'error' && (
                 <div className="border-destructive/40 bg-destructive/10 mb-4 rounded-lg border px-3 py-3">
                   <div className="flex items-start gap-2">
@@ -392,7 +406,8 @@ export function ChildSessionDrawer({
                   ))}
                 </div>
               ) : hydrationState.status === 'loading' ||
-                hydrationState.status === 'error' ? null : (
+                hydrationState.status === 'error' ||
+                (hydrationState.status === 'ready' && hydrationState.isRefreshing) ? null : (
                 <div className="border-border bg-muted/20 text-muted-foreground rounded-lg border px-4 py-6 text-sm">
                   No sub-agent messages yet.
                 </div>
