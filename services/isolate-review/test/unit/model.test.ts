@@ -128,6 +128,32 @@ describe('Kilo gateway model', () => {
     expect(reviewSchema).toHaveProperty('properties.comments.items.properties.body.type', 'string');
     expect(summarySchema).toHaveProperty('properties.body.type', 'string');
   });
+
+  it('accepts omitted GitHub read arguments without making them nullable', () => {
+    const tools = createGithubTools({
+      input: {
+        owner: 'acme',
+        repo: 'widget',
+        pullNumber: 42,
+        gitToken: 'fixture-git-token',
+        kiloToken: 'fixture-kilo-token',
+      },
+      headSha: 'a'.repeat(40),
+      tools: ['pr_view', 'pr_file'],
+    });
+    const viewSchema = tools.pr_view.inputSchema as z.ZodType;
+    const fileSchema = tools.pr_file.inputSchema as z.ZodType;
+    const fileInput = { path: 'src/index.ts', revision: 'head' };
+
+    expect(viewSchema.parse({})).toEqual({});
+    expect(fileSchema.parse(fileInput)).toEqual(fileInput);
+    expect(() => viewSchema.parse({ bodyHash: null })).toThrow();
+    expect(() => viewSchema.parse({ offset: null })).toThrow();
+    expect(() => fileSchema.parse({ ...fileInput, commitSha: null })).toThrow();
+    expect(() => fileSchema.parse({ ...fileInput, offset: null })).toThrow();
+    expect(() => fileSchema.parse({ path: fileInput.path })).toThrow();
+    expect(() => fileSchema.parse({ revision: fileInput.revision })).toThrow();
+  });
 });
 
 const catalogModel = {

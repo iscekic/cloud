@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { READ_ONLY_GITHUB_TOOL_NAMES } from './github';
 import type { ReviewWorkspace } from './git';
 import { buildChildSystemPrompt } from './prompt';
-import { createReviewGrepTool } from './workspace';
+import { createReviewGrepTool, createReviewReadTool } from './workspace';
 
 export const MAX_TASK_CONCURRENCY = 6;
 export const MAX_TASK_STEPS = 12;
@@ -213,7 +213,7 @@ export function createTaskTool(options: {
 }) {
   const ws = createWorkspaceTools(options.workspace, { bash: false });
   const childTools: ToolSet = {
-    read: ws.read,
+    read: createReviewReadTool(options.workspace),
     grep: createReviewGrepTool(options.workspace),
     list: ws.list,
     find: ws.find,

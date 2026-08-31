@@ -10,6 +10,7 @@ import {
   type UIMessage,
 } from 'ai';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { createGithubTools } from '../../src/github';
 import { createKiloGatewayModel, resolveIsolateReviewInferenceFromCatalog } from '../../src/model';
 import type { IsolateReviewInference } from '../../src/types';
 
@@ -37,6 +38,13 @@ type WireBody = {
   text?: { verbosity?: string };
   store?: boolean;
   include?: string[];
+  tools?: Array<{
+    type?: string;
+    name?: string;
+    strict?: boolean;
+    parameters?: { required?: string[] };
+    function?: { strict?: boolean };
+  }>;
   messages?: Array<Record<string, unknown>>;
   input?: Array<Record<string, unknown>>;
   providerOptions?: unknown;
@@ -207,7 +215,12 @@ function messagesReply(model: string, first: boolean, streaming: boolean) {
   return eventStream(events);
 }
 
-function responsesReply(model: string, first: boolean, streaming: boolean) {
+function responsesReply(
+  model: string,
+  first: boolean,
+  streaming: boolean,
+  functionCall = { name: 'inspect', arguments: '{}' }
+) {
   const output = first
     ? [
         {
@@ -220,8 +233,7 @@ function responsesReply(model: string, first: boolean, streaming: boolean) {
           type: 'function_call',
           id: 'fc_fixture',
           call_id: 'call_fixture',
-          name: 'inspect',
-          arguments: '{}',
+          ...functionCall,
           status: 'completed',
         },
       ]
@@ -256,7 +268,7 @@ function responsesReply(model: string, first: boolean, streaming: boolean) {
         type: 'response.function_call_arguments.delta',
         item_id: item.id,
         output_index: index,
-        delta: '{}',
+        delta: functionCall.arguments,
       });
     }
     if (item.type === 'message') {
@@ -411,6 +423,10 @@ function expectWireOptions(inference: IsolateReviewInference, body: WireBody) {
   expect(body.providerOptions).toBeUndefined();
   expect(body.temperature).toBe(inference.temperature);
   expect(body.top_p).toBe(inference.topP);
+  for (const tool of body.tools ?? []) {
+    expect(tool.strict).toBe(inference.provider === 'openai' ? false : undefined);
+    expect(tool.function?.strict).toBeUndefined();
+  }
   const reasoning = inference.variant?.reasoning;
   const verbosity = inference.variant?.verbosity;
   if (inference.provider === 'anthropic') {
@@ -514,6 +530,166 @@ const cases = catalogFixtures.flatMap(model =>
 );
 
 describe('installed SDK protocol fixtures without live model claims', () => {
+  it.each(
+    [
+      { toolName: 'pr_view', input: {} },
+      { toolName: 'pr_file', input: { path: 'src/index.ts', revision: 'head' } },
+      { toolName: 'pr_file', input: { path: 'src/index.ts', revision: 'merge-base' } },
+    ].flatMap(call => [false, true].map(streaming => ({ ...call, streaming })))
+  )(
+    'Responses $toolName with $input round-trips omitted optional arguments (stream=$streaming)',
+    async ({ toolName, input, streaming }) => {
+      const snapshot = {
+        headSha: 'a'.repeat(40),
+        baseTipSha: 'b'.repeat(40),
+        mergeBaseSha: 'c'.repeat(40),
+      };
+      const githubFetch: typeof fetch = async (request, init) => {
+        const url = new URL(request instanceof Request ? request.url : request.toString());
+        expect(url.origin).toBe('https://github.offline.invalid');
+        expect(init?.method ?? 'GET').toBe('GET');
+        if (url.pathname === '/repos/acme/widget/pulls/42')
+          return Response.json({
+            head: { sha: snapshot.headSha },
+            base: { sha: snapshot.baseTipSha },
+            body: 'fixture description',
+            changed_files: 1,
+          });
+        if (
+          url.pathname === `/repos/acme/widget/compare/${snapshot.baseTipSha}...${snapshot.headSha}`
+        )
+          return Response.json({
+            base_commit: { sha: snapshot.baseTipSha },
+            merge_base_commit: { sha: snapshot.mergeBaseSha },
+            files: [
+              {
+                sha: 'd'.repeat(40),
+                filename: 'src/index.ts',
+                status: 'modified',
+                additions: 1,
+                deletions: 1,
+                changes: 2,
+                patch: '@@ -1 +1 @@\n-old\n+fixture file',
+              },
+            ],
+          });
+        if (url.pathname === '/repos/acme/widget/contents/src/index.ts') {
+          expect(url.searchParams.get('ref')).toBe(
+            input.revision === 'head' ? snapshot.headSha : snapshot.mergeBaseSha
+          );
+          return Response.json({
+            type: 'file',
+            path: 'src/index.ts',
+            size: 'fixture file'.length,
+            encoding: 'base64',
+            content: btoa('fixture file'),
+            sha: 'd'.repeat(40),
+          });
+        }
+        throw new Error(`Unexpected fixture request: ${url.pathname}`);
+      };
+      const githubTools = createGithubTools({
+        input: {
+          owner: 'acme',
+          repo: 'widget',
+          pullNumber: 42,
+          gitToken: 'fixture-git-token',
+          kiloToken: 'fixture-kilo-token',
+        },
+        ...snapshot,
+        tools: ['pr_view', 'pr_file'],
+        apiUrl: 'https://github.offline.invalid',
+        fetchImpl: githubFetch,
+      });
+      const inference = resolveIsolateReviewInferenceFromCatalog(catalogFixtures[2], 'high');
+      const requests: WireBody[] = [];
+      const functionCall = { name: toolName, arguments: JSON.stringify(input) };
+      const fetchImpl: typeof fetch = async (request, init) => {
+        expect(request).toBe('https://offline.invalid/api/openrouter/responses');
+        if (typeof init?.body !== 'string') throw new Error('Expected a JSON body');
+        const body = JSON.parse(init.body) as WireBody;
+        requests.push(body);
+        return responsesReply(
+          inference.modelId,
+          requests.length === 1,
+          body.stream === true,
+          functionCall
+        );
+      };
+      const options = {
+        model: createKiloGatewayModel({
+          runId: 'root',
+          kiloToken: 'fixture-token',
+          inference,
+          gatewayUrl: 'https://offline.invalid/api/openrouter',
+          fetchImpl,
+        }),
+        messages,
+        tools: githubTools,
+        stopWhen: stepCountIs(2),
+        maxRetries: 0,
+      };
+      const result = streaming ? streamText(options) : await generateText(options);
+      expect(await result.text).toBe('done');
+      const steps = await result.steps;
+      expect(steps).toHaveLength(2);
+      expect(steps[0].toolResults).toHaveLength(1);
+      expect(steps[0].toolResults[0]).toMatchObject({ toolName, input });
+      const output = steps[0].toolResults[0].output;
+      expect(output).toMatchObject(
+        toolName === 'pr_view'
+          ? { body: 'fixture description', bodyHash: expect.any(String) }
+          : { body: 'fixture file', found: true }
+      );
+      expect(requests).toHaveLength(2);
+      for (const body of requests) {
+        expectWireOptions(inference, body);
+        expect(body.tools).toHaveLength(2);
+        const view = body.tools?.find(tool => tool.name === 'pr_view');
+        expect(view).toMatchObject({
+          type: 'function',
+          strict: false,
+          parameters: {
+            properties: { offset: { type: 'number' }, bodyHash: { type: 'string' } },
+          },
+        });
+        expect(view?.parameters?.required ?? []).toEqual([]);
+        const file = body.tools?.find(tool => tool.name === 'pr_file');
+        expect(file).toMatchObject({
+          type: 'function',
+          strict: false,
+          parameters: {
+            properties: { commitSha: { type: 'string' }, offset: { type: 'number' } },
+            required: ['path', 'revision'],
+          },
+        });
+      }
+      expect(requests[1].input).toContainEqual({
+        type: 'function_call',
+        call_id: 'call_fixture',
+        ...functionCall,
+      });
+      expect(requests[1].input).toContainEqual({
+        type: 'function_call_output',
+        call_id: 'call_fixture',
+        output: JSON.stringify(output),
+      });
+    }
+  );
+
+  it('preserves explicitly configured Responses function-tool strictness', async () => {
+    const fixture = createFixture(resolveIsolateReviewInferenceFromCatalog(catalogFixtures[2]));
+    await generateText({
+      model: fixture.model,
+      messages,
+      tools: { inspect: { ...tools.inspect, strict: true } },
+      maxRetries: 0,
+    });
+    expect(fixture.requests[0].body.tools).toContainEqual(
+      expect.objectContaining({ type: 'function', name: 'inspect', strict: true })
+    );
+  });
+
   it.each(cases)(
     '$label preserves wire settings and tool-result continuation',
     async ({ model, key, streaming }) => {

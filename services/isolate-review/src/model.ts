@@ -219,6 +219,16 @@ export function cleanStatelessResponsesBody(body: BodyInit | null | undefined): 
   });
 }
 
+const responsesToolMiddleware: LanguageModelMiddleware = {
+  specificationVersion: 'v4',
+  transformParams: async ({ params }) => ({
+    ...params,
+    tools: params.tools?.map(tool =>
+      tool.type === 'function' ? { ...tool, strict: tool.strict ?? false } : tool
+    ),
+  }),
+};
+
 const openRouterReasoningMiddleware: LanguageModelMiddleware = {
   specificationVersion: 'v4',
   transformParams: async ({ params }) => ({
@@ -374,6 +384,7 @@ export function createKiloGatewayModel(options: {
     model,
     middleware: [
       defaultSettingsMiddleware({ settings }),
+      ...(inference.provider === 'openai' ? [responsesToolMiddleware] : []),
       ...(inference.provider === 'openrouter' ? [openRouterReasoningMiddleware] : []),
     ],
   });

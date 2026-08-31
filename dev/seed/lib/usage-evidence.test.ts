@@ -37,6 +37,7 @@ function usageRow(overrides: UsageRow = {}): UsageRow {
 }
 
 function mockUsageDb(t: TestContext, rows: UsageRow[]) {
+  t.mock.timers.enable({ apis: ['Date'], now: new Date('2026-08-27T10:00:00.000Z') });
   const previousEnv = {
     POSTGRES_URL: process.env.POSTGRES_URL,
     USE_PRODUCTION_DB: process.env.USE_PRODUCTION_DB,
@@ -169,20 +170,99 @@ void test('session and since filters are bound with the user before the sentinel
   }
 });
 
-void test('session filtering does not require a since filter', async t => {
+void test('session filtering applies the default 48-hour window when --since is omitted', async t => {
   const { statements } = mockUsageDb(t, []);
   const result = await run(email, '--session-id', 'isolate-run');
   assert.ok(result);
   assert.equal(result.sessionId, 'isolate-run');
+  assert.equal(result.since, '2026-08-25T10:00:00.000Z');
   assert.equal(result.rows, 0);
   const statement = statements.at(-1);
   assert.ok(statement);
   assert.equal(
     statement.sql.slice(statement.sql.indexOf(' where ')),
-    ' where ("microdollar_usage"."kilo_user_id" = $1 and "microdollar_usage_metadata"."session_id" = $2) order by "microdollar_usage"."created_at" desc limit $3'
+    ' where ("microdollar_usage"."kilo_user_id" = $1 and "microdollar_usage"."created_at" > $2 and "microdollar_usage_metadata"."session_id" = $3) order by "microdollar_usage"."created_at" desc limit $4'
   );
-  assert.deepEqual(statement.params, [userId, 'isolate-run', 101]);
+  assert.deepEqual(statement.params, [userId, '2026-08-25T10:00:00.000Z', 'isolate-run', 101]);
 });
+
+for (const { name, sinceArgs, since, includedTimes } of [
+  {
+    name: 'default 48-hour window',
+    sinceArgs: [],
+    since: '2026-08-25T10:00:00.000Z',
+    includedTimes: ['2026-08-25T10:00:00.001Z', '2026-08-27T09:00:00.000Z'],
+  },
+  {
+    name: 'explicit older --since window',
+    sinceArgs: ['--since', '2026-08-24T12:00:00+02:00'],
+    since: '2026-08-24T10:00:00.000Z',
+    includedTimes: [
+      '2026-08-24T10:00:00.001Z',
+      '2026-08-25T09:59:59.999Z',
+      '2026-08-25T10:00:00.000Z',
+      '2026-08-25T10:00:00.001Z',
+      '2026-08-27T09:00:00.000Z',
+    ],
+  },
+]) {
+  void test(`${name} bounds aggregates, samples and unattributed totals consistently across scopes`, async t => {
+    mockUsageDb(
+      t,
+      [
+        { session_id: 'review-a', cost: 2, input_tokens: 20 },
+        { session_id: 'child', cost: 3, input_tokens: 30 },
+        { session_id: null, cost: 5, input_tokens: 50 },
+        { metadataPresent: false, cost: 7, input_tokens: 70 },
+        { session_id: 'unrelated', cost: 11, input_tokens: 110 },
+        { kilo_user_id: 'other-user', cost: 999999, input_tokens: 999999 },
+      ].flatMap(overrides =>
+        [
+          '2026-08-24 09:59:59.999+00',
+          '2026-08-24 10:00:00+00',
+          '2026-08-24 10:00:00.001+00',
+          '2026-08-25 09:59:59.999+00',
+          '2026-08-25 10:00:00+00',
+          '2026-08-25 10:00:00.001+00',
+          '2026-08-27 09:00:00+00',
+        ].map(created_at => usageRow({ ...overrides, created_at }))
+      )
+    );
+    for (const { sessionIds, scope, rowsPerTime, costPerTime } of [
+      { sessionIds: [], scope: 'user-window', rowsPerTime: 5, costPerTime: 28 },
+      { sessionIds: ['review-a'], scope: 'session', rowsPerTime: 1, costPerTime: 2 },
+      { sessionIds: ['review-a', 'child'], scope: 'session-set', rowsPerTime: 2, costPerTime: 5 },
+    ]) {
+      const result = await run(
+        email,
+        ...sinceArgs,
+        ...sessionIds.flatMap(sessionId => ['--session-id', sessionId])
+      );
+      assert.ok(result);
+      const timeCount = includedTimes.length;
+      assert.partialDeepStrictEqual(result, {
+        since,
+        scope,
+        matchedRows: rowsPerTime * timeCount,
+        billedMicrodollars: costPerTime * timeCount,
+        grossInputTokens: costPerTime * timeCount * 10,
+        rows: rowsPerTime * timeCount,
+        sampledCostMicrodollars: costPerTime * timeCount,
+        sampledInputTokens: costPerTime * timeCount * 10,
+        unattributedRows: 2 * timeCount,
+        unattributedBilledMicrodollars: 12 * timeCount,
+        unattributedGrossInputTokens: 120 * timeCount,
+        unattributedMissingMetadataRows: timeCount,
+        truncated: false,
+        runAccountingCompleteness: 'unproven',
+      });
+      const samples = jsonField(result, 'sampleRowsJson');
+      assert.ok(Array.isArray(samples));
+      assert.equal(samples.length, rowsPerTime * timeCount);
+      assert.deepEqual([...new Set(samples.map(row => row.createdAt))].sort(), includedTimes);
+    }
+  });
+}
 
 void test('sampled totals include BYOK and non-BYOK rows while preserving flat BYOK evidence', async t => {
   mockUsageDb(t, [

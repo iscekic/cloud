@@ -51,7 +51,7 @@ import {
 import { ISOLATE_REVIEW_SKILLS } from './prompt/skills';
 import { projectReviewTranscript } from './transcript';
 import { createTaskTool, type TaskOutcome, type TaskSession } from './task';
-import { createReviewGrepTool, createSafeReviewWorkspace } from './workspace';
+import { createReviewGrepTool, createReviewReadTool, createSafeReviewWorkspace } from './workspace';
 import {
   hasReviewSecrets,
   isDryRun,
@@ -929,6 +929,7 @@ export class ReviewIsolate extends Think<Env> {
         DENIED_WORKSPACE_TOOLS.map(name => [name, disabledWorkspaceTool(name)])
       ),
       ...github,
+      read: createReviewReadTool(this.workspace),
       grep: createReviewGrepTool(this.workspace),
       task: createTaskTool({
         parentSessionId: state.runId,

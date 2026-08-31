@@ -25,6 +25,7 @@ import {
   createReviewGrepTool,
   MAX_REVIEW_GREP_LINE_BYTES,
   MAX_REVIEW_GREP_OUTPUT_BYTES,
+  MAX_REVIEW_READ_OUTPUT_BYTES,
 } from '../../src/workspace';
 
 const reviewContext = 'Canonical resolved review policy and captured snapshot';
@@ -203,6 +204,72 @@ describe('review task tool', () => {
       ],
     });
   });
+
+  it.each(['general', 'explore'] as const)(
+    'uses streaming read limits and exposes continuations in %s children',
+    async subagentType => {
+      const { storage } = fakeStorage();
+      const { calls, generate } = makeGenerate();
+      const path = '/workspace/data.csv';
+      const bytes = new TextEncoder().encode('value\n'.repeat(10_000));
+      const workspace = {
+        ...fakeWorkspace(),
+        fs: {
+          readFile: vi.fn(
+            async () =>
+              new ReadableStream<Uint8Array>({
+                start(controller) {
+                  controller.enqueue(bytes);
+                  controller.close();
+                },
+              })
+          ),
+        },
+      } as unknown as ReviewWorkspace;
+      vi.mocked(workspace.stat).mockResolvedValue({
+        path,
+        name: 'data.csv',
+        type: 'file',
+        mimeType: 'text/csv',
+        size: bytes.byteLength,
+        createdAt: 0,
+        updatedAt: 0,
+      });
+      const task = createTestTask(storage, generate as typeof generateText, { workspace });
+      await executeTask(task, {
+        description: 'Read a large file',
+        prompt: 'Inspect the next file segment.',
+        subagent_type: subagentType,
+      });
+      const read = calls[0]?.tools?.read;
+      if (!read?.execute || !read.toModelOutput) throw new Error('Child read tool is incomplete');
+      const input = { path };
+      const output = await read.execute(input, {
+        toolCallId: 'child-read',
+        messages: [],
+        context: {},
+      });
+      const result = z
+        .object({
+          content: z.string(),
+          truncated: z.boolean(),
+          nextOffset: z.number(),
+          nextByteOffset: z.number(),
+        })
+        .parse(output);
+      expect(result.truncated).toBe(true);
+      expect(new TextEncoder().encode(result.content).byteLength).toBeLessThanOrEqual(
+        MAX_REVIEW_READ_OUTPUT_BYTES
+      );
+      expect(result.nextOffset).toBeGreaterThan(1);
+      expect(await read.toModelOutput({ input, output, toolCallId: 'child-read' })).toMatchObject({
+        type: 'json',
+        value: { nextOffset: result.nextOffset, nextByteOffset: result.nextByteOffset },
+      });
+      expect(workspace.readFile).not.toHaveBeenCalled();
+      expect(workspace.readFileBytes).not.toHaveBeenCalled();
+    }
+  );
 
   it.each(['general', 'explore'] as const)(
     'uses shared byte-bounded grep in %s children',

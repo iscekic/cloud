@@ -53,6 +53,7 @@ export const MAX_FILE_BYTES = 1024 * 1024;
 export const MAX_PUBLICATION_ATTEMPTS = 2;
 export const MAX_HISTORY_REQUESTS = 20;
 export const MAX_HISTORY_COMMITS = 100;
+export const MAX_RENAME_PROOF_REQUESTS = 100;
 const HISTORY_PAGE_SIZE = 20;
 const MAX_HISTORY_PAGES = 5;
 const MAX_CATEGORY_OUTPUT_BYTES = 128 * 1024;
@@ -398,6 +399,31 @@ const historyCommitSchema = z.object({
 const commitDetailsSchema = historyCommitSchema.extend({
   files: z.array(fileSchema).max(PAGE_SIZE),
 });
+const gitCommitSchema = z.object({
+  sha: shaSchema,
+  tree: z.object({ sha: shaSchema }),
+});
+const gitTreeEntrySchema = z
+  .object({
+    path: pathSchema.refine(
+      path => path !== '.' && path !== '..' && !path.includes('/') && !path.includes('\0')
+    ),
+    sha: shaSchema,
+    mode: z.enum(['100644', '100755', '040000', '120000', '160000']),
+    type: z.enum(['blob', 'tree', 'commit']),
+  })
+  .refine(
+    entry =>
+      entry.type ===
+      (entry.mode === '040000' ? 'tree' : entry.mode === '160000' ? 'commit' : 'blob')
+  );
+const gitTreeSchema = z
+  .object({
+    sha: shaSchema,
+    truncated: z.literal(false),
+    tree: z.array(gitTreeEntrySchema).max(MAX_CONTEXT_RECORDS),
+  })
+  .refine(tree => new Set(tree.tree.map(entry => entry.path)).size === tree.tree.length);
 const contentSchema = z.object({
   type: z.literal('file'),
   encoding: z.literal('base64'),
@@ -907,6 +933,8 @@ export function createGithubTools(options: {
   let currentPrFiles: FileEvidence[] | undefined;
   let currentPrFileSource: 'exact-compare' | 'guarded-pr-files' = 'exact-compare';
   let cachedPatchBytes = 0;
+  let renameProofRequestCount = 0;
+  let renameProofBytes = 0;
   let inlineCommentsComplete = false;
   let existingInlineKeys = new Set<string>();
   let reviewResult: { id: number } | undefined;
@@ -1227,6 +1255,114 @@ export function createGithubTools(options: {
     return result.data.files;
   }
 
+  function createRenameProofReader<T extends { sha: string }>(
+    endpoint: 'commits' | 'trees',
+    schema: z.ZodType<T>
+  ) {
+    const cache = new Map<string, T>();
+    const inFlight = new Map<string, { signal?: AbortSignal; promise: Promise<T> }>();
+    return async (sha: string, signal?: AbortSignal): Promise<T> => {
+      signal?.throwIfAborted();
+      const cached = cache.get(sha);
+      if (cached) return cached;
+      let pending = inFlight.get(sha);
+      if (!pending || pending.signal !== signal) {
+        const promise = read(`${basePath}/git/${endpoint}/${sha}`, schema, signal, async () => {
+          if (renameProofRequestCount >= MAX_RENAME_PROOF_REQUESTS)
+            throw new GithubContextError('GitHub rename proof request budget exhausted');
+          if (renameProofBytes >= MAX_GITHUB_TRAVERSAL_BYTES)
+            throw new GithubContextError('GitHub rename proof metadata byte budget exhausted');
+          renameProofRequestCount++;
+        }).then(response => {
+          signal?.throwIfAborted();
+          const bytes = responseBytes(response);
+          renameProofBytes += bytes;
+          if (bytes > MAX_GITHUB_RESPONSE_BYTES || renameProofBytes > MAX_GITHUB_TRAVERSAL_BYTES)
+            throw new GithubContextError('GitHub rename proof metadata byte budget exhausted');
+          if (response.data.sha !== sha || linkUrl(response.headers.get('Link'), 'next'))
+            throw new GithubContextError('GitHub returned mismatched or incomplete Git metadata');
+          cache.set(sha, response.data);
+          return response.data;
+        });
+        pending = { signal, promise };
+        inFlight.set(sha, pending);
+      }
+      try {
+        const value = await pending.promise;
+        signal?.throwIfAborted();
+        return value;
+      } finally {
+        if (inFlight.get(sha) === pending) inFlight.delete(sha);
+      }
+    };
+  }
+
+  const readGitCommit = createRenameProofReader('commits', gitCommitSchema);
+  const readGitTree = createRenameProofReader('trees', gitTreeSchema);
+
+  async function regularFileMode(
+    path: string,
+    commitSha: string,
+    blobSha: string,
+    signal?: AbortSignal
+  ): Promise<'100644' | '100755' | undefined> {
+    const parts = path.split('/');
+    let treeSha = (await readGitCommit(commitSha, signal)).tree.sha;
+    const visited = new Set<string>();
+    for (let index = 0; index < parts.length; index++) {
+      if (visited.has(treeSha))
+        throw new GithubContextError('GitHub returned cyclic Git tree metadata');
+      visited.add(treeSha);
+      const tree = await readGitTree(treeSha, signal);
+      const entry = tree.tree.find(entry => entry.path === parts[index]);
+      if (!entry) return undefined;
+      if (index === parts.length - 1) {
+        return entry.type === 'blob' &&
+          (entry.mode === '100644' || entry.mode === '100755') &&
+          entry.sha === blobSha
+          ? entry.mode
+          : undefined;
+      }
+      if (entry.type !== 'tree' || entry.mode !== '040000') return undefined;
+      treeSha = entry.sha;
+    }
+    return undefined;
+  }
+
+  async function isContentPreservingRename(
+    file: DiffFile,
+    comparison: FileComparison,
+    signal?: AbortSignal
+  ): Promise<boolean> {
+    if (
+      file.status !== 'renamed' ||
+      !file.previous_filename ||
+      file.previous_filename === file.filename ||
+      file.additions !== 0 ||
+      file.deletions !== 0 ||
+      file.changes !== 0 ||
+      (file.patch !== undefined && file.patch !== '')
+    ) {
+      return false;
+    }
+    const captured = await getSnapshot(signal);
+    const oldSha =
+      comparison === 'review' && incrementalSelection
+        ? incrementalSelection.previousHeadSha
+        : captured.mergeBaseSha;
+    try {
+      const previousMode = await regularFileMode(file.previous_filename, oldSha, file.sha, signal);
+      return (
+        previousMode !== undefined &&
+        previousMode === (await regularFileMode(file.filename, captured.headSha, file.sha, signal))
+      );
+    } catch (error) {
+      signal?.throwIfAborted();
+      if (error instanceof Error && error.name === 'AbortError') throw error;
+      return false;
+    }
+  }
+
   async function getFiles(
     comparison: FileComparison,
     signal?: AbortSignal
@@ -1240,17 +1376,21 @@ export function createGithubTools(options: {
     const compared = await compare(comparison, signal);
     const evidence: FileEvidence[] = [];
     const names = new Set<string>();
-    function add(file: DiffFile, page?: number) {
+    async function add(file: DiffFile, page?: number) {
       if (
         names.has(file.filename) ||
         toRepoRelativePath(file.filename) !== file.filename ||
+        (file.previous_filename !== undefined &&
+          toRepoRelativePath(file.previous_filename) !== file.previous_filename) ||
         (file.status === 'renamed' && !file.previous_filename)
       ) {
         throw new GithubContextError('GitHub returned duplicate or invalid changed-file metadata');
       }
       names.add(file.filename);
-      const patchStatus = filePatchStatus(file);
-      const patchBytes = file.patch === undefined ? null : byteLength(file.patch);
+      const metadataOnly = await isContentPreservingRename(file, comparison, signal);
+      const patch = metadataOnly ? '' : file.patch;
+      const patchStatus = metadataOnly ? 'available' : filePatchStatus(file);
+      const patchBytes = patch === undefined ? null : byteLength(patch);
       const retain =
         patchStatus === 'available' &&
         patchBytes !== null &&
@@ -1258,15 +1398,15 @@ export function createGithubTools(options: {
       if (retain) cachedPatchBytes += patchBytes;
       evidence.push({
         ...file,
-        patch: retain ? file.patch : undefined,
-        patchLength: file.patch?.length ?? null,
+        patch: retain ? patch : undefined,
+        patchLength: patch?.length ?? null,
         patchBytes,
         patchStatus,
         ...(page === undefined ? {} : { page }),
       });
     }
     if (delta || (compared.length < MAX_DIFF_FILES && compared.length === before.changed_files)) {
-      for (const file of compared) add(file);
+      for (const file of compared) await add(file);
     } else {
       currentPrFileSource = 'guarded-pr-files';
       await currentPull(signal);
@@ -1276,7 +1416,7 @@ export function createGithubTools(options: {
         (file, index, page) => {
           if (index >= MAX_PR_FILES)
             throw new GithubContextError('PR-file pagination exceeds 3,000 files');
-          add(file, page);
+          return add(file, page);
         },
         signal
       );
@@ -2345,6 +2485,7 @@ export function createGithubTools(options: {
               !file ||
               file.status === 'removed' ||
               file.patchLength === null ||
+              file.patchLength === 0 ||
               (incrementalSelection && file.patchStatus !== 'available')
             )
               return {

@@ -1,7 +1,47 @@
+import { createReadTool, WorkspaceFileStore } from '@cloudflare/computer/tools';
 import { tool } from 'ai';
+import { RE2JS } from 're2js';
 import { z } from 'zod';
 import type { ReviewWorkspace } from './git';
 import { isGitPath } from './paths';
+
+export const MAX_REVIEW_READ_LINES = 2_000;
+export const MAX_REVIEW_READ_OUTPUT_BYTES = 16 * 1024;
+export const MAX_REVIEW_READ_LINE_BYTES = 2 * 1024;
+const MAX_REVIEW_READ_MEDIA_BYTES = 3.5 * 1024 * 1024;
+
+export function createReviewReadTool(workspace: ReviewWorkspace) {
+  const store = new WorkspaceFileStore(workspace);
+  const stat = async (path: string) => {
+    const info = await workspace.stat(path);
+    return info?.type === 'file' ? { size: info.size, mtime: info.updatedAt } : null;
+  };
+
+  return createReadTool({
+    store: {
+      stat,
+      async *readChunks(path, byteOffset, byteLength) {
+        if (!(await stat(path))) {
+          throw Object.assign(new Error(`File not found: ${path}`), { code: 'ENOENT' });
+        }
+        yield* store.readChunks(path, byteOffset, byteLength);
+      },
+      async readAll(path) {
+        const info = await stat(path);
+        if (!info || info.size > MAX_REVIEW_READ_MEDIA_BYTES) return null;
+        return workspace.readFileBytes(path);
+      },
+      async write() {
+        throw new Error('Review workspace is read-only');
+      },
+    },
+    maxLines: MAX_REVIEW_READ_LINES,
+    maxBytes: MAX_REVIEW_READ_OUTPUT_BYTES,
+    includeLineNumbers: true,
+    lineTruncation: { bytes: MAX_REVIEW_READ_LINE_BYTES },
+    maxModelBytes: MAX_REVIEW_READ_MEDIA_BYTES,
+  });
+}
 
 export const MAX_REVIEW_GREP_LINE_BYTES = 2 * 1024;
 export const MAX_REVIEW_GREP_OUTPUT_BYTES = 64 * 1024;
@@ -105,7 +145,7 @@ export function createSafeReviewWorkspace(workspace: ReviewWorkspace): ReviewWor
 export function createReviewGrepTool(workspace: ReviewWorkspace) {
   return tool({
     description:
-      'Search file contents using a regular expression or fixed string. Returns matching lines with file paths and line numbers. Searches all files matching the include glob, or all files if not specified. Line previews and total output are byte-bounded; truncated evidence requires follow-up reads or a narrower search.',
+      'Search file contents using an RE2 regular expression (no lookaround or backreferences) or fixed string. Returns matching lines with file paths and line numbers. Searches all files matching the include glob, or all files if not specified. Line previews and total output are byte-bounded; truncated evidence requires follow-up reads or a narrower search.',
     inputSchema: z.object({
       query: z.string().describe('Search pattern (regex or fixed string)'),
       include: z
@@ -150,11 +190,11 @@ export function createReviewGrepTool(workspace: ReviewWorkspace) {
         };
       };
       const boundedQuery = preview(query);
-      let regex: RegExp;
+      let regex: RE2JS;
       try {
-        regex = new RegExp(
+        regex = RE2JS.compile(
           fixedString ? query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : query,
-          caseSensitive ? 'g' : 'gi'
+          caseSensitive ? 0 : RE2JS.CASE_INSENSITIVE
         );
       } catch {
         return { error: `Invalid regex: ${boundedQuery.text}` };
@@ -208,7 +248,6 @@ export function createReviewGrepTool(workspace: ReviewWorkspace) {
         const lines = content.split('\n');
         let fileHasMatch = false;
         for (let index = 0; index < lines.length; index++) {
-          regex.lastIndex = 0;
           if (!regex.test(lines[index])) continue;
           if (file.path.length > remainingBytes) {
             truncation.outputLimitReached = true;

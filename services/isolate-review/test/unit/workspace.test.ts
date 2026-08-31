@@ -1,13 +1,18 @@
 import { createWorkspaceTools } from '@cloudflare/think/tools/workspace';
 import { env, runInDurableObject } from 'cloudflare:test';
 import { describe, expect, it, vi } from 'vitest';
+import { z } from 'zod';
 import type { ReviewWorkspace } from '../../src/git';
 import type { Env } from '../../src/types';
 import {
   createReviewGrepTool,
+  createReviewReadTool,
   createSafeReviewWorkspace,
   MAX_REVIEW_GREP_LINE_BYTES,
   MAX_REVIEW_GREP_OUTPUT_BYTES,
+  MAX_REVIEW_READ_LINE_BYTES,
+  MAX_REVIEW_READ_LINES,
+  MAX_REVIEW_READ_OUTPUT_BYTES,
 } from '../../src/workspace';
 
 type WorkspaceEntry = Awaited<ReturnType<ReviewWorkspace['glob']>>[number];
@@ -33,7 +38,35 @@ class FakeWorkspace {
   readonly git = { client: 'git-client' };
   readonly missing = new Set<string>();
   readonly symlinks = new Map<string, string>();
+  readonly streamedBytes = new Map<string, number>();
+  readonly cancelledReads: string[] = [];
   readonly fs = {
+    readFile: vi.fn(
+      async (path: string, options: { byteOffset?: number; byteLength?: number } = {}) => {
+        const content = this.contents.get(path);
+        if (content === undefined) {
+          throw Object.assign(new Error(`ENOENT: no such path: ${path}`), { code: 'ENOENT' });
+        }
+        const bytes = new TextEncoder().encode(content);
+        let cursor = options.byteOffset ?? 0;
+        const end = Math.min(bytes.byteLength, cursor + (options.byteLength ?? bytes.byteLength));
+        return new ReadableStream<Uint8Array>({
+          pull: controller => {
+            if (cursor >= end) {
+              controller.close();
+              return;
+            }
+            const chunk = bytes.subarray(cursor, Math.min(cursor + 512, end));
+            cursor += chunk.byteLength;
+            this.streamedBytes.set(path, (this.streamedBytes.get(path) ?? 0) + chunk.byteLength);
+            controller.enqueue(chunk);
+          },
+          cancel: () => {
+            this.cancelledReads.push(path);
+          },
+        });
+      }
+    ),
     lstat: vi.fn(async (path: string) => {
       if (this.symlinks.has(path)) return { isSymbolicLink: true };
       if (
@@ -111,6 +144,191 @@ async function runGrep(original: FakeWorkspace, input: ReviewGrepInput) {
     throw new Error('Review grep returned no matches field');
   return result;
 }
+
+const textReadResultSchema = z.object({
+  path: z.string(),
+  content: z.string(),
+  startLine: z.number(),
+  endLine: z.number(),
+  totalLines: z.number().nullable(),
+  truncated: z.boolean(),
+  nextOffset: z.number().optional(),
+  nextByteOffset: z.number().optional(),
+});
+
+type ReviewReadInput = Parameters<
+  NonNullable<ReturnType<typeof createReviewReadTool>['execute']>
+>[0];
+
+async function runRead(original: FakeWorkspace, input: ReviewReadInput) {
+  const workspace = createSafeReviewWorkspace(original.asReviewWorkspace());
+  const execute = createReviewReadTool(workspace).execute;
+  if (!execute) throw new Error('Review read tool has no execute function');
+  return textReadResultSchema.parse(
+    await execute(input, { toolCallId: 'review-read', messages: [], context: {} })
+  );
+}
+
+describe('bounded review read', () => {
+  it.each([undefined, Number.MAX_SAFE_INTEGER])(
+    'streams a large CSV without loading or numbering the entire file with limit %s',
+    async limit => {
+      const path = '/workspace/data.csv';
+      const original = grepWorkspace(new Map([[path, 'a,b\n'.repeat(1_500_000)]]));
+      const first = await runRead(original, { path, limit });
+
+      expect(first).toMatchObject({ startLine: 1, truncated: true, totalLines: null });
+      expect(first.content.startsWith('1\ta,b\n2\ta,b')).toBe(true);
+      expect(first.endLine).toBeLessThanOrEqual(MAX_REVIEW_READ_LINES);
+      expect(new TextEncoder().encode(first.content).byteLength).toBeLessThanOrEqual(
+        MAX_REVIEW_READ_OUTPUT_BYTES
+      );
+      expect(original.streamedBytes.get(path)).toBeLessThan(MAX_REVIEW_READ_OUTPUT_BYTES * 2);
+      expect(original.cancelledReads).toContain(path);
+      expect(original.readFile).not.toHaveBeenCalled();
+      expect(original.readFileBytes).not.toHaveBeenCalled();
+      expect(first.nextOffset).toBe(first.endLine + 1);
+      expect(first.nextByteOffset).toBe(first.endLine * 4);
+
+      const second = await runRead(original, {
+        path,
+        offset: first.nextOffset,
+        byteOffset: first.nextByteOffset,
+        limit: 2,
+      });
+      expect(second.content).toBe(`${first.endLine + 1}\ta,b\n${first.endLine + 2}\ta,b`);
+      expect(original.fs.readFile).toHaveBeenLastCalledWith(path, {
+        byteOffset: first.nextByteOffset,
+        byteLength: undefined,
+      });
+    }
+  );
+
+  it('preserves complete small reads, offsets and Unicode across stream chunks', async () => {
+    const path = '/workspace/source.ts';
+    const lines = ['a'.repeat(511) + 'é漢\u{1D11E}', 'second', 'third'];
+    const original = grepWorkspace(new Map([[path, lines.join('\n')]]));
+
+    expect(await runRead(original, { path })).toEqual({
+      path,
+      content: lines.map((line, index) => `${index + 1}\t${line}`).join('\n'),
+      startLine: 1,
+      endLine: 3,
+      totalLines: 3,
+      truncated: false,
+    });
+    expect(await runRead(original, { path, offset: 2, limit: 1 })).toMatchObject({
+      content: '2\tsecond',
+      startLine: 2,
+      endLine: 2,
+      truncated: true,
+      nextOffset: 3,
+    });
+  });
+
+  it('clips a large Unicode line without retaining its complete contents', async () => {
+    const path = '/workspace/long.ts';
+    const result = await runRead(
+      grepWorkspace(new Map([[path, `${'é漢\u{1D11E}'.repeat(50_000)}\nend`]])),
+      { path }
+    );
+    const line = result.content.split('\n')[0];
+    expect(line).toContain('... (truncated)');
+    expect(line).not.toContain('\uFFFD');
+    expect(new TextEncoder().encode(line).byteLength).toBeLessThanOrEqual(
+      MAX_REVIEW_READ_LINE_BYTES + 32
+    );
+    expect(result.content.endsWith('\n2\tend')).toBe(true);
+  });
+
+  it('preserves PDF attachment handling through bounded byte reads', async () => {
+    const path = '/workspace/document.pdf';
+    const body = '%PDF-1.7\nfixture';
+    const original = grepWorkspace(new Map([[path, body]]));
+    const read = createReviewReadTool(createSafeReviewWorkspace(original.asReviewWorkspace()));
+    if (!read.execute || !read.toModelOutput) throw new Error('Review read tool is incomplete');
+    const input = { path };
+    const output = await read.execute(input, {
+      toolCallId: 'pdf-read',
+      messages: [],
+      context: {},
+    });
+    expect(output).toMatchObject({ kind: 'file', mediaType: 'application/pdf', data: btoa(body) });
+    expect(await read.toModelOutput({ input, output, toolCallId: 'pdf-read' })).toMatchObject({
+      type: 'content',
+      value: expect.arrayContaining([
+        expect.objectContaining({ type: 'file', mediaType: 'application/pdf' }),
+      ]),
+    });
+    expect(original.readFileBytes).not.toHaveBeenCalled();
+  });
+
+  it('rejects oversized inline media before reading its bytes', async () => {
+    const path = '/workspace/document.pdf';
+    const original = grepWorkspace(new Map([[path, '%PDF-1.7\nfixture']]));
+    original.sizes.set(path, 8 * 1024 * 1024);
+    const read = createReviewReadTool(createSafeReviewWorkspace(original.asReviewWorkspace()));
+    if (!read.execute || !read.toModelOutput) throw new Error('Review read tool is incomplete');
+    const input = { path };
+    const output = await read.execute(input, {
+      toolCallId: 'oversized-pdf-read',
+      messages: [],
+      context: {},
+    });
+    expect(output).toMatchObject({
+      kind: 'file',
+      mediaType: 'application/pdf',
+      sizeBytes: 8 * 1024 * 1024,
+    });
+    expect(
+      await read.toModelOutput({ input, output, toolCallId: 'oversized-pdf-read' })
+    ).toMatchObject({
+      type: 'error-text',
+      value: expect.stringContaining('inline model output limit'),
+    });
+    expect(original.fs.readFile).not.toHaveBeenCalled();
+    expect(original.readFileBytes).not.toHaveBeenCalled();
+  });
+
+  it.each(['/workspace/.git/config', '/workspace/metadata/config'])(
+    'does not open a stream for hidden path %s, including byte continuations',
+    async path => {
+      const original = grepWorkspace(new Map([[path, 'secret Git metadata']]));
+      original.symlinks.set('/workspace/metadata', '.git');
+      const read = createReviewReadTool(createSafeReviewWorkspace(original.asReviewWorkspace()));
+      if (!read.execute) throw new Error('Review read tool has no execute function');
+      expect(
+        await read.execute(
+          { path, offset: 1, byteOffset: 1 },
+          { toolCallId: 'hidden-read', messages: [], context: {} }
+        )
+      ).toEqual({ error: `File not found: ${path}` });
+      expect(original.fs.readFile).not.toHaveBeenCalled();
+    }
+  );
+
+  it('streams a real chunked Computer Workspace file within the Durable Object', async () => {
+    const namespace = (env as Env).REVIEW_ISOLATE;
+    const id = namespace.idFromName(`workspace-bounded-read-${crypto.randomUUID()}`);
+    const result = await runInDurableObject(namespace.get(id), async instance => {
+      const workspace = instance.workspace;
+      await workspace.mkdir('/workspace', { recursive: true });
+      await workspace.writeFile('/workspace/data.csv', 'a,b\n'.repeat(1_500_000));
+      const read = createReviewReadTool(workspace);
+      if (!read.execute) throw new Error('Review read tool has no execute function');
+      return read.execute(
+        { path: '/workspace/data.csv' },
+        { toolCallId: 'real-bounded-read', messages: [], context: {} }
+      );
+    });
+    const output = textReadResultSchema.parse(result);
+    expect(output).toMatchObject({ startLine: 1, truncated: true, totalLines: null });
+    expect(output.endLine).toBeLessThanOrEqual(MAX_REVIEW_READ_LINES);
+    expect(new TextEncoder().encode(output.content).byteLength).toBeLessThanOrEqual(
+      MAX_REVIEW_READ_OUTPUT_BYTES
+    );
+  });
+});
 
 describe('bounded review grep', () => {
   it.each([
@@ -306,6 +524,34 @@ describe('bounded review grep', () => {
     expect(result.matches.at(-1)).toBe(`${path}:200: needle needle`);
     expect(original.readFile).toHaveBeenCalledExactlyOnceWith(path);
   });
+
+  it.each(['.*needle', '(x+)+y', '(x|xx)+y'])(
+    'searches a maximum-size nonmatching line with %s without backtracking',
+    async query => {
+      const path = '/workspace/minified.js';
+      const original = grepWorkspace(new Map([[path, 'x'.repeat(1024 * 1024)]]));
+      expect(await runGrep(original, { query })).toEqual({
+        query,
+        filesSearched: 1,
+        filesWithMatches: 0,
+        totalMatches: 0,
+        matches: [],
+      });
+    }
+  );
+
+  it.each(['(?<=n)eedle', '(needle)\\1'])(
+    'rejects unsupported RE2 syntax %s without falling back to backtracking',
+    async query => {
+      const original = grepWorkspace(new Map([['/workspace/source.ts', 'needleneedle']]));
+      const execute = createReviewGrepTool(original.asReviewWorkspace()).execute;
+      if (!execute) throw new Error('Review grep tool has no execute function');
+      expect(
+        await execute({ query }, { toolCallId: 'unsupported-regex', messages: [], context: {} })
+      ).toEqual({ error: `Invalid regex: ${query}` });
+      expect(original.readFile).not.toHaveBeenCalled();
+    }
+  );
 
   it('returns invalid-regex errors and keeps reflected oversized queries bounded', async () => {
     const original = grepWorkspace(new Map([['/workspace/source.ts', 'needle']]));

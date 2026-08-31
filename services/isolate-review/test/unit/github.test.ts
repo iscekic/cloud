@@ -10,10 +10,12 @@ import {
   MAX_FILE_BYTES,
   MAX_GITHUB_PAGES,
   MAX_GITHUB_RESPONSE_BYTES,
+  MAX_GITHUB_TRAVERSAL_BYTES,
   MAX_HISTORY_REQUESTS,
   MAX_HISTORY_COMMITS,
   MAX_PUBLICATION_ATTEMPTS,
   MAX_RETRIEVAL_BYTES,
+  MAX_RENAME_PROOF_REQUESTS,
   READ_ONLY_GITHUB_TOOL_NAMES,
   type GithubClient,
   type GithubPublicationDetails,
@@ -204,6 +206,8 @@ function fakeApi() {
     reviews: [] as RecordValue[],
     reviewComments: new Map<number, RecordValue[]>(),
     contents: new Map<string, RecordValue>(),
+    gitCommits: new Map<string, RecordValue>(),
+    gitTrees: new Map<string, RecordValue>(),
     history: [commitRecord()],
     commits: new Map<string, RecordValue>([
       [snapshot.headSha, commitRecord(snapshot.headSha, { files: [diffFile()] })],
@@ -233,6 +237,16 @@ function fakeApi() {
       if (overridden) return overridden;
       if (method === 'GET') {
         if (url.pathname === repositoryPath) return Response.json(api.repository);
+        if (url.pathname.startsWith(`${repositoryPath}/git/commits/`)) {
+          const commit = api.gitCommits.get(
+            url.pathname.slice(`${repositoryPath}/git/commits/`.length)
+          );
+          return Response.json(commit ?? {}, { status: commit ? 200 : 404 });
+        }
+        if (url.pathname.startsWith(`${repositoryPath}/git/trees/`)) {
+          const tree = api.gitTrees.get(url.pathname.slice(`${repositoryPath}/git/trees/`.length));
+          return Response.json(tree ?? {}, { status: tree ? 200 : 404 });
+        }
         if (url.pathname === `${repositoryPath}/commits`) return pageResponse(api.history, url);
         if (url.pathname.startsWith(`${repositoryPath}/commits/`)) {
           const sha = url.pathname.slice(`${repositoryPath}/commits/`.length);
@@ -377,6 +391,45 @@ function content(path: string, text: string): RecordValue {
     content: btoa(binary),
     sha: 'd'.repeat(40),
   };
+}
+
+function gitSnapshot(
+  api: ReturnType<typeof setup>['api'],
+  commitSha: string,
+  files: Array<RecordValue & { path: string }>
+) {
+  function build(entries: Array<RecordValue & { path: string }>): {
+    sha: string;
+    truncated: boolean;
+    tree: RecordValue[];
+  } {
+    const tree: RecordValue[] = [];
+    const directories = new Map<string, Array<RecordValue & { path: string }>>();
+    for (const entry of entries) {
+      const slash = entry.path.indexOf('/');
+      if (slash < 0) {
+        tree.push({ mode: '100644', type: 'blob', sha: 'd'.repeat(40), ...entry });
+      } else {
+        const directory = entry.path.slice(0, slash);
+        const children = directories.get(directory) ?? [];
+        children.push({ ...entry, path: entry.path.slice(slash + 1) });
+        directories.set(directory, children);
+      }
+    }
+    for (const [path, children] of directories)
+      tree.push({ path, mode: '040000', type: 'tree', sha: build(children).sha });
+    const result = {
+      sha: (api.gitTrees.size + 1).toString(16).padStart(40, '0'),
+      truncated: false,
+      tree,
+    };
+    api.gitTrees.set(result.sha, result);
+    return result;
+  }
+  const root = build(files);
+  const commit = { sha: commitSha, tree: { sha: root.sha } };
+  api.gitCommits.set(commitSha, commit);
+  return { root, commit };
 }
 
 describe('bounded, abortable GitHub transport', () => {
@@ -2655,6 +2708,737 @@ describe('read-only summary cleaning', () => {
     );
     expect(onContextIncomplete).toHaveBeenCalledOnce();
     expect(writes(api)).toEqual([]);
+  });
+});
+
+describe.each([
+  {
+    mode: 'full',
+    reviewSelection: undefined,
+    oldSha: snapshot.mergeBaseSha,
+    revision: 'merge-base',
+  },
+  {
+    mode: 'incremental',
+    reviewSelection: incrementalSelection,
+    oldSha: previousHeadSha,
+    revision: 'previous',
+  },
+])('$mode metadata-only rename completeness', ({ reviewSelection, oldSha, revision }) => {
+  const path = 'src/new.ts';
+  const oldPath = reviewSelection ? 'src/previous.ts' : 'src/original.ts';
+
+  function renamedSetup(patch: string | undefined, extra: Partial<ToolOptions> = {}) {
+    const fixture = setup({ reviewSelection, ...extra });
+    const file = diffFile({
+      filename: path,
+      previous_filename: oldPath,
+      status: 'renamed',
+      additions: 0,
+      deletions: 0,
+      changes: 0,
+      patch,
+    });
+    fixture.api.deltaFiles = [file];
+    fixture.api.files = [{ ...file, previous_filename: 'src/original.ts' }];
+    gitSnapshot(fixture.api, snapshot.headSha, [{ path }]);
+    gitSnapshot(fixture.api, snapshot.mergeBaseSha, [{ path: 'src/original.ts' }]);
+    if (reviewSelection) gitSnapshot(fixture.api, oldSha, [{ path: oldPath }]);
+    fixture.api.contents.set(`${snapshot.headSha}:${path}`, content(path, 'unchanged file'));
+    fixture.api.contents.set(`${oldSha}:${oldPath}`, content(oldPath, 'unchanged file'));
+    fixture.api.contents.set(
+      `${snapshot.mergeBaseSha}:src/original.ts`,
+      content('src/original.ts', 'unchanged file')
+    );
+    fixture.api.contents.set(`${snapshot.baseTipSha}:${oldPath}`, {
+      ...content(oldPath, 'base branch changed independently'),
+      sha: '9'.repeat(40),
+    });
+    return fixture;
+  }
+
+  it.each([undefined, ''])(
+    'completes a blob-verified rename with patch %s without authorizing an anchor',
+    async patch => {
+      for (const dryRun of [false, true]) {
+        const { tools, api, onContextIncomplete, onProposal } = renamedSetup(patch, {
+          input: { ...input, dryRun },
+        });
+        await executeTool(tools, 'pr_view', {});
+        expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+          snapshot,
+          filesComplete: true,
+          patchesComplete: true,
+          contextComplete: true,
+          truncated: false,
+          files: [
+            expect.objectContaining({
+              filename: path,
+              oldPath,
+              oldRevision: revision,
+              patch: '',
+              patchStatus: 'available',
+              patchComplete: true,
+            }),
+          ],
+        });
+        expect(await executeTool(tools, 'pr_file', { path, revision: 'head' })).toMatchObject({
+          path,
+          sha: snapshot.headSha,
+          blobSha: 'd'.repeat(40),
+          body: 'unchanged file',
+        });
+        expect(await executeTool(tools, 'pr_file', { path, revision })).toMatchObject({
+          path: oldPath,
+          sha: oldSha,
+          blobSha: 'd'.repeat(40),
+          body: 'unchanged file',
+        });
+        expect(await executeTool(tools, 'pr_file_patch', { path })).toMatchObject({
+          body: '',
+          patchComplete: true,
+          contextComplete: true,
+          bodyTruncated: false,
+          nextOffset: null,
+        });
+        expect(
+          await executeTool(tools, 'submit_review', { comments: [{ ...finding, path }] })
+        ).toMatchObject({
+          error: expect.stringContaining('No current RIGHT-side diff target'),
+        });
+        expect(onContextIncomplete).not.toHaveBeenCalled();
+        expect(onProposal).not.toHaveBeenCalled();
+        expect(writes(api)).toEqual([]);
+        const summary = await executeTool(tools, 'upsert_summary', {
+          body: 'Metadata-only rename reviewed',
+        });
+        expect(summary).toMatchObject(dryRun ? { dryRun: true, publishable: true } : { id: 1_000 });
+        expect(onProposal).toHaveBeenCalledWith(
+          expect.objectContaining({ kind: 'summary', publishable: true })
+        );
+        expect(
+          api.requests.some(({ url }) => url.searchParams.get('ref') === snapshot.baseTipSha)
+        ).toBe(false);
+      }
+    }
+  );
+
+  it.each([
+    {
+      label: 'binary bytes',
+      metadata: { encoding: 'base64', content: btoa('\0\xffbinary'), size: 8 },
+    },
+    { label: 'large file', metadata: { encoding: 'none', content: '', size: MAX_FILE_BYTES + 1 } },
+    { label: 'large executable', metadata: { size: 200 * MAX_FILE_BYTES, mode: '100755' } },
+  ])('proves unchanged $label without decoding file content', async ({ metadata }) => {
+    for (const patch of [undefined, '']) {
+      const { tools, api, onContextIncomplete } = renamedSetup(patch, {
+        reviewSelection: reviewSelection ? { ...reviewSelection, changedFileCount: 2 } : undefined,
+      });
+      api.files.push(diffFile());
+      api.deltaFiles.push(diffFile());
+      for (const [sha, filename] of [
+        [snapshot.headSha, path],
+        [oldSha, oldPath],
+        [snapshot.mergeBaseSha, 'src/original.ts'],
+      ]) {
+        api.contents.set(`${sha}:${filename}`, {
+          type: 'file',
+          path: filename,
+          sha: 'd'.repeat(40),
+          ...metadata,
+        });
+        gitSnapshot(api, sha, [
+          {
+            path: filename,
+            size: metadata.size,
+            mode: 'mode' in metadata ? metadata.mode : '100644',
+          },
+        ]);
+      }
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        patchesComplete: true,
+        contextComplete: true,
+      });
+      expect(await executeTool(tools, 'pr_file_patch', { path })).toMatchObject({
+        body: '',
+        patchComplete: true,
+        contextComplete: true,
+      });
+      expect(
+        await executeTool(tools, 'submit_review', { comments: [{ ...finding, path }] })
+      ).toMatchObject({ error: expect.stringContaining('No current RIGHT-side diff target') });
+      expect(writes(api)).toEqual([]);
+      expect(await executeTool(tools, 'submit_review', args)).toEqual({ id: 1_000 });
+      expect(
+        await executeTool(tools, 'upsert_summary', {
+          body: 'Metadata-only rename and unrelated defect reviewed',
+        })
+      ).toHaveProperty('id');
+      expect(onContextIncomplete).not.toHaveBeenCalled();
+      expect(writes(api)).toHaveLength(2);
+      expect(api.requests.some(({ url }) => /\/(?:contents|git\/blobs)\//.test(url.pathname))).toBe(
+        false
+      );
+    }
+  });
+
+  it('rejects a moved relative symlink even when Contents dereferences it to type:file with the link SHA', async () => {
+    const { tools, api, onContextIncomplete, onProposal } = renamedSetup(undefined);
+    const oldLink = 'original/RelNotes';
+    const newLink = 'moved/RelNotes';
+    const link = diffFile({
+      filename: newLink,
+      previous_filename: oldLink,
+      status: 'renamed',
+      additions: 0,
+      deletions: 0,
+      changes: 0,
+      patch: undefined,
+    });
+    api.files = [link];
+    api.deltaFiles = [link];
+    for (const [sha, filename, text] of [
+      [oldSha, oldLink, 'old dereferenced target'],
+      [snapshot.headSha, newLink, 'different dereferenced target'],
+    ]) {
+      gitSnapshot(api, sha, [{ path: filename, mode: '120000' }]);
+      api.contents.set(`${sha}:${filename}`, content(filename, text));
+    }
+    expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+      patchesComplete: false,
+      contextComplete: false,
+    });
+    expect(await executeTool(tools, 'upsert_summary', { body: 'No findings' })).toMatchObject({
+      publishable: false,
+    });
+    expect(onContextIncomplete).toHaveBeenCalledOnce();
+    expect(onProposal).not.toHaveBeenCalled();
+    expect(writes(api)).toEqual([]);
+    expect(api.requests.some(({ url }) => url.pathname.includes('/contents/'))).toBe(false);
+  });
+
+  it.each([
+    ['100644', '100755'],
+    ['100755', '100644'],
+  ])('keeps a rename with mode change %s to %s incomplete', async (oldMode, newMode) => {
+    const { tools, api, onContextIncomplete } = renamedSetup('');
+    gitSnapshot(api, oldSha, [{ path: oldPath, mode: oldMode }]);
+    gitSnapshot(api, snapshot.headSha, [{ path, mode: newMode }]);
+    expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+      patchesComplete: false,
+      contextComplete: false,
+    });
+    expect(await executeTool(tools, 'upsert_summary', { body: 'No findings' })).toMatchObject({
+      publishable: false,
+    });
+    expect(onContextIncomplete).toHaveBeenCalledOnce();
+    expect(writes(api)).toEqual([]);
+  });
+
+  it.each([
+    { mode: '120000', type: 'blob' },
+    { mode: '100644', type: 'blob' },
+    { mode: '160000', type: 'commit' },
+    { mode: '040000', type: 'blob' },
+    { mode: 'unknown', type: 'tree' },
+  ])('never follows non-directory or malformed ancestors', async metadata => {
+    for (const [sha, filename] of [
+      [oldSha, oldPath],
+      [snapshot.headSha, path],
+    ]) {
+      const { tools, api, onContextIncomplete } = renamedSetup(undefined);
+      const { root } = gitSnapshot(api, sha, [{ path: filename }]);
+      const ancestor = root.tree[0];
+      if (!ancestor || typeof ancestor.sha !== 'string')
+        throw new Error('Missing fixture ancestor');
+      const childSha = ancestor.sha;
+      root.tree[0] = { ...ancestor, ...metadata };
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        patchesComplete: false,
+        contextComplete: false,
+      });
+      expect(
+        api.requests.some(({ url }) => url.pathname === `${repositoryPath}/git/trees/${childSha}`)
+      ).toBe(false);
+      expect(onContextIncomplete).toHaveBeenCalledOnce();
+      expect(writes(api)).toEqual([]);
+    }
+  });
+
+  it('allows an unrelated real finding after the renamed file evidence is complete', async () => {
+    const { tools, api, onContextIncomplete } = renamedSetup(undefined, {
+      reviewSelection: reviewSelection ? { ...reviewSelection, changedFileCount: 2 } : undefined,
+    });
+    api.files.push(diffFile());
+    api.deltaFiles.push(diffFile());
+    expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+      patchesComplete: true,
+      contextComplete: true,
+    });
+    expect(await executeTool(tools, 'submit_review', args)).toEqual({ id: 1_000 });
+    expect(
+      await executeTool(tools, 'upsert_summary', { body: 'One unrelated defect found' })
+    ).toHaveProperty('id');
+    expect(writes(api)).toHaveLength(2);
+    expect(writes(api)[0]?.body).toMatchObject({ comments: [finding] });
+    expect(onContextIncomplete).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    { status: 'modified', previous_filename: undefined },
+    { additions: 1, changes: 1 },
+    { patch: '@@ -1 +1 @@\n+' },
+    { previous_filename: path },
+  ])(
+    'does not infer metadata-only completeness from zero totals or malformed patches',
+    async overrides => {
+      const { tools, api, onContextIncomplete } = renamedSetup('');
+      api.files = api.files.map(file => ({ ...file, ...overrides }));
+      api.deltaFiles = api.deltaFiles.map(file => ({ ...file, ...overrides }));
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        patchesComplete: false,
+        contextComplete: false,
+      });
+      expect(api.requests.some(({ url }) => /\/(?:contents|git)\//.test(url.pathname))).toBe(false);
+      expect(onContextIncomplete).toHaveBeenCalledOnce();
+    }
+  );
+
+  it('rejects an unsafe previous filename before requesting rename content', async () => {
+    const { tools, api, onContextIncomplete } = renamedSetup(undefined);
+    api.files = api.files.map(file => ({ ...file, previous_filename: '../outside.ts' }));
+    api.deltaFiles = api.deltaFiles.map(file => ({ ...file, previous_filename: '../outside.ts' }));
+    await expect(executeTool(tools, 'pr_diff', {})).rejects.toThrow();
+    expect(api.requests.some(({ url }) => /\/(?:contents|git)\//.test(url.pathname))).toBe(false);
+    expect(onContextIncomplete).toHaveBeenCalledOnce();
+  });
+
+  it('preserves cancellation during rename proof without recording an incomplete context', async () => {
+    const { tools, api, onContextIncomplete } = renamedSetup(undefined);
+    const controller = new AbortController();
+    api.override = url => {
+      if (url.pathname.includes('/git/')) controller.abort();
+      return undefined;
+    };
+    await expect(executeTool(tools, 'pr_diff', {}, controller.signal)).rejects.toMatchObject({
+      name: 'AbortError',
+    });
+    expect(api.requests.filter(({ url }) => url.pathname.includes('/git/'))).toHaveLength(1);
+    expect(onContextIncomplete).not.toHaveBeenCalled();
+    expect(writes(api)).toEqual([]);
+  });
+
+  it('refuses publication when the head moves during rename proof', async () => {
+    const { tools, api, onContextIncomplete } = renamedSetup(undefined);
+    api.override = url => {
+      if (url.pathname.includes('/git/')) api.pull.head = { sha: '9'.repeat(40) };
+      return undefined;
+    };
+    await expect(executeTool(tools, 'pr_diff', {})).rejects.toThrow('head changed');
+    expect(await executeTool(tools, 'upsert_summary', { body: 'No findings' })).toMatchObject({
+      publishable: false,
+    });
+    expect(onContextIncomplete).toHaveBeenCalledOnce();
+    expect(writes(api)).toEqual([]);
+  });
+
+  it.each(['old', 'head', 'both'] as const)(
+    'keeps %s blob identity mismatches incomplete',
+    async side => {
+      const { tools, api, onContextIncomplete, onProposal } = renamedSetup(undefined);
+      if (side !== 'head') gitSnapshot(api, oldSha, [{ path: oldPath, sha: '9'.repeat(40) }]);
+      if (side !== 'old') gitSnapshot(api, snapshot.headSha, [{ path, sha: '9'.repeat(40) }]);
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        patchesComplete: false,
+        contextComplete: false,
+      });
+      await executeTool(tools, 'pr_file', { path, revision: 'head' });
+      await executeTool(tools, 'pr_file', { path, revision });
+      expect(await executeTool(tools, 'upsert_summary', { body: 'No findings' })).toMatchObject({
+        publishable: false,
+      });
+      expect(onContextIncomplete).toHaveBeenCalledOnce();
+      expect(onProposal).not.toHaveBeenCalled();
+      expect(writes(api)).toEqual([]);
+    }
+  );
+
+  it.each([
+    { label: 'missing file', metadata: undefined },
+    { label: 'wrong path', metadata: { path: 'elsewhere.ts' } },
+    { label: 'invalid identity', metadata: { sha: 'invalid' } },
+    { label: 'missing identity', metadata: { sha: undefined } },
+    { label: 'directory', metadata: { type: 'tree', mode: '040000' } },
+    { label: 'symlink', metadata: { type: 'blob', mode: '120000' } },
+    { label: 'submodule', metadata: { type: 'commit', mode: '160000' } },
+    { label: 'unknown mode', metadata: { mode: '100664' } },
+    { label: 'missing mode', metadata: { mode: undefined } },
+    { label: 'unknown type', metadata: { type: 'file' } },
+    { label: 'mismatched type and mode', metadata: { type: 'commit', mode: '100644' } },
+  ])('keeps an unprovable $label incomplete', async ({ metadata }) => {
+    for (const [sha, filename] of [
+      [oldSha, oldPath],
+      [snapshot.headSha, path],
+    ]) {
+      const { tools, api, onContextIncomplete, onProposal } = renamedSetup('');
+      gitSnapshot(api, sha, metadata ? [{ path: filename, ...metadata }] : []);
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        patchesComplete: false,
+        contextComplete: false,
+      });
+      expect(await executeTool(tools, 'upsert_summary', { body: 'No findings' })).toMatchObject({
+        publishable: false,
+      });
+      expect(onContextIncomplete).toHaveBeenCalledOnce();
+      expect(onProposal).not.toHaveBeenCalled();
+      expect(writes(api)).toEqual([]);
+      expect(api.requests.some(({ url }) => url.pathname.includes('/contents/'))).toBe(false);
+    }
+  });
+
+  it.each([
+    { label: 'missing commit', kind: 'commit', metadata: undefined },
+    { label: 'wrong commit identity', kind: 'commit', metadata: { sha: '9'.repeat(40) } },
+    { label: 'missing root tree', kind: 'commit', metadata: { tree: undefined } },
+    { label: 'invalid root identity', kind: 'commit', metadata: { tree: { sha: 'invalid' } } },
+    { label: 'missing tree', kind: 'tree', metadata: undefined },
+    { label: 'wrong tree identity', kind: 'tree', metadata: { sha: '9'.repeat(40) } },
+    { label: 'truncated tree', kind: 'tree', metadata: { truncated: true } },
+    { label: 'unknown tree completeness', kind: 'tree', metadata: { truncated: undefined } },
+    { label: 'missing tree entries', kind: 'tree', metadata: { tree: undefined } },
+    {
+      label: 'recursive entries',
+      kind: 'tree',
+      metadata: {
+        tree: [{ path: 'src/nested', sha: 'd'.repeat(40), mode: '100644', type: 'blob' }],
+      },
+    },
+  ])('rejects $label without falling back to Contents', async ({ kind, metadata }) => {
+    for (const [sha, filename] of [
+      [oldSha, oldPath],
+      [snapshot.headSha, path],
+    ]) {
+      const { tools, api, onContextIncomplete } = renamedSetup(undefined);
+      const { root, commit } = gitSnapshot(api, sha, [{ path: filename }]);
+      const records = kind === 'commit' ? api.gitCommits : api.gitTrees;
+      const original = kind === 'commit' ? commit : root;
+      if (metadata) records.set(original.sha, { ...original, ...metadata });
+      else records.delete(original.sha);
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        patchesComplete: false,
+        contextComplete: false,
+      });
+      expect(await executeTool(tools, 'upsert_summary', { body: 'No findings' })).toMatchObject({
+        publishable: false,
+      });
+      expect(onContextIncomplete).toHaveBeenCalledOnce();
+      expect(api.requests.some(({ url }) => url.pathname.includes('/contents/'))).toBe(false);
+      expect(writes(api)).toEqual([]);
+    }
+  });
+
+  it.each(['duplicate', 'cycle'])('rejects %s tree entries', async failure => {
+    const { tools, api, onContextIncomplete } = renamedSetup(undefined);
+    const { root } = gitSnapshot(api, oldSha, [{ path: oldPath }]);
+    if (failure === 'duplicate') root.tree.push({ ...root.tree[0] });
+    else root.tree = [{ path: 'src', mode: '040000', type: 'tree', sha: root.sha }];
+    expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+      patchesComplete: false,
+      contextComplete: false,
+    });
+    expect(onContextIncomplete).toHaveBeenCalledOnce();
+    expect(writes(api)).toEqual([]);
+  });
+});
+
+describe('bounded metadata-only rename proof', () => {
+  it.each([false, true])(
+    'bounds physical Git metadata requests including retries=%s',
+    async retries => {
+      const { tools, api, onContextIncomplete } = setup();
+      const paths = Array.from({ length: MAX_RENAME_PROOF_REQUESTS }, (_, index) => ({
+        filename: `new-${index}/file.ts`,
+        previous_filename: `old-${index}/file.ts`,
+      }));
+      api.files = paths.map(paths =>
+        diffFile({
+          ...paths,
+          status: 'renamed',
+          additions: 0,
+          deletions: 0,
+          changes: 0,
+          patch: undefined,
+        })
+      );
+      gitSnapshot(
+        api,
+        snapshot.headSha,
+        paths.map(({ filename }) => ({ path: filename }))
+      );
+      gitSnapshot(
+        api,
+        snapshot.mergeBaseSha,
+        paths.map(({ previous_filename }) => ({ path: previous_filename }))
+      );
+      const attempted = new Set<string>();
+      api.override = url => {
+        if (retries && url.pathname.includes('/git/') && !attempted.has(url.pathname)) {
+          attempted.add(url.pathname);
+          return new Response('Temporary failure', { status: 503 });
+        }
+        return undefined;
+      };
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        filesComplete: true,
+        patchesComplete: false,
+        contextComplete: false,
+      });
+      expect(api.requests.filter(({ url }) => url.pathname.includes('/git/'))).toHaveLength(
+        MAX_RENAME_PROOF_REQUESTS
+      );
+      await executeTool(tools, 'pr_diff', {});
+      expect(api.requests.filter(({ url }) => url.pathname.includes('/git/'))).toHaveLength(
+        MAX_RENAME_PROOF_REQUESTS
+      );
+      expect(await executeTool(tools, 'upsert_summary', { body: 'No findings' })).toMatchObject({
+        publishable: false,
+      });
+      expect(onContextIncomplete).toHaveBeenCalledOnce();
+      expect(writes(api)).toEqual([]);
+    }
+  );
+
+  it('bounds aggregate cached Git metadata bytes', async () => {
+    const { tools, api, onContextIncomplete } = setup();
+    const paths = Array.from({ length: 10 }, (_, index) => ({
+      filename: `new-${index}/file.ts`,
+      previous_filename: `old-${index}/file.ts`,
+    }));
+    api.files = paths.map(paths =>
+      diffFile({
+        ...paths,
+        status: 'renamed',
+        additions: 0,
+        deletions: 0,
+        changes: 0,
+        patch: undefined,
+      })
+    );
+    gitSnapshot(
+      api,
+      snapshot.headSha,
+      paths.map(({ filename }) => ({ path: filename }))
+    );
+    gitSnapshot(
+      api,
+      snapshot.mergeBaseSha,
+      paths.map(({ previous_filename }) => ({ path: previous_filename }))
+    );
+    api.override = url => {
+      const tree = api.gitTrees.get(url.pathname.slice(`${repositoryPath}/git/trees/`.length));
+      return tree ? Response.json({ ...tree, padding: 'x'.repeat(MAX_FILE_BYTES) }) : undefined;
+    };
+    expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+      patchesComplete: false,
+      contextComplete: false,
+    });
+    expect(
+      api.requests.filter(({ url }) => url.pathname.includes('/git/trees/')).length
+    ).toBeLessThanOrEqual(MAX_GITHUB_TRAVERSAL_BYTES / MAX_FILE_BYTES);
+    expect(onContextIncomplete).toHaveBeenCalledOnce();
+    expect(writes(api)).toEqual([]);
+  });
+
+  it.each(['record cap', 'pagination'])(
+    'refuses tree evidence exceeding the %s completeness bound',
+    async failure => {
+      const { tools, api, onContextIncomplete } = setup();
+      api.files = [
+        diffFile({
+          filename: 'new.ts',
+          previous_filename: 'old.ts',
+          status: 'renamed',
+          additions: 0,
+          deletions: 0,
+          changes: 0,
+          patch: undefined,
+        }),
+      ];
+      gitSnapshot(api, snapshot.headSha, [{ path: 'new.ts' }]);
+      const { root } = gitSnapshot(api, snapshot.mergeBaseSha, [{ path: 'old.ts' }]);
+      if (failure === 'record cap') {
+        root.tree.push(
+          ...Array.from({ length: MAX_CONTEXT_RECORDS }, (_, index) => ({
+            path: `other-${index}`,
+            sha: 'd'.repeat(40),
+            mode: '100644',
+            type: 'blob',
+          }))
+        );
+      } else {
+        api.override = url =>
+          url.pathname === `${repositoryPath}/git/trees/${root.sha}`
+            ? Response.json(root, { headers: { Link: `<${url.href}?page=2>; rel="next"` } })
+            : undefined;
+      }
+      expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+        patchesComplete: false,
+        contextComplete: false,
+      });
+      expect(onContextIncomplete).toHaveBeenCalledOnce();
+      expect(writes(api)).toEqual([]);
+    }
+  );
+
+  it('shares immutable commit and directory lookups across many concurrent renames', async () => {
+    const { tools, api, onContextIncomplete } = setup();
+    const paths = Array.from({ length: 100 }, (_, index) => ({
+      filename: `src/new-${index}.ts`,
+      previous_filename: `src/old-${index}.ts`,
+    }));
+    api.files = paths.map(paths =>
+      diffFile({
+        ...paths,
+        status: 'renamed',
+        additions: 0,
+        deletions: 0,
+        changes: 0,
+        patch: undefined,
+      })
+    );
+    gitSnapshot(
+      api,
+      snapshot.headSha,
+      paths.map(({ filename }) => ({ path: filename }))
+    );
+    gitSnapshot(
+      api,
+      snapshot.mergeBaseSha,
+      paths.map(({ previous_filename }) => ({ path: previous_filename }))
+    );
+    const controller = new AbortController();
+    const results = await Promise.all([
+      executeTool(tools, 'pr_diff', {}, controller.signal),
+      executeTool(tools, 'pr_diff', {}, controller.signal),
+    ]);
+    for (const result of results)
+      expect(result).toMatchObject({ patchesComplete: true, contextComplete: true });
+    expect(api.requests.filter(({ url }) => url.pathname.includes('/git/'))).toHaveLength(6);
+    expect(
+      api.requests
+        .filter(({ url }) => url.pathname.includes('/git/commits/'))
+        .map(({ url }) => url.pathname)
+    ).toEqual([
+      `${repositoryPath}/git/commits/${snapshot.mergeBaseSha}`,
+      `${repositoryPath}/git/commits/${snapshot.headSha}`,
+    ]);
+    expect(
+      api.requests.some(
+        ({ url }) => url.searchParams.has('recursive') || url.pathname.includes('/contents/')
+      )
+    ).toBe(false);
+    expect(
+      api.requests.every(
+        ({ init }) => new Headers(init.headers).get('Accept') === 'application/vnd.github+json'
+      )
+    ).toBe(true);
+    expect(onContextIncomplete).not.toHaveBeenCalled();
+  });
+
+  it('does not share cancellation between different in-flight callers', async () => {
+    const { tools, api, onContextIncomplete } = setup();
+    api.files = [
+      diffFile({
+        filename: 'new.ts',
+        previous_filename: 'old.ts',
+        status: 'renamed',
+        additions: 0,
+        deletions: 0,
+        changes: 0,
+        patch: undefined,
+      }),
+    ];
+    gitSnapshot(api, snapshot.headSha, [{ path: 'new.ts' }]);
+    gitSnapshot(api, snapshot.mergeBaseSha, [{ path: 'old.ts' }]);
+    const cancelled = new AbortController();
+    const continuing = new AbortController();
+    api.override = (url, init) => {
+      if (url.pathname.includes('/git/') && init.signal === cancelled.signal) cancelled.abort();
+      return undefined;
+    };
+    const [aborted, completed] = await Promise.allSettled([
+      executeTool(tools, 'pr_diff', {}, cancelled.signal),
+      executeTool(tools, 'pr_diff', {}, continuing.signal),
+    ]);
+    expect(aborted).toMatchObject({
+      status: 'rejected',
+      reason: expect.objectContaining({ name: 'AbortError' }),
+    });
+    expect(completed).toMatchObject({
+      status: 'fulfilled',
+      value: { patchesComplete: true, contextComplete: true },
+    });
+    expect(onContextIncomplete).not.toHaveBeenCalled();
+  });
+
+  it('proves guarded PR-files renames against the merge base', async () => {
+    const { tools, api, onContextIncomplete } = setup();
+    api.files.push(
+      diffFile({
+        filename: 'new.ts',
+        previous_filename: 'old.ts',
+        status: 'renamed',
+        additions: 0,
+        deletions: 0,
+        changes: 0,
+        patch: undefined,
+      })
+    );
+    api.compareFiles = [];
+    gitSnapshot(api, snapshot.headSha, [{ path: 'new.ts' }]);
+    gitSnapshot(api, snapshot.mergeBaseSha, [{ path: 'old.ts' }]);
+    expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+      source: 'guarded-pr-files',
+      filesComplete: true,
+      patchesComplete: true,
+      contextComplete: true,
+    });
+    expect(await executeTool(tools, 'upsert_summary', { body: 'Reviewed' })).toHaveProperty('id');
+    expect(onContextIncomplete).not.toHaveBeenCalled();
+  });
+
+  it('does not share incremental rename proof with a different current-PR old revision', async () => {
+    const { tools, api, onContextIncomplete } = setup({ reviewSelection: incrementalSelection });
+    const file = diffFile({
+      filename: 'new.ts',
+      previous_filename: 'old.ts',
+      status: 'renamed',
+      additions: 0,
+      deletions: 0,
+      changes: 0,
+      patch: undefined,
+    });
+    api.files = [file];
+    api.deltaFiles = [file];
+    gitSnapshot(api, snapshot.headSha, [{ path: 'new.ts' }]);
+    gitSnapshot(api, previousHeadSha, [{ path: 'old.ts' }]);
+    gitSnapshot(api, snapshot.mergeBaseSha, [{ path: 'old.ts', sha: '9'.repeat(40) }]);
+    expect(await executeTool(tools, 'pr_diff', {})).toMatchObject({
+      patchesComplete: true,
+      contextComplete: true,
+    });
+    expect(await executeTool(tools, 'pr_diff', { comparison: 'current-pr' })).toMatchObject({
+      patchesComplete: false,
+      contextComplete: true,
+    });
+    expect(
+      await executeTool(tools, 'submit_review', { comments: [{ ...finding, path: 'new.ts' }] })
+    ).toMatchObject({ error: expect.stringContaining('No current RIGHT-side diff target') });
+    expect(
+      await executeTool(tools, 'upsert_summary', { body: 'Selected delta reviewed' })
+    ).toHaveProperty('id');
+    expect(onContextIncomplete).not.toHaveBeenCalled();
   });
 });
 

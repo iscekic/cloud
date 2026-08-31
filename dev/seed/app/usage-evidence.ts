@@ -41,7 +41,10 @@ function printUsage(): void {
   console.log('Aggregates and samples are separate observations. Read-only; never writes.');
   console.log('');
   console.log('Options:');
-  console.log('  --since <ISO-8601>   Only rows created after this instant.');
+  console.log(
+    '  --since <ISO-8601>   Only rows created after this instant (default: 48 hours ago).'
+  );
+  console.log('                      Pass an earlier timestamp to opt in to older history.');
   console.log(
     '  --session-id <id>    Match this session; repeat for root/child/retry sessions (OR).'
   );
@@ -217,14 +220,15 @@ export async function run(...args: string[]): Promise<SeedResult | void> {
     return;
   }
 
-  const { email, since, sessionIds } = parseArgs(args);
+  const { email, since: requestedSince, sessionIds } = parseArgs(args);
+  const since = requestedSince ?? new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
   const userId = await resolveSeedUserId(email);
   const db = getSeedDb();
 
-  const windowConditions = [eq(microdollar_usage.kilo_user_id, userId)];
-  if (since) {
-    windowConditions.push(gt(microdollar_usage.created_at, since));
-  }
+  const windowConditions = [
+    eq(microdollar_usage.kilo_user_id, userId),
+    gt(microdollar_usage.created_at, since),
+  ];
   const conditions = [...windowConditions];
   const firstSessionId = sessionIds[0];
   if (firstSessionId !== undefined) {
