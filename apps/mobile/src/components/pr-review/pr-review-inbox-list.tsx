@@ -21,6 +21,7 @@ import { type PrInboxView, selectPrInboxView } from '@/components/pr-review/pr-r
 import { Button } from '@/components/ui/button';
 import { Clock, GitPullRequest, Inbox } from '@/components/ui/icons';
 import { DirectionalChevronRight } from '@/components/ui/directional-icons';
+import { Image } from '@/components/ui/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Text } from '@/components/ui/text';
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
@@ -119,7 +120,7 @@ function RecentEyebrow() {
   );
 }
 
-function InboxRow({ item }: Readonly<{ item: InboxItem }>) {
+export function InboxRow({ item }: Readonly<{ item: InboxItem }>) {
   const router = useRouter();
   const colors = useThemeColors();
   const { t } = useTranslation();
@@ -139,6 +140,22 @@ function InboxRow({ item }: Readonly<{ item: InboxItem }>) {
         <Text className="text-sm font-medium" numberOfLines={1}>
           {item.title}
         </Text>
+        <View className="flex-row items-center gap-2">
+          {item.author?.avatarUrl ? (
+            <Image
+              source={{ uri: item.author.avatarUrl }}
+              className="size-4 rounded-full"
+              transition={0}
+              cachePolicy="memory"
+              accessibilityIgnoresInvertColors
+            />
+          ) : (
+            <View className="size-4 rounded-full bg-muted" />
+          )}
+          <Text className="text-xs font-medium" numberOfLines={1}>
+            {item.author?.login ?? t('prReview.overview.unknownAuthor')}
+          </Text>
+        </View>
         <View className="flex-row items-center gap-2">
           <Text variant="muted" className="text-xs">
             {item.owner}/{item.repo}#{item.number} · {updatedLabel}
