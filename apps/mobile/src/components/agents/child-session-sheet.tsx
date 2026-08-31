@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import {
@@ -13,10 +13,12 @@ import { EmptyState } from '@/components/empty-state';
 import { QueryError } from '@/components/query-error';
 import { SheetHeader } from '@/components/sheet-header';
 import { Bot } from '@/components/ui/icons';
+import { Text } from '@/components/ui/text';
 import {
   markChildFirstContent,
   takeChildSessionOpenTiming,
 } from '@/lib/child-session-open-timing';
+import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { type SessionModelOption } from '@/lib/hooks/use-session-model-options';
 
 import {
@@ -79,7 +81,9 @@ export function ChildSessionSheet({
   const messages = getChildMessages(sessionId);
   const state = getChildSessionSheetState(hydrationState, messages.length, sessionError);
   const modelLabel = getChildSessionModelLabel(messages, modelOptions ?? []);
+  const colors = useThemeColors();
   const { t } = useTranslation();
+  const isRefreshing = hydrationState.status === 'ready' && hydrationState.isRefreshing;
   // Safe-area context can return 0 inside a RN `Modal` (pageSheet doesn't
   // always propagate the home-indicator inset), so we floor the value with
   // a comfortable constant to keep the last row / working indicator clear
@@ -177,6 +181,14 @@ export function ChildSessionSheet({
       {modelLabel ? (
         <View className="border-b border-border px-4 py-2">
           <ChildSessionModelLabel modelLabel={modelLabel} />
+        </View>
+      ) : null}
+      {isRefreshing ? (
+        <View className="flex-row items-center gap-2 border-b border-border px-4 py-2">
+          <ActivityIndicator size="small" color={colors.mutedForeground} />
+          <Text className="text-xs text-muted-foreground">
+            {t('agentChat.childSessionSheet.loading')}
+          </Text>
         </View>
       ) : null}
       <PartDetailSheetHost messages={messages}>{content}</PartDetailSheetHost>

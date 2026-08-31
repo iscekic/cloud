@@ -1,22 +1,20 @@
 import {
   type KiloSessionId,
-  type Part,
   type StoredMessage,
   type ToolPart,
 } from '@kilocode/cloud-agent-sdk';
 
 import { i18n } from '@/i18n';
 
-import { computeStatus } from './compute-status';
 import { isToolPart } from './part-types';
-import { getFilename, truncateText } from './tool-card-utils';
+import { truncateText } from './tool-card-utils';
 
-export type ChildSessionActivity = { tool: string; context?: string };
+export type ChildSessionStatus = 'running' | 'pending' | 'completed' | 'error';
 
 export type ChildSessionCardState = {
   agentName: string;
   taskName: string;
-  latestActivity: ChildSessionActivity | string;
+  status: ChildSessionStatus;
 };
 
 function getStringProperty(obj: unknown, key: string): string | undefined {
@@ -29,60 +27,12 @@ function getStringProperty(obj: unknown, key: string): string | undefined {
   return typeof value === 'string' ? value : undefined;
 }
 
-function getToolContext(p: ToolPart): string | undefined {
-  const input = p.state.input;
-
-  if (p.tool === 'read' || p.tool === 'edit' || p.tool === 'write') {
-    const filePath = getStringProperty(input, 'filePath');
-    return filePath ? getFilename(filePath) : undefined;
-  }
-  if (p.tool === 'bash') {
-    const command = getStringProperty(input, 'command');
-    if (!command) {
-      return undefined;
-    }
-    const firstWord = command.split(/\s+/)[0];
-    if (!firstWord) {
-      return undefined;
-    }
-    return truncateText(firstWord, 20);
-  }
-  if (p.tool === 'glob' || p.tool === 'grep') {
-    const pattern = getStringProperty(input, 'pattern');
-    if (!pattern) {
-      return undefined;
-    }
-    return truncateText(pattern, 25);
-  }
-  if (p.tool === 'task') {
-    const description = getStringProperty(input, 'description');
-    if (!description) {
-      return undefined;
-    }
-    return truncateText(description, 30);
-  }
-  return undefined;
-}
-
-function findLatestAssistantPart(messages: StoredMessage[]): Part | undefined {
-  for (let i = messages.length - 1; i >= 0; i -= 1) {
-    const msg = messages[i];
-    if (msg?.info.role === 'assistant') {
-      for (let j = msg.parts.length - 1; j >= 0; j -= 1) {
-        const part = msg.parts[j];
-        if (part) {
-          return part;
-        }
-      }
-    }
-  }
-  return undefined;
-}
-
-export function getChildSessionCardState(
-  part: ToolPart,
-  childMessages: StoredMessage[]
-): ChildSessionCardState {
+/**
+ * Derives the card title and status from the task tool part metadata only, so
+ * rendering a card never fetches the child transcript. Mirrors web's
+ * `getTaskDescription`/`getTaskAgent` metadata read.
+ */
+export function getChildSessionCardState(part: ToolPart): ChildSessionCardState {
   const input = part.state.input;
   const agentName =
     getStringProperty(input, 'subagent_type') ?? i18n.t('agentChat.childSession.subagent');
@@ -91,26 +41,7 @@ export function getChildSessionCardState(
   const taskName =
     description ?? (prompt ? truncateText(prompt, 60) : i18n.t('agentChat.childSession.task'));
 
-  const latestPart = findLatestAssistantPart(childMessages);
-  const latestActivity: ChildSessionActivity | string = (() => {
-    if (!latestPart) {
-      return i18n.t('agentChat.childSession.waitingForActivity');
-    }
-    if (isToolPart(latestPart)) {
-      return { tool: latestPart.tool, context: getToolContext(latestPart) };
-    }
-    return computeStatus(latestPart);
-  })();
-
-  return { agentName, taskName, latestActivity };
-}
-
-export function getChildSessionActivityLabel(activity: ChildSessionActivity | string): string {
-  // oxlint-disable-next-line anti-slop/no-runtime-typeof -- distinguishing the string-vs-object ChildSessionActivity variant has no non-typeof discriminant
-  if (typeof activity === 'string') {
-    return activity;
-  }
-  return activity.context ? `${activity.tool} ${activity.context}` : activity.tool;
+  return { agentName, taskName, status: part.state.status };
 }
 
 export function getTaskToolSessionId(part: ToolPart): KiloSessionId | undefined {

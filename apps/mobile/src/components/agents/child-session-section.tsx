@@ -18,7 +18,6 @@ import { type SessionModelOption } from '@/lib/hooks/use-session-model-options';
 
 import {
   type ChildSessionCardState,
-  getChildSessionActivityLabel,
   getChildSessionCardState,
   getTaskToolSessionId,
 } from './child-session-card-state';
@@ -55,14 +54,10 @@ export function ChildSessionSection({
   const colors = useThemeColors();
   const { t } = useTranslation();
 
-  const { agentName, taskName, latestActivity }: ChildSessionCardState = getChildSessionCardState(
-    part,
-    childMessages
-  );
-  const latestActivityLabel = getChildSessionActivityLabel(latestActivity);
-  const modelLabel = getChildSessionModelLabel(childMessages, modelOptions ?? []);
+  const { agentName, taskName, status }: ChildSessionCardState = getChildSessionCardState(part);
+  const modelLabel =
+    childMessages.length > 0 ? getChildSessionModelLabel(childMessages, modelOptions ?? []) : null;
 
-  const { status } = part.state;
   const isRunning = status === 'running' || status === 'pending';
   const sessionId = getTaskToolSessionId(part);
 
@@ -88,7 +83,7 @@ export function ChildSessionSection({
           agentName,
           taskName,
           modelLabel: modelLabel ? `, ${modelLabel}` : '',
-          latestActivityLabel,
+          latestActivityLabel: status,
           status,
         })}
         accessibilityHint={sessionId ? t('agentChat.childSession.openHint') : undefined}
@@ -110,19 +105,6 @@ export function ChildSessionSection({
             {taskName}
           </Text>
           {modelLabel ? <ChildSessionModelLabel modelLabel={modelLabel} /> : null}
-          <Text className="text-xs leading-4 text-muted-foreground" numberOfLines={1}>
-            {
-              // oxlint-disable-next-line anti-slop/no-runtime-typeof -- ChildSessionActivity has no discriminant field to narrow on, and `'tool' in latestActivity` would throw for the string variant.
-              typeof latestActivity === 'string' ? (
-                latestActivity
-              ) : (
-                <>
-                  <Text className="text-xs leading-4 text-agent-sky">{latestActivity.tool}</Text>
-                  {latestActivity.context ? ` ${latestActivity.context}` : ''}
-                </>
-              )
-            }
-          </Text>
         </View>
 
         <StatusBadge status={status} />
