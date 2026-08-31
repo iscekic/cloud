@@ -120,6 +120,7 @@ import {
   SESSION_VIEWED_EVENT,
 } from '@/lib/analytics/posthog';
 import { moveA11yFocus } from '@/lib/a11y/announce';
+import { markChildOpenStart } from '@/lib/child-session-open-timing';
 import { useAvailableModels } from '@/lib/hooks/use-available-models';
 import { useCurrentUserId } from '@/lib/hooks/use-current-user-id';
 import { useModelPreferences } from '@/lib/hooks/use-model-preferences';
@@ -635,6 +636,7 @@ export function SessionDetailContent({
 
   const handleOpenChildSession = useCallback(
     (childSessionId: KiloSessionId, childTitle: string) => {
+      markChildOpenStart(childSessionId);
       clearChildSheetReleaseTimeout();
       setChildSessionSheet(current =>
         openChildSessionSheet(current, { sessionId: childSessionId, title: childTitle })

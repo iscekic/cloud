@@ -346,6 +346,29 @@ export function CloudAgentProvider({ children, organizationId }: CloudAgentProvi
           kilo_session_id: kiloSessionId,
         });
       },
+      onChildSessionOpenTiming: ({ childSessionId, networkMs, storageMs }) => {
+        // The first-content mark lands after React commits the ready state, so
+        // defer one frame and read the open measure the drawer created.
+        const emit = () => {
+          const openEntry = performance
+            .getEntriesByName(`child-open-${childSessionId}`, 'measure')
+            .at(-1);
+          const renderMs = openEntry
+            ? Math.max(0, openEntry.duration - networkMs - storageMs)
+            : 0;
+          posthogRef.current?.capture('child_session_open', {
+            child_session_id: childSessionId,
+            network_ms: networkMs,
+            storage_ms: storageMs,
+            render_ms: renderMs,
+          });
+        };
+        if (typeof requestAnimationFrame === 'function') {
+          requestAnimationFrame(emit);
+        } else {
+          emit();
+        }
+      },
     });
   }
 

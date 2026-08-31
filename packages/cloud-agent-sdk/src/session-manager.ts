@@ -317,6 +317,21 @@ type SessionManagerConfig = {
    * preview the file later (e.g. mobile). Web never passes it.
    */
   onFilePart?: (partId: string, file: { mime: string; filename?: string; url: string }) => void;
+  /**
+   * Optional measurement sink for child-session open latency. Called exactly
+   * once per completed hydrate with wall-clock milliseconds for the network
+   * fetch and the storage replay. Consumers use it to record tap-to-first-
+   * content timing (mobile) or emit a PostHog event (web). `phase` is `fresh`
+   * for a cold open that fetched from the network and `cached` when the child
+   * already had messages in storage. The sink is advisory: a throwing sink
+   * never fails a hydrate.
+   */
+  onChildSessionOpenTiming?: (timing: {
+    childSessionId: KiloSessionId;
+    networkMs: number;
+    storageMs: number;
+    phase: 'fresh' | 'cached';
+  }) => void;
   onRemoteSessionOpened?: (data: { kiloSessionId: KiloSessionId }) => void;
   onRemoteSessionMessageSent?: (data: { kiloSessionId: KiloSessionId }) => void;
 };
@@ -1030,6 +1045,25 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
     }
   }
 
+  function reportChildSessionOpenTiming(
+    childSessionId: KiloSessionId,
+    networkMs: number,
+    storageMs: number,
+    hadCachedMessages: boolean
+  ): void {
+    if (!config.onChildSessionOpenTiming) return;
+    try {
+      config.onChildSessionOpenTiming({
+        childSessionId,
+        networkMs,
+        storageMs,
+        phase: hadCachedMessages ? 'cached' : 'fresh',
+      });
+    } catch {
+      // Measurement sinks are advisory; a throwing sink must never fail a hydrate.
+    }
+  }
+
   async function hydrateChildSession(childSessionId: KiloSessionId): Promise<void> {
     const existingState = store.get(childSessionHydrationStatesAtom).get(childSessionId);
     if (existingState?.status === 'ready') return;
@@ -1045,12 +1079,15 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
     if (!storage || !rootSessionId) return;
 
     const generation = childSessionHydrationGeneration;
+    const hadCachedMessages = store.get(childMessagesAtom)(childSessionId).length > 0;
     setChildSessionHydrationState(childSessionId, { status: 'loading' });
 
     const request = (async () => {
       try {
         if (config.fetchSnapshotPage) {
+          const networkStart = Date.now();
           const page = await config.fetchSnapshotPage(childSessionId, {});
+          const networkMs = Date.now() - networkStart;
           if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
 
           // A null page (worker 404) or any typed failure on the first page is
@@ -1070,7 +1107,9 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
             return;
           }
 
+          const storageStart = Date.now();
           replayChildMessages(storage, page.messages);
+          const storageMs = Date.now() - storageStart;
           setChildSessionHydrationState(childSessionId, {
             status: 'ready',
             cursor: page.nextCursor,
@@ -1079,14 +1118,19 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
             olderError: null,
             omittedItemCount: page.omittedItemCount,
           });
+          reportChildSessionOpenTiming(childSessionId, networkMs, storageMs, hadCachedMessages);
           return;
         }
 
         // Legacy fallback: full snapshot, no pagination state.
+        const networkStart = Date.now();
         const snapshot = await config.fetchSnapshot(childSessionId);
+        const networkMs = Date.now() - networkStart;
         if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
 
+        const storageStart = Date.now();
         replayChildMessages(storage, snapshot.messages);
+        const storageMs = Date.now() - storageStart;
         setChildSessionHydrationState(childSessionId, {
           status: 'ready',
           cursor: null,
@@ -1095,6 +1139,7 @@ function createSessionManager(config: SessionManagerConfig): SessionManager {
           olderError: null,
           omittedItemCount: 0,
         });
+        reportChildSessionOpenTiming(childSessionId, networkMs, storageMs, hadCachedMessages);
       } catch (err) {
         if (!isCurrentChildSessionHydration(generation, rootSessionId, storage)) return;
         setChildSessionHydrationState(childSessionId, {

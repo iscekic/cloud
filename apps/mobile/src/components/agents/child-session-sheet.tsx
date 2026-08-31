@@ -1,9 +1,10 @@
-import { type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import {
   type ChildSessionHydrationState,
+  type KiloSessionId,
   type OlderMessagesError,
   type StoredMessage,
 } from '@kilocode/cloud-agent-sdk';
@@ -12,6 +13,10 @@ import { EmptyState } from '@/components/empty-state';
 import { QueryError } from '@/components/query-error';
 import { SheetHeader } from '@/components/sheet-header';
 import { Bot } from '@/components/ui/icons';
+import {
+  markChildFirstContent,
+  takeChildSessionOpenTiming,
+} from '@/lib/child-session-open-timing';
 import { type SessionModelOption } from '@/lib/hooks/use-session-model-options';
 
 import {
@@ -82,6 +87,15 @@ export function ChildSessionSheet({
   const insets = useSafeAreaInsets();
   const sheetBottomInset = Math.max(insets.bottom, 16);
   let content: ReactNode = null;
+
+  useEffect(() => {
+    if (state !== 'content') return;
+    markChildFirstContent(sessionId as KiloSessionId);
+    const timing = takeChildSessionOpenTiming();
+    if (timing) {
+      console.debug('child_session_open', timing);
+    }
+  }, [state, sessionId]);
 
   if (state === 'content') {
     content = (

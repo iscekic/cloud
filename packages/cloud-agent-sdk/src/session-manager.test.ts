@@ -2857,6 +2857,60 @@ describe('createSessionManager', () => {
       });
     });
 
+    it('reports child-session open timing to the config sink once per hydrate', async () => {
+      const childMessage = createStoredMessage('msg-child-timing', 'child-timing', 'assistant');
+      const childPart = stubTextPart({
+        id: 'part-child-timing',
+        sessionID: 'child-timing',
+        messageID: childMessage.info.id,
+        text: 'Timed child message',
+      });
+      const onChildSessionOpenTiming = jest.fn() as jest.MockedFunction<
+        NonNullable<SessionManagerConfig['onChildSessionOpenTiming']>
+      >;
+      const config = createMockConfig({
+        fetchSnapshot: jest.fn().mockResolvedValue(
+          makeSnapshot({ id: 'child-timing', parentID: 'ses-root' }, [
+            { info: childMessage.info, parts: [childPart] },
+          ])
+        ),
+        onChildSessionOpenTiming,
+      });
+      const mgr = createSessionManager(config);
+
+      await mgr.switchSession(kiloId('ses-root'));
+      await mgr.hydrateChildSession(kiloId('child-timing'));
+
+      expect(onChildSessionOpenTiming).toHaveBeenCalledTimes(1);
+      const timing = onChildSessionOpenTiming.mock.calls[0]?.[0];
+      expect(timing?.childSessionId).toBe(kiloId('child-timing'));
+      expect(timing?.networkMs).toBeGreaterThanOrEqual(0);
+      expect(timing?.storageMs).toBeGreaterThanOrEqual(0);
+      expect(timing?.phase).toBe('fresh');
+    });
+
+    it('does not fail hydration when the timing sink throws', async () => {
+      const onChildSessionOpenTiming = jest.fn().mockImplementation(() => {
+        throw new Error('timing sink failure');
+      }) as jest.MockedFunction<NonNullable<SessionManagerConfig['onChildSessionOpenTiming']>>;
+      const config = createMockConfig({
+        fetchSnapshot: jest
+          .fn()
+          .mockResolvedValue(makeSnapshot({ id: 'child-sink-throw', parentID: 'ses-root' })),
+        onChildSessionOpenTiming,
+      });
+      const mgr = createSessionManager(config);
+
+      await mgr.switchSession(kiloId('ses-root'));
+      await mgr.hydrateChildSession(kiloId('child-sink-throw'));
+
+      const state = atomValue<(childSessionId: string) => { status: string }>(
+        config.store,
+        mgr.atoms.childSessionHydrationState
+      );
+      expect(state('child-sink-throw')).toEqual(expect.objectContaining({ status: 'ready' }));
+    });
+
     it('merges fetched history into live child messages without duplicating them', async () => {
       const childMessage = createStoredMessage('msg-child-live', 'child-live', 'assistant');
       const livePart = stubTextPart({

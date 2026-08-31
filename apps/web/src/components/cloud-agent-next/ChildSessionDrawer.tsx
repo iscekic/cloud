@@ -67,6 +67,7 @@ export function ChildSessionDrawer({
     ? getChildSessionHydrationState(selectedSessionId)
     : IDLE_HYDRATION_STATE;
   const previousStackDepthRef = useRef(stack.length);
+  const firstContentMarkedSessionRef = useRef<string | null>(null);
   const backButtonRef = useRef<HTMLButtonElement | null>(null);
   const headingFocusRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -159,8 +160,22 @@ export function ChildSessionDrawer({
 
   useEffect(() => {
     if (!selectedSessionId) return;
+    performance.mark(`child-open-${selectedSessionId}`);
     void manager.hydrateChildSession(selectedSessionId);
   }, [manager, selectedSessionId]);
+
+  useEffect(() => {
+    if (!selectedSessionId) return;
+    if (hydrationState.status !== 'ready' || messages.length === 0) return;
+    if (firstContentMarkedSessionRef.current === selectedSessionId) return;
+    firstContentMarkedSessionRef.current = selectedSessionId;
+    performance.mark(`child-first-content-${selectedSessionId}`);
+    performance.measure(
+      `child-open-${selectedSessionId}`,
+      `child-open-${selectedSessionId}`,
+      `child-first-content-${selectedSessionId}`
+    );
+  }, [hydrationState.status, messages.length, selectedSessionId]);
 
   useEffect(() => {
     if (!shouldAutoScroll) return;
