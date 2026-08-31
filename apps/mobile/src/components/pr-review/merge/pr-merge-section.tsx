@@ -203,6 +203,7 @@ export function PrMergeSection({
   if (overview.autoMerge) {
     return (
       <View className="gap-3">
+        {requirementsSection}
         <AutoMergeEnabledBanner
           method={overview.autoMerge.method}
           onDisable={() => {
