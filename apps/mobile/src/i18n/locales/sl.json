@@ -2096,7 +2096,11 @@
       "couldNotSearch": "Sej ni bilo mogoče iskati",
       "completedWillAppear": "Dokončane seje bodo prikazane tukaj.",
       "noPastSessions": "Ni preteklih sej",
-      "live": "V ŽIVO"
+      "live": "V ŽIVO",
+      "liveCount_one": "{{count}} V ŽIVO",
+      "liveCount_two": "{{count}} V ŽIVO",
+      "liveCount_few": "{{count}} V ŽIVO",
+      "liveCount_other": "{{count}} V ŽIVO"
     },
     "sessionRow": {
       "deleteTitle": "Izbrisati sejo?",
@@ -2307,6 +2311,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Nalaganje…",
       "cloudAgentDescription": "Zaženi na Kilo oblaku v peskovniku",
+      "remotes": "Oddaljeni stroji",
+      "terminals": "Terminali",
       "noCliInstances": "Ni povezanih instanc CLI",
       "noCliInstancesDescription": "Zaženi `kilo remote` v projektu na svojem računalniku ali pa posodobi Kilo CLI, če že teče.",
       "instanceOnProject": "{{name}} na {{project}}",

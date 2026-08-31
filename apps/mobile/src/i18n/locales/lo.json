@@ -2070,7 +2070,9 @@
       "couldNotSearch": "ບໍ່ສາມາດຄົ້ນຫາເຊດຊັນ",
       "completedWillAppear": "ເຊດຊັນທີ່ສຳເລັດຈະປາກົດຢູ່ນີ້.",
       "noPastSessions": "ບໍ່ມີເຊດຊັນທີ່ຜ່ານມາ",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "ລຶບເຊດຊັນ?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "ກຳລັງໂຫຼດ…",
       "cloudAgentDescription": "ດຳເນີນການໃນ sandbox ຄລາວຂອງ Kilo",
+      "remotes": "ເຄື່ອງທາງໄກ",
+      "terminals": "ເທີມິນອລ",
       "noCliInstances": "ບໍ່ມີ CLI instance ທີ່ເຊື່ອມຕໍ່",
       "noCliInstancesDescription": "ດຳເນີນການ `kilo remote` ໃນໂປຣເຈັກໃນຄອມພິວເຕີຂອງທ່ານ, ຫຼື ອັບເດດ Kilo CLI ຖ້າມີອັນທີ່ກຳລັງດຳເນີນຢູ່.",
       "instanceOnProject": "{{name}} ໃນ {{project}}",

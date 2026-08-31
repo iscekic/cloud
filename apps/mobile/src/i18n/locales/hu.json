@@ -2070,7 +2070,9 @@
       "couldNotSearch": "A munkamenetek keresése nem sikerült",
       "completedWillAppear": "A befejezett munkamenetek itt jelennek meg.",
       "noPastSessions": "Nincs korábbi munkamenet",
-      "live": "ÉLŐ"
+      "live": "ÉLŐ",
+      "liveCount_one": "{{count}} ÉLŐ",
+      "liveCount_other": "{{count}} ÉLŐ"
     },
     "sessionRow": {
       "deleteTitle": "Munkamenet törlése?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Betöltés…",
       "cloudAgentDescription": "Futtatás a Kilo felhőalapú sandboxában",
+      "remotes": "Távoli gépek",
+      "terminals": "Terminálok",
       "noCliInstances": "Nincs csatlakoztatott CLI-példány",
       "noCliInstancesDescription": "Futtassa a `kilo remote` parancsot egy projekten a számítógépén, vagy frissítse a Kilo CLI-t, ha már fut egy.",
       "instanceOnProject": "{{name}} a {{project}} projekten",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "సెషన్‌లను శోధించలేకపోయింది",
       "completedWillAppear": "పూర్తయిన సెషన్‌లు ఇక్కడ కనిపిస్తాయి.",
       "noPastSessions": "గత సెషన్‌లు లేవు",
-      "live": "ప్రత్యక్ష"
+      "live": "ప్రత్యక్ష",
+      "liveCount_one": "{{count}} ప్రత్యక్ష",
+      "liveCount_other": "{{count}} ప్రత్యక్ష"
     },
     "sessionRow": {
       "deleteTitle": "సెషన్‌ను తొలగించాలా?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "క్లౌడ్ ఏజెంట్",
       "loading": "లోడ్ అవుతోంది…",
       "cloudAgentDescription": "Kilo యొక్క క్లౌడ్ శాండ్‌బాక్స్‌లో అమలు చేయండి",
+      "remotes": "దూర యంత్రాలు",
+      "terminals": "టెర్మినల్స్",
       "noCliInstances": "CLI ఇన్‌స్టాన్స్‌లు కనెక్ట్ చేయబడలేదు",
       "noCliInstancesDescription": "మీ కంప్యూటర్‌లో ఒక ప్రాజెక్ట్‌లో `kilo remote` అమలు చేయండి, లేదా ఒకటి ఇప్పటికే నడుస్తుంటే Kilo CLIను నవీకరించండి.",
       "instanceOnProject": "{{project}}లో {{name}}",

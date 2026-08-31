@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Pa t 'kapab chèche sesyon yo",
       "completedWillAppear": "Sesyon ki fini yo pral parèt isit la.",
       "noPastSessions": "Pa gen sesyon pase",
-      "live": "AN DIRÈK"
+      "live": "AN DIRÈK",
+      "liveCount_one": "{{count}} AN DIRÈK",
+      "liveCount_other": "{{count}} AN DIRÈK"
     },
     "sessionRow": {
       "deleteTitle": "Efase sesyon an?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Ap chaje…",
       "cloudAgentDescription": "Kouri sou sabl Cloud Kilo",
+      "remotes": "Machin aleka",
+      "terminals": "Tèminal",
       "noCliInstances": "Pa gen enstans CLI konekte",
       "noCliInstancesDescription": "Kouri `kilo remote` nan yon pwojè sou òdinatè ou, oswa mete ajou Kilo CLI si youn deja k ap kouri.",
       "instanceOnProject": "{{name}} sou {{project}}",

@@ -2109,7 +2109,12 @@
       "couldNotSearch": "Níorbh fhéidir seisiúin a chuardach",
       "completedWillAppear": "Beidh seisiúin chríochnaithe le feiceáil anseo.",
       "noPastSessions": "Níl aon seisiúin roimhe seo",
-      "live": "BEO"
+      "live": "BEO",
+      "liveCount_one": "{{count}} BEO",
+      "liveCount_two": "{{count}} BEO",
+      "liveCount_few": "{{count}} BEO",
+      "liveCount_many": "{{count}} BEO",
+      "liveCount_other": "{{count}} BEO"
     },
     "sessionRow": {
       "deleteTitle": "An scriosfar an seisiún?",
@@ -2323,6 +2328,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Ag lódáil…",
       "cloudAgentDescription": "Rith ar sandbox scamall Kilo",
+      "remotes": "Meaisíní cianda",
+      "terminals": "Teirminéil",
       "noCliInstances": "Níl aon shampla CLI ceangailte",
       "noCliInstancesDescription": "Rith `kilo remote` i dtionscadal ar do ríomhaire, nó nuashonraigh Kilo CLI má tá ceann ar siúl cheana.",
       "instanceOnProject": "{{name}} ar {{project}}",

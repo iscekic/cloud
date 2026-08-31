@@ -1616,7 +1616,9 @@
       "noSessionsYetDescription": "अपने फ़ोन से कोडिंग कार्य शुरू करें। आपके सत्र यहाँ दिखाई देंगे।",
       "tryAdjustFilters": "अपने फ़िल्टर समायोजित करने या साफ़ करने का प्रयास करें।",
       "tryDifferentSearch": "कोई दूसरा खोज शब्द आज़माएँ।",
-      "live": "लाइव"
+      "live": "लाइव",
+      "liveCount_one": "{{count}} लाइव",
+      "liveCount_other": "{{count}} लाइव"
     },
     "sessionRow": {
       "copyId": "सत्र ID कॉपी करें",
@@ -1794,6 +1796,8 @@
       "cloudAgent": "क्लाउड एजेंट",
       "loading": "लोड हो रहा है…",
       "cloudAgentDescription": "Kilo के क्लाउड सैंडबॉक्स पर चलाएँ",
+      "remotes": "दूरस्थ मशीनें",
+      "terminals": "टर्मिनल",
       "noCliInstances": "कोई CLI इंस्टेंस कनेक्ट नहीं",
       "noCliInstancesDescription": "अपने कंप्यूटर पर किसी प्रोजेक्ट में `kilo remote` चलाएँ, या अगर पहले से चल रहा है तो Kilo CLI अपडेट करें।",
       "instanceOnProject": "{{project}} पर {{name}}",

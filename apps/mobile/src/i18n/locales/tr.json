@@ -1616,7 +1616,9 @@
       "couldNotSearch": "Oturumlar aranamadı",
       "completedWillAppear": "Tamamlanan oturumlar burada görünecek.",
       "noPastSessions": "Geçmiş oturum yok",
-      "live": "CANLI"
+      "live": "CANLI",
+      "liveCount_one": "{{count}} CANLI",
+      "liveCount_other": "{{count}} CANLI"
     },
     "sessionRow": {
       "deleteTitle": "Oturum silinsin mi?",
@@ -1821,6 +1823,8 @@
       "cloudAgent": "Bulut Ajanı",
       "loading": "Yükleniyor…",
       "cloudAgentDescription": "Kilo'nun bulut korumalı alanında çalıştır",
+      "remotes": "Uzak makineler",
+      "terminals": "Terminaller",
       "noCliInstances": "Bağlı CLI örneği yok",
       "noCliInstancesDescription": "Bilgisayarınızdaki bir projede `kilo remote` çalıştırın veya zaten çalışıyorsa Kilo CLI'yi güncelleyin.",
       "instanceOnProject": "{{project}} üzerinde {{name}}",

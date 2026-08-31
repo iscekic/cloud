@@ -2070,7 +2070,9 @@
       "couldNotSearch": "සැසි සෙවීමට නොහැකි විය",
       "completedWillAppear": "සම්පූර්ණ කළ සැසි මෙහි දිස්වනු ඇත.",
       "noPastSessions": "පසුගිය සැසි නැත",
-      "live": "සජීවී"
+      "live": "සජීවී",
+      "liveCount_one": "{{count}} සජීවී",
+      "liveCount_other": "{{count}} සජීවී"
     },
     "sessionRow": {
       "deleteTitle": "සැසිය මකන්නද?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "පූරණය වෙමින්…",
       "cloudAgentDescription": "Kilo හි cloud sandbox මත ධාවනය කරන්න",
+      "remotes": "දුරස්ථ යන්ත්‍ර",
+      "terminals": "ටර්මිනල්",
       "noCliInstances": "CLI අවස්ථා සම්බන්ධ කර නැත",
       "noCliInstancesDescription": "ඔබේ පරිගණකයේ ව්යාපෘතියක `kilo remote` ධාවනය කරන්න, නැතහොත් එකක් දැනටමත් ධාවනය වන්නේ නම් Kilo CLI යාවත්කාලීන කරන්න.",
       "instanceOnProject": "{{project}} මත {{name}}",

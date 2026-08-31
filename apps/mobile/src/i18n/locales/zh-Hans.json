@@ -1616,7 +1616,9 @@
       "couldNotSearch": "无法搜索会话",
       "completedWillAppear": "已完成的会话将显示在这里。",
       "noPastSessions": "没有过去的会话",
-      "live": "实时"
+      "live": "实时",
+      "liveCount_one": "{{count}} 实时",
+      "liveCount_other": "{{count}} 实时"
     },
     "sessionRow": {
       "deleteTitle": "删除会话？",
@@ -1821,6 +1823,8 @@
       "cloudAgent": "云端代理",
       "loading": "加载中…",
       "cloudAgentDescription": "在 Kilo 的云端沙盒中运行",
+      "remotes": "远程",
+      "terminals": "终端",
       "noCliInstances": "未连接 CLI 实例",
       "noCliInstancesDescription": "在您电脑上的项目中运行 `kilo remote`，或如果已有 Kilo CLI 在运行，请更新它。",
       "instanceOnProject": "{{project}} 上的 {{name}}",

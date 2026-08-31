@@ -2083,7 +2083,10 @@
       "couldNotSearch": "Neizdevās meklēt sesijas",
       "completedWillAppear": "Pabeigtās sesijas parādīsies šeit.",
       "noPastSessions": "Nav pagājušo sesiju",
-      "live": "TIŠRAIDĒ"
+      "live": "TIŠRAIDĒ",
+      "liveCount_zero": "{{count}} TIŠRAIDĒ",
+      "liveCount_one": "{{count}} TIŠRAIDĒ",
+      "liveCount_other": "{{count}} TIŠRAIDĒ"
     },
     "sessionRow": {
       "deleteTitle": "Dzēst sesiju?",
@@ -2291,6 +2294,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Ielādē…",
       "cloudAgentDescription": "Palaist uz Kilo mākoņa smilškastes",
+      "remotes": "Attālās mašīnas",
+      "terminals": "Termināļi",
       "noCliInstances": "Nav savienotu CLI instanču",
       "noCliInstancesDescription": "Palaid `kilo remote` projektā savā datorā vai atjaunini Kilo CLI, ja tā jau darbojas.",
       "instanceOnProject": "{{name}} uz {{project}}",

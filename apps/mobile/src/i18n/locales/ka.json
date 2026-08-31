@@ -2070,7 +2070,9 @@
       "couldNotSearch": "სესიების ძიება ვერ მოხერხდა",
       "completedWillAppear": "დასრულებული სესიები აქ გამოჩნდება.",
       "noPastSessions": "წარსული სესიები არ არის",
-      "live": "პირდაპირი"
+      "live": "პირდაპირი",
+      "liveCount_one": "{{count}} პირდაპირი",
+      "liveCount_other": "{{count}} პირდაპირი"
     },
     "sessionRow": {
       "deleteTitle": "სესიის წაშლა?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "ჩატვირთვა…",
       "cloudAgentDescription": "გაშვება Kilo-ს ღრუბლოვან ქვიშაყუთში",
+      "remotes": "დისტანციური მანქანები",
+      "terminals": "ტერმინალები",
       "noCliInstances": "დაკავშირებული CLI ინსტანციები არ არის",
       "noCliInstancesDescription": "გაუშვით `kilo remote` პროექტში თქვენს კომპიუტერზე, ან განაახლეთ Kilo CLI, თუ ის უკვე მუშაობს.",
       "instanceOnProject": "{{name}} პროექტზე {{project}}",

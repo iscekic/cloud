@@ -2096,7 +2096,11 @@
       "couldNotSearch": "Nepavyko ieškoti sesijų",
       "completedWillAppear": "Baigtos sesijos bus rodomos čia.",
       "noPastSessions": "Nėra ankstesnių sesijų",
-      "live": "TIESIOGIAI"
+      "live": "TIESIOGIAI",
+      "liveCount_one": "{{count}} TIESIOGIAI",
+      "liveCount_few": "{{count}} TIESIOGIAI",
+      "liveCount_many": "{{count}} TIESIOGIAI",
+      "liveCount_other": "{{count}} TIESIOGIAI"
     },
     "sessionRow": {
       "deleteTitle": "Ištrinti sesiją?",
@@ -2307,6 +2311,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Kraunama…",
       "cloudAgentDescription": "Vykdyti Kilo debesijos smėlio dėžėje",
+      "remotes": "Nuotolinės mašinos",
+      "terminals": "Terminalai",
       "noCliInstances": "Neprijungta jokių CLI egzempliorių",
       "noCliInstancesDescription": "Vykdykite `kilo remote` projekte savo kompiuteryje arba atnaujinkite Kilo CLI, jei jis jau veikia.",
       "instanceOnProject": "{{name}} projekte {{project}}",

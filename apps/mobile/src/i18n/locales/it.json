@@ -1604,7 +1604,10 @@
       "couldNotSearch": "Impossibile cercare le sessioni",
       "completedWillAppear": "Le sessioni completate appariranno qui.",
       "noPastSessions": "Nessuna sessione passata",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_many": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Eliminare la sessione?",
@@ -1812,6 +1815,8 @@
       "cloudAgent": "Agente cloud",
       "loading": "Caricamento…",
       "cloudAgentDescription": "Esegui sul sandbox cloud di Kilo",
+      "remotes": "Macchine remote",
+      "terminals": "Terminali",
       "noCliInstances": "Nessuna istanza CLI collegata",
       "noCliInstancesDescription": "Esegui `kilo remote` in un progetto sul tuo computer, oppure aggiorna la CLI di Kilo se è già in esecuzione.",
       "instanceOnProject": "{{name}} su {{project}}",

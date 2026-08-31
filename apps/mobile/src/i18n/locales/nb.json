@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Kunne ikke søke i økter",
       "completedWillAppear": "Fullførte økter vises her.",
       "noPastSessions": "Ingen tidligere økter",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Slette økt?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Laster…",
       "cloudAgentDescription": "Kjør på Kilos skybaserte sandkasse",
+      "remotes": "Eksterne maskiner",
+      "terminals": "Terminaler",
       "noCliInstances": "Ingen CLI-instanser tilkoblet",
       "noCliInstancesDescription": "Kjør `kilo remote` i et prosjekt på datamaskinen din, eller oppdater Kilo CLI hvis en allerede kjører.",
       "instanceOnProject": "{{name}} på {{project}}",

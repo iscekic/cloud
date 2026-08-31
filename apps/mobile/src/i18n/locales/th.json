@@ -2070,7 +2070,9 @@
       "couldNotSearch": "ไม่สามารถค้นหา sessions ได้",
       "completedWillAppear": "sessions ที่เสร็จแล้วจะปรากฏที่นี่",
       "noPastSessions": "ไม่มี sessions ในอดีต",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "ลบ session?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "กำลังโหลด…",
       "cloudAgentDescription": "รันบน sandbox คลาวด์ของ Kilo",
+      "remotes": "เครื่องระยะไกล",
+      "terminals": "เทอร์มินัล",
       "noCliInstances": "ไม่มี CLI instances ที่เชื่อมต่อ",
       "noCliInstancesDescription": "รัน `kilo remote` ในโปรเจกต์บนคอมพิวเตอร์ของคุณ หรืออัปเดต Kilo CLI หากมีอยู่แล้วกำลังทำงาน",
       "instanceOnProject": "{{name}} บน {{project}}",

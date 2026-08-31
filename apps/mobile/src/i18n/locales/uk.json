@@ -1628,7 +1628,11 @@
       "couldNotSearch": "Не вдалося виконати пошук сеансів",
       "completedWillAppear": "Завершені сеанси з'являться тут.",
       "noPastSessions": "Немає минулих сеансів",
-      "live": "НАЖИВО"
+      "live": "НАЖИВО",
+      "liveCount_one": "{{count}} НАЖИВО",
+      "liveCount_few": "{{count}} НАЖИВО",
+      "liveCount_many": "{{count}} НАЖИВО",
+      "liveCount_other": "{{count}} НАЖИВО"
     },
     "sessionRow": {
       "deleteTitle": "Видалити сеанс?",
@@ -1839,6 +1843,8 @@
       "cloudAgent": "Хмарний агент",
       "loading": "Завантаження…",
       "cloudAgentDescription": "Запуск у хмарній пісочниці Kilo",
+      "remotes": "Віддалені машини",
+      "terminals": "Термінали",
       "noCliInstances": "Немає підключених екземплярів CLI",
       "noCliInstancesDescription": "Виконайте `kilo remote` у проєкті на своєму комп'ютері або оновіть Kilo CLI, якщо вона вже запущена.",
       "instanceOnProject": "{{name}} на {{project}}",

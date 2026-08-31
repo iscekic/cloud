@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Kon sessies nie soek nie",
       "completedWillAppear": "Voltooide sessies sal hier verskyn.",
       "noPastSessions": "Geen vorige sessies nie",
-      "live": "LEWEND"
+      "live": "LEWEND",
+      "liveCount_one": "{{count}} LEWEND",
+      "liveCount_other": "{{count}} LEWEND"
     },
     "sessionRow": {
       "deleteTitle": "Sessie verwyder?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Laai…",
       "cloudAgentDescription": "Loop op Kilo se wolk-sandbox",
+      "remotes": "Afgeleë masjiene",
+      "terminals": "Terminale",
       "noCliInstances": "Geen CLI-instansies gekoppel nie",
       "noCliInstancesDescription": "Loop `kilo remote` in 'n projek op jou rekenaar, of werk Kilo CLI by as een reeds loop.",
       "instanceOnProject": "{{name}} op {{project}}",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "ಸೆಶನ್ಗಳನ್ನು ಹುಡುಕಲಾಗಲಿಲ್ಲ",
       "completedWillAppear": "ಪೂರ್ಣಗೊಂಡ ಸೆಶನ್ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.",
       "noPastSessions": "ಯಾವುದೇ ಹಿಂದಿನ ಸೆಶನ್ಗಳಿಲ್ಲ",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "ಸೆಶನ್ ಅಳಿಸಬೇಕೆ?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "ಲೋಡ್ ಆಗುತ್ತಿದೆ…",
       "cloudAgentDescription": "Kilo ನ ಕ್ಲೌಡ್ ಸ್ಯಾಂಡ್ಬಾಕ್ಸ್ನಲ್ಲಿ ಚಲಾಯಿಸಿ",
+      "remotes": "ದೂರದ ಯಂತ್ರಗಳು",
+      "terminals": "ಟರ್ಮಿನಲ್",
       "noCliInstances": "ಯಾವುದೇ CLI ಇನ್ಸ್ಟನ್ಸ್ಗಳು ಸಂಪರ್ಕಗೊಂಡಿಲ್ಲ",
       "noCliInstancesDescription": "ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್ನ ಒಂದು ಪ್ರಾಜೆಕ್ಟ್ನಲ್ಲಿ `kilo remote` ಚಲಾಯಿಸಿ, ಅಥವಾ ಒಂದು ಈಗಾಗಲೇ ಚಲಾಯಿಸುತ್ತಿದ್ದರೆ Kilo CLI ಅನ್ನು ನವೀಕರಿಸಿ.",
       "instanceOnProject": "{{project}} ಮೇಲೆ {{name}}",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Ko le wa awọn akoko",
       "completedWillAppear": "Awọn akoko ti o pari yoo han nibi.",
       "noPastSessions": "Ko si awọn akoko ti o kọja",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Pa akoko rẹ?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Nṣagbewọ…",
       "cloudAgentDescription": "Ṣiṣẹ lori sandbox awọsanma Kilo",
+      "remotes": "Ẹrọ jíjìn",
+      "terminals": "Tẹ́mínà",
       "noCliInstances": "Ko si awọn ayeye CLI ti sopọ",
       "noCliInstancesDescription": "Ṣiṣẹ `kilo remote` ninu iṣẹ akanṣe lori kọnputa rẹ, tabi ṣe imudojuiwọn Kilo CLI ti o ba ti n ṣiṣẹ tẹlẹ.",
       "instanceOnProject": "{{name}} lori {{project}}",

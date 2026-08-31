@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Сессийг хайх боломжгүй",
       "completedWillAppear": "Дууссан сессүүд энд гарч ирнэ.",
       "noPastSessions": "Өмнөх сесс байхгүй",
-      "live": "ШУУД"
+      "live": "ШУУД",
+      "liveCount_one": "{{count}} ШУУД",
+      "liveCount_other": "{{count}} ШУУД"
     },
     "sessionRow": {
       "deleteTitle": "Сессийг устгах уу?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Ачаалж байна…",
       "cloudAgentDescription": "Kilo-ийн үүлэн sandbox дээр ажиллуулах",
+      "remotes": "Алсын машинууд",
+      "terminals": "Терминалууд",
       "noCliInstances": "CLI инстанц холбогдоогүй",
       "noCliInstancesDescription": "Компьютерийнхээ төсөлд `kilo remote` ажиллуулах, эсвэл аль хэдийн ажиллаж байгаа бол Kilo CLI-г шинэчилнэ үү.",
       "instanceOnProject": "{{name}} дээр {{project}}",

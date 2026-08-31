@@ -2070,7 +2070,9 @@
       "couldNotSearch": "ਸੈਸ਼ਨ ਖੋਜੇ ਨਹੀਂ ਜਾ ਸਕੇ",
       "completedWillAppear": "ਮੁਕੰਮਲ ਸੈਸ਼ਨ ਇੱਥੇ ਦਿਖਾਈ ਦੇਣਗੇ।",
       "noPastSessions": "ਕੋਈ ਪਿਛਲੇ ਸੈਸ਼ਨ ਨਹੀਂ",
-      "live": "ਲਾਈਵ"
+      "live": "ਲਾਈਵ",
+      "liveCount_one": "{{count}} ਲਾਈਵ",
+      "liveCount_other": "{{count}} ਲਾਈਵ"
     },
     "sessionRow": {
       "deleteTitle": "ਕੀ ਸੈਸ਼ਨ ਮਿਟਾਉਣਾ ਹੈ?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "ਕਲਾਉਡ ਏਜੰਟ",
       "loading": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…",
       "cloudAgentDescription": "Kilo ਦੇ ਕਲਾਉਡ ਸੈਂਡਬਾਕਸ 'ਤੇ ਚਲਾਓ",
+      "remotes": "ਦੂਰ ਦੀਆਂ ਮਸ਼ੀਨਾਂ",
+      "terminals": "ਟਰਮੀਨਲ",
       "noCliInstances": "ਕੋਈ CLI ਇੰਸਟੈਂਸ ਕਨੈਕਟ ਨਹੀਂ",
       "noCliInstancesDescription": "ਆਪਣੇ ਕੰਪਿਊਟਰ ਦੇ ਪ੍ਰੋਜੈਕਟ ਵਿੱਚ `kilo remote` ਚਲਾਓ, ਜਾਂ ਜੇਕਰ ਕੋਈ ਪਹਿਲਾਂ ਹੀ ਚੱਲ ਰਿਹਾ ਹੈ ਤਾਂ Kilo CLI ਅੱਪਡੇਟ ਕਰੋ।",
       "instanceOnProject": "{{name}} {{project}} 'ਤੇ",

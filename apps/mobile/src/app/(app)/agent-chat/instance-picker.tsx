@@ -98,10 +98,10 @@ export default function InstancePickerScreen() {
     [instancesData]
   );
 
-  const labeled = useMemo(() => labelInstances(instances, i18n.language), [
-    instances,
-    i18n.language,
-  ]);
+  const labeled = useMemo(
+    () => labelInstances(instances, i18n.language),
+    [instances, i18n.language]
+  );
 
   // Remotes first, then Terminals. Each section is omitted when empty; the
   // order of rows within a section is the server list order (filter, not
@@ -228,8 +228,15 @@ export default function InstancePickerScreen() {
     const selected = item.connectionId === currentConnectionId;
     const subtitle = item.facts ?? item.projectName;
     const label = item.dedupSuffix
-      ? `${item.name}, ${subtitle}, #${item.dedupSuffix}`
-      : `${item.name}, ${subtitle}`;
+      ? t('agentChat.instancePicker.instanceOnProjectSuffix', {
+          name: item.name,
+          project: subtitle,
+          suffix: `#${item.dedupSuffix}`,
+        })
+      : t('agentChat.instancePicker.instanceOnProject', {
+          name: item.name,
+          project: subtitle,
+        });
     return (
       <Pressable
         className="flex-row items-center gap-3 border-b border-border px-4 py-3 active:bg-secondary"

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Seansside otsimine ebaõnnestus",
       "completedWillAppear": "Lõpetatud seansid ilmuvad siia.",
       "noPastSessions": "Minevikuseansse pole",
-      "live": "OTSE"
+      "live": "OTSE",
+      "liveCount_one": "{{count}} OTSE",
+      "liveCount_other": "{{count}} OTSE"
     },
     "sessionRow": {
       "deleteTitle": "Kustutan seansi?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Laadimine…",
       "cloudAgentDescription": "Käitage Kilo pilve sandbox'is",
+      "remotes": "Kaugmasinad",
+      "terminals": "Terminalid",
       "noCliInstances": "Ühtegi CLI instantsi pole ühendatud",
       "noCliInstancesDescription": "Käivita projektis arvutis käsk `kilo remote` või uuenda Kilo CLI-d, kui see juba töötab.",
       "instanceOnProject": "{{name}} saidil {{project}}",

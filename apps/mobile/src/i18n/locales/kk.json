@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Сессияларды іздеу мүмкін болмады",
       "completedWillAppear": "Аяқталған сессиялар осында пайда болады.",
       "noPastSessions": "Өткен сессиялар жоқ",
-      "live": "ТІКІ"
+      "live": "ТІКІ",
+      "liveCount_one": "{{count}} ТІКІ",
+      "liveCount_other": "{{count}} ТІКІ"
     },
     "sessionRow": {
       "deleteTitle": "Сессияны жою керек пе?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Жүктелуде…",
       "cloudAgentDescription": "Kilo хмарлы sandbox ортасында іске қосу",
+      "remotes": "Қашықтағы машиналар",
+      "terminals": "Терминалдар",
       "noCliInstances": "Қосылған CLI инстанстары жоқ",
       "noCliInstancesDescription": "Компьютеріңіздегі жобада `kilo remote` іске қосыңыз немесе Kilo CLI жаңартылғанын тексеріңіз.",
       "instanceOnProject": "{{project}} жобасындағы {{name}}",

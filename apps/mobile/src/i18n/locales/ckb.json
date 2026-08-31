@@ -2070,7 +2070,9 @@
       "couldNotSearch": "نەتوانرا گەڕان لە سێشنەکان بکرێت",
       "completedWillAppear": "سێشنە تەواوکراوەکان لێرە دەردەکەون.",
       "noPastSessions": "هیچ سێشنێکی ڕابردوو نییە",
-      "live": "ڕاستەوخۆ"
+      "live": "ڕاستەوخۆ",
+      "liveCount_one": "{{count}} ڕاستەوخۆ",
+      "liveCount_other": "{{count}} ڕاستەوخۆ"
     },
     "sessionRow": {
       "deleteTitle": "سڕینەوەی سێشن؟",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "ئەرکى هەور",
       "loading": "بارکردن…",
       "cloudAgentDescription": "لە ساندبۆکسی هەوری Kilo جێبەجێ بکە",
+      "remotes": "ئامێرە دوورەکان",
+      "terminals": "تێرمیناڵەکان",
       "noCliInstances": "هیچ نموونەی CLI پەیوەندیدار نییە",
       "noCliInstancesDescription": "لە پڕۆژەیەک لە کۆمپیوتەرەکەتدا `kilo remote` جێبەجێ بکە، یان ئەگەر یەکێک پێشتر کاردەکات Kilo CLI نوێ بکە.",
       "instanceOnProject": "{{name}} لەسەر {{project}}",

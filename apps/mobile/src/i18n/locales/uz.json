@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Sessiyalarni qidirib bo'lmadi",
       "completedWillAppear": "Tugallangan sessiyalar shu yerda paydo bo'ladi.",
       "noPastSessions": "O'tgan sessiyalar yo'q",
-      "live": "JO'N"
+      "live": "JO'N",
+      "liveCount_one": "{{count}} JO'N",
+      "liveCount_other": "{{count}} JO'N"
     },
     "sessionRow": {
       "deleteTitle": "Sessiya o'chirilsinmi?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Yuklanmoqda…",
       "cloudAgentDescription": "Kilo'ning bulutli sandboxida ishga tushirish",
+      "remotes": "Masofaviy mashinalar",
+      "terminals": "Terminallar",
       "noCliInstances": "Ulangan CLI missallari yo'q",
       "noCliInstancesDescription": "Kompyuteringizdagi loyihada `kilo remote` ni ishga tushiring yoki allaqachon ishlayotgan bo'lsa Kilo CLI'ni yangilang.",
       "instanceOnProject": "{{project}} ustida {{name}}",

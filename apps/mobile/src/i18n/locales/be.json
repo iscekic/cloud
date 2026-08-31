@@ -2096,7 +2096,11 @@
       "couldNotSearch": "Не атрымалася выканаць пошук па сеансах",
       "completedWillAppear": "Завершаныя сеансы з'явяцца тут.",
       "noPastSessions": "Няма мінулых сеансаў",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_few": "{{count}} LIVE",
+      "liveCount_many": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Выдаліць сеанс?",
@@ -2307,6 +2311,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Загрузка…",
       "cloudAgentDescription": "Запуск у воблачнай пясочніцы Kilo",
+      "remotes": "Аддаленыя машыны",
+      "terminals": "Тэрміналы",
       "noCliInstances": "Няма падключаных экзэмпляраў CLI",
       "noCliInstancesDescription": "Выканайце `kilo remote` у праекце на вашым кампутары або абнавіце Kilo CLI, калі ён ужо працуе.",
       "instanceOnProject": "{{name}} на {{project}}",

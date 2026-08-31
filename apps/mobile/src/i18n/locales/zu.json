@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Akukwazanga ukusesha iziseshini",
       "completedWillAppear": "Iziseshini eziqediwe zizovela lapha.",
       "noPastSessions": "Akukho ziseshini ezidlule",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Isula iseshini?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "I-Cloud Agent",
       "loading": "Iyalayisha…",
       "cloudAgentDescription": "Sebenza kusihlabathi sefu se-Kilo",
+      "remotes": "Imishini ekude",
+      "terminals": "Amaterminal",
       "noCliInstances": "Akukho zimo ze-CLI ezixhunyiwe",
       "noCliInstancesDescription": "Qalisa `kilo remote` kuphrojetha ekhompuyutheni yakho, noma buyekeza i-Kilo CLI uma isivele isebenza.",
       "instanceOnProject": "{{name}} ku-{{project}}",

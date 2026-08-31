@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Չհաջողվեց որոնել նիստերը",
       "completedWillAppear": "Ավարտված նիստերը կհայտնվեն այստեղ։",
       "noPastSessions": "Անցյալի նիստեր չկան",
-      "live": "ՈՒՂԻՂ"
+      "live": "ՈՒՂԻՂ",
+      "liveCount_one": "{{count}} ՈՒՂԻՂ",
+      "liveCount_other": "{{count}} ՈՒՂԻՂ"
     },
     "sessionRow": {
       "deleteTitle": "Ջնջե՞լ նիստը",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Ամպային գործակալ",
       "loading": "Բեռնվում է…",
       "cloudAgentDescription": "Գործարկել Kilo-ի ամպային ավազարկղում",
+      "remotes": "Հեռակա մեքենաներ",
+      "terminals": "Տերմինալներ",
       "noCliInstances": "Միացված CLI օրինակներ չկան",
       "noCliInstancesDescription": "Գործարկեք `kilo remote`-ը ձեր համակարգչի նախագծում, կամ թարմացրեք Kilo CLI-ն, եթե այն արդեն աշխատում է։",
       "instanceOnProject": "{{name}} {{project}}-ում",

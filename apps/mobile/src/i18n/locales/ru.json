@@ -1628,7 +1628,11 @@
       "couldNotSearch": "Не удалось выполнить поиск сеансов",
       "completedWillAppear": "Завершенные сеансы появятся здесь.",
       "noPastSessions": "Нет прошлых сеансов",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_few": "{{count}} LIVE",
+      "liveCount_many": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Удалить сеанс?",
@@ -1839,6 +1843,8 @@
       "cloudAgent": "Облачный агент",
       "loading": "Загрузка…",
       "cloudAgentDescription": "Запуск в облачной песочнице Kilo",
+      "remotes": "Удалённые машины",
+      "terminals": "Терминалы",
       "noCliInstances": "Нет подключенных экземпляров CLI",
       "noCliInstancesDescription": "Выполните `kilo remote` в проекте на своем компьютере или обновите Kilo CLI, если она уже запущена.",
       "instanceOnProject": "{{name}} на {{project}}",

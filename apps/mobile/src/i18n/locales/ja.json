@@ -1616,7 +1616,9 @@
       "couldNotSearch": "セッションを検索できませんでした",
       "completedWillAppear": "完了したセッションがここに表示されます。",
       "noPastSessions": "過去のセッションはありません",
-      "live": "ライブ"
+      "live": "ライブ",
+      "liveCount_one": "{{count}} ライブ",
+      "liveCount_other": "{{count}} ライブ"
     },
     "sessionRow": {
       "deleteTitle": "セッションを削除しますか？",
@@ -1821,6 +1823,8 @@
       "cloudAgent": "クラウドエージェント",
       "loading": "読み込み中…",
       "cloudAgentDescription": "Kiloのクラウドサンドボックスで実行",
+      "remotes": "リモート",
+      "terminals": "ターミナル",
       "noCliInstances": "接続されたCLIインスタンスがありません",
       "noCliInstancesDescription": "コンピューター上のプロジェクトで`kilo remote`を実行するか、すでに実行中の場合はKilo CLIを更新してください。",
       "instanceOnProject": "{{project}} の {{name}}",

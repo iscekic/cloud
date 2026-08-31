@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Hindi ma-search ang mga session",
       "completedWillAppear": "Lalabas dito ang mga natapos na session.",
       "noPastSessions": "Walang nakaraang session",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Burahin ang session?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Naglo-load…",
       "cloudAgentDescription": "Patakbuhin sa cloud sandbox ng Kilo",
+      "remotes": "Mga malayong makina",
+      "terminals": "Mga terminal",
       "noCliInstances": "Walang konektadong CLI instance",
       "noCliInstancesDescription": "Patakbuhin ang `kilo remote` sa isang project sa iyong computer, o i-update ang Kilo CLI kung mayroon nang tumatakbo.",
       "instanceOnProject": "{{name}} sa {{project}}",

@@ -2109,7 +2109,12 @@
       "couldNotSearch": "Ma setgħux jinstabu s-sessjonijiet",
       "completedWillAppear": "Is-sessjonijiet kompluti se jidhru hawn.",
       "noPastSessions": "L-ebda sessjoni tal-passat",
-      "live": "DIRETT"
+      "live": "DIRETT",
+      "liveCount_one": "{{count}} DIRETT",
+      "liveCount_two": "{{count}} DIRETT",
+      "liveCount_few": "{{count}} DIRETT",
+      "liveCount_many": "{{count}} DIRETT",
+      "liveCount_other": "{{count}} DIRETT"
     },
     "sessionRow": {
       "deleteTitle": "Tħassar is-sessjoni?",
@@ -2323,6 +2328,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Qed jgħabbi…",
       "cloudAgentDescription": "Mexxi fuq is-sandbox fil-cloud ta' Kilo",
+      "remotes": "Magni remoti",
+      "terminals": "Terminals",
       "noCliInstances": "L-ebda istanza tal-CLI konnessa",
       "noCliInstancesDescription": "Mexxi `kilo remote` fi proġett fuq il-kompjuter tiegħek, jew aġġorna l-Kilo CLI jekk waħda diġà qed taħdem.",
       "instanceOnProject": "{{name}} fuq {{project}}",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Non se puido buscar nas sesións",
       "completedWillAppear": "As sesións completadas aparecerán aquí.",
       "noPastSessions": "Sen sesións pasadas",
-      "live": "EN DIRECTO"
+      "live": "EN DIRECTO",
+      "liveCount_one": "{{count}} EN DIRECTO",
+      "liveCount_other": "{{count}} EN DIRECTO"
     },
     "sessionRow": {
       "deleteTitle": "Eliminar sesión?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Cargando…",
       "cloudAgentDescription": "Executar no sandbox na nube de Kilo",
+      "remotes": "Máquinas remotas",
+      "terminals": "Terminais",
       "noCliInstances": "Non hai instancias CLI conectadas",
       "noCliInstancesDescription": "Executa `kilo remote` nun proxecto do teu ordenador ou actualiza Kilo CLI se xa hai unha en execución.",
       "instanceOnProject": "{{name}} en {{project}}",

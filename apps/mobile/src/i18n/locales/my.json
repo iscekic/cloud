@@ -2070,7 +2070,9 @@
       "couldNotSearch": "စက်ရှင်များကို ရှာဖွေ၍မရခဲ့ပါ",
       "completedWillAppear": "ပြီးဆုံးသော စက်ရှင်များ ဤနေရာတွင် ပေါ်လာမည်။",
       "noPastSessions": "ယခင်စက်ရှင်များ မရှိပါ",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "စက်ရှင်ကို ဖျက်မလား?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "ဖွင့်နေသည်…",
       "cloudAgentDescription": "Kilo ၏ cloud sandbox တွင် လုပ်ဆောင်ပါ",
+      "remotes": "အဝေးရှိ စက်များ",
+      "terminals": "တာမင်နယ်လ်များ",
       "noCliInstances": "CLI instance များ ချိတ်ဆက်မထားပါ",
       "noCliInstancesDescription": "သင့်ကွန်ပျူတာရှိ ပရောဂျက်တစ်ခုတွင် `kilo remote` ကို လုပ်ဆောင်ပါ၊ သို့မဟုတ် တစ်ခုလုပ်ဆောင်နေပြီးသားဖြစ်ပါက Kilo CLI ကို မွမ်းမံပါ။",
       "instanceOnProject": "{{project}} ပေါ်ရှိ {{name}}",

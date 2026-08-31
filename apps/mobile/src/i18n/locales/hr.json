@@ -2083,7 +2083,10 @@
       "couldNotSearch": "Nije moguće pretražiti sesije",
       "completedWillAppear": "Dovršene sesije pojavit će se ovdje.",
       "noPastSessions": "Nema prošlih sesija",
-      "live": "UŽIVO"
+      "live": "UŽIVO",
+      "liveCount_one": "{{count}} UŽIVO",
+      "liveCount_few": "{{count}} UŽIVO",
+      "liveCount_other": "{{count}} UŽIVO"
     },
     "sessionRow": {
       "deleteTitle": "Izbrisati sesiju?",
@@ -2291,6 +2294,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Učitavanje…",
       "cloudAgentDescription": "Pokreni na Kilo cloud sandbox okruženju",
+      "remotes": "Udaljeni strojevi",
+      "terminals": "Terminali",
       "noCliInstances": "Nema povezanih CLI instanci",
       "noCliInstancesDescription": "Pokrenite `kilo remote` u projektu na računalu ili ažurirajte Kilo CLI ako već radi.",
       "instanceOnProject": "{{name}} na {{project}}",

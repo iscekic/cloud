@@ -2070,7 +2070,9 @@
       "couldNotSearch": "સત્રો શોધી શકાયા નથી",
       "completedWillAppear": "પૂર્ણ થયેલ સત્રો અહીં દેખાશે.",
       "noPastSessions": "કોઈ ભૂતકાળના સત્ર નથી",
-      "live": "લાઇવ"
+      "live": "લાઇવ",
+      "liveCount_one": "{{count}} લાઇવ",
+      "liveCount_other": "{{count}} લાઇવ"
     },
     "sessionRow": {
       "deleteTitle": "સત્ર કાઢી નાખવું?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "ક્લાઉડ એજન્ટ",
       "loading": "લોડ થઈ રહ્યું છે…",
       "cloudAgentDescription": "Kilo ના ક્લાઉડ સેન્ડબોક્સ પર ચલાવો",
+      "remotes": "દૂરસ્થ મશીનો",
+      "terminals": "ટર્મિનલ",
       "noCliInstances": "કોઈ CLI ઇન્સ્ટન્સ કનેક્ટ થયેલ નથી",
       "noCliInstancesDescription": "તમારા કમ્પ્યુટરના પ્રોજેક્ટમાં `kilo remote` ચલાવો, અથવા જો પહેલેથી ચાલતું હોય તો Kilo CLI અપડેટ કરો.",
       "instanceOnProject": "{{name}} {{project}} પર",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "সেশন খোঁজা যায়নি",
       "completedWillAppear": "সম্পন্ন সেশন এখানে দেখাবে।",
       "noPastSessions": "কোনো অতীত সেশন নেই",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "সেশন মুছবেন?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "ক্লাউড এজেন্ট",
       "loading": "লোড হচ্ছে…",
       "cloudAgentDescription": "কিলোর ক্লাউড স্যান্ডবক্সে চলবে",
+      "remotes": "দূরবর্তী মেশিন",
+      "terminals": "টার্মিনাল",
       "noCliInstances": "কোনো CLI ইনস্ট্যান্স সংযুক্ত নেই",
       "noCliInstancesDescription": "আপনার কম্পিউটারের একটি প্রজেক্টে `kilo remote` চালান, অথবা একটি ইতিমধ্যে চলমান থাকলে কিলো CLI আপডেট করুন।",
       "instanceOnProject": "{{project}}-এ {{name}}",

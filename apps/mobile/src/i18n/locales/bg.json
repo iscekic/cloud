@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Не може да се търсят сесии",
       "completedWillAppear": "Завършените сесии ще се появят тук.",
       "noPastSessions": "Няма минали сесии",
-      "live": "НА ЖИВО"
+      "live": "НА ЖИВО",
+      "liveCount_one": "{{count}} НА ЖИВО",
+      "liveCount_other": "{{count}} НА ЖИВО"
     },
     "sessionRow": {
       "deleteTitle": "Да изтрием сесията?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Зареждане…",
       "cloudAgentDescription": "Изпълни в облачната пясъчна среда на Kilo",
+      "remotes": "Отдалечени машини",
+      "terminals": "Терминали",
       "noCliInstances": "Няма свързани CLI инстанции",
       "noCliInstancesDescription": "Изпълни `kilo remote` в проект на компютъра си или актуализирай Kilo CLI, ако вече работи.",
       "instanceOnProject": "{{name}} в {{project}}",

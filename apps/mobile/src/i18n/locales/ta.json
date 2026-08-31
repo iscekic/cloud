@@ -2070,7 +2070,9 @@
       "couldNotSearch": "அமர்வுகளைத் தேட முடியவில்லை",
       "completedWillAppear": "நிறைவடைந்த அமர்வுகள் இங்கே தோன்றும்.",
       "noPastSessions": "கடந்த அமர்வுகள் இல்லை",
-      "live": "நேரலை"
+      "live": "நேரலை",
+      "liveCount_one": "{{count}} நேரலை",
+      "liveCount_other": "{{count}} நேரலை"
     },
     "sessionRow": {
       "deleteTitle": "அமர்வை நீக்கவா?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "ஏற்றுகிறது…",
       "cloudAgentDescription": "Kilo இன் கிளவுட் சாண்ட்பாக்ஸில் இயக்கு",
+      "remotes": "தொலை மெஷின்கள்",
+      "terminals": "டெர்மினல்கள்",
       "noCliInstances": "CLI நிகழ்வுகள் எதுவும் இணைக்கப்படவில்லை",
       "noCliInstancesDescription": "உங்கள் கணினியில் ஒரு திட்டத்தில் `kilo remote` ஐ இயக்கவும், அல்லது ஒன்று ஏற்கனவே இயங்கினால் Kilo CLI ஐ புதுப்பிக்கவும்.",
       "instanceOnProject": "{{project}} இல் {{name}}",

@@ -1616,7 +1616,9 @@
       "couldNotSearch": "Kon sessies niet doorzoeken",
       "completedWillAppear": "Voltooide sessies verschijnen hier.",
       "noPastSessions": "Geen eerdere sessies",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Sessie verwijderen?",
@@ -1821,6 +1823,8 @@
       "cloudAgent": "Cloudagent",
       "loading": "Laden…",
       "cloudAgentDescription": "Uitvoeren in Kilo's cloudsandbox",
+      "remotes": "Externe machines",
+      "terminals": "Terminals",
       "noCliInstances": "Geen CLI-instanties verbonden",
       "noCliInstancesDescription": "Voer `kilo remote` uit in een project op je computer, of werk Kilo CLI bij als er al een draait.",
       "instanceOnProject": "{{name}} op {{project}}",

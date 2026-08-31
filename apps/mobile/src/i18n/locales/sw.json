@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Haikuweza kutafuta vikao",
       "completedWillAppear": "Vikao vilivyokamilika vitaonekana hapa.",
       "noPastSessions": "Hakuna vikao vya zamani",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Futa kikao?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Inapakia…",
       "cloudAgentDescription": "Endesha kwenye sandbox ya wingu ya Kilo",
+      "remotes": "Mashine za mbali",
+      "terminals": "Terminali",
       "noCliInstances": "Hakuna mifano ya CLI iliyounganishwa",
       "noCliInstancesDescription": "Endesha `kilo remote` kwenye mradi wa kompyuta yako, au sasisha Kilo CLI ikiwa moja tayari inaendelea.",
       "instanceOnProject": "{{name}} kwenye {{project}}",

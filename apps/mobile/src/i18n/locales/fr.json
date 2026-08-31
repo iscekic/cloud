@@ -1745,6 +1745,8 @@
       "cloudAgent": "Agent cloud",
       "loading": "Chargement…",
       "cloudAgentDescription": "Exécuter sur le bac à sable cloud de Kilo",
+      "remotes": "Machines distantes",
+      "terminals": "Terminaux",
       "noCliInstances": "Aucune instance CLI connectée",
       "noCliInstancesDescription": "Exécutez `kilo remote` dans un projet sur votre ordinateur, ou mettez à jour la CLI Kilo si elle est déjà en cours d'exécution.",
       "instanceOnProject": "{{name}} sur {{project}}",
@@ -2492,7 +2494,10 @@
       "couldNotSearch": "Impossible de rechercher des sessions",
       "completedWillAppear": "Les sessions terminées apparaîtront ici.",
       "noPastSessions": "Aucune session passée",
-      "live": "EN DIRECT"
+      "live": "EN DIRECT",
+      "liveCount_one": "{{count}} EN DIRECT",
+      "liveCount_many": "{{count}} EN DIRECT",
+      "liveCount_other": "{{count}} EN DIRECT"
     },
     "sessionRow": {
       "deleteTitle": "Supprimer la session ?",

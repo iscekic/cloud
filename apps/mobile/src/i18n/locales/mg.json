@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Tsy afaka nanao fikarohana sessions",
       "completedWillAppear": "Hiseho eto ny sessions vita.",
       "noPastSessions": "Tsy misy sessions taloha",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Hofafana ve ny session?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Mamaky…",
       "cloudAgentDescription": "Ampandeho amin'ny sandbox cloud an'ny Kilo",
+      "remotes": "Milina lavitra",
+      "terminals": "Terminaly",
       "noCliInstances": "Tsy misy CLI instances mifandray",
       "noCliInstancesDescription": "Ampandeho `kilo remote` amin'ny tetikasa iray ao amin'ny solosainao, na havaozy ny Kilo CLI raha efa mandeha iray.",
       "instanceOnProject": "{{name}} amin'ny {{project}}",

@@ -1628,7 +1628,11 @@
       "couldNotSearch": "Nie udało się wyszukać sesji",
       "completedWillAppear": "Ukończone sesje pojawią się tutaj.",
       "noPastSessions": "Brak poprzednich sesji",
-      "live": "NA ŻYWO"
+      "live": "NA ŻYWO",
+      "liveCount_one": "{{count}} NA ŻYWO",
+      "liveCount_few": "{{count}} NA ŻYWO",
+      "liveCount_many": "{{count}} NA ŻYWO",
+      "liveCount_other": "{{count}} NA ŻYWO"
     },
     "sessionRow": {
       "deleteTitle": "Usunąć sesję?",
@@ -1839,6 +1843,8 @@
       "cloudAgent": "Agent w chmurze",
       "loading": "Ładowanie…",
       "cloudAgentDescription": "Uruchom w piaskownicy chmurowej Kilo",
+      "remotes": "Zdalne maszyny",
+      "terminals": "Terminale",
       "noCliInstances": "Brak połączonych instancji CLI",
       "noCliInstancesDescription": "Uruchom `kilo remote` w projekcie na swoim komputerze lub zaktualizuj Kilo CLI, jeśli już działa.",
       "instanceOnProject": "{{name}} na {{project}}",

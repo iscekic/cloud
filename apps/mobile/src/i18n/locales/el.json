@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Δεν ήταν δυνατή η αναζήτηση συνεδριών",
       "completedWillAppear": "Οι ολοκληρωμένες συνεδρίες θα εμφανιστούν εδώ.",
       "noPastSessions": "Καμία προηγούμενη συνεδρία",
-      "live": "ΖΩΝΤΑΝΑ"
+      "live": "ΖΩΝΤΑΝΑ",
+      "liveCount_one": "{{count}} ΖΩΝΤΑΝΑ",
+      "liveCount_other": "{{count}} ΖΩΝΤΑΝΑ"
     },
     "sessionRow": {
       "deleteTitle": "Διαγραφή συνεδρίας;",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Φόρτωση…",
       "cloudAgentDescription": "Εκτέλεση στο cloud sandbox του Kilo",
+      "remotes": "Απομακρυσμένα μηχανήματα",
+      "terminals": "Τερματικά",
       "noCliInstances": "Δεν υπάρχουν συνδεδεμένες περιπτώσεις CLI",
       "noCliInstancesDescription": "Εκτελέστε το `kilo remote` σε ένα έργο στον υπολογιστή σας ή ενημερώστε το Kilo CLI εάν εκτελείται ήδη.",
       "instanceOnProject": "{{name}} στο {{project}}",

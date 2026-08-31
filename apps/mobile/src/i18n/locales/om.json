@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Xalayyii barbaaduu hin dandeenye",
       "completedWillAppear": "Xalayyiin xumuraman as ni mul'atu.",
       "noPastSessions": "Xalayyiin darbe hin jiru",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Xalayyii haqaa?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Fe'eessaa jira…",
       "cloudAgentDescription": "Sandbox lafoo Kilo irratti hojjedhu",
+      "remotes": "Meeshaalee fagoo",
+      "terminals": "Terminalii",
       "noCliInstances": "Instance CLI wal qabatan hin jiran",
       "noCliInstancesDescription": "Kompiutara kee irratti project tokko keessatti `kilo remote` hojjedhu, ykn yoo tokko hojjechaa jiraate Kilo CLI haaromsi.",
       "instanceOnProject": "{{name}} kan {{project}} irratti",

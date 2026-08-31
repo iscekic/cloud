@@ -2070,7 +2070,9 @@
       "couldNotSearch": "An kasa nemo zaman",
       "completedWillAppear": "Zaman da suka gama za su bayyana a nan.",
       "noPastSessions": "Babu zaman da suka gabata",
-      "live": "RAYA"
+      "live": "RAYA",
+      "liveCount_one": "{{count}} RAYA",
+      "liveCount_other": "{{count}} RAYA"
     },
     "sessionRow": {
       "deleteTitle": "Share zaman?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Ana loda…",
       "cloudAgentDescription": "Gudanar a sandbox na Cloud na Kilo",
+      "remotes": "Na'urorin nesa",
+      "terminals": "Terminalai",
       "noCliInstances": "Babu misalan CLI da aka haɗa",
       "noCliInstancesDescription": "Gudanar da `kilo remote` a cikin aiki a kwamfutarka, ko sabunta Kilo CLI idan ɗaya yana gudana.",
       "instanceOnProject": "{{name}} a {{project}}",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Ezin dira saioak bilatu",
       "completedWillAppear": "Amaitutako saioak hemen agertuko dira.",
       "noPastSessions": "Ez dago iraganeko saiorik",
-      "live": "ZUZENEAN"
+      "live": "ZUZENEAN",
+      "liveCount_one": "{{count}} ZUZENEAN",
+      "liveCount_other": "{{count}} ZUZENEAN"
     },
     "sessionRow": {
       "deleteTitle": "Ezabatu saioa?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Kargatzen…",
       "cloudAgentDescription": "Exekutatu Kilo-ren hodei sandbox-ean",
+      "remotes": "Urruneko makinak",
+      "terminals": "Terminalak",
       "noCliInstances": "Ez dago CLI instantzia konektaturik",
       "noCliInstancesDescription": "Exekutatu `kilo remote` zure ordenagailuko projektuan, edo eguneratu Kilo CLI jada exekutatzen ari bada.",
       "instanceOnProject": "{{name}} {{project}}n",

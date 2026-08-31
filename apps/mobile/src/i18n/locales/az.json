@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Sessiyalar axtarıla bilmədi",
       "completedWillAppear": "Tamamlanmış sessiyalar burada görünəcək.",
       "noPastSessions": "Keçmiş sessiya yoxdur",
-      "live": "CANLI"
+      "live": "CANLI",
+      "liveCount_one": "{{count}} CANLI",
+      "liveCount_other": "{{count}} CANLI"
     },
     "sessionRow": {
       "deleteTitle": "Sessiyanı silsin?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Yüklənir…",
       "cloudAgentDescription": "Kilo-nun bulud sandboxında işə salın",
+      "remotes": "Uzaq qurğular",
+      "terminals": "Terminallar",
       "noCliInstances": "Qoşulmuş CLI instansiyası yoxdur",
       "noCliInstancesDescription": "Kompüterinizdəki layihədə `kilo remote` işə salın və ya artıq işləyirsə Kilo CLI-ni yeniləyin.",
       "instanceOnProject": "{{project}} üzərində {{name}}",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Istuntoja ei voitu hakea",
       "completedWillAppear": "Valmistuneet istunnot näkyvät tässä.",
       "noPastSessions": "Ei aiempia istuntoja",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Poistetaanko istunto?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Ladataan…",
       "cloudAgentDescription": "Aja Kilo-pilven hiekkalaatikossa",
+      "remotes": "Etäkoneet",
+      "terminals": "Päätteet",
       "noCliInstances": "Ei yhdistettyjä CLI-instansseja",
       "noCliInstancesDescription": "Aja `kilo remote` projektissa tietokoneellasi tai päivitä Kilo CLI, jos sellainen on jo käynnissä.",
       "instanceOnProject": "{{name}} projektissa {{project}}",

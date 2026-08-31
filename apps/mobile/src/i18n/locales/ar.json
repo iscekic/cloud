@@ -1640,7 +1640,13 @@
       "couldNotSearch": "تعذّر البحث في الجلسات",
       "completedWillAppear": "ستظهر الجلسات المكتملة هنا.",
       "noPastSessions": "لا توجد جلسات سابقة",
-      "live": "مباشر"
+      "live": "مباشر",
+      "liveCount_zero": "{{count}} مباشر",
+      "liveCount_one": "{{count}} مباشر",
+      "liveCount_two": "{{count}} مباشر",
+      "liveCount_few": "{{count}} مباشر",
+      "liveCount_many": "{{count}} مباشر",
+      "liveCount_other": "{{count}} مباشر"
     },
     "sessionRow": {
       "deleteTitle": "حذف الجلسة؟",
@@ -1857,6 +1863,8 @@
       "cloudAgent": "وكيل سحابي",
       "loading": "جارٍ التحميل…",
       "cloudAgentDescription": "التشغيل على بيئة الاختبار السحابية من Kilo",
+      "remotes": "الأجهزة البعيدة",
+      "terminals": "الطرفيات",
       "noCliInstances": "لا توجد مثيلات CLI متصلة",
       "noCliInstancesDescription": "شغّل `kilo remote` في مشروع على جهاز الكمبيوتر الخاص بك، أو حدّث Kilo CLI إذا كان يعمل بالفعل.",
       "instanceOnProject": "{{name}} على {{project}}",

@@ -1622,7 +1622,10 @@
       "couldNotSearch": "לא ניתן היה לחפש הפעלות",
       "completedWillAppear": "הפעלות שהושלמו יופיעו כאן.",
       "noPastSessions": "אין הפעלות עבר",
-      "live": "חי"
+      "live": "חי",
+      "liveCount_one": "{{count}} חי",
+      "liveCount_two": "{{count}} חי",
+      "liveCount_other": "{{count}} חי"
     },
     "sessionRow": {
       "deleteTitle": "למחוק הפעלה?",
@@ -1830,6 +1833,8 @@
       "cloudAgent": "סוכן ענן",
       "loading": "טוען…",
       "cloudAgentDescription": "הרץ על ארגז החול בענן של Kilo",
+      "remotes": "מכונות מרוחקות",
+      "terminals": "מסופים",
       "noCliInstances": "אין מופעי CLI מחוברים",
       "noCliInstancesDescription": "הרץ `kilo remote` בפרויקט במחשב שלך, או עדכן את Kilo CLI אם אחד כבר פועל.",
       "instanceOnProject": "{{name}} ב-{{project}}",

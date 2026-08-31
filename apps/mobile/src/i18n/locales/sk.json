@@ -2096,7 +2096,11 @@
       "couldNotSearch": "Sedenie sa nepodarilo vyhľadať",
       "completedWillAppear": "Dokončené sedenia sa zobrazia tu.",
       "noPastSessions": "Žiadne minulé sedenia",
-      "live": "NAŽIVO"
+      "live": "NAŽIVO",
+      "liveCount_one": "{{count}} NAŽIVO",
+      "liveCount_few": "{{count}} NAŽIVO",
+      "liveCount_many": "{{count}} NAŽIVO",
+      "liveCount_other": "{{count}} NAŽIVO"
     },
     "sessionRow": {
       "deleteTitle": "Odstrániť sedenie?",
@@ -2307,6 +2311,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Načítava sa…",
       "cloudAgentDescription": "Spustiť na cloudovom sandboxe Kilo",
+      "remotes": "Vzdialené stroje",
+      "terminals": "Terminály",
       "noCliInstances": "Žiadne pripojené CLI inštancie",
       "noCliInstancesDescription": "Spustite `kilo remote` v projekte na svojom počítači alebo aktualizujte Kilo CLI, ak už jedno beží.",
       "instanceOnProject": "{{name}} na {{project}}",

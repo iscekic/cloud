@@ -1616,7 +1616,9 @@
       "couldNotSearch": "無法搜尋工作階段",
       "completedWillAppear": "已完成的工作階段將顯示在這裡。",
       "noPastSessions": "沒有過去的工作階段",
-      "live": "即時"
+      "live": "即時",
+      "liveCount_one": "{{count}} 即時",
+      "liveCount_other": "{{count}} 即時"
     },
     "sessionRow": {
       "deleteTitle": "刪除工作階段？",
@@ -1821,6 +1823,8 @@
       "cloudAgent": "雲端代理",
       "loading": "載入中…",
       "cloudAgentDescription": "在 Kilo 的雲端沙箱中執行",
+      "remotes": "遠端",
+      "terminals": "終端",
       "noCliInstances": "未連接 CLI 執行個體",
       "noCliInstancesDescription": "在您電腦上的專案中執行 `kilo remote`，或如果已有 Kilo CLI 在執行，請更新它。",
       "instanceOnProject": "{{project}} 上的 {{name}}",

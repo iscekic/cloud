@@ -2122,7 +2122,13 @@
       "couldNotSearch": "Methwyd chwilio sesiynau",
       "completedWillAppear": "Bydd sesiynau wedi'u cwblhau'n ymddangos yma.",
       "noPastSessions": "Dim sesiynau yn y gorffennol",
-      "live": "BYW"
+      "live": "BYW",
+      "liveCount_zero": "{{count}} BYW",
+      "liveCount_one": "{{count}} BYW",
+      "liveCount_two": "{{count}} BYW",
+      "liveCount_few": "{{count}} BYW",
+      "liveCount_many": "{{count}} BYW",
+      "liveCount_other": "{{count}} BYW"
     },
     "sessionRow": {
       "deleteTitle": "Dileu sesiwn?",
@@ -2339,6 +2345,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Yn llwytho…",
       "cloudAgentDescription": "Rhedeg ar flwch tywod cwmwl Kilo",
+      "remotes": "Peiriannau pell",
+      "terminals": "Terfynellau",
       "noCliInstances": "Dim achosion CLI wedi'u cysylltu",
       "noCliInstancesDescription": "Rhedwch `kilo remote` mewn prosiect ar eich cyfrifiadur, neu diweddarwch Kilo CLI os yw un eisoes yn rhedeg.",
       "instanceOnProject": "{{name}} ar {{project}}",

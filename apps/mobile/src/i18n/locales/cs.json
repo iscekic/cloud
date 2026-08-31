@@ -2096,7 +2096,11 @@
       "couldNotSearch": "Relace se nepodařilo vyhledat",
       "completedWillAppear": "Dokončené relace se zde zobrazí.",
       "noPastSessions": "Žádné minulé relace",
-      "live": "ŽIVĚ"
+      "live": "ŽIVĚ",
+      "liveCount_one": "{{count}} ŽIVĚ",
+      "liveCount_few": "{{count}} ŽIVĚ",
+      "liveCount_many": "{{count}} ŽIVĚ",
+      "liveCount_other": "{{count}} ŽIVĚ"
     },
     "sessionRow": {
       "deleteTitle": "Smazat relaci?",
@@ -2307,6 +2311,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Načítá se…",
       "cloudAgentDescription": "Spustit na cloudovém sandboxu Kilo",
+      "remotes": "Vzdálené stroje",
+      "terminals": "Terminály",
       "noCliInstances": "Žádné instance CLI nejsou připojeny",
       "noCliInstancesDescription": "Spusťte `kilo remote` v projektu na počítači, nebo aktualizujte Kilo CLI, pokud jeden již běží.",
       "instanceOnProject": "{{name}} na {{project}}",

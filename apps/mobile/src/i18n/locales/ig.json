@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Enweghị ike ịchọ nzukọ",
       "completedWillAppear": "Nzukọ ndị emechara ga-apụta ebe a.",
       "noPastSessions": "Enweghị nzukọ gara aga",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Hichapụ nzukọ?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Na-ebudata…",
       "cloudAgentDescription": "Gbaa na sandbox igwe ojii nke Kilo",
+      "remotes": "Igwe dị anya",
+      "terminals": "Terminal",
       "noCliInstances": "Enweghị ihe atụ CLI ejikọrọ",
       "noCliInstancesDescription": "Gbaa `kilo remote` n'ọrụ dị na kọmputa gị, ma ọ bụ melite Kilo CLI ma ọ bụrụ na otu na-agba ọsọ.",
       "instanceOnProject": "{{name}} na {{project}}",

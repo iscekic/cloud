@@ -2070,7 +2070,9 @@
       "couldNotSearch": "جستجوی نشستها ممکن نشد",
       "completedWillAppear": "نشستهای تکمیلشده اینجا ظاهر میشوند.",
       "noPastSessions": "هیچ نشست گذشته وجود ندارد",
-      "live": "زنده"
+      "live": "زنده",
+      "liveCount_one": "{{count}} زنده",
+      "liveCount_other": "{{count}} زنده"
     },
     "sessionRow": {
       "deleteTitle": "نشست حذف شود؟",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "در حال بارگذاری…",
       "cloudAgentDescription": "اجرا بر روی جعبه شنی ابری کیلا",
+      "remotes": "ماشین‌های راه دور",
+      "terminals": "ترمینال‌ها",
       "noCliInstances": "هیچ نمونهای از CLI متصل نیست",
       "noCliInstancesDescription": "در یک پروژه روی رایانه خود `kilo remote` را اجرا کنید، یا اگر CLI کیلا در حال اجرا است آن را بهروزرسانی کنید.",
       "instanceOnProject": "{{name}} در {{project}}",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "មិនអាចស្វែងរកវគ្គ",
       "completedWillAppear": "វគ្គដែលបានបញ្ចប់នឹងបង្ហាញនៅទីនេះ។",
       "noPastSessions": "គ្មានវគ្គកន្លងមក",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "លុបវគ្គ?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "កំពុងផ្ទុក…",
       "cloudAgentDescription": "ដំណើរការលើប្រអប់ខ្សាច់ពពករបស់ Kilo",
+      "remotes": "ម៉ាស៊ីនពីចម្ងាយ",
+      "terminals": "ស្ថានីយ",
       "noCliInstances": "គ្មានឧទាហរណ៍ CLI ដែលបានភ្ជាប់",
       "noCliInstancesDescription": "ដំណើរការ `kilo remote` ក្នុងគម្រោងមួយនៅលើកុំព្យូទ័ររបស់អ្នក ឬធ្វើបច្ចុប្បន្នភាព Kilo CLI ប្រសិនបើមានមួយកំពុងដំណើរការរួចហើយ។",
       "instanceOnProject": "{{name}} នៅលើ {{project}}",

@@ -2070,7 +2070,9 @@
       "couldNotSearch": "सत्रहरू खोज्न सकिएन",
       "completedWillAppear": "पूरा भएका सत्रहरू यहाँ देखा पर्नेछन्।",
       "noPastSessions": "कुनै पुराना सत्रहरू छैनन्",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "सत्र मेटाउने?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "क्लाउड एजेन्ट",
       "loading": "लोड हुँदै…",
       "cloudAgentDescription": "Kilo को क्लाउड स्यान्डबक्समा चलाउनुहोस्",
+      "remotes": "टाढाका मेसिनहरू",
+      "terminals": "टर्मिनलहरू",
       "noCliInstances": "कुनै CLI इन्स्ट्यान्सहरू जडान भएका छैनन्",
       "noCliInstancesDescription": "तपाईंको कम्प्युटरको एउटा प्रोजेक्टमा `kilo remote` चलाउनुहोस्, वा कुनै CLI पहिले नै चलिरहेको छ भने Kilo CLI अद्यावधिक गर्नुहोस्।",
       "instanceOnProject": "{{project}} मा {{name}}",

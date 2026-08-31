@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Ekki tókst að leita í lotum",
       "completedWillAppear": "Lokið lotur birtast hér.",
       "noPastSessions": "Engar fyrri lotur",
-      "live": "BEIN"
+      "live": "BEIN",
+      "liveCount_one": "{{count}} BEIN",
+      "liveCount_other": "{{count}} BEIN"
     },
     "sessionRow": {
       "deleteTitle": "Eyða lotu?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Hleður…",
       "cloudAgentDescription": "Keyra á skýjasandkassa Kilo",
+      "remotes": "Fjartölvur",
+      "terminals": "Terminalar",
       "noCliInstances": "Engin CLI-tilvik tengd",
       "noCliInstancesDescription": "Keyrðu `kilo remote` í verkefni á tölvunni þinni, eða uppfærðu Kilo CLI ef eitt er þegar í gangi.",
       "instanceOnProject": "{{name}} á {{project}}",

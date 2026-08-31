@@ -1616,7 +1616,9 @@
       "couldNotSearch": "Sitzungen konnten nicht durchsucht werden",
       "completedWillAppear": "Abgeschlossene Sitzungen erscheinen hier.",
       "noPastSessions": "Keine vergangenen Sitzungen",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Sitzung löschen?",
@@ -1821,6 +1823,8 @@
       "cloudAgent": "Cloud-Agent",
       "loading": "Wird geladen…",
       "cloudAgentDescription": "In Kilos Cloud-Sandbox ausführen",
+      "remotes": "Entfernte Maschinen",
+      "terminals": "Terminals",
       "noCliInstances": "Keine CLI-Instanzen verbunden",
       "noCliInstancesDescription": "Führe `kilo remote` in einem Projekt auf deinem Computer aus, oder aktualisiere die Kilo CLI, falls bereits eine läuft.",
       "instanceOnProject": "{{name}} auf {{project}}",

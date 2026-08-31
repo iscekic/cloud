@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Kunde inte söka i sessioner",
       "completedWillAppear": "Slutförda sessioner visas här.",
       "noPastSessions": "Inga tidigare sessioner",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Ta bort session?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Läser in…",
       "cloudAgentDescription": "Kör på Kilos molnsandlåda",
+      "remotes": "Fjärrmaskiner",
+      "terminals": "Terminaler",
       "noCliInstances": "Inga CLI-instanser anslutna",
       "noCliInstancesDescription": "Kör `kilo remote` i ett projekt på din dator, eller uppdatera Kilo CLI om en redan körs.",
       "instanceOnProject": "{{name}} på {{project}}",

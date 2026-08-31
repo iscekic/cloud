@@ -1616,7 +1616,9 @@
       "couldNotSearch": "세션을 검색할 수 없습니다",
       "completedWillAppear": "완료된 세션이 여기에 표시됩니다.",
       "noPastSessions": "지난 세션 없음",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "세션을 삭제하시겠습니까?",
@@ -1821,6 +1823,8 @@
       "cloudAgent": "클라우드 에이전트",
       "loading": "로드 중…",
       "cloudAgentDescription": "Kilo의 클라우드 샌드박스에서 실행",
+      "remotes": "원격",
+      "terminals": "터미널",
       "noCliInstances": "연결된 CLI 인스턴스 없음",
       "noCliInstancesDescription": "컴퓨터의 프로젝트에서 `kilo remote`를 실행하거나, 이미 실행 중이라면 Kilo CLI를 업데이트하세요.",
       "instanceOnProject": "{{project}}의 {{name}}",

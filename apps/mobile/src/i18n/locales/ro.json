@@ -2083,7 +2083,10 @@
       "couldNotSearch": "Nu s-au putut căuta sesiunile",
       "completedWillAppear": "Sesiunile finalizate vor apărea aici.",
       "noPastSessions": "Nicio sesiune trecută",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_few": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Ștergi sesiunea?",
@@ -2291,6 +2294,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Se încarcă…",
       "cloudAgentDescription": "Rulează pe sandbox-ul cloud Kilo",
+      "remotes": "Mașini la distanță",
+      "terminals": "Terminale",
       "noCliInstances": "Nicio instanță CLI conectată",
       "noCliInstancesDescription": "Rulează `kilo remote` într-un proiect de pe computerul tău sau actualizează Kilo CLI dacă unul rulează deja.",
       "instanceOnProject": "{{name}} pe {{project}}",

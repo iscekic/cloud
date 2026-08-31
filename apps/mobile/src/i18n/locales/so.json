@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Lama raadin karin kalfadhiyada",
       "completedWillAppear": "Kalfadhiyada la dhammaystiray halkan ayay soo muuqan doonaan.",
       "noPastSessions": "Ma jiraan kalfadhiyo hore",
-      "live": "TOOS AH"
+      "live": "TOOS AH",
+      "liveCount_one": "{{count}} TOOS AH",
+      "liveCount_other": "{{count}} TOOS AH"
     },
     "sessionRow": {
       "deleteTitle": "Tirtir kalfadhiga?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Soo dejinaya…",
       "cloudAgentDescription": "Ku socodsii sanduuqa daruuraha ee Kilo",
+      "remotes": "Mashiinado fog",
+      "terminals": "Terminal",
       "noCliInstances": "Ma jiraan instances CLI oo xidhan",
       "noCliInstancesDescription": "Ku socodsii `kilo remote` mashruuc ku yaal kombiyuutarkaaga, ama cusboonaysii Kilo CLI haddii mid mar hore shaqaynayo.",
       "instanceOnProject": "{{name}} oo ku yaal {{project}}",

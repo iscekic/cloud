@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Tidak dapat mencari sesi",
       "completedWillAppear": "Sesi yang selesai akan muncul di sini.",
       "noPastSessions": "Tiada sesi lalu",
-      "live": "LANGSUNG"
+      "live": "LANGSUNG",
+      "liveCount_one": "{{count}} LANGSUNG",
+      "liveCount_other": "{{count}} LANGSUNG"
     },
     "sessionRow": {
       "deleteTitle": "Padam sesi?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Memuatkan…",
       "cloudAgentDescription": "Jalankan pada kotak pasir awan Kilo",
+      "remotes": "Mesin jauh",
+      "terminals": "Terminal",
       "noCliInstances": "Tiada contoh CLI disambungkan",
       "noCliInstancesDescription": "Jalankan `kilo remote` dalam projek pada komputer anda, atau kemas kini Kilo CLI jika ia sudah berjalan.",
       "instanceOnProject": "{{name}} pada {{project}}",

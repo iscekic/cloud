@@ -2070,7 +2070,9 @@
       "couldNotSearch": "Kunne ikke søge i sessioner",
       "completedWillAppear": "Fuldførte sessioner vises her.",
       "noPastSessions": "Ingen tidligere sessioner",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Slet session?",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "Cloud Agent",
       "loading": "Indlæser…",
       "cloudAgentDescription": "Kør på Kilos cloud-sandkasse",
+      "remotes": "Fjernmaskiner",
+      "terminals": "Terminaler",
       "noCliInstances": "Ingen CLI-instanser forbundet",
       "noCliInstancesDescription": "Kør `kilo remote` i et projekt på din computer, eller opdatér Kilo CLI, hvis én allerede kører.",
       "instanceOnProject": "{{name}} på {{project}}",

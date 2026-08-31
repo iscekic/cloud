@@ -2070,7 +2070,9 @@
       "couldNotSearch": "سیشنز تلاش نہیں ہو سکے",
       "completedWillAppear": "مکمل شدہ سیشنز یہاں ظاہر ہوں گے۔",
       "noPastSessions": "کوئی ماضی کے سیشن نہیں",
-      "live": "لائیو"
+      "live": "لائیو",
+      "liveCount_one": "{{count}} لائیو",
+      "liveCount_other": "{{count}} لائیو"
     },
     "sessionRow": {
       "deleteTitle": "سیشن حذف کریں؟",
@@ -2275,6 +2277,8 @@
       "cloudAgent": "کلاؤڈ ایجنٹ",
       "loading": "لوڈ ہو رہا ہے…",
       "cloudAgentDescription": "Kilo کے کلاؤڈ سینڈ باکس پر چلائیں",
+      "remotes": "دور دراز مشینیں",
+      "terminals": "ٹرمینلز",
       "noCliInstances": "کوئی CLI انسٹینس جڑی نہیں",
       "noCliInstancesDescription": "اپنے کمپیوٹر پر کسی پروجیکٹ میں `kilo remote` چلائیں، یا اگر کوئی پہلے سے چل رہا ہو تو Kilo CLI اپ ڈیٹ کریں۔",
       "instanceOnProject": "{{project}} پر {{name}}",
