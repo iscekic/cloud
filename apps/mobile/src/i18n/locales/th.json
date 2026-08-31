@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "ไม่สามารถโหลดเซสชันได้",
       "couldNotLoadActive": "ไม่สามารถโหลด sessions ที่ทำงานอยู่ได้",
+      "updating": "กำลังรีเฟรช",
+      "refreshFailed": "รีเฟรชไม่ได้",
       "noSessionsYetDescription": "เริ่มงานเขียนโค้ดจากโทรศัพท์ของคุณ sessions ของคุณจะปรากฏที่นี่",
       "noMatches": "ไม่มี sessions ที่ตรงกัน",
       "tryDifferentSearch": "ลองใช้คำค้นหาอื่น",

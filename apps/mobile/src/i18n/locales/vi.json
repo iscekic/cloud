@@ -1609,6 +1609,8 @@
     "sessionList": {
       "couldNotLoad": "Không thể tải các phiên",
       "couldNotLoadActive": "Không thể tải các phiên đang hoạt động",
+      "updating": "Đang làm mới",
+      "refreshFailed": "Không thể làm mới",
       "noSessionsYetDescription": "Bắt đầu tác vụ lập trình từ điện thoại. Các phiên của bạn sẽ xuất hiện tại đây.",
       "noMatches": "Không có phiên nào khớp",
       "tryDifferentSearch": "Hãy thử một cụm từ tìm kiếm khác.",

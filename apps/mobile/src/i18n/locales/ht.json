@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Pa t 'kapab chaje sesyon yo",
       "couldNotLoadActive": "Pa t 'kapab chaje sesyon aktif yo",
+      "updating": "Ap rafrechi",
+      "refreshFailed": "Pa t ka rafrechi",
       "noSessionsYetDescription": "Kòmanse yon travay kodaj depi telefòn ou. Sesyon ou yo pral parèt isit la.",
       "noMatches": "Pa gen sesyon ki matche",
       "tryDifferentSearch": "Eseye yon tèm rechèch diferan.",

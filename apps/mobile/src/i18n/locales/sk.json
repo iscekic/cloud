@@ -2089,6 +2089,8 @@
     "sessionList": {
       "couldNotLoad": "Relácie sa nepodarilo načítať",
       "couldNotLoadActive": "Aktívne sedenia sa nepodarilo načítať",
+      "updating": "Obnovuje sa",
+      "refreshFailed": "Obnovenie sa nepodarilo",
       "noSessionsYetDescription": "Spustite programátorskú úlohu z telefónu. Vaše sedenia sa zobrazia tu.",
       "noMatches": "Žiadne sedenia nezodpovedajú",
       "tryDifferentSearch": "Skúste iný vyhľadávací výraz.",

@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Ezin dira saioak kargatu",
       "couldNotLoadActive": "Ezin dira saio aktiboak kargatu",
+      "updating": "Freskatzen",
+      "refreshFailed": "Ezin izan da freskatu",
       "noSessionsYetDescription": "Hasi kodetze-lan bat zure telefonotik. Zure saioak hemen agertuko dira.",
       "noMatches": "Ez dago bat datorren saiorik",
       "tryDifferentSearch": "Saiatu bilaketa-termino desberdin batekin.",

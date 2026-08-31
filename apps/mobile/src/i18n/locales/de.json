@@ -1609,6 +1609,8 @@
     "sessionList": {
       "couldNotLoad": "Sitzungen konnten nicht geladen werden",
       "couldNotLoadActive": "Aktive Sitzungen konnten nicht geladen werden",
+      "updating": "Wird aktualisiert",
+      "refreshFailed": "Aktualisieren nicht möglich",
       "noSessionsYetDescription": "Starte eine Codieraufgabe von deinem Telefon. Deine Sitzungen erscheinen hier.",
       "noMatches": "Keine Sitzungen gefunden",
       "tryDifferentSearch": "Versuche einen anderen Suchbegriff.",

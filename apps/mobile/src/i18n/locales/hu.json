@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "A munkamenetek betöltése nem sikerült",
       "couldNotLoadActive": "Az aktív munkamenetek betöltése nem sikerült",
+      "updating": "Frissítés",
+      "refreshFailed": "Nem sikerült frissíteni",
       "noSessionsYetDescription": "Indítson egy kódolási feladatot a telefonjáról. A munkamenetei itt jelennek meg.",
       "noMatches": "Nincs egyező munkamenet",
       "tryDifferentSearch": "Próbáljon másik keresőszót.",

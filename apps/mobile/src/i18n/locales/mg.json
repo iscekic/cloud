@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Tsy afaka namaky ny sessions",
       "couldNotLoadActive": "Tsy afaka namaky ny sessions mavitrika",
+      "updating": "Eo am-panavaozana",
+      "refreshFailed": "Tsy afaka navaozina",
       "noSessionsYetDescription": "Atombohy asa fandaharana avy amin'ny findainao. Hisetra eto ny sessions-nao.",
       "noMatches": "Tsy misy sessions mifanaraka",
       "tryDifferentSearch": "Andramo teny fikarohana hafa.",

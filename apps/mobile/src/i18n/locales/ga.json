@@ -2102,6 +2102,8 @@
     "sessionList": {
       "couldNotLoad": "Níorbh fhéidir seisiúin a lódáil",
       "couldNotLoadActive": "Níorbh fhéidir seisiúin ghníomhacha a lódáil",
+      "updating": "Ag athnuachan",
+      "refreshFailed": "Níorbh fhéidir athnuachan",
       "noSessionsYetDescription": "Tosaigh tasc códaithe ó do ghuthán. Beidh do sheisiúin le feiceáil anseo.",
       "noMatches": "Ní mheaitseálann aon seisiún",
       "tryDifferentSearch": "Bain triail as téarma cuardaigh eile.",

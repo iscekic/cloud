@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Kunne ikke laste inn økter",
       "couldNotLoadActive": "Kunne ikke laste inn aktive økter",
+      "updating": "Oppdaterer",
+      "refreshFailed": "Kunne ikke oppdatere",
       "noSessionsYetDescription": "Start en kodingsoppgave fra telefonen din. Øktene dine vises her.",
       "noMatches": "Ingen økter samsvarer",
       "tryDifferentSearch": "Prøv et annet søkeord.",

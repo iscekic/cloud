@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Kon sessies nie laai nie",
       "couldNotLoadActive": "Kon aktiewe sessies nie laai nie",
+      "updating": "Word verfris",
+      "refreshFailed": "Kon nie verfris nie",
       "noSessionsYetDescription": "Begin 'n koderings taak vanaf jou foon. Jou sessies sal hier verskyn.",
       "noMatches": "Geen sessies pas nie",
       "tryDifferentSearch": "Probeer 'n ander soekterm.",

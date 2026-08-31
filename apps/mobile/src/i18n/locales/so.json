@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Kalfadhiyada lama soo dejin karin",
       "couldNotLoadActive": "Lama xiri karin kalfadhiyada firfircoon",
+      "updating": "La cusboonaysiinayaa",
+      "refreshFailed": "Ma cusboonaysiin karin",
       "noSessionsYetDescription": "Ka bilow hawsha coding-ga taleefankaaga. Kalfadhiyadaagu halkan ayay soo muuqan doonaan.",
       "noMatches": "Ma jiraan kalfadhiyo u dhigma",
       "tryDifferentSearch": "Isku day erey raadin oo kala duwan.",

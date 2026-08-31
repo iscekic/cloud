@@ -1609,6 +1609,8 @@
     "sessionList": {
       "couldNotLoad": "Oturumlar yüklenemedi",
       "couldNotLoadActive": "Etkin oturumlar yüklenemedi",
+      "updating": "Yenileniyor",
+      "refreshFailed": "Yenilenemedi",
       "noSessionsYetDescription": "Telefonunuzdan bir kodlama görevi başlatın. Oturumlarınız burada görünecek.",
       "noMatches": "Eşleşen oturum yok",
       "tryDifferentSearch": "Farklı bir arama terimi deneyin.",

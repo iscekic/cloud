@@ -2089,6 +2089,8 @@
     "sessionList": {
       "couldNotLoad": "Relace se nepodařilo načíst",
       "couldNotLoadActive": "Aktivní relace se nepodařilo načíst",
+      "updating": "Obnovování",
+      "refreshFailed": "Obnovení se nepodařilo",
       "noSessionsYetDescription": "Spusťte programátorskou úlohu z telefonu. Vaše relace se zde zobrazí.",
       "noMatches": "Žádné relace neodpovídají",
       "tryDifferentSearch": "Zkuste jiný hledaný výraz.",

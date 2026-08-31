@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "ክፍለ-ጊዜዎችን መጫን አልተቻለም",
       "couldNotLoadActive": "ንቁ ክፍለ ጊዜዎችን ማግኘት አልተቻለም",
+      "updating": "በማደስ ላይ",
+      "refreshFailed": "ማደስ አልተቻለም",
       "noSessionsYetDescription": "ከስልክዎ የኮዲንግ ተግባር ይጀምሩ። ክፍለ ጊዜዎችዎ እዚህ ይታያሉ።",
       "noMatches": "ምንም ክፍለ ጊዜ አይዛመድም",
       "tryDifferentSearch": "የተለየ የፍለጋ ቃል ይሞክሩ።",

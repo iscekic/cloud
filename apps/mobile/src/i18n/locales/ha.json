@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "An kasa loda zaman",
       "couldNotLoadActive": "An kasa loda zaman da ke aiki",
+      "updating": "Ana sabuntawa",
+      "refreshFailed": "Ba a iya sabuntawa ba",
       "noSessionsYetDescription": "Fara aikin coding daga wayarka. Zamanka za su bayyana a nan.",
       "noMatches": "Babu zaman da ya dace",
       "tryDifferentSearch": "Gwada wani kalmar bincike dabam.",

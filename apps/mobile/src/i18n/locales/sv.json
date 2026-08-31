@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Det gick inte att läsa in sessioner",
       "couldNotLoadActive": "Kunde inte läsa in aktiva sessioner",
+      "updating": "Uppdaterar",
+      "refreshFailed": "Kunde inte uppdatera",
       "noSessionsYetDescription": "Starta en kodningsuppgift från din telefon. Dina sessioner visas här.",
       "noMatches": "Inga sessioner matchar",
       "tryDifferentSearch": "Prova en annan sökterm.",

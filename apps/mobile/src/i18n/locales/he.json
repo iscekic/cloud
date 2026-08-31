@@ -1615,6 +1615,8 @@
     "sessionList": {
       "couldNotLoad": "לא ניתן היה לטעון הפעלות",
       "couldNotLoadActive": "לא ניתן היה לטעון הפעלות פעילות",
+      "updating": "מרענן",
+      "refreshFailed": "לא ניתן היה לרענן",
       "noSessionsYetDescription": "התחל משימת קידוד מהטלפון שלך. ההפעלות שלך יופיעו כאן.",
       "noMatches": "אין הפעלות תואמות",
       "tryDifferentSearch": "נסה מונח חיפוש אחר.",

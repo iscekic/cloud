@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Tidak dapat memuatkan sesi",
       "couldNotLoadActive": "Tidak dapat memuatkan sesi aktif",
+      "updating": "Memuat semula",
+      "refreshFailed": "Tidak dapat memuat semula",
       "noSessionsYetDescription": "Mulakan tugasan pengekodan dari telefon anda. Sesi anda akan muncul di sini.",
       "noMatches": "Tiada sesi sepadan",
       "tryDifferentSearch": "Cuba istilah carian yang berbeza.",

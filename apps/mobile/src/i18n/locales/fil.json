@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Hindi ma-load ang mga session",
       "couldNotLoadActive": "Hindi ma-load ang mga aktibong session",
+      "updating": "Nire-refresh",
+      "refreshFailed": "Hindi ma-refresh",
       "noSessionsYetDescription": "Magsimula ng coding task mula sa iyong phone. Lalabas dito ang iyong mga session.",
       "noMatches": "Walang session na tugma",
       "tryDifferentSearch": "Subukan ang ibang termino sa paghahanap.",

@@ -2076,6 +2076,8 @@
     "sessionList": {
       "couldNotLoad": "Neizdevās ielādēt sesijas",
       "couldNotLoadActive": "Neizdevās ielādēt aktīvās sesijas",
+      "updating": "Atjaunina",
+      "refreshFailed": "Neizdevās atjaunināt",
       "noSessionsYetDescription": "Sāc kodēšanas uzdevumu no sava tālruņa. Tavas sesijas parādīsies šeit.",
       "noMatches": "Neviena sesija neatbilst",
       "tryDifferentSearch": "Izmēģini citu meklēšanas vārdu.",

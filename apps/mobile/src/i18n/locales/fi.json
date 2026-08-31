@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Istuntoja ei voitu ladata",
       "couldNotLoadActive": "Aktiivisia istuntoja ei voitu ladata",
+      "updating": "Päivitetään",
+      "refreshFailed": "Päivitys epäonnistui",
       "noSessionsYetDescription": "Aloita koodaustehtävä puhelimellasi. Istunnot näkyvät tässä.",
       "noMatches": "Mikään istunto ei vastaa",
       "tryDifferentSearch": "Kokeile toista hakusanaa.",

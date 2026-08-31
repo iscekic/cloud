@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Sessiyalarni yuklab bo'lmadi",
       "couldNotLoadActive": "Faol sessiyalar yuklab olinmadi",
+      "updating": "Yangilanmoqda",
+      "refreshFailed": "Yangilab bo'lmadi",
       "noSessionsYetDescription": "Telefoningizdan kodlash vazifasini boshlang. Sessiyalaringiz shu yerda paydo bo'ladi.",
       "noMatches": "Sessiyalar mos kelmadi",
       "tryDifferentSearch": "Boshqa qidiruv so'zini sinab ko'ring.",

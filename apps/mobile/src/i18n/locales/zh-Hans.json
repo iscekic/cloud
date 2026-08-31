@@ -1609,6 +1609,8 @@
     "sessionList": {
       "couldNotLoad": "无法加载会话",
       "couldNotLoadActive": "无法加载活动会话",
+      "updating": "更新中",
+      "refreshFailed": "无法刷新",
       "noSessionsYetDescription": "从您的手机开始编程任务。您的会话将显示在这里。",
       "noMatches": "没有匹配的会话",
       "tryDifferentSearch": "请尝试其他搜索词。",

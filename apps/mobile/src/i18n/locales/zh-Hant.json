@@ -1609,6 +1609,8 @@
     "sessionList": {
       "couldNotLoad": "無法載入工作階段",
       "couldNotLoadActive": "無法載入使用中的工作階段",
+      "updating": "更新中",
+      "refreshFailed": "無法重新整理",
       "noSessionsYetDescription": "從手機開始程式設計任務。您的工作階段將顯示在這裡。",
       "noMatches": "沒有相符的工作階段",
       "tryDifferentSearch": "請嘗試其他搜尋字詞。",

@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "ບໍ່ສາມາດໂຫຼດເຊດຊັນ",
       "couldNotLoadActive": "ບໍ່ສາມາດໂຫຼດເຊດຊັນທີ່ເຄື່ອນໄຫວ",
+      "updating": "ກຳລັງໂຫຼດໃໝ່",
+      "refreshFailed": "ບໍ່ສາມາດໂຫຼດໃໝ່ໄດ້",
       "noSessionsYetDescription": "ເລີ່ມວຽກການຂຽນລະຫັດຈາກໂທລະສັບຂອງທ່ານ. ເຊດຊັນຂອງທ່ານຈະປາກົດຢູ່ນີ້.",
       "noMatches": "ບໍ່ມີເຊດຊັນທີ່ກົງກັນ",
       "tryDifferentSearch": "ລອງຄຳຄົ້ນຫາທີ່ແຕກຕ່າງ.",

@@ -2485,6 +2485,8 @@
     "sessionList": {
       "couldNotLoad": "Impossible de charger les sessions",
       "couldNotLoadActive": "Impossible de charger les sessions actives",
+      "updating": "Actualisation en cours",
+      "refreshFailed": "Actualisation impossible",
       "noSessionsYetDescription": "Démarrez une tâche de codage depuis votre téléphone. Vos sessions apparaîtront ici.",
       "noMatches": "Aucune session ne correspond",
       "tryDifferentSearch": "Essayez un autre terme de recherche.",

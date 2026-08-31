@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "ਸੈਸ਼ਨ ਲੋਡ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕੇ",
       "couldNotLoadActive": "ਕਿਰਿਆਸ਼ੀਲ ਸੈਸ਼ਨ ਲੋਡ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕੇ",
+      "updating": "ਰੀਫ੍ਰੈਸ਼ ਹੋ ਰਿਹਾ ਹੈ",
+      "refreshFailed": "ਰੀਫ੍ਰੈਸ਼ ਨਹੀਂ ਹੋ ਸਕਿਆ",
       "noSessionsYetDescription": "ਆਪਣੇ ਫ਼ੋਨ ਤੋਂ ਕੋਡਿੰਗ ਕੰਮ ਸ਼ੁਰੂ ਕਰੋ। ਤੁਹਾਡੇ ਸੈਸ਼ਨ ਇੱਥੇ ਦਿਖਾਈ ਦੇਣਗੇ।",
       "noMatches": "ਕੋਈ ਸੈਸ਼ਨ ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ",
       "tryDifferentSearch": "ਵੱਖਰਾ ਖੋਜ ਸ਼ਬਦ ਅਜ਼ਮਾਓ।",

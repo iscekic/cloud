@@ -1621,6 +1621,8 @@
     "sessionList": {
       "couldNotLoad": "Не удалось загрузить сеансы",
       "couldNotLoadActive": "Не удалось загрузить активные сеансы",
+      "updating": "Обновление",
+      "refreshFailed": "Не удалось обновить",
       "noSessionsYetDescription": "Начните задачу кодирования с телефона. Ваши сеансы появятся здесь.",
       "noMatches": "Нет подходящих сеансов",
       "tryDifferentSearch": "Попробуйте другой поисковый запрос.",

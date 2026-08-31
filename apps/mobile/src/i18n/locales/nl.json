@@ -1609,6 +1609,8 @@
     "sessionList": {
       "couldNotLoad": "Kon sessies niet laden",
       "couldNotLoadActive": "Kon actieve sessies niet laden",
+      "updating": "Wordt vernieuwd",
+      "refreshFailed": "Vernieuwen mislukt",
       "noSessionsYetDescription": "Start een codeertaak vanaf je telefoon. Je sessies verschijnen hier.",
       "noMatches": "Geen sessies komen overeen",
       "tryDifferentSearch": "Probeer een andere zoekterm.",

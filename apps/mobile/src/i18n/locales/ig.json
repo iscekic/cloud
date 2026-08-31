@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Enweghị ike ibudata nzukọ",
       "couldNotLoadActive": "Enweghị ike ibudata nzukọ na-arụ ọrụ",
+      "updating": "Na-emwegharị",
+      "refreshFailed": "Enweghị ike imwegharị",
       "noSessionsYetDescription": "Malite ọrụ koodu site na ekwentị gị. Nzukọ gị ga-apụta ebe a.",
       "noMatches": "Enweghị nzukọ dabara",
       "tryDifferentSearch": "Nwaa okwu ọchụchọ dị iche.",

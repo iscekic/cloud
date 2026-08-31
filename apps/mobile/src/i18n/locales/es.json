@@ -1615,6 +1615,8 @@
     "sessionList": {
       "couldNotLoad": "No se pudieron cargar las sesiones",
       "couldNotLoadActive": "No se pudieron cargar las sesiones activas",
+      "updating": "Actualizando",
+      "refreshFailed": "No se pudo actualizar",
       "noSessionsYetDescription": "Inicia una tarea de codificación desde tu teléfono. Tus sesiones aparecerán aquí.",
       "noMatches": "Ninguna sesión coincide",
       "tryDifferentSearch": "Prueba con otro término de búsqueda.",

@@ -2089,6 +2089,8 @@
     "sessionList": {
       "couldNotLoad": "Nepavyko įkelti sesijų",
       "couldNotLoadActive": "Nepavyko įkelti aktyvių sesijų",
+      "updating": "Atnaujinama",
+      "refreshFailed": "Nepavyko atnaujinti",
       "noSessionsYetDescription": "Pradėkite kodavimo užduotį iš savo telefono. Jūsų sesijos bus rodomos čia.",
       "noMatches": "Sesijų neatitikimų nėra",
       "tryDifferentSearch": "Pabandykite kitą paieškos terminą.",

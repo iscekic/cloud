@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Ekki tókst að hlaða lotur",
       "couldNotLoadActive": "Ekki tókst að hlaða virkar lotur",
+      "updating": "Endurnýjar",
+      "refreshFailed": "Ekki tókst að endurnýja",
       "noSessionsYetDescription": "Byrjaðu kóðunarverkefni frá símanum þínum. Loturnar þínar birtast hér.",
       "noMatches": "Engar lotur passa",
       "tryDifferentSearch": "Prófaðu annað leitarorð.",

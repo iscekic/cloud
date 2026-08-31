@@ -2102,6 +2102,8 @@
     "sessionList": {
       "couldNotLoad": "Ma setgħux jitgħabbew is-sessjonijiet",
       "couldNotLoadActive": "Ma setgħux jintgħabbu s-sessjonijiet attivi",
+      "updating": "Qed jaġġorna",
+      "refreshFailed": "Ma setgħux jiġu aġġornati",
       "noSessionsYetDescription": "Ibda biċċa xogħol ta' kodifikazzjoni mit-telefon tiegħek. Is-sessjonijiet tiegħek se jidhru hawn.",
       "noMatches": "L-ebda sessjoni ma taqbel",
       "tryDifferentSearch": "Ipprova terminu ta' tfittxija differenti.",

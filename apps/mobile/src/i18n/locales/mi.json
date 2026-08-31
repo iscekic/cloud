@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Kāore i taea te uta ngā wātū",
       "couldNotLoadActive": "Kāore i taea te uta ngā wātūtū mahi",
+      "updating": "E whakahou ana",
+      "refreshFailed": "Kāore i taea te whakahou",
       "noSessionsYetDescription": "Tīmatatia tētahi mahi whakawaehere mai i tō waea. Ka puta ō wātūtū ki konei.",
       "noMatches": "Kāore he wātūtū e hāngai ana",
       "tryDifferentSearch": "Whakamātauhia tētahi kupu rapu rerekē.",

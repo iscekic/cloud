@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "سیشنز لوڈ نہیں ہو سکے",
       "couldNotLoadActive": "فعال سیشنز لوڈ نہیں ہو سکے",
+      "updating": "تازہ ہو رہا ہے",
+      "refreshFailed": "تازہ نہیں کیا جا سکا",
       "noSessionsYetDescription": "اپنے فون سے کوڈنگ کا کام شروع کریں۔ آپ کے سیشن یہاں ظاہر ہوں گے۔",
       "noMatches": "کوئی سیشن مماثل نہیں",
       "tryDifferentSearch": "کوئی مختلف تلاش کا لفظ آزمائیں۔",

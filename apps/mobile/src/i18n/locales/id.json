@@ -1609,6 +1609,8 @@
     "sessionList": {
       "couldNotLoad": "Tidak dapat memuat sesi",
       "couldNotLoadActive": "Tidak dapat memuat sesi aktif",
+      "updating": "Menyegarkan",
+      "refreshFailed": "Tidak dapat menyegarkan",
       "noSessionsYetDescription": "Mulai tugas coding dari ponsel Anda. Sesi Anda akan muncul di sini.",
       "noMatches": "Tidak ada sesi yang cocok",
       "tryDifferentSearch": "Coba istilah pencarian lain.",

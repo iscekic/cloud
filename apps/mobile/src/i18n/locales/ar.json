@@ -1633,6 +1633,8 @@
     "sessionList": {
       "couldNotLoad": "تعذّر تحميل الجلسات",
       "couldNotLoadActive": "تعذّر تحميل الجلسات النشطة",
+      "updating": "جارٍ التحديث",
+      "refreshFailed": "تعذّر التحديث",
       "noSessionsYetDescription": "ابدأ مهمة برمجة من هاتفك. ستظهر جلساتك هنا.",
       "noMatches": "لا توجد جلسات مطابقة",
       "tryDifferentSearch": "جرّب مصطلح بحث مختلف.",

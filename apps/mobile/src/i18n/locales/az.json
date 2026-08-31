@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Sessiyalar yüklənə bilmədi",
       "couldNotLoadActive": "Aktiv sessiyalar yüklənə bilmədi",
+      "updating": "Yenilənir",
+      "refreshFailed": "Yeniləmək mümkün olmadı",
       "noSessionsYetDescription": "Telefonunuzdan kodlaşdırma tapşırığı başladın. Sessiyalarınız burada görünəcək.",
       "noMatches": "Heç bir sessiya uyğun gəlmir",
       "tryDifferentSearch": "Fərqli axtarış termini cəhd edin.",

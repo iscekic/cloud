@@ -2076,6 +2076,8 @@
     "sessionList": {
       "couldNotLoad": "No s'han pogut carregar les sessions",
       "couldNotLoadActive": "No s'han pogut carregar les sessions actives",
+      "updating": "S'està actualitzant",
+      "refreshFailed": "No s'ha pogut actualitzar",
       "noSessionsYetDescription": "Inicia una tasca de codificació des del telèfon. Les sessions apareixeran aquí.",
       "noMatches": "Cap sessió no coincideix",
       "tryDifferentSearch": "Prova amb un altre terme de cerca.",

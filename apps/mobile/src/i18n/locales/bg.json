@@ -2063,6 +2063,8 @@
     "sessionList": {
       "couldNotLoad": "Не може да се заредят сесиите",
       "couldNotLoadActive": "Не може да се заредят активните сесии",
+      "updating": "Опресняване",
+      "refreshFailed": "Не можахме да опресним",
       "noSessionsYetDescription": "Започни задача за кодиране от телефона си. Сесиите ти ще се появят тук.",
       "noMatches": "Няма съвпадащи сесии",
       "tryDifferentSearch": "Опитай с различен термин за търсене.",

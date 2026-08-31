@@ -1597,6 +1597,8 @@
     "sessionList": {
       "couldNotLoad": "Não foi possível carregar as sessões",
       "couldNotLoadActive": "Não foi possível carregar as sessões ativas",
+      "updating": "Atualizando",
+      "refreshFailed": "Não foi possível atualizar",
       "noSessionsYetDescription": "Inicie uma tarefa de codificação pelo celular. Suas sessões aparecerão aqui.",
       "noMatches": "Nenhuma sessão corresponde",
       "tryDifferentSearch": "Tente um termo de busca diferente.",

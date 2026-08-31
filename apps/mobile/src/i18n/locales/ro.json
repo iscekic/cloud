@@ -2076,6 +2076,8 @@
     "sessionList": {
       "couldNotLoad": "Nu s-au putut încărca sesiunile",
       "couldNotLoadActive": "Nu s-au putut încărca sesiunile active",
+      "updating": "Se reîmprospătează",
+      "refreshFailed": "Nu s-a putut reîmprospăta",
       "noSessionsYetDescription": "Începe o sarcină de codare de pe telefon. Sesiunile tale vor apărea aici.",
       "noMatches": "Nicio sesiune nu corespunde",
       "tryDifferentSearch": "Încearcă un alt termen de căutare.",

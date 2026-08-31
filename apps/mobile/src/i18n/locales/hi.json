@@ -1610,6 +1610,8 @@
       "completedWillAppear": "पूर्ण सत्र यहाँ दिखाई देंगे।",
       "couldNotLoad": "सत्र लोड नहीं हो सके",
       "couldNotLoadActive": "सक्रिय सत्र लोड नहीं हो सके",
+      "updating": "रीफ़्रेश हो रहा है",
+      "refreshFailed": "रीफ़्रेश नहीं हो सका",
       "couldNotSearch": "सत्र खोजे नहीं जा सके",
       "noMatches": "कोई सत्र मेल नहीं खाता",
       "noPastSessions": "कोई पिछले सत्र नहीं",

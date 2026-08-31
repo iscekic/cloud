@@ -2076,6 +2076,8 @@
     "sessionList": {
       "couldNotLoad": "Sesije se ne mogu učitati",
       "couldNotLoadActive": "Aktivne sesije se ne mogu učitati",
+      "updating": "Osvežavanje",
+      "refreshFailed": "Nije moguće osvežiti",
       "noSessionsYetDescription": "Započni zadatak kodiranja sa svog telefona. Tvoje sesije će se pojaviti ovde.",
       "noMatches": "Nijedna sesija ne odgovara",
       "tryDifferentSearch": "Probaj drugi termin za pretragu.",

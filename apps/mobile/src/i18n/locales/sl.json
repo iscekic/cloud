@@ -2089,6 +2089,8 @@
     "sessionList": {
       "couldNotLoad": "Sej ni bilo mogoče naložiti",
       "couldNotLoadActive": "Aktivnih sej ni bilo mogoče naložiti",
+      "updating": "Osveževanje",
+      "refreshFailed": "Osveževanje ni uspelo",
       "noSessionsYetDescription": "Začni nalogo kodiranja s telefona. Tvoje seje bodo prikazane tukaj.",
       "noMatches": "Nobena seja se ne ujema",
       "tryDifferentSearch": "Poskusi z drugim iskalnim izrazom.",
