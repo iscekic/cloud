@@ -44,6 +44,7 @@ describe('deriveMergeRequirements', () => {
       requirements: requirements({ status: 'absent' }),
       checkRuns: [run()],
       reviews: [review()],
+      requestedReviewers: [],
     });
 
     expect(result.kind).toBe('absent');
@@ -57,6 +58,7 @@ describe('deriveMergeRequirements', () => {
       requirements: requirements({ status: 'unavailable' }),
       checkRuns: [run()],
       reviews: [review()],
+      requestedReviewers: [],
     });
 
     expect(result.kind).toBe('unavailable');
@@ -69,6 +71,7 @@ describe('deriveMergeRequirements', () => {
       requirements: requirements({ requiredApprovingReviewCount: 2 }),
       checkRuns: [],
       reviews: [review()],
+      requestedReviewers: [],
     });
 
     expect(result.kind).toBe('present');
@@ -80,6 +83,7 @@ describe('deriveMergeRequirements', () => {
       requirements: requirements({ requiredStatusCheckContexts: ['ci', 'lint'] }),
       checkRuns: [run({ name: 'ci' })],
       reviews: [],
+      requestedReviewers: [],
     });
 
     expect(result.checks).toEqual([
@@ -97,6 +101,7 @@ describe('deriveMergeRequirements', () => {
         run({ name: 'audit', conclusion: 'success' }),
       ],
       reviews: [],
+      requestedReviewers: [],
     });
 
     expect(result.checks).toEqual([
@@ -116,6 +121,7 @@ describe('deriveMergeRequirements', () => {
         run({ name: 'e2e', status: 'in_progress', conclusion: null }),
       ],
       reviews: [],
+      requestedReviewers: [],
     });
 
     expect(result.checks).toEqual([
@@ -133,6 +139,7 @@ describe('deriveMergeRequirements', () => {
         run({ name: 'lint', conclusion: 'failure' }),
       ],
       reviews: [],
+      requestedReviewers: [],
     });
 
     expect(result.checks.map(check => check.name)).toEqual(['lint', 'ci', 'coverage']);
@@ -147,6 +154,7 @@ describe('deriveMergeRequirements', () => {
         review({ author: { login: 'alice', avatarUrl: null } }),
         review({ author: { login: 'bob', avatarUrl: null } }),
       ],
+      requestedReviewers: [],
     });
 
     expect(result.reviewSatisfied).toBe(2);
@@ -170,6 +178,7 @@ describe('deriveMergeRequirements', () => {
         review({ author: { login: 'bob', avatarUrl: null }, state: 'DISMISSED' }),
         review({ author: { login: 'carol', avatarUrl: null }, state: 'APPROVED' }),
       ],
+      requestedReviewers: [],
     });
 
     // alice's latest is DISMISSED, bob is DISMISSED, only carol approves.
@@ -184,6 +193,7 @@ describe('deriveMergeRequirements', () => {
         review({ submittedAt: '2026-01-01T00:00:00Z' }),
         review({ submittedAt: '2026-01-02T00:00:00Z' }),
       ],
+      requestedReviewers: [],
     });
 
     expect(result.reviewSatisfied).toBe(1);
@@ -194,8 +204,31 @@ describe('deriveMergeRequirements', () => {
       requirements: requirements({ requiredApprovingReviewCount: 1 }),
       checkRuns: [],
       reviews: [review({ author: null })],
+      requestedReviewers: [],
     });
 
     expect(result.reviewSatisfied).toBe(0);
+  });
+
+  it('does not count an approving reviewer with an outstanding review request', () => {
+    const result = deriveMergeRequirements({
+      requirements: requirements(),
+      checkRuns: [],
+      reviews: [review()],
+      requestedReviewers: [{ login: 'alice' }],
+    });
+
+    expect(result.reviewSatisfied).toBe(0);
+  });
+
+  it('counts an approving reviewer who is no longer requested', () => {
+    const result = deriveMergeRequirements({
+      requirements: requirements(),
+      checkRuns: [],
+      reviews: [review()],
+      requestedReviewers: [],
+    });
+
+    expect(result.reviewSatisfied).toBe(1);
   });
 });

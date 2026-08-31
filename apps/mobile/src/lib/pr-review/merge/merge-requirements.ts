@@ -75,7 +75,11 @@ function isMoreRecent(candidate: MergeReviewDto, current: MergeReviewDto): boole
   return true;
 }
 
-function countApprovingReviewers(reviews: readonly MergeReviewDto[]): number {
+function countApprovingReviewers(
+  reviews: readonly MergeReviewDto[],
+  requestedReviewers: readonly { login: string }[]
+): number {
+  const requestedLogins = new Set(requestedReviewers.map(reviewer => reviewer.login));
   const latestByLogin = new Map<string, MergeReviewDto>();
   for (const review of reviews) {
     const login = review.author?.login;
@@ -87,8 +91,8 @@ function countApprovingReviewers(reviews: readonly MergeReviewDto[]): number {
     }
   }
   let satisfied = 0;
-  for (const latest of latestByLogin.values()) {
-    if (latest.state === 'APPROVED') {
+  for (const [login, latest] of latestByLogin) {
+    if (latest.state === 'APPROVED' && !requestedLogins.has(login)) {
       satisfied += 1;
     }
   }
@@ -99,8 +103,9 @@ export function deriveMergeRequirements(args: {
   requirements: MergeRequirementsDto;
   checkRuns: readonly MergeCheckRunDto[];
   reviews: readonly MergeReviewDto[];
+  requestedReviewers: readonly { login: string }[];
 }): MergeRequirementsResult {
-  const { requirements, checkRuns, reviews } = args;
+  const { requirements, checkRuns, reviews, requestedReviewers } = args;
 
   if (requirements.status === 'absent') {
     return { kind: 'absent', reviewRequired: null, reviewSatisfied: 0, checks: [] };
@@ -138,7 +143,7 @@ export function deriveMergeRequirements(args: {
   return {
     kind: 'present',
     reviewRequired: requirements.requiredApprovingReviewCount,
-    reviewSatisfied: countApprovingReviewers(reviews),
+    reviewSatisfied: countApprovingReviewers(reviews, requestedReviewers),
     checks,
   };
 }

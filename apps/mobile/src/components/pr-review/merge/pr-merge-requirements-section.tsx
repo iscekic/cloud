@@ -227,6 +227,7 @@ export function PrMergeRequirementsSection({
     // read as "No run yet" — never "passed" — which is the safe fallback.
     checkRuns: checks.data?.checkRuns ?? [],
     reviews: overview.reviews,
+    requestedReviewers: overview.requestedReviewers,
   });
 
   return (
