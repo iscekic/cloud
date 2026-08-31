@@ -87,6 +87,15 @@ export type ConnectedInstanceRow = {
   name: string;
   projectName: string;
   version?: string;
+  // Newer CLIs report the spawn kind (`cli` vs `remote`). Omitted for legacy
+  // CLIs that predate the field so the response stays byte-identical.
+  kind?: 'cli' | 'remote';
+  // Process start time (Unix ms). Omitted when the CLI did not report it.
+  startedAt?: number;
+  // Git branch the CLI is running on. Omitted when the CLI did not report it.
+  branch?: string;
+  // Working directory of the CLI process. Omitted when not reported.
+  workingDirectory?: string;
   // Latest capabilities from the CLI socket attachment. Omitted when the
   // attachment has no capabilities (legacy CLI / pre-field build) so the
   // response stays byte-identical for those clients.
@@ -1944,6 +1953,10 @@ export class UserConnectionDO extends DurableObject<Env> {
         name: att.instance.name,
         projectName: att.instance.projectName,
         ...(att.instance.version ? { version: att.instance.version } : {}),
+        ...(att.instance.kind ? { kind: att.instance.kind } : {}),
+        ...(att.instance.startedAt !== undefined ? { startedAt: att.instance.startedAt } : {}),
+        ...(att.instance.branch ? { branch: att.instance.branch } : {}),
+        ...(att.instance.workingDirectory ? { workingDirectory: att.instance.workingDirectory } : {}),
         ...(att.capabilities ? { capabilities: att.capabilities } : {}),
       });
     }

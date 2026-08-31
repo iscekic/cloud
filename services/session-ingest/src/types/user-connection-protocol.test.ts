@@ -63,6 +63,91 @@ describe('CLIOutboundMessageSchema', () => {
     }
   });
 
+  it('parses instance with kind/startedAt/branch/workingDirectory', () => {
+    const msg = {
+      type: 'heartbeat',
+      instance: {
+        name: 'laptop-1',
+        projectName: 'kilo',
+        version: '0.1.2',
+        kind: 'remote',
+        startedAt: 1728000000000,
+        branch: 'feat/heartbeat',
+        workingDirectory: '/Users/igor/Projects/kilo',
+      },
+      sessions: [],
+    };
+    const result = CLIOutboundMessageSchema.safeParse(msg);
+    expect(result.success).toBe(true);
+    if (result.success && result.data.type === 'heartbeat') {
+      expect(result.data.instance).toEqual({
+        name: 'laptop-1',
+        projectName: 'kilo',
+        version: '0.1.2',
+        kind: 'remote',
+        startedAt: 1728000000000,
+        branch: 'feat/heartbeat',
+        workingDirectory: '/Users/igor/Projects/kilo',
+      });
+    }
+  });
+
+  it('parses instance without the new fields (legacy CLI)', () => {
+    const msg = {
+      type: 'heartbeat',
+      instance: { name: 'laptop-1', projectName: 'kilo', version: '0.1.2' },
+      sessions: [],
+    };
+    const result = CLIOutboundMessageSchema.safeParse(msg);
+    expect(result.success).toBe(true);
+    if (result.success && result.data.type === 'heartbeat') {
+      expect(result.data.instance).not.toHaveProperty('kind');
+      expect(result.data.instance).not.toHaveProperty('startedAt');
+      expect(result.data.instance).not.toHaveProperty('branch');
+      expect(result.data.instance).not.toHaveProperty('workingDirectory');
+    }
+  });
+
+  it('rejects instance with an invalid kind', () => {
+    const msg = {
+      type: 'heartbeat',
+      instance: { name: 'laptop-1', projectName: 'kilo', kind: 'desktop' },
+      sessions: [],
+    };
+    expect(CLIOutboundMessageSchema.safeParse(msg).success).toBe(false);
+  });
+
+  it('rejects instance with a negative startedAt', () => {
+    const msg = {
+      type: 'heartbeat',
+      instance: { name: 'laptop-1', projectName: 'kilo', startedAt: -1 },
+      sessions: [],
+    };
+    expect(CLIOutboundMessageSchema.safeParse(msg).success).toBe(false);
+  });
+
+  it('rejects instance with an oversize branch', () => {
+    const msg = {
+      type: 'heartbeat',
+      instance: { name: 'laptop-1', projectName: 'kilo', branch: 'x'.repeat(129) },
+      sessions: [],
+    };
+    expect(CLIOutboundMessageSchema.safeParse(msg).success).toBe(false);
+  });
+
+  it('rejects instance with an oversize workingDirectory', () => {
+    const msg = {
+      type: 'heartbeat',
+      instance: {
+        name: 'laptop-1',
+        projectName: 'kilo',
+        workingDirectory: 'x'.repeat(1025),
+      },
+      sessions: [],
+    };
+    expect(CLIOutboundMessageSchema.safeParse(msg).success).toBe(false);
+  });
+
   it('rejects instance with empty name', () => {
     const msg = {
       type: 'heartbeat',

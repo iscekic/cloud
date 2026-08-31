@@ -257,6 +257,70 @@ describe('active-sessions-router', () => {
       expect(result.instances[0]).not.toHaveProperty('capabilities');
     });
 
+    it('forwards kind/startedAt/branch/workingDirectory when the worker reports them', async () => {
+      jest.spyOn(global, 'fetch').mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            instances: [
+              {
+                connectionId: 'cli-new',
+                name: 'laptop-new',
+                projectName: 'kilo',
+                version: '0.2.0',
+                kind: 'remote',
+                startedAt: 1728000000000,
+                branch: 'feat/heartbeat',
+                workingDirectory: '/Users/igor/Projects/kilo',
+              },
+            ],
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        )
+      );
+
+      const caller = await createCallerForUser(regularUser.id);
+      const result = await caller.activeSessions.listInstances();
+      expect(result).toEqual({
+        instances: [
+          {
+            connectionId: 'cli-new',
+            name: 'laptop-new',
+            projectName: 'kilo',
+            version: '0.2.0',
+            kind: 'remote',
+            startedAt: 1728000000000,
+            branch: 'feat/heartbeat',
+            workingDirectory: '/Users/igor/Projects/kilo',
+          },
+        ],
+      });
+    });
+
+    it('omits kind/startedAt/branch/workingDirectory for a legacy row', async () => {
+      jest.spyOn(global, 'fetch').mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            instances: [
+              { connectionId: 'cli-legacy', name: 'laptop-legacy', projectName: 'kilo', version: '0.1.0' },
+            ],
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        )
+      );
+
+      const caller = await createCallerForUser(regularUser.id);
+      const result = await caller.activeSessions.listInstances();
+      expect(result).toEqual({
+        instances: [
+          { connectionId: 'cli-legacy', name: 'laptop-legacy', projectName: 'kilo', version: '0.1.0' },
+        ],
+      });
+      expect(result.instances[0]).not.toHaveProperty('kind');
+      expect(result.instances[0]).not.toHaveProperty('startedAt');
+      expect(result.instances[0]).not.toHaveProperty('branch');
+      expect(result.instances[0]).not.toHaveProperty('workingDirectory');
+    });
+
     it('throws a TRPCError when the upstream worker returns a non-2xx response', async () => {
       jest
         .spyOn(global, 'fetch')

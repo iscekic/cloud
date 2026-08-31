@@ -14,6 +14,10 @@ const instanceSchema = z.object({
   name: z.string().min(1).max(64),
   projectName: z.string().min(1).max(64),
   version: z.string().max(32).optional(),
+  kind: z.enum(['cli', 'remote']).optional(),
+  startedAt: z.number().int().nonnegative().optional(),
+  branch: z.string().max(128).optional(),
+  workingDirectory: z.string().max(1024).optional(),
 });
 
 export type Instance = z.infer<typeof instanceSchema>;

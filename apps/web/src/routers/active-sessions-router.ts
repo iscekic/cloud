@@ -68,6 +68,14 @@ const connectedInstanceSchema = z.object({
   name: z.string(),
   projectName: z.string(),
   version: z.string().optional(),
+  // Spawn kind (`cli` vs `remote`). Omitted when the CLI did not report it.
+  kind: z.enum(['cli', 'remote']).optional(),
+  // Process start time (Unix ms). Omitted when the CLI did not report it.
+  startedAt: z.number().int().nonnegative().optional(),
+  // Git branch the CLI is running on. Omitted when the CLI did not report it.
+  branch: z.string().max(128).optional(),
+  // Working directory of the CLI process. Omitted when the CLI did not report it.
+  workingDirectory: z.string().max(1024).optional(),
   /**
    * Capabilities advertised by this connected CLI instance. Omitted when the
    * CLI's latest attachment did not include a capabilities object (legacy CLI

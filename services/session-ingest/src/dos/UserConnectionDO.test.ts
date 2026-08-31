@@ -4083,6 +4083,73 @@ describe('UserConnectionDO', () => {
       expect(instances[0]).not.toHaveProperty('version');
     });
 
+    it('forwards kind/startedAt/branch/workingDirectory when the CLI reports them', async () => {
+      const { doInstance, mockCtx } = setup();
+      const cliWs = createMockWs(['cli'], {
+        role: 'cli',
+        connectionId: 'cli-new',
+        sessions: [],
+        instance: {
+          name: 'laptop-new',
+          projectName: 'kilo',
+          version: '0.2.0',
+          kind: 'remote',
+          startedAt: 1728000000000,
+          branch: 'feat/heartbeat',
+          workingDirectory: '/Users/igor/Projects/kilo',
+        },
+      });
+      mockCtx.addSocket(cliWs);
+
+      const { instances } = doInstance.getConnectedInstances();
+      expect(instances).toEqual([
+        {
+          connectionId: 'cli-new',
+          name: 'laptop-new',
+          projectName: 'kilo',
+          version: '0.2.0',
+          kind: 'remote',
+          startedAt: 1728000000000,
+          branch: 'feat/heartbeat',
+          workingDirectory: '/Users/igor/Projects/kilo',
+        },
+      ]);
+    });
+
+    it('forwards a `startedAt` of zero (nonnegative lower bound)', async () => {
+      const { doInstance, mockCtx } = setup();
+      const cliWs = createMockWs(['cli'], {
+        role: 'cli',
+        connectionId: 'cli-zero',
+        sessions: [],
+        instance: { name: 'laptop-zero', projectName: 'kilo', startedAt: 0 },
+      });
+      mockCtx.addSocket(cliWs);
+
+      const { instances } = doInstance.getConnectedInstances();
+      expect(instances).toEqual([
+        { connectionId: 'cli-zero', name: 'laptop-zero', projectName: 'kilo', startedAt: 0 },
+      ]);
+    });
+
+    it('omits kind/startedAt/branch/workingDirectory when the CLI did not report them (legacy row)', async () => {
+      const { doInstance, mockCtx } = setup();
+      addCliSocket(mockCtx, 'cli-1', [], {
+        name: 'laptop-1',
+        projectName: 'kilo',
+        version: '0.1.0',
+      });
+
+      const { instances } = doInstance.getConnectedInstances();
+      expect(instances).toEqual([
+        { connectionId: 'cli-1', name: 'laptop-1', projectName: 'kilo', version: '0.1.0' },
+      ]);
+      expect(instances[0]).not.toHaveProperty('kind');
+      expect(instances[0]).not.toHaveProperty('startedAt');
+      expect(instances[0]).not.toHaveProperty('branch');
+      expect(instances[0]).not.toHaveProperty('workingDirectory');
+    });
+
     it('excludes legacy CLIs that never reported an `instance`', async () => {
       const { doInstance, mockCtx } = setup();
       // Legacy CLI: pre-spawner heartbeat has no `instance`.
