@@ -37,6 +37,7 @@ import {
   MergeabilityTimedOutRow,
   TerminalChip,
 } from '@/components/pr-review/merge/pr-merge-section-parts';
+import { PrMergeRequirementsSection } from '@/components/pr-review/merge/pr-merge-requirements-section';
 
 type PrMergeSectionProps = Readonly<{
   owner: string;
@@ -166,19 +167,36 @@ export function PrMergeSection({
     return <TerminalChip state={overview.state} />;
   }
 
+  const requirementsSection = (
+    <PrMergeRequirementsSection
+      owner={owner}
+      repo={repo}
+      headSha={overview.headSha}
+      overview={overview}
+    />
+  );
+
   // Unknown mergeability — poll until it resolves or the timer expires.
   if (status === 'unknown') {
     if (hasTimedOut) {
       return (
-        <MergeabilityTimedOutRow
-          onRefresh={() => {
-            ignoreRejection(onRefetch());
-          }}
-          isRefreshing={isRefetching}
-        />
+        <View className="gap-3">
+          {requirementsSection}
+          <MergeabilityTimedOutRow
+            onRefresh={() => {
+              ignoreRejection(onRefetch());
+            }}
+            isRefreshing={isRefetching}
+          />
+        </View>
       );
     }
-    return <MergeabilityCheckingRow />;
+    return (
+      <View className="gap-3">
+        {requirementsSection}
+        <MergeabilityCheckingRow />
+      </View>
+    );
   }
 
   // Auto-merge active.
@@ -228,6 +246,7 @@ export function PrMergeSection({
   if (status === 'blocked') {
     return (
       <View className="gap-3">
+        {requirementsSection}
         <BlockedPanel
           reasons={reasons}
           allowUpdateBranch={overview.repo.allowUpdateBranch}
@@ -270,7 +289,8 @@ export function PrMergeSection({
 
   // Mergeable — single "Merge" CTA.
   return (
-    <View className="gap-2">
+    <View className="gap-3">
+      {requirementsSection}
       <Text variant="small" className="uppercase tracking-wide text-muted-foreground">
         {t('prReview.merge.merge')}
       </Text>

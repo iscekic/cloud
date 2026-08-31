@@ -320,6 +320,30 @@
         "merge": "Combine all commits from this branch into the base branch with a merge commit.",
         "squash": "Combine all commits from this branch into a single commit on the base branch.",
         "rebase": "Replay all commits from this branch onto the base branch without a merge commit."
+      },
+      "requirements": {
+        "title": "Merge requirements",
+        "reviews": "Reviews",
+        "approvals": "{{satisfied}} of {{required}} approvals",
+        "required": "Required",
+        "notRequired": "Not required",
+        "passed": "Passed",
+        "failed": "Failed",
+        "pending": "Pending",
+        "noRunYet": "No run yet",
+        "notMet": "Not met",
+        "unavailable": "Merge requirements unavailable",
+        "noProtectionRules": "No branch protection rules",
+        "queueTitle": "Merge queue",
+        "inQueue": "{{position}} in queue",
+        "positionUnknown": "Position unknown",
+        "queueState": {
+          "QUEUED": "Queued",
+          "AWAITING_CHECKS": "Awaiting checks",
+          "MERGEABLE": "Mergeable",
+          "UNMERGEABLE": "Unmergeable",
+          "LOCKED": "Locked"
+        }
       }
     },
     "discussion": {
