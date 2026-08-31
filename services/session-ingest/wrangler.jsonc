@@ -68,6 +68,10 @@
         "name": "CONNECTION_TICKET_DO",
         "class_name": "ConnectionTicketDO",
       },
+      {
+        "name": "BROWSER_TASK_DO",
+        "class_name": "BrowserTaskDO",
+      },
     ],
   },
   "migrations": [
@@ -82,6 +86,10 @@
     {
       "tag": "v3",
       "new_sqlite_classes": ["ConnectionTicketDO"],
+    },
+    {
+      "tag": "v4",
+      "new_sqlite_classes": ["BrowserTaskDO"],
     },
   ],
   "r2_buckets": [

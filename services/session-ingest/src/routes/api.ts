@@ -22,6 +22,12 @@ import { isDefaultSessionTitle } from '../ingest/default-session-title';
 import { resolveAccessibleKiloSession } from '../services/session-access';
 import { signSessionShareToken } from '../services/session-share-token';
 import { canCreateCliSessionForUser } from '../services/user-session-admission';
+import {
+  browserProfileIdSchema,
+  browserTaskStatusResponseSchema,
+  extensionBrowserTaskUpdateSchema,
+  submitBrowserTaskSchema,
+} from '../browser-task-schemas';
 
 export type ApiContext = {
   Bindings: Env;
@@ -901,4 +907,147 @@ api.post('/user/web-ticket', async c => {
   });
 
   return c.json({ ticket, expiresAt: Math.floor(doExpiresAt / 1000) }, 200);
+});
+
+// ---------------------------------------------------------------------------
+// Browser tasks: per-profile FIFO queue + relay to the connected extension.
+//
+// `getBrowserTaskDO`/`browserProfileIdFromTaskId` are loaded lazily so the
+// node-env vitest suite (which does not mock `cloudflare:workers`) can import
+// this module without pulling in the Durable Object class.
+// ---------------------------------------------------------------------------
+
+api.post('/browser-task', zodJsonValidator(submitBrowserTaskSchema), async c => {
+  const body = c.req.valid('json');
+  // Owner comes from the authenticated connection, never a model/body argument.
+  const kiloUserId = c.get('user_id');
+
+  const userConnection = getUserConnectionDO(c.env, { kiloUserId });
+  // Reject when the named profile is not an enabled, connected browser profile
+  // for this user. Never fall back to a first/other profile.
+  if (!(await userConnection.hasConnectedBrowserProfile(body.browserProfileId))) {
+    return c.json({ success: false, error: 'browser_profile_not_connected' }, 404);
+  }
+
+  const { getBrowserTaskDO } = await import('../dos/browser-task-do');
+  const { task, created } = await withDORetry(
+    () => getBrowserTaskDO(c.env, { browserProfileId: body.browserProfileId }),
+    stub =>
+      stub.enqueue({
+        ownerKiloUserId: kiloUserId,
+        browserProfileId: body.browserProfileId,
+        provider: body.provider,
+        goal: body.goal,
+        invocationId: body.invocationId,
+      }),
+    'BrowserTaskDO.enqueue'
+  );
+
+  // Only relay a newly queued task; a dedupe hit was already relayed on first
+  // submission and must not be delivered a second time.
+  if (created) {
+    await userConnection.relayBrowserTask(body.browserProfileId, {
+      taskId: task.taskId,
+      provider: task.provider,
+      goal: task.goal,
+      invocationId: task.invocationId,
+    });
+  }
+
+  return c.json(browserTaskStatusResponseSchema.parse(task), 200);
+});
+
+api.post('/browser-task/:taskId', zodJsonValidator(extensionBrowserTaskUpdateSchema), async c => {
+  const kiloUserId = c.get('user_id');
+  const taskId = c.req.param('taskId');
+  const body = c.req.valid('json');
+
+  const { getBrowserTaskDO, browserProfileIdFromTaskId } = await import(
+    '../dos/browser-task-do'
+  );
+  const browserProfileId = browserProfileIdFromTaskId(taskId);
+  if (!browserProfileId) {
+    return c.json({ success: false, error: 'Invalid taskId' }, 400);
+  }
+
+  const getStub = () => getBrowserTaskDO(c.env, { browserProfileId });
+
+  const existing = await withDORetry(getStub, stub => stub.get(taskId), 'BrowserTaskDO.get');
+  if (!existing || existing.ownerKiloUserId !== kiloUserId) {
+    return c.json({ success: false, error: 'task_not_found' }, 404);
+  }
+
+  const updated = await withDORetry(
+    getStub,
+    stub =>
+      body.terminalStatus !== undefined
+        ? stub.settle({
+            taskId,
+            terminalStatus: body.terminalStatus,
+            summary: body.summary,
+            evidence: body.evidence,
+          })
+        : stub.updateProgress({
+            taskId,
+            status: body.status,
+            summary: body.summary,
+            evidence: body.evidence,
+            boundTabId: body.boundTabId,
+          }),
+    'BrowserTaskDO.update'
+  );
+
+  if (!updated) {
+    return c.json({ success: false, error: 'task_not_found' }, 404);
+  }
+
+  return c.json(browserTaskStatusResponseSchema.parse(updated), 200);
+});
+
+api.get('/browser-task/:taskId', async c => {
+  const kiloUserId = c.get('user_id');
+  const taskId = c.req.param('taskId');
+
+  const { getBrowserTaskDO, browserProfileIdFromTaskId } = await import(
+    '../dos/browser-task-do'
+  );
+  const browserProfileId = browserProfileIdFromTaskId(taskId);
+  if (!browserProfileId) {
+    return c.json({ success: false, error: 'Invalid taskId' }, 400);
+  }
+
+  const task = await withDORetry(
+    () => getBrowserTaskDO(c.env, { browserProfileId }),
+    stub => stub.get(taskId),
+    'BrowserTaskDO.get'
+  );
+
+  if (!task || task.ownerKiloUserId !== kiloUserId) {
+    return c.json({ success: false, error: 'task_not_found' }, 404);
+  }
+
+  return c.json(browserTaskStatusResponseSchema.parse(task), 200);
+});
+
+api.get('/browser-task', async c => {
+  const kiloUserId = c.get('user_id');
+  const profileParse = browserProfileIdSchema.safeParse(c.req.query('profile'));
+  if (!profileParse.success) {
+    return c.json({ success: false, error: 'Invalid profile' }, 400);
+  }
+
+  const userConnection = getUserConnectionDO(c.env, { kiloUserId });
+  if (!(await userConnection.hasConnectedBrowserProfile(profileParse.data))) {
+    return c.json({ success: false, error: 'browser_profile_not_connected' }, 404);
+  }
+
+  const { getBrowserTaskDO } = await import('../dos/browser-task-do');
+  const tasks = await withDORetry(
+    () => getBrowserTaskDO(c.env, { browserProfileId: profileParse.data }),
+    stub => stub.list(),
+    'BrowserTaskDO.list'
+  );
+
+  const owned = tasks.filter(task => task.ownerKiloUserId === kiloUserId);
+  return c.json({ tasks: owned.map(task => browserTaskStatusResponseSchema.parse(task)) }, 200);
 });

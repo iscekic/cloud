@@ -78,6 +78,10 @@ type WSAttachment =
       // accepted before this field existed. Needed for command/subscribe
       // access rechecks against current session membership.
       kiloUserId?: string;
+      // Stable profile id advertised by the browser extension while CLI tasks
+      // are enabled. Undefined on sockets that predate the field or that have
+      // CLI tasks disabled. Used to target `browser_task` relay events.
+      browserProfileId?: string;
     };
 
 // Type re-export so test files and other internal callers can reference the
@@ -410,11 +414,14 @@ export class UserConnectionDO extends DurableObject<Env> {
       this.replaceWebSocket(connectionId);
 
       const kiloUserId = url.searchParams.get('kiloUserId') ?? undefined;
+      const rawBrowserProfileId = url.searchParams.get('browserProfileId');
+      const browserProfileId = rawBrowserProfileId ? rawBrowserProfileId : undefined;
       const attachment: WSAttachment = {
         role: 'web',
         connectionId,
         subscribedSessions: [],
         kiloUserId,
+        browserProfileId,
       };
       this.ctx.acceptWebSocket(server, ['web']);
       server.serializeAttachment(attachment);
@@ -2016,6 +2023,69 @@ export class UserConnectionDO extends DurableObject<Env> {
   hasActiveCliSession(sessionId: string): boolean {
     this.ensureState();
     return this.findCliForSession(sessionId) !== undefined;
+  }
+
+  /**
+   * Whether this user has a live web socket whose attachment advertises the
+   * given `browserProfileId`. The extension only advertises its profile id
+   * while CLI tasks are enabled, so "connected" here doubles as "enabled".
+   */
+  async hasConnectedBrowserProfile(browserProfileId: string): Promise<boolean> {
+    this.ensureState();
+    if (!browserProfileId) return false;
+    for (const ws of this.activeWebSockets()) {
+      const attachment = ws.deserializeAttachment() as WSAttachment | null;
+      if (attachment?.role === 'web' && attachment.browserProfileId === browserProfileId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Relay a `browser_task` system event to the web sockets whose attachment
+   * advertises the given `browserProfileId`. Delivery is scoped to sockets
+   * sharing this DO's authenticated kiloUserId (the DO is keyed by kiloUserId)
+   * and the named profile — never to another user or profile.
+   */
+  async relayBrowserTask(
+    browserProfileId: string,
+    task: {
+      taskId: string;
+      provider: string;
+      goal: string;
+      invocationId: string;
+      boundTabId?: number;
+    }
+  ): Promise<{ delivered: number }> {
+    this.ensureState();
+    if (!browserProfileId) return { delivered: 0 };
+    const msg: WebInboundMessage = {
+      type: 'system',
+      event: 'browser_task',
+      data: {
+        taskId: task.taskId,
+        provider: task.provider,
+        goal: task.goal,
+        invocationId: task.invocationId,
+        ...(task.boundTabId !== undefined ? { boundTabId: task.boundTabId } : {}),
+      },
+    };
+
+    let delivered = 0;
+    const json = JSON.stringify(msg);
+    for (const ws of this.activeWebSockets()) {
+      const attachment = ws.deserializeAttachment() as WSAttachment | null;
+      if (attachment?.role === 'web' && attachment.browserProfileId === browserProfileId) {
+        try {
+          ws.send(json);
+          delivered++;
+        } catch (err) {
+          console.warn('relayBrowserTask: skipping failed web socket:', err);
+        }
+      }
+    }
+    return { delivered };
   }
 
   // ---------------------------------------------------------------------------

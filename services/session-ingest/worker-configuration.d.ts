@@ -16,13 +16,14 @@ interface __BaseEnv_CloudflareBindings {
 	SESSION_ACCESS_CACHE_DO: DurableObjectNamespace<import("./src/index").SessionAccessCacheDO>;
 	USER_CONNECTION_DO: DurableObjectNamespace<import("./src/index").UserConnectionDO>;
 	CONNECTION_TICKET_DO: DurableObjectNamespace<import("./src/index").ConnectionTicketDO>;
+	BROWSER_TASK_DO: DurableObjectNamespace<import("./src/index").BrowserTaskDO>;
 	O11Y: Fetcher /* o11y */;
 	NOTIFICATIONS: Service /* entrypoint NotificationsService from notifications */;
 }
 declare namespace Cloudflare {
 	interface GlobalProps {
 		mainModule: typeof import("./src/index");
-		durableNamespaces: "SessionIngestDO" | "SessionAccessCacheDO" | "UserConnectionDO" | "ConnectionTicketDO";
+		durableNamespaces: "SessionIngestDO" | "SessionAccessCacheDO" | "UserConnectionDO" | "ConnectionTicketDO" | "BrowserTaskDO";
 	}
 	interface Env extends __BaseEnv_CloudflareBindings {}
 }
