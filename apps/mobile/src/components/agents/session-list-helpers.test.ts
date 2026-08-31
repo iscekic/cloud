@@ -17,6 +17,7 @@ import {
   remoteMeta,
   remoteSessionEyebrowLabel,
   repoNameFromGitUrl,
+  selectLiveCount,
   selectRemoteRowSpokenMeta,
   storedSessionEyebrowLabel,
 } from './session-list-helpers';
@@ -386,5 +387,23 @@ describe('selectRemoteRowSpokenMeta', () => {
     expect(
       selectRemoteRowSpokenMeta({ needsInput: false, costSpoken: null, timeSpoken: null })
     ).toBeNull();
+  });
+});
+
+describe('selectLiveCount', () => {
+  it('returns the count when live sessions exist and not loading', () => {
+    expect(selectLiveCount(3, false)).toBe(3);
+  });
+
+  it('returns null when there are no live sessions', () => {
+    expect(selectLiveCount(0, false)).toBeNull();
+  });
+
+  it('returns null while loading, even with a positive count', () => {
+    expect(selectLiveCount(3, true)).toBeNull();
+  });
+
+  it('returns null while loading and empty', () => {
+    expect(selectLiveCount(0, true)).toBeNull();
   });
 });

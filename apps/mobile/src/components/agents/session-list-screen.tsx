@@ -22,6 +22,7 @@ import { useLiveSessionQuery } from '@/components/agents/use-live-session-query'
 import { getNewAgentSessionPath } from '@/components/agents/session-list-routes';
 import { RemoteSessionRow } from '@/components/agents/remote-session-row';
 import { FAB_MARGIN, FAB_SIZE } from '@/components/agents/session-list-content';
+import { selectLiveCount } from '@/components/agents/session-list-helpers';
 import { useAgentSessionNavigator } from '@/components/agents/use-agent-session-navigator';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -64,6 +65,7 @@ export function AgentSessionListScreen() {
 
   // Treat !orgLoaded as loading so the empty state cannot flash before skeletons.
   const loading = isLoading || !orgLoaded;
+  const count = selectLiveCount(activeSessions.length, loading);
   const hasLiveRows = activeSessions.length > 0;
   const hasVisibleRows = visibleSessions.length > 0;
 
@@ -276,6 +278,7 @@ export function AgentSessionListScreen() {
     <View className="flex-1 bg-background">
       <ScreenHeader
         title={t('tabs.agents')}
+        eyebrow={count != null ? t('agents.sessionList.liveCount', { count }) : undefined}
         size="large"
         showBackButton={false}
         className="px-[22px]"

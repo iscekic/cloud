@@ -39,6 +39,9 @@ type AgentSessionListContentProps = {
   /** Post-deletion focus anchor: the screen's always-mounted search input. */
   searchInputRef: Parameters<typeof moveA11yFocus>[0];
   sections: SessionSection[];
+  /** Ids of the org's currently-active sessions. A stored row whose id is in
+   * this set renders the live dot beside its timestamp (never hiding it). */
+  liveSessionIds: ReadonlySet<string>;
   hasAnySessions: boolean;
   isLoading: boolean;
   /** Body-driving error flag — a search failure (when searching) OR a
@@ -61,6 +64,7 @@ type AgentSessionListContentProps = {
 export function AgentSessionListContent({
   searchInputRef,
   sections,
+  liveSessionIds,
   hasAnySessions,
   isLoading,
   isError,
@@ -152,6 +156,14 @@ export function AgentSessionListContent({
     }, [])
   );
 
+  // Re-render cells without remounting the list when the attention revision or
+  // the live-id set changes. `liveSessionIds` is derived from the
+  // activeSessions cache, so a WS write flips a row's live dot in place.
+  const extraData = useMemo(
+    () => ({ attentionFocusRevision, liveSessionIds }),
+    [attentionFocusRevision, liveSessionIds]
+  );
+
   const handleRefresh = useCallback(() => {
     void (async () => {
       setRefreshing(true);
@@ -168,6 +180,8 @@ export function AgentSessionListContent({
       <StoredSessionRow
         session={item}
         sortBy={SESSION_LIST_SORT}
+        live={liveSessionIds.has(item.session_id)}
+        metaWhileLive={liveSessionIds.has(item.session_id)}
         onPress={() => {
           onSessionPress(item.session_id, item.organization_id, item.title ?? undefined);
         }}
@@ -184,7 +198,7 @@ export function AgentSessionListContent({
         }}
       />
     ),
-    [onSessionPress, deleteSession, renameSession, searchInputRef]
+    [onSessionPress, deleteSession, renameSession, searchInputRef, liveSessionIds]
   );
 
   const renderSectionHeader = useCallback(
@@ -269,7 +283,7 @@ export function AgentSessionListContent({
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={keyExtractor}
-        extraData={attentionFocusRevision}
+        extraData={extraData}
         ListHeaderComponent={null}
         ListEmptyComponent={emptyComponent}
         ListFooterComponent={

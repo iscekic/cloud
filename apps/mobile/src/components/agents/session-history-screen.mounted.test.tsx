@@ -8,6 +8,7 @@ import { SessionHistoryScreen } from './session-history-screen';
 
 const listState = vi.hoisted(() => ({
   storedSessions: [] as { session_id: string; organization_id: string | null }[],
+  activeSessionIds: new Set<string>(),
   isSearching: false,
 }));
 
@@ -86,6 +87,7 @@ vi.mock('@/components/agents/use-agent-session-navigator', () => ({
 vi.mock('@/components/agents/use-agent-session-list-data', () => ({
   useAgentSessionListData: () => ({
     storedSessions: listState.storedSessions,
+    activeSessionIds: listState.activeSessionIds,
     activeSessions: [],
     isLoading: false,
     storedIsFetching: false,
@@ -173,6 +175,7 @@ describe('SessionHistoryScreen', () => {
   beforeEach(() => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     listState.storedSessions = [];
+    listState.activeSessionIds = new Set();
     listState.isSearching = false;
     focusState.current = true;
     focusCallbacks.current = [];
@@ -240,6 +243,14 @@ describe('SessionHistoryScreen', () => {
     const content = findNodeByType(renderer, 'AgentSessionListContent');
     expect(content.props.hasActiveQuery).toBe(true);
     expect(content.props.hasAnySessions).toBe(true);
+  });
+
+  it('passes the org active-session ids to the list content as liveSessionIds', async () => {
+    listState.activeSessionIds = new Set(['live-1', 'live-2']);
+    const renderer = await renderScreen();
+
+    const content = findNodeByType(renderer, 'AgentSessionListContent');
+    expect(content.props.liveSessionIds).toEqual(new Set(['live-1', 'live-2']));
   });
 
   it('refetches stored sessions through the wrapped refetch on route focus', async () => {

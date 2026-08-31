@@ -206,6 +206,12 @@ function headerRightOf(renderer: MountedRenderer) {
   return header.props.headerRight as HeaderElement;
 }
 
+function screenHeaderOf(renderer: MountedRenderer) {
+  return renderer.root.find(
+    node => typeof node.type === 'string' && (node.type as string) === 'ScreenHeader'
+  );
+}
+
 function headerActionsOf(renderer: MountedRenderer): HeaderElement[] {
   const { children } = headerRightOf(renderer).props;
   return (Array.isArray(children) ? children : [children]).filter(Boolean) as HeaderElement[];
@@ -301,6 +307,38 @@ describe('AgentSessionListScreen live tab', () => {
     const seeAll = requireHeaderAction(renderer, 'agents-view-history');
 
     expect(seeAll.props.accessibilityRole).toBe('button');
+  });
+
+  it('shows the live-count eyebrow above the title when live rows exist', async () => {
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+
+    const renderer = await renderScreen();
+
+    expect(screenHeaderOf(renderer).props.eyebrow).toBe('agents.sessionList.liveCount');
+  });
+
+  it('hides the live-count eyebrow when there are no live rows', async () => {
+    const renderer = await renderScreen();
+
+    expect(screenHeaderOf(renderer).props.eyebrow).toBeUndefined();
+  });
+
+  it('hides the live-count eyebrow while the live query is loading, even with rows', async () => {
+    sessionListState.isLoading = true;
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+
+    const renderer = await renderScreen();
+
+    expect(screenHeaderOf(renderer).props.eyebrow).toBeUndefined();
+  });
+
+  it('hides the live-count eyebrow while the org is not loaded, even with rows', async () => {
+    orgState.isLoaded = false;
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+
+    const renderer = await renderScreen();
+
+    expect(screenHeaderOf(renderer).props.eyebrow).toBeUndefined();
   });
 
   it('pushes the history route when See-all is pressed', async () => {

@@ -2084,7 +2084,9 @@
       "couldNotSearch": "Could not search sessions",
       "completedWillAppear": "Completed sessions will appear here.",
       "noPastSessions": "No past sessions",
-      "live": "LIVE"
+      "live": "LIVE",
+      "liveCount_one": "{{count}} LIVE",
+      "liveCount_other": "{{count}} LIVE"
     },
     "sessionRow": {
       "deleteTitle": "Delete session?",

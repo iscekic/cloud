@@ -78,6 +78,17 @@ export function formatMeta(timestamp: string): string {
 }
 
 /**
+ * Live-count eyebrow selector. Returns the count only when there are live
+ * sessions and the active query is not loading; otherwise `null` hides the
+ * eyebrow (loading, empty, error-with-no-cache, and unknown all hide it).
+ * Cached rows on a failed refetch keep the count because `isLoading` is
+ * false while stale data is still rendered.
+ */
+export function selectLiveCount(count: number, isLoading: boolean): number | null {
+  return count > 0 && !isLoading ? count : null;
+}
+
+/**
  * Canonical visible cost for every mobile session surface (list row, detail
  * header, context sheet total).
  *
