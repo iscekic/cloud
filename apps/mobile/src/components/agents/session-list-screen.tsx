@@ -70,10 +70,6 @@ export function AgentSessionListScreen() {
 
   const [updating, setUpdating] = useState(false);
   const [refreshFailed, setRefreshFailed] = useState(false);
-  // The native RefreshControl spinner is pull-only: focus return and OS
-  // foreground refetch set `updating` (drives the inline strip) but must not
-  // flash the spinner, so only the pull path owns this flag.
-  const [refreshing, setRefreshing] = useState(false);
 
   const runRefresh = useCallback(async () => {
     setUpdating(true);
@@ -171,10 +167,7 @@ export function AgentSessionListScreen() {
   );
 
   const handleRefresh = useCallback(() => {
-    setRefreshing(true);
-    void runRefresh().finally(() => {
-      setRefreshing(false);
-    });
+    void runRefresh();
   }, [runRefresh]);
 
   const renderItem = useCallback(
@@ -285,7 +278,7 @@ export function AgentSessionListScreen() {
         keyExtractor={keyExtractor}
         extraData={attentionFocusRevision}
         contentContainerStyle={listPadding}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+        refreshControl={<RefreshControl refreshing={false} onRefresh={handleRefresh} />}
         maintainVisibleContentPosition={{ minIndexForVisible: 0, autoscrollToTopThreshold: 10 }}
       />
     );

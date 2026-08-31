@@ -674,6 +674,29 @@ describe('AgentSessionListScreen live tab', () => {
     expect(strip.props.refreshFailed).toBe(false);
   });
 
+  it('shows only the strip indicator on a pull', async () => {
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+
+    const renderer = await renderScreen();
+
+    const flatList = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'FlatList'
+    );
+    const refreshControl = flatList.props.refreshControl as {
+      type: string;
+      props: { onRefresh: () => void; refreshing: boolean };
+    };
+    expect(refreshControl.type).toBe('RefreshControl');
+
+    act(() => {
+      refreshControl.props.onRefresh();
+    });
+
+    const strip = findStrip(renderer);
+    expect(strip.props.updating).toBe(true);
+    expect(refreshControl.props.refreshing).toBe(false);
+  });
+
   it('refetches live sessions on route focus', async () => {
     await renderScreen();
 
