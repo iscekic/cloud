@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Մոդել: {{modelLabel}}",
       "openHint": "Բացել ենթագործակալի նիստ",
       "subagent": "Ենթագործակալ",
-      "task": "Առաջադրանք",
-      "waitingForActivity": "Սպասում է գործունեության"
+      "task": "Առաջադրանք"
     },
     "childSessionSheet": {
       "couldNotLoad": "Հնարավոր չեղավ բեռնել ենթագործակալի նիստը",

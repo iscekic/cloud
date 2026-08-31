@@ -2482,8 +2482,7 @@
       "modelAccessibility": "Modelis: {{modelLabel}}",
       "openHint": "Atidaryti subagento sesiją",
       "subagent": "Subagentas",
-      "task": "Užduotis",
-      "waitingForActivity": "Laukiama veiklos"
+      "task": "Užduotis"
     },
     "childSessionSheet": {
       "couldNotLoad": "Nepavyko įkelti subagento sesijos",

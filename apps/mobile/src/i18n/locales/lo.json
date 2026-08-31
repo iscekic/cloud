@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ຮູບແບບ: {{modelLabel}}",
       "openHint": "ເປີດເຊດຊັນຂອງຕົວແທນຍ່ອຍ",
       "subagent": "ຕົວແທນຍ່ອຍ",
-      "task": "ວຽກ",
-      "waitingForActivity": "ລໍຖ້າກິດຈະກຳ"
+      "task": "ວຽກ"
     },
     "childSessionSheet": {
       "couldNotLoad": "ບໍ່ສາມາດໂຫລດເຊດຊັນຕົວແທນຍ່ອຍ",

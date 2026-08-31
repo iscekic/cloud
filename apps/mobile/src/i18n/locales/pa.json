@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ਮਾਡਲ: {{modelLabel}}",
       "openHint": "ਸਬਏਜੰਟ ਸੈਸ਼ਨ ਖੋਲ੍ਹੋ",
       "subagent": "ਸਬਏਜੰਟ",
-      "task": "ਕੰਮ",
-      "waitingForActivity": "ਗਤੀਵਿਧੀ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
+      "task": "ਕੰਮ"
     },
     "childSessionSheet": {
       "couldNotLoad": "ਸਬਏਜੰਟ ਸੈਸ਼ਨ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ",

@@ -1996,8 +1996,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buka sesi subagen",
       "subagent": "Subagen",
-      "task": "Tugas",
-      "waitingForActivity": "Menunggu aktivitas"
+      "task": "Tugas"
     },
     "childSessionSheet": {
       "couldNotLoad": "Tidak dapat memuat sesi subagen",

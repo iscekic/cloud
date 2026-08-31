@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ماډل: {{modelLabel}}",
       "openHint": "د فرعي اجنټ غونډه پرانیزئ",
       "subagent": "فرعي اجنټ",
-      "task": "دنده",
-      "waitingForActivity": "د فعالیت انتظار"
+      "task": "دنده"
     },
     "childSessionSheet": {
       "couldNotLoad": "د فرعي اجنټ غونډه نه شوه پورته کېدلای",

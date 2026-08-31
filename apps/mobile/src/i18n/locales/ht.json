@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modèl: {{modelLabel}}",
       "openHint": "Louvri sesyon subajant",
       "subagent": "Subajant",
-      "task": "Travay",
-      "waitingForActivity": "Ap tann aktivite"
+      "task": "Travay"
     },
     "childSessionSheet": {
       "couldNotLoad": "Pa t ka chaje sesyon subajant",

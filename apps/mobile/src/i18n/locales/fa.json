@@ -2450,8 +2450,7 @@
       "modelAccessibility": "مدل: {{modelLabel}}",
       "openHint": "باز کردن جلسه زیرعامل",
       "subagent": "زیرعامل",
-      "task": "وظیفه",
-      "waitingForActivity": "در انتظار فعالیت"
+      "task": "وظیفه"
     },
     "childSessionSheet": {
       "couldNotLoad": "بارگذاری جلسه زیرعامل ممکن نشد",

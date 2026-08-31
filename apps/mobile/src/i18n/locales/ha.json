@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buɗe zaman subagent",
       "subagent": "Subagent",
-      "task": "Aiki",
-      "waitingForActivity": "Jiran aiki"
+      "task": "Aiki"
     },
     "childSessionSheet": {
       "couldNotLoad": "An kasa buɗe zaman subagent",

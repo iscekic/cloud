@@ -2466,8 +2466,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Deschide sesiunea de subagent",
       "subagent": "Subagent",
-      "task": "Sarcină",
-      "waitingForActivity": "Se așteaptă activitate"
+      "task": "Sarcină"
     },
     "childSessionSheet": {
       "couldNotLoad": "Sesiunea de subagent nu a putut fi încărcată",

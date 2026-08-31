@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Åbn subagent-session",
       "subagent": "Subagent",
-      "task": "Opgave",
-      "waitingForActivity": "Venter på aktivitet"
+      "task": "Opgave"
     },
     "childSessionSheet": {
       "couldNotLoad": "Kunne ikke indlæse subagent-session",

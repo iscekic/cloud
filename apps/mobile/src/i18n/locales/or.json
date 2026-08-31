@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ମଡେଲ: {{modelLabel}}",
       "openHint": "ସବଏଜେଣ୍ଟ ସେସନ୍ ଖୋଲନ୍ତୁ",
       "subagent": "ସବଏଜେଣ୍ଟ",
-      "task": "କାର୍ଯ୍ୟ",
-      "waitingForActivity": "କାର୍ଯ୍ୟ ଅପେକ୍ଷା କରୁଛି"
+      "task": "କାର୍ଯ୍ୟ"
     },
     "childSessionSheet": {
       "couldNotLoad": "ସବଏଜେଣ୍ଟ ସେସନ୍ ଲୋଡ୍ ହୋଇପାରିଲା ନାହିଁ",

@@ -2450,8 +2450,7 @@
       "modelAccessibility": "مۆدێل: {{modelLabel}}",
       "openHint": "کردنەوەی دانیشتنی ساب‌ئەجێنت",
       "subagent": "ساب‌ئەجێنت",
-      "task": "ئەرک",
-      "waitingForActivity": "چاوەڕوانی چالاکی"
+      "task": "ئەرک"
     },
     "childSessionSheet": {
       "couldNotLoad": "نەتوانرا دانیشتنی ساب‌ئەجێنت باربکرێت",

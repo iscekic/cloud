@@ -2498,8 +2498,7 @@
       "modelAccessibility": "Samhail: {{modelLabel}}",
       "openHint": "Oscail seisiún foghníomhaire",
       "subagent": "Foghníomhaire",
-      "task": "Tasc",
-      "waitingForActivity": "Ag fanacht ar ghníomhaíocht"
+      "task": "Tasc"
     },
     "childSessionSheet": {
       "couldNotLoad": "Níorbh fhéidir seisiún foghníomhaire a lódáil",

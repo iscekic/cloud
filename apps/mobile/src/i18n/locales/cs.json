@@ -2482,8 +2482,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otevřít relaci subagenta",
       "subagent": "Subagent",
-      "task": "Úkol",
-      "waitingForActivity": "Čeká se na aktivitu"
+      "task": "Úkol"
     },
     "childSessionSheet": {
       "couldNotLoad": "Nelze načíst relaci subagenta",

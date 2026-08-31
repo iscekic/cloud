@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Líkan: {{modelLabel}}",
       "openHint": "Opna undirumboðslotu",
       "subagent": "Undirumboð",
-      "task": "Verkefni",
-      "waitingForActivity": "Bíða eftir virkni"
+      "task": "Verkefni"
     },
     "childSessionSheet": {
       "couldNotLoad": "Ekki tókst að hlaða undirumboðslotu",

@@ -1996,8 +1996,7 @@
       "modelAccessibility": "模型：{{modelLabel}}",
       "openHint": "打开子代理会话",
       "subagent": "子代理",
-      "task": "任务",
-      "waitingForActivity": "等待活动"
+      "task": "任务"
     },
     "childSessionSheet": {
       "couldNotLoad": "无法加载子代理会话",

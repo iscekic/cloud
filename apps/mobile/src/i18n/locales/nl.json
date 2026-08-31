@@ -1996,8 +1996,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Subagentsessie openen",
       "subagent": "Subagent",
-      "task": "Taak",
-      "waitingForActivity": "Wachten op activiteit"
+      "task": "Taak"
     },
     "childSessionSheet": {
       "couldNotLoad": "Kon subagentsessie niet laden",

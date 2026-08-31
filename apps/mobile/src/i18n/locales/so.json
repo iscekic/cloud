@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Fur kalfadhiga subagent",
       "subagent": "Subagent",
-      "task": "Hawsha",
-      "waitingForActivity": "Sugitaanka hawsha"
+      "task": "Hawsha"
     },
     "childSessionSheet": {
       "couldNotLoad": "Kalfadhiga subagent lama soo dejin karin",

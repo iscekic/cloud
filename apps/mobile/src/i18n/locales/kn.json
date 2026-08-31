@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ಮಾದರಿ: {{modelLabel}}",
       "openHint": "ಉಪ-ಏಜೆಂಟ್ ಸೆಷನ್ ತೆರೆಯಿರಿ",
       "subagent": "ಉಪ-ಏಜೆಂಟ್",
-      "task": "ಕಾರ್ಯ",
-      "waitingForActivity": "ಚಟುವಟಿಕೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ"
+      "task": "ಕಾರ್ಯ"
     },
     "childSessionSheet": {
       "couldNotLoad": "ಉಪ-ಏಜೆಂಟ್ ಸೆಷನ್ ಅನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ",

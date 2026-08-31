@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ម៉ូដែល: {{modelLabel}}",
       "openHint": "បើកវគ្គភ្នាក់ងាររង",
       "subagent": "ភ្នាក់ងាររង",
-      "task": "កិច្ចការ",
-      "waitingForActivity": "កំពុងរង់ចាំសកម្មភាព"
+      "task": "កិច្ចការ"
     },
     "childSessionSheet": {
       "couldNotLoad": "មិនអាចផ្ទុកវគ្គភ្នាក់ងាររងបានទេ",

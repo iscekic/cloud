@@ -2450,8 +2450,7 @@
       "modelAccessibility": "မော်ဒယ်: {{modelLabel}}",
       "openHint": "subagent session ဖွင့်ရန်",
       "subagent": "Subagent",
-      "task": "Task",
-      "waitingForActivity": "လုပ်ဆောင်ချက် စောင့်နေသည်"
+      "task": "Task"
     },
     "childSessionSheet": {
       "couldNotLoad": "subagent session ကို မဖွင့်နိုင်ပါ",

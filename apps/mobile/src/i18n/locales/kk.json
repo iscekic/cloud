@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Модель: {{modelLabel}}",
       "openHint": "Субаргент сессиясын ашу",
       "subagent": "Субаргент",
-      "task": "Тапсырма",
-      "waitingForActivity": "Әрекет күтілуде"
+      "task": "Тапсырма"
     },
     "childSessionSheet": {
       "couldNotLoad": "Субаргент сессиясын жүктеу мүмкін болмады",

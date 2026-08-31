@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Awoṣe: {{modelLabel}}",
       "openHint": "Ṣii igba-ijiroro subagent",
       "subagent": "Subagent",
-      "task": "Iṣẹ-ṣiṣe",
-      "waitingForActivity": "Nduro fun iṣẹ-ṣiṣe"
+      "task": "Iṣẹ-ṣiṣe"
     },
     "childSessionSheet": {
       "couldNotLoad": "Ko le ṣagbewọ igba-ijiroro subagent",

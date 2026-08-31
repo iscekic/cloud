@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Moodela: {{modelLabel}}",
       "openHint": "Shumarra subagent bani",
       "subagent": "Subagent",
-      "task": "Hojii",
-      "waitingForActivity": "Sochii eegaa jira"
+      "task": "Hojii"
     },
     "childSessionSheet": {
       "couldNotLoad": "Shumarra subagent fudhachuu hin danda'ine",

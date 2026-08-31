@@ -1921,8 +1921,7 @@
       "modelAccessibility": "Modèle : {{modelLabel}}",
       "openHint": "Ouvrir la session du sous-agent",
       "subagent": "Sous-agent",
-      "task": "Tâche",
-      "waitingForActivity": "En attente d'activité"
+      "task": "Tâche"
     },
     "childSessionSheet": {
       "couldNotLoad": "Impossible de charger la session du sous-agent",

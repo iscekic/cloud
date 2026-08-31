@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Ụdị: {{modelLabel}}",
       "openHint": "Mepee nnọkọ onye nnọchite",
       "subagent": "Onye nnọchite",
-      "task": "Ọrụ",
-      "waitingForActivity": "Na-eche ọrụ"
+      "task": "Ọrụ"
     },
     "childSessionSheet": {
       "couldNotLoad": "Enweghị ike ibutu nnọkọ onye nnọchite",

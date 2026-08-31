@@ -2450,8 +2450,7 @@
       "modelAccessibility": "მოდელი: {{modelLabel}}",
       "openHint": "ქვეაგენტის სესიის გახსნა",
       "subagent": "ქვეაგენტი",
-      "task": "დავალება",
-      "waitingForActivity": "აქტივობის მოლოდინი"
+      "task": "დავალება"
     },
     "childSessionSheet": {
       "couldNotLoad": "ქვეაგენტის სესია ვერ ჩაიტვირთა",

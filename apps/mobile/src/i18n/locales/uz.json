@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Subagent sessiyasini ochish",
       "subagent": "Subagent",
-      "task": "Vazifa",
-      "waitingForActivity": "Faoliyat kutilmoqda"
+      "task": "Vazifa"
     },
     "childSessionSheet": {
       "couldNotLoad": "Subagent sessiyasini yuklab bo'lmadi",

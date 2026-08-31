@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Mfano: {{modelLabel}}",
       "openHint": "Fungua kikao cha subagent",
       "subagent": "Subagent",
-      "task": "Kazi",
-      "waitingForActivity": "Kusubiri shughuli"
+      "task": "Kazi"
     },
     "childSessionSheet": {
       "couldNotLoad": "Haikuweza kupakia kikao cha subagent",

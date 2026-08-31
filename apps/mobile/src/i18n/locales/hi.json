@@ -1969,8 +1969,7 @@
       "modelAccessibility": "मॉडल: {{modelLabel}}",
       "openHint": "सबएजेंट सत्र खोलें",
       "subagent": "सबएजेंट",
-      "task": "कार्य",
-      "waitingForActivity": "गतिविधि की प्रतीक्षा"
+      "task": "कार्य"
     },
     "childSessionSheet": {
       "couldNotLoad": "सबएजेंट सत्र लोड नहीं हो सका",

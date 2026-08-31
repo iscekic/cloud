@@ -1996,8 +1996,7 @@
       "modelAccessibility": "模型：{{modelLabel}}",
       "openHint": "開啟子代理工作階段",
       "subagent": "子代理",
-      "task": "任務",
-      "waitingForActivity": "等待活動"
+      "task": "任務"
     },
     "childSessionSheet": {
       "couldNotLoad": "無法載入子代理工作階段",

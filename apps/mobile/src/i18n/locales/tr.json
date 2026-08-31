@@ -1996,8 +1996,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Alt ajan oturumunu aç",
       "subagent": "Alt ajan",
-      "task": "Görev",
-      "waitingForActivity": "Etkinlik bekleniyor"
+      "task": "Görev"
     },
     "childSessionSheet": {
       "couldNotLoad": "Alt ajan oturumu yüklenemedi",

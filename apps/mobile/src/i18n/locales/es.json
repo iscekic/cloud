@@ -2005,8 +2005,7 @@
       "modelAccessibility": "Modelo: {{modelLabel}}",
       "openHint": "Abrir sesión del subagente",
       "subagent": "Subagente",
-      "task": "Tarea",
-      "waitingForActivity": "Esperando actividad"
+      "task": "Tarea"
     },
     "childSessionSheet": {
       "couldNotLoad": "No se pudo cargar la sesión del subagente",

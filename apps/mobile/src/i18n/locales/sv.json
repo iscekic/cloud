@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Öppna undersessionssession",
       "subagent": "Underagent",
-      "task": "Uppgift",
-      "waitingForActivity": "Väntar på aktivitet"
+      "task": "Uppgift"
     },
     "childSessionSheet": {
       "couldNotLoad": "Det gick inte att läsa in undersessionssessionen",

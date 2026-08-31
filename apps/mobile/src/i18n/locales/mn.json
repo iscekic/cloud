@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Загвар: {{modelLabel}}",
       "openHint": "Дэд агентын сессийг нээх",
       "subagent": "Дэд агент",
-      "task": "Даалгавар",
-      "waitingForActivity": "Үйлдлийг хүлээж байна"
+      "task": "Даалгавар"
     },
     "childSessionSheet": {
       "couldNotLoad": "Дэд агентын сессийг ачаалж чадсангүй",

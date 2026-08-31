@@ -2466,8 +2466,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otvori sesiju podagenta",
       "subagent": "Podagent",
-      "task": "Zadatak",
-      "waitingForActivity": "Čeka se aktivnost"
+      "task": "Zadatak"
     },
     "childSessionSheet": {
       "couldNotLoad": "Sesija podagenta nije mogla biti učitana",

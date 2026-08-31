@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buka sesi subejen",
       "subagent": "Subejen",
-      "task": "tugasan",
-      "waitingForActivity": "Menunggu aktiviti"
+      "task": "tugasan"
     },
     "childSessionSheet": {
       "couldNotLoad": "Tidak dapat memuatkan sesi subejen",

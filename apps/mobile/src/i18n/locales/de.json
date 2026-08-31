@@ -1996,8 +1996,7 @@
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Subagent-Sitzung öffnen",
       "subagent": "Subagent",
-      "task": "Aufgabe",
-      "waitingForActivity": "Warte auf Aktivität"
+      "task": "Aufgabe"
     },
     "childSessionSheet": {
       "couldNotLoad": "Subagent-Sitzung konnte nicht geladen werden",

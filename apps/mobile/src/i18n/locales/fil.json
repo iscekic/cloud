@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modelo: {{modelLabel}}",
       "openHint": "Buksan ang subagent session",
       "subagent": "Subagent",
-      "task": "Gawain",
-      "waitingForActivity": "Naghihintay ng aktibidad"
+      "task": "Gawain"
     },
     "childSessionSheet": {
       "couldNotLoad": "Hindi ma-load ang subagent session",

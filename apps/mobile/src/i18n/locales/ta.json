@@ -2450,8 +2450,7 @@
       "modelAccessibility": "மாதிரி: {{modelLabel}}",
       "openHint": "துணை முகவர் அமர்வைத் திறக்கவும்",
       "subagent": "துணை முகவர்",
-      "task": "பணி",
-      "waitingForActivity": "செயல்பாட்டிற்காக காத்திருக்கிறது"
+      "task": "பணி"
     },
     "childSessionSheet": {
       "couldNotLoad": "துணை முகவர் அமர்வை ஏற்ற முடியவில்லை",

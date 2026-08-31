@@ -2450,8 +2450,7 @@
       "modelAccessibility": "మోడల్: {{modelLabel}}",
       "openHint": "సబ్ఏజెంట్ సెషన్ను తెరవండి",
       "subagent": "సబ్ఏజెంట్",
-      "task": "టాస్క్",
-      "waitingForActivity": "కార్యాచరణ కోసం వేచి ఉంది"
+      "task": "టాస్క్"
     },
     "childSessionSheet": {
       "couldNotLoad": "సబ్ఏజెంట్ సెషన్ను లోడ్ చేయలేకపోయింది",

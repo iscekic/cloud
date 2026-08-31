@@ -2032,8 +2032,7 @@
       "modelAccessibility": "النموذج: {{modelLabel}}",
       "openHint": "فتح جلسة الوكيل الفرعي",
       "subagent": "وكيل فرعي",
-      "task": "المهمة",
-      "waitingForActivity": "في انتظار النشاط"
+      "task": "المهمة"
     },
     "childSessionSheet": {
       "couldNotLoad": "تعذّر تحميل جلسة الوكيل الفرعي",

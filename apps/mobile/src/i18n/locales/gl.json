@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modelo: {{modelLabel}}",
       "openHint": "Abrir sesión de subaxente",
       "subagent": "Subaxente",
-      "task": "Tarefa",
-      "waitingForActivity": "Agardando por actividade"
+      "task": "Tarefa"
     },
     "childSessionSheet": {
       "couldNotLoad": "Non se puido cargar a sesión de subaxente",

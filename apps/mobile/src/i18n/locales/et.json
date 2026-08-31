@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Mudel: {{modelLabel}}",
       "openHint": "Ava alaseansi seanss",
       "subagent": "Alasell",
-      "task": "Ülesanne",
-      "waitingForActivity": "Ootab tegevust"
+      "task": "Ülesanne"
     },
     "childSessionSheet": {
       "couldNotLoad": "Alaseansi seanssi ei õnnestunud laadida",

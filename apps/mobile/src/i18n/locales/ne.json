@@ -2450,8 +2450,7 @@
       "modelAccessibility": "मोडेल: {{modelLabel}}",
       "openHint": "सबएजेन्ट सत्र खोल्नुहोस्",
       "subagent": "सबएजेन्ट",
-      "task": "कार्य",
-      "waitingForActivity": "गतिविधिको पर्खाइमा"
+      "task": "कार्य"
     },
     "childSessionSheet": {
       "couldNotLoad": "सबएजेन्ट सत्र लोड गर्न सकिएन",

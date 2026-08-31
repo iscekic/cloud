@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modely: {{modelLabel}}",
       "openHint": "Sokafy ny session subagent",
       "subagent": "Subagent",
-      "task": "Asa",
-      "waitingForActivity": "Miandry hetsika"
+      "task": "Asa"
     },
     "childSessionSheet": {
       "couldNotLoad": "Tsy afaka nampidirina ny session subagent",

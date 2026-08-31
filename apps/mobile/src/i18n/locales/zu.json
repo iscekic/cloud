@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Imodeli: {{modelLabel}}",
       "openHint": "Vula iseshini ye-subagent",
       "subagent": "I-subagent",
-      "task": "Umsebenzi",
-      "waitingForActivity": "Ilinde umsebenzi"
+      "task": "Umsebenzi"
     },
     "childSessionSheet": {
       "couldNotLoad": "Ayikwazanga ukulayisha iseshini ye-subagent",

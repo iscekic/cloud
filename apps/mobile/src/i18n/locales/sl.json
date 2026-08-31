@@ -2482,8 +2482,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Odpri podagentovo sejo",
       "subagent": "Podagent",
-      "task": "Naloga",
-      "waitingForActivity": "Čakanje na aktivnost"
+      "task": "Naloga"
     },
     "childSessionSheet": {
       "couldNotLoad": "Seje podagenta ni bilo mogoče naložiti",

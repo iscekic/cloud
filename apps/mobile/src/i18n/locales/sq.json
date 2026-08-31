@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modeli: {{modelLabel}}",
       "openHint": "Hap seancën e nënagjentit",
       "subagent": "Nënagjent",
-      "task": "Detyrë",
-      "waitingForActivity": "Duke pritur për aktivitet"
+      "task": "Detyrë"
     },
     "childSessionSheet": {
       "couldNotLoad": "Seanca e nënagjentit nuk mund të ngarkohej",

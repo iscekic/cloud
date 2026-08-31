@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Maak subsessie oop",
       "subagent": "Subagent",
-      "task": "Taak",
-      "waitingForActivity": "Wag vir aktiwiteit"
+      "task": "Taak"
     },
     "childSessionSheet": {
       "couldNotLoad": "Kon nie subsessie laai nie",

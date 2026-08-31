@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Åpne underagentøkten",
       "subagent": "Underagent",
-      "task": "Oppgave",
-      "waitingForActivity": "Venter på aktivitet"
+      "task": "Oppgave"
     },
     "childSessionSheet": {
       "couldNotLoad": "Kunne ikke laste underagentøkten",

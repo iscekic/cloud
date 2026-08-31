@@ -2005,8 +2005,7 @@
       "modelAccessibility": "דגם: {{modelLabel}}",
       "openHint": "פתח הפעלת תת-סוכן",
       "subagent": "תת-סוכן",
-      "task": "משימה",
-      "waitingForActivity": "ממתין לפעילות"
+      "task": "משימה"
     },
     "childSessionSheet": {
       "couldNotLoad": "לא ניתן היה לטעון הפעלת תת-סוכן",

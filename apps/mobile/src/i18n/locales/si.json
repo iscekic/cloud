@@ -2450,8 +2450,7 @@
       "modelAccessibility": "මාදිලිය: {{modelLabel}}",
       "openHint": "උපඒජන්ත සැසිය විවෘත කරන්න",
       "subagent": "උපඒජන්තයා",
-      "task": "කාර්යය",
-      "waitingForActivity": "ක්‍රියාකාරකම එනතුරු බලා සිටී"
+      "task": "කාර්යය"
     },
     "childSessionSheet": {
       "couldNotLoad": "උපඒජන්ත සැසිය පූරණය කළ නොහැක",

@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Модел: {{modelLabel}}",
       "openHint": "Отворете сесия на субагент",
       "subagent": "Субагент",
-      "task": "Задача",
-      "waitingForActivity": "В очакване на активност"
+      "task": "Задача"
     },
     "childSessionSheet": {
       "couldNotLoad": "Неуспешно зареждане на сесията на субагента",

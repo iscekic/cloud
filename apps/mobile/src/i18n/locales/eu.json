@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modeloa: {{modelLabel}}",
       "openHint": "Ireki subagentearen saioa",
       "subagent": "Subagentea",
-      "task": "zeregina",
-      "waitingForActivity": "Jardueraren zain"
+      "task": "zeregina"
     },
     "childSessionSheet": {
       "couldNotLoad": "Ezin izan da subagentearen saioa kargatu",

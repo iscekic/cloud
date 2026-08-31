@@ -2014,8 +2014,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otwórz sesję podagenta",
       "subagent": "Podagent",
-      "task": "Zadanie",
-      "waitingForActivity": "Oczekiwanie na aktywność"
+      "task": "Zadanie"
     },
     "childSessionSheet": {
       "couldNotLoad": "Nie udało się załadować sesji podagenta",

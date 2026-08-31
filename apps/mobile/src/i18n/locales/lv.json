@@ -2466,8 +2466,7 @@
       "modelAccessibility": "Modelis: {{modelLabel}}",
       "openHint": "Atvērt apakšaģenta sesiju",
       "subagent": "Apakšaģents",
-      "task": "Uzdevums",
-      "waitingForActivity": "Gaida aktivitāti"
+      "task": "Uzdevums"
     },
     "childSessionSheet": {
       "couldNotLoad": "Neizdevās ielādēt apakšaģenta sesiju",

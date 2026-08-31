@@ -2014,8 +2014,7 @@
       "modelAccessibility": "Модель: {{modelLabel}}",
       "openHint": "Открыть сеанс субагента",
       "subagent": "Субагент",
-      "task": "Задача",
-      "waitingForActivity": "Ожидание активности"
+      "task": "Задача"
     },
     "childSessionSheet": {
       "couldNotLoad": "Не удалось загрузить сеанс субагента",

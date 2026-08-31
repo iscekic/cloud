@@ -2466,8 +2466,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Obre la sessió de subagent",
       "subagent": "Subagent",
-      "task": "Tasca",
-      "waitingForActivity": "Esperant activitat"
+      "task": "Tasca"
     },
     "childSessionSheet": {
       "couldNotLoad": "No s'ha pogut carregar la sessió de subagent",

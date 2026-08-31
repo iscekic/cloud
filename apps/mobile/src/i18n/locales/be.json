@@ -2482,8 +2482,7 @@
       "modelAccessibility": "Мадэль: {{modelLabel}}",
       "openHint": "Адкрыць сеанс падагента",
       "subagent": "Падагент",
-      "task": "Задача",
-      "waitingForActivity": "Чаканне дзеяння"
+      "task": "Задача"
     },
     "childSessionSheet": {
       "couldNotLoad": "Не ўдалося загрузіць сеанс падагента",

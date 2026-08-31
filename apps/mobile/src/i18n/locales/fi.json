@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Malli: {{modelLabel}}",
       "openHint": "Avaa alagentin istunto",
       "subagent": "Alagentti",
-      "task": "Tehtävä",
-      "waitingForActivity": "Odotetaan toimintaa"
+      "task": "Tehtävä"
     },
     "childSessionSheet": {
       "couldNotLoad": "Alagentin istuntoa ei voitu ladata",

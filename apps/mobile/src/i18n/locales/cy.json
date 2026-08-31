@@ -2514,8 +2514,7 @@
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Agor sesiwn is-asiant",
       "subagent": "Is-asiant",
-      "task": "Tasg",
-      "waitingForActivity": "Aros am weithgaredd"
+      "task": "Tasg"
     },
     "childSessionSheet": {
       "couldNotLoad": "Methwyd llwytho sesiwn is-asiant",

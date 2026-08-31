@@ -1996,8 +1996,7 @@
       "modelAccessibility": "モデル: {{modelLabel}}",
       "openHint": "サブエージェントセッションを開く",
       "subagent": "サブエージェント",
-      "task": "タスク",
-      "waitingForActivity": "アクティビティを待機中"
+      "task": "タスク"
     },
     "childSessionSheet": {
       "couldNotLoad": "サブエージェントセッションを読み込めませんでした",

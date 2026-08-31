@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ماڈل: {{modelLabel}}",
       "openHint": "ذیلی ایجنٹ سیشن کھولیں",
       "subagent": "ذیلی ایجنٹ",
-      "task": "کام",
-      "waitingForActivity": "سرگرمی کا انتظار"
+      "task": "کام"
     },
     "childSessionSheet": {
       "couldNotLoad": "ذیلی ایجنٹ سیشن لوڈ نہیں ہو سکا",

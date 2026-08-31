@@ -2450,8 +2450,7 @@
       "modelAccessibility": "โมเดล: {{modelLabel}}",
       "openHint": "เปิดเซสชันซับเอเจนต์",
       "subagent": "ซับเอเจนต์",
-      "task": "งาน",
-      "waitingForActivity": "กำลังรอกิจกรรม"
+      "task": "งาน"
     },
     "childSessionSheet": {
       "couldNotLoad": "โหลดเซสชันซับเอเจนต์ไม่สำเร็จ",

@@ -2450,8 +2450,7 @@
       "modelAccessibility": "મોડલ: {{modelLabel}}",
       "openHint": "સબએજન્ટ સત્ર ખોલો",
       "subagent": "સબએજન્ટ",
-      "task": "કાર્ય",
-      "waitingForActivity": "પ્રવૃત્તિની રાહ જોઈ રહ્યું છે"
+      "task": "કાર્ય"
     },
     "childSessionSheet": {
       "couldNotLoad": "સબએજન્ટ સત્ર લોડ કરી શકાયું નહીં",

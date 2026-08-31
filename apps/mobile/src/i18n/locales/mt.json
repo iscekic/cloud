@@ -2498,8 +2498,7 @@
       "modelAccessibility": "Mudell: {{modelLabel}}",
       "openHint": "Iftaħ is-sessjoni tas-subaġent",
       "subagent": "Subaġent",
-      "task": "Kompitu",
-      "waitingForActivity": "Qed nistennew attività"
+      "task": "Kompitu"
     },
     "childSessionSheet": {
       "couldNotLoad": "Ma setgħetx titgħabba s-sessjoni tas-subaġent",

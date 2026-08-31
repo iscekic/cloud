@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Alügynök munkamenet megnyitása",
       "subagent": "Alügynök",
-      "task": "Feladat",
-      "waitingForActivity": "Várakozás a tevékenységre"
+      "task": "Feladat"
     },
     "childSessionSheet": {
       "couldNotLoad": "Az alügynök munkamenet nem tölthető be",

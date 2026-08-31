@@ -2450,8 +2450,7 @@
       "modelAccessibility": "ሞዴል፡ {{modelLabel}}",
       "openHint": "የንዑስ-ወኪል ክፍለ-ጊዜ ይክፈቱ",
       "subagent": "ንዑስ-ወኪል",
-      "task": "ተግባር",
-      "waitingForActivity": "እንቅስቃሴን በመጠበቅ ላይ"
+      "task": "ተግባር"
     },
     "childSessionSheet": {
       "couldNotLoad": "የንዑስ-ወኪል ክፍለ-ጊዜ መጫን አልተሳካም",

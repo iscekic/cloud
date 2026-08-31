@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Tauira: {{modelLabel}}",
       "openHint": "Whakatuwhera wātū kaihoko-iti",
       "subagent": "Kaihoko-iti",
-      "task": "Mahi",
-      "waitingForActivity": "E tatari ana ki te mahi"
+      "task": "Mahi"
     },
     "childSessionSheet": {
       "couldNotLoad": "Kāore i taea te uta te wātū kaihoko-iti",

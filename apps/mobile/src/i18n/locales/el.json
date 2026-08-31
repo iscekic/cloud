@@ -2450,8 +2450,7 @@
       "modelAccessibility": "Μοντέλο: {{modelLabel}}",
       "openHint": "Άνοιγμα συνεδρίας υποπράκτορα",
       "subagent": "Υποπράκτορας",
-      "task": "Εργασία",
-      "waitingForActivity": "Αναμονή για δραστηριότητα"
+      "task": "Εργασία"
     },
     "childSessionSheet": {
       "couldNotLoad": "Δεν ήταν δυνατή η φόρτωση της συνεδρίας υποπράκτορα",

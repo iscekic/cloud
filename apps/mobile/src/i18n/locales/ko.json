@@ -1996,8 +1996,7 @@
       "modelAccessibility": "모델: {{modelLabel}}",
       "openHint": "하위 에이전트 세션 열기",
       "subagent": "하위 에이전트",
-      "task": "작업",
-      "waitingForActivity": "활동 대기 중"
+      "task": "작업"
     },
     "childSessionSheet": {
       "couldNotLoad": "하위 에이전트 세션을 불러올 수 없습니다",

@@ -1996,8 +1996,7 @@
       "modelAccessibility": "Mô hình: {{modelLabel}}",
       "openHint": "Mở phiên tác nhân phụ",
       "subagent": "Tác nhân phụ",
-      "task": "Tác vụ",
-      "waitingForActivity": "Đang chờ hoạt động"
+      "task": "Tác vụ"
     },
     "childSessionSheet": {
       "couldNotLoad": "Không thể tải phiên tác nhân phụ",
