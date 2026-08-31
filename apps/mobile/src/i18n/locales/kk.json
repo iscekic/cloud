@@ -320,6 +320,30 @@
         "merge": "Осы филиалдағы барлық commit-терді біріктіру commit-імен базалық филиалға біріктіріңіз.",
         "squash": "Осы филиалдағы барлық commit-терді базалық филиалдағы бір commit-ке біріктіріңіз.",
         "rebase": "Осы филиалдағы барлық commit-терді біріктіру commit-інсіз базалық филиалға қайта ойнатыңыз."
+      },
+      "requirements": {
+        "title": "Біріктіру талаптары",
+        "reviews": "Рецензиялар",
+        "approvals": "{{required}} мақұлдаудың {{satisfied}}",
+        "required": "қажет",
+        "notRequired": "Міндетті емес",
+        "passed": "Өтті",
+        "failed": "Сәтсіз аяқталды",
+        "pending": "Күтілуде",
+        "noRunYet": "Әзірге іске қосу жоқ",
+        "notMet": "Орындалмады",
+        "unavailable": "Біріктіру талаптары қолжетімсіз",
+        "noProtectionRules": "Тармақты қорғау ережелері жоқ",
+        "queueTitle": "Біріктіру кезегі",
+        "inQueue": "{{position}} кезекте",
+        "positionUnknown": "Орны белгісіз",
+        "queueState": {
+          "QUEUED": "Кезекте",
+          "AWAITING_CHECKS": "Тексерулерді күтуде",
+          "MERGEABLE": "Біріктіруге болады",
+          "UNMERGEABLE": "Біріктіруге болмайды",
+          "LOCKED": "Құлыпталған"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Растау мүмкін болмады — қайталамас бұрын PR-ті тексеріңіз.",
       "persistenceFailed": "Бұл әрекетті тіркей алмадық. Кейінірек қайталап көріңіз.",
       "forbidden": "Тыйым салынған"
+    },
+    "context": {
+      "title": "Контекст",
+      "labels": "Белгілер",
+      "assignees": "Тағайындалғандар",
+      "reviewers": "Рецензенттер",
+      "team": "Команда",
+      "approved": "Мақұлданды",
+      "changesRequested": "Өзгерістер сұралды",
+      "dismissed": "Болдырылды",
+      "commented": "Пікір қалдырылды",
+      "awaiting": "Күтуде",
+      "opened": "Ашылды",
+      "updated": "Жаңартылды",
+      "closed": "Жабық",
+      "merged": "Біріктірілді",
+      "mergedBy": "Біріктірген",
+      "linkedIssues": "Байланысты мәселелер",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Белгісіз автор"
     }
   },
   "notifications": {

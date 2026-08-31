@@ -320,6 +320,30 @@
         "merge": "Kombineeri kõik selle haru commit'id alusharu ühendamise commit'iga.",
         "squash": "Kombineeri kõik selle haru commit'id alusharu üheks commit'iks.",
         "rebase": "Kanna kõik selle haru commit'id alusharule ümber ilma ühendamise commit'ita."
+      },
+      "requirements": {
+        "title": "Ühendamise nõuded",
+        "reviews": "Ülevaated",
+        "approvals": "{{satisfied}} {{required}}-st kinnitusest",
+        "required": "nõutav",
+        "notRequired": "Pole nõutav",
+        "passed": "Läbitud",
+        "failed": "Ebaõnnestus",
+        "pending": "Ootel",
+        "noRunYet": "Töötlust pole veel olnud",
+        "notMet": "Ei ole täidetud",
+        "unavailable": "Ühendamise nõuded pole saadaval",
+        "noProtectionRules": "Haru kaitse reegleid pole",
+        "queueTitle": "Ühendamise järjekord",
+        "inQueue": "{{position}} järjekorras",
+        "positionUnknown": "Asukoht teadmata",
+        "queueState": {
+          "QUEUED": "Järjekorras",
+          "AWAITING_CHECKS": "Ootab kontrolle",
+          "MERGEABLE": "Ühendatav",
+          "UNMERGEABLE": "Mitteühendatav",
+          "LOCKED": "Lukustatud"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Ei õnnestunud kinnitada — kontrolli PR-i enne uuesti proovimist.",
       "persistenceFailed": "Me ei saanud seda toimingut salvestada. Proovi hiljem uuesti.",
       "forbidden": "Keelatud"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Sildid",
+      "assignees": "Määratud",
+      "reviewers": "Ülevaatajad",
+      "team": "Meeskond",
+      "approved": "Kinnitatud",
+      "changesRequested": "Muudatusi on palutud",
+      "dismissed": "Kõrvale jäetud",
+      "commented": "Kommenteeritud",
+      "awaiting": "Ootab",
+      "opened": "Avatud",
+      "updated": "Uuendatud",
+      "closed": "Suletud",
+      "merged": "Ühendatud",
+      "mergedBy": "Ühendanud",
+      "linkedIssues": "Seotud probleemid",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Tundmatu autor"
     }
   },
   "notifications": {

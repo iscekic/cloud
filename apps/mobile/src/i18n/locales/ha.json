@@ -320,6 +320,30 @@
         "merge": "Haɗa duk commits daga wannan reshe cikin reshen tushe tare da commit ɗin haɗawa.",
         "squash": "Haɗa duk commits daga wannan reshe cikin commit guda ɗaya akan reshen tushe.",
         "rebase": "Sake kunna duk commits daga wannan reshe akan reshen tushe ba tare da commit ɗin haɗawa ba."
+      },
+      "requirements": {
+        "title": "Bukatun hadawa",
+        "reviews": "Bitoci",
+        "approvals": "{{satisfied}} daga {{required}} amincewa",
+        "required": "ana buƙata",
+        "notRequired": "Ba a buƙata ba",
+        "passed": "Ya wuce",
+        "failed": "Ya kasa",
+        "pending": "Yana jira",
+        "noRunYet": "Babu gudu har yanzu",
+        "notMet": "Ba a cimma ba",
+        "unavailable": "Bukatun hadawa ba su samuwa",
+        "noProtectionRules": "Babu dokokin kare reshe",
+        "queueTitle": "Layin hadawa",
+        "inQueue": "{{position}} a layi",
+        "positionUnknown": "Matsayi ba a sani ba",
+        "queueState": {
+          "QUEUED": "A jera",
+          "AWAITING_CHECKS": "Ana jiran dubawa",
+          "MERGEABLE": "Ana iya hadawa",
+          "UNMERGEABLE": "Ba za a iya hadawa ba",
+          "LOCKED": "A kulle"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Ba a iya tabbatarwa ba — duba PR kafin ka sake gwadawa.",
       "persistenceFailed": "Ba mu iya rubuta wannan aikin ba. Da fatan za ka sake gwadawa daga baya.",
       "forbidden": "An hana"
+    },
+    "context": {
+      "title": "Mahallin",
+      "labels": "Lakabi",
+      "assignees": "Wadanda aka sanya",
+      "reviewers": "Masu bita",
+      "team": "Ƙungiya",
+      "approved": "An amince",
+      "changesRequested": "An nemi canje-canje",
+      "dismissed": "An watsar",
+      "commented": "An yi sharhi",
+      "awaiting": "Ana jira",
+      "opened": "An buɗe",
+      "updated": "An sabunta",
+      "closed": "An rufe",
+      "merged": "An haɗa",
+      "mergedBy": "An haɗa ta",
+      "linkedIssues": "Batutuwan da ke da alaƙa",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Marubucin da ba a sani ba"
     }
   },
   "notifications": {

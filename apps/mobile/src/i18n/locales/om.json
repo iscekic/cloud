@@ -320,6 +320,30 @@
         "merge": "Commitoota hunda branch kanaa commit merge wajjin base branch keessatti walitti maki.",
         "squash": "Commitoota hunda branch kanaa base branch irratti commit tokko keessatti walitti maki.",
         "rebase": "Commitoota hunda branch kanaa base branch irratti commit merge malee deebi'ii maxxansi."
+      },
+      "requirements": {
+        "title": "Ulaagaa ka dabarsii",
+        "reviews": "Ilalloo",
+        "approvals": "{{satisfied}} kan {{required}} raggaasifamoota",
+        "required": "barbaachisaa",
+        "notRequired": "Hin barbaachisu",
+        "passed": "Milkaahe",
+        "failed": "Dadhabe",
+        "pending": "Eeggachaa",
+        "noRunYet": "Hanga ammattii raawwii hin jiru",
+        "notMet": "Hin guunfamne",
+        "unavailable": "Ulaagaan ka dabarsii hin argamu",
+        "noProtectionRules": "Seerota eegumsa damee hin jiru",
+        "queueTitle": "Tarree ka dabarsii",
+        "inQueue": "{{position}} tarree keessa",
+        "positionUnknown": "Iddoo hin beekamne",
+        "queueState": {
+          "QUEUED": "Eeggachuu keessa",
+          "AWAITING_CHECKS": "Qormaata eegaa jira",
+          "MERGEABLE": "Dabarsuun ni danda’ama",
+          "UNMERGEABLE": "Dabarsuun hin danda’amu",
+          "LOCKED": "Cufame"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Mirkaneessuu hin dandeenye — deebi'ii yaaluu dura PR ilaali.",
       "persistenceFailed": "Gocha kana galmeessuu hin dandeenye. Maaloo booda deebi'ii yaali.",
       "forbidden": "Hayyama hin qabdu"
+    },
+    "context": {
+      "title": "Context",
+      "labels": "Asxaawwota",
+      "assignees": "Ramaddamtoota",
+      "reviewers": "Xinxaltoota",
+      "team": "Garee",
+      "approved": "Raggeeffame",
+      "changesRequested": "Jijjiirama gaafatame",
+      "dismissed": "Dhiifame",
+      "commented": "Yaada kenname",
+      "awaiting": "Eegaa jira",
+      "opened": "Baname",
+      "updated": "Haaromfame",
+      "closed": "Cufame",
+      "merged": "Maksame",
+      "mergedBy": "Kan dabarsame",
+      "linkedIssues": "Dhimma walitti hidhaman",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Barreessaan hin beekamne"
     }
   },
   "notifications": {

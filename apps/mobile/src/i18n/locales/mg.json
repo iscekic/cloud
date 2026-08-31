@@ -320,6 +320,30 @@
         "merge": "Ampiraiso ao amin'ny sampana base ny commit rehetra avy amin'ity sampana ity amin'ny alalan'ny commit hampirina.",
         "squash": "Ampiraiso ho commit tokana ao amin'ny sampana base ny commit rehetra avy amin'ity sampana ity.",
         "rebase": "Avereno amin'ny sampana base ny commit rehetra avy amin'ity sampana ity tsy misy commit hampirina."
+      },
+      "requirements": {
+        "title": "Fepetra fampitambarana",
+        "reviews": "Fandinihana",
+        "approvals": "{{satisfied}} amin’ny {{required}} fankatoavana",
+        "required": "ilaina",
+        "notRequired": "Tsy voatery",
+        "passed": "Tafita",
+        "failed": "Tsy nahomby",
+        "pending": "Miandry",
+        "noRunYet": "Mbola tsy nisy fampandehanana",
+        "notMet": "Tsy voatontosa",
+        "unavailable": "Tsy hita ny fepetra fampitambarana",
+        "noProtectionRules": "Tsy misy fitsipika fiarovana sampana",
+        "queueTitle": "Filaharana fampitambarana",
+        "inQueue": "{{position}} ao amin’ny filaharana",
+        "positionUnknown": "Toerana tsy fantatra",
+        "queueState": {
+          "QUEUED": "Voalahatra",
+          "AWAITING_CHECKS": "Miandry fanamarinana",
+          "MERGEABLE": "Azo ampitambatra",
+          "UNMERGEABLE": "Tsy azo ampitambatra",
+          "LOCKED": "Mihidy"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Tsy afaka nanamafy — jereo ny PR alohan'ny andramana indray.",
       "persistenceFailed": "Tsy vitanay ny nandrakitra ity hetsika ity. Andramo indray azafady any aoriana.",
       "forbidden": "Voarara"
+    },
+    "context": {
+      "title": "Contexte",
+      "labels": "Marika",
+      "assignees": "Voatendry",
+      "reviewers": "Mpanadihady",
+      "team": "Ekipa",
+      "approved": "Nankatoavina",
+      "changesRequested": "Nangatahana fanovana",
+      "dismissed": "Voala",
+      "commented": "Nisy fanehoan-kevitra",
+      "awaiting": "Miandry",
+      "opened": "Nosokafana",
+      "updated": "Nohavaozina",
+      "closed": "Mihidy",
+      "merged": "Nampirina",
+      "mergedBy": "Nampitambatra",
+      "linkedIssues": "Olana mifandray",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Mpanoratra tsy fantatra"
     }
   },
   "notifications": {

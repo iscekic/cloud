@@ -322,6 +322,30 @@
         "merge": "Combină toate commit-urile din această ramură în ramura de bază cu un commit de fuzionare.",
         "squash": "Combină toate commit-urile din această ramură într-un singur commit pe ramura de bază.",
         "rebase": "Reia toate commit-urile din această ramură pe ramura de bază fără un commit de fuzionare."
+      },
+      "requirements": {
+        "title": "Cerințe de fuzionare",
+        "reviews": "Revizii",
+        "approvals": "{{satisfied}} din {{required}} aprobări",
+        "required": "obligatoriu",
+        "notRequired": "Nu este obligatoriu",
+        "passed": "Trecut",
+        "failed": "Eșuat",
+        "pending": "În așteptare",
+        "noRunYet": "Nicio rulare încă",
+        "notMet": "Neîndeplinit",
+        "unavailable": "Cerințele de fuzionare sunt indisponibile",
+        "noProtectionRules": "Nicio regulă de protecție a ramurii",
+        "queueTitle": "Coadă de fuzionare",
+        "inQueue": "{{position}} în coadă",
+        "positionUnknown": "Poziție necunoscută",
+        "queueState": {
+          "QUEUED": "În coadă",
+          "AWAITING_CHECKS": "Se așteaptă verificările",
+          "MERGEABLE": "Fuzionabil",
+          "UNMERGEABLE": "Nefuzionabil",
+          "LOCKED": "Blocat"
+        }
       }
     },
     "discussion": {
@@ -615,6 +639,26 @@
       "ambiguous": "Nu s-a putut confirma — verifică PR-ul înainte de a reîncerca.",
       "persistenceFailed": "Nu am putut înregistra această acțiune. Încearcă din nou mai târziu.",
       "forbidden": "Interzis"
+    },
+    "context": {
+      "title": "Context",
+      "labels": "Etichete",
+      "assignees": "Desemnați",
+      "reviewers": "Recenzenți",
+      "team": "Echipă",
+      "approved": "Aprobat",
+      "changesRequested": "Au fost cerute modificări",
+      "dismissed": "Respinsă",
+      "commented": "Comentat",
+      "awaiting": "În așteptare",
+      "opened": "Deschis",
+      "updated": "Actualizat",
+      "closed": "Închis",
+      "merged": "Fuzionat",
+      "mergedBy": "Fuzionat de",
+      "linkedIssues": "Probleme legate",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Autor necunoscut"
     }
   },
   "notifications": {

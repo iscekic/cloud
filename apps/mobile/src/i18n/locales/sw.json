@@ -320,6 +320,30 @@
         "merge": "Unganisha commit zote kutoka tawi hili kwenye tawi la msingi kwa commit ya kuunganisha.",
         "squash": "Unganisha commit zote kutoka tawi hili kuwa commit moja kwenye tawi la msingi.",
         "rebase": "Rudia commit zote kutoka tawi hili kwenye tawi la msingi bila commit ya kuunganisha."
+      },
+      "requirements": {
+        "title": "Mahitaji ya kuunganisha",
+        "reviews": "Ukaguzi",
+        "approvals": "{{satisfied}} kati ya {{required}} idhini",
+        "required": "inahitajika",
+        "notRequired": "Haitakiwi",
+        "passed": "Imepita",
+        "failed": "Imeshindwa",
+        "pending": "Inasubiri",
+        "noRunYet": "Bado hakuna utekelezaji",
+        "notMet": "Haijatimizwa",
+        "unavailable": "Mahitaji ya kuunganisha hayapatikani",
+        "noProtectionRules": "Hakuna sheria za ulinzi wa tawi",
+        "queueTitle": "Foleni ya kuunganisha",
+        "inQueue": "{{position}} kwenye foleni",
+        "positionUnknown": "Nafasi haijulikani",
+        "queueState": {
+          "QUEUED": "Imepangwa",
+          "AWAITING_CHECKS": "Inasubiri ukaguzi",
+          "MERGEABLE": "Inaweza kuunganishwa",
+          "UNMERGEABLE": "Haiwezi kuunganishwa",
+          "LOCKED": "Imefungwa"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Haikuweza kuthibitisha — angalia PR kabla ya kujaribu tena.",
       "persistenceFailed": "Hatukuweza kurekodi kitendo hiki. Tafadhali jaribu tena baadaye.",
       "forbidden": "Imekatazwa"
+    },
+    "context": {
+      "title": "Muktadha",
+      "labels": "Lebo",
+      "assignees": "Waliokabidhiwa",
+      "reviewers": "Wakaguzi",
+      "team": "Timu",
+      "approved": "Imeidhinishwa",
+      "changesRequested": "Mabadiliko yameombwa",
+      "dismissed": "Imefutwa",
+      "commented": "Imetolewa maoni",
+      "awaiting": "Inasubiri",
+      "opened": "Imefunguliwa",
+      "updated": "Imesasishwa",
+      "closed": "Imefungwa",
+      "merged": "Imeunganishwa",
+      "mergedBy": "Imeunganishwa na",
+      "linkedIssues": "Masuala yaliyounganishwa",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Mwandishi asiyejulikana"
     }
   },
   "notifications": {

@@ -324,6 +324,30 @@
         "merge": "Sloučí všechny commity z této větve do základní větve pomocí slučovacího commitu.",
         "squash": "Sloučí všechny commity z této větve do jediného commitu na základní větvi.",
         "rebase": "Přehraje všechny commity z této větve na základní větev bez slučovacího commitu."
+      },
+      "requirements": {
+        "title": "Požadavky na sloučení",
+        "reviews": "Recenze",
+        "approvals": "{{satisfied}} z {{required}} schválení",
+        "required": "povinné",
+        "notRequired": "Není vyžadováno",
+        "passed": "Prošlo",
+        "failed": "Selhalo",
+        "pending": "Čeká",
+        "noRunYet": "Zatím žádný běh",
+        "notMet": "Nesplněno",
+        "unavailable": "Požadavky na sloučení nedostupné",
+        "noProtectionRules": "Žádná pravidla ochrany větve",
+        "queueTitle": "Fronta sloučení",
+        "inQueue": "{{position}} ve frontě",
+        "positionUnknown": "Neznámá pozice",
+        "queueState": {
+          "QUEUED": "Ve frontě",
+          "AWAITING_CHECKS": "Čeká na kontroly",
+          "MERGEABLE": "Lze sloučit",
+          "UNMERGEABLE": "Nelze sloučit",
+          "LOCKED": "Zamčeno"
+        }
       }
     },
     "discussion": {
@@ -622,6 +646,26 @@
       "ambiguous": "Nepodařilo se potvrdit — zkontrolujte PR a zkuste to znovu.",
       "persistenceFailed": "Nepodařilo se zaznamenat tuto akci. Zkuste to prosím později.",
       "forbidden": "Zakázáno"
+    },
+    "context": {
+      "title": "Kontext",
+      "labels": "Štítky",
+      "assignees": "Přiřazení",
+      "reviewers": "Recenzenti",
+      "team": "Tým",
+      "approved": "Schváleno",
+      "changesRequested": "Požadovány změny",
+      "dismissed": "Zavrženo",
+      "commented": "Okomentováno",
+      "awaiting": "Čeká",
+      "opened": "Otevřeno",
+      "updated": "Aktualizováno",
+      "closed": "Uzavřeno",
+      "merged": "Sloučeno",
+      "mergedBy": "Sloučil",
+      "linkedIssues": "Propojené problémy",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Neznámý autor"
     }
   },
   "notifications": {

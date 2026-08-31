@@ -320,6 +320,30 @@
         "merge": "Saml alle commits fra denne gren i basegrenen med en flette-commit.",
         "squash": "Saml alle commits fra denne gren i en enkelt commit på basegrenen.",
         "rebase": "Afspil alle commits fra denne gren oven på basegrenen uden en flette-commit."
+      },
+      "requirements": {
+        "title": "Krav til sammenlægning",
+        "reviews": "Anmeldelser",
+        "approvals": "{{satisfied}} af {{required}} godkendelser",
+        "required": "påkrævet",
+        "notRequired": "Ikke påkrævet",
+        "passed": "Bestået",
+        "failed": "Mislykkedes",
+        "pending": "Afventer",
+        "noRunYet": "Endnu intet kørsel",
+        "notMet": "Ikke opfyldt",
+        "unavailable": "Krav til sammenlægning er ikke tilgængelige",
+        "noProtectionRules": "Ingen regler for grenbeskyttelse",
+        "queueTitle": "Sammenlægningskø",
+        "inQueue": "{{position}} i køen",
+        "positionUnknown": "Position ukendt",
+        "queueState": {
+          "QUEUED": "I kø",
+          "AWAITING_CHECKS": "Afventer tjek",
+          "MERGEABLE": "Kan sammenlægges",
+          "UNMERGEABLE": "Kan ikke sammenlægges",
+          "LOCKED": "Låst"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Kunne ikke bekræftes — tjek PR'en, før du prøver igen.",
       "persistenceFailed": "Vi kunne ikke registrere denne handling. Prøv igen senere.",
       "forbidden": "Forbudt"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Etiketter",
+      "assignees": "Tildelte",
+      "reviewers": "Anmeldere",
+      "team": "Team",
+      "approved": "Godkendt",
+      "changesRequested": "Ændringer anmodet",
+      "dismissed": "Afvist",
+      "commented": "Kommenteret",
+      "awaiting": "Afventer",
+      "opened": "Åbnet",
+      "updated": "Opdateret",
+      "closed": "Lukket",
+      "merged": "Flettet",
+      "mergedBy": "Sammenlagt af",
+      "linkedIssues": "Tilknyttede problemer",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Ukendt forfatter"
     }
   },
   "notifications": {

@@ -322,6 +322,30 @@
         "merge": "Apvienojiet visus šī zara commits bāzes zarā ar apvienošanas commit.",
         "squash": "Apvienojiet visus šī zara commits vienā commit bāzes zarā.",
         "rebase": "Atkārtojiet visus šī zara commits bāzes zarā bez apvienošanas commit."
+      },
+      "requirements": {
+        "title": "Sapludināšanas prasības",
+        "reviews": "Pārskati",
+        "approvals": "{{satisfied}} no {{required}} apstiprinājumiem",
+        "required": "obligāts",
+        "notRequired": "Nav obligāts",
+        "passed": "Izpildīts",
+        "failed": "Neizdevās",
+        "pending": "Gaida",
+        "noRunYet": "Vēl nav palaišanas",
+        "notMet": "Nav izpildīts",
+        "unavailable": "Sapludināšanas prasības nav pieejamas",
+        "noProtectionRules": "Nav zaru aizsardzības noteikumu",
+        "queueTitle": "Sapludināšanas rinda",
+        "inQueue": "{{position}} rindā",
+        "positionUnknown": "Nezināma pozīcija",
+        "queueState": {
+          "QUEUED": "Rindā",
+          "AWAITING_CHECKS": "Gaida pārbaudes",
+          "MERGEABLE": "Sapludināms",
+          "UNMERGEABLE": "Nesapludināms",
+          "LOCKED": "Bloķēts"
+        }
       }
     },
     "discussion": {
@@ -615,6 +639,26 @@
       "ambiguous": "Neizdevās apstiprināt — pirms mēģināšanas vēlreiz pārbaudiet PR.",
       "persistenceFailed": "Mēs nevarējām reģistrēt šo darbību. Lūdzu, mēģini vēlreiz vēlāk.",
       "forbidden": "Aizliegts"
+    },
+    "context": {
+      "title": "Konteksts",
+      "labels": "Iezīmes",
+      "assignees": "Nozīmētie",
+      "reviewers": "Recenzenti",
+      "team": "Komanda",
+      "approved": "Apstiprināts",
+      "changesRequested": "Pieprasītas izmaiņas",
+      "dismissed": "Noraidīts",
+      "commented": "Komentēts",
+      "awaiting": "Gaida",
+      "opened": "Atvērts",
+      "updated": "Atjaunināts",
+      "closed": "Slēgts",
+      "merged": "Apvienots",
+      "mergedBy": "Sapludināja",
+      "linkedIssues": "Saistītās problēmas",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Nezināms autors"
     }
   },
   "notifications": {

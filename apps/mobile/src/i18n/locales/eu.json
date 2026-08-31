@@ -320,6 +320,30 @@
         "merge": "Konbinatu adar honen commit guztiak oinarrizko adarrean batze-commit batekin.",
         "squash": "Konbinatu adar honen commit guztiak commit bakarrean oinarrizko adarrean.",
         "rebase": "Erreproduzitu adar honen commit guztiak oinarrizko adarrean batze-commit gabe."
+      },
+      "requirements": {
+        "title": "Bateratze-eskakizunak",
+        "reviews": "Berrikuspenak",
+        "approvals": "{{required}}tik {{satisfied}} onarpen",
+        "required": "beharrezkoa",
+        "notRequired": "Ez da beharrezkoa",
+        "passed": "Gainditu da",
+        "failed": "Huts egin du",
+        "pending": "Zain",
+        "noRunYet": "Oraindik ez da exekuziorik",
+        "notMet": "Ez da bete",
+        "unavailable": "Bateratze-eskakizunak ez daude erabilgarri",
+        "noProtectionRules": "Ez dago adarra babesteko araurik",
+        "queueTitle": "Bateratze-ilara",
+        "inQueue": "{{position}} ilaran",
+        "positionUnknown": "Posizio ezezaguna",
+        "queueState": {
+          "QUEUED": "Ilaran",
+          "AWAITING_CHECKS": "Egiaztapenen zain",
+          "MERGEABLE": "Bateragarria",
+          "UNMERGEABLE": "Ez-bateragarria",
+          "LOCKED": "Blokeatuta"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Ezin izan da berretsi — egiaztatu PR-a berriro saiatu aurretik.",
       "persistenceFailed": "Ezin izan dugu ekintza hau erregistratu. Saiatu berriro geroago.",
       "forbidden": "Debekatuta"
+    },
+    "context": {
+      "title": "Testuingurua",
+      "labels": "Etiketak",
+      "assignees": "Esleitutakoak",
+      "reviewers": "Berrikusleak",
+      "team": "Taldea",
+      "approved": "Onartuta",
+      "changesRequested": "Aldaketak eskatuta",
+      "dismissed": "Baztertuta",
+      "commented": "Iruzkinduta",
+      "awaiting": "Zain",
+      "opened": "Irekita",
+      "updated": "Eguneratuta",
+      "closed": "Itxita",
+      "merged": "Batuta",
+      "mergedBy": "Bateratu duena",
+      "linkedIssues": "Lotutako arazoak",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Egile ezezaguna"
     }
   },
   "notifications": {

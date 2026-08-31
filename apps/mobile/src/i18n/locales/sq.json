@@ -320,6 +320,30 @@
         "merge": "Bashko të gjithë commit-et nga kjo degë në degën bazë me një commit shkrirjeje.",
         "squash": "Bashko të gjithë commit-et nga kjo degë në një commit të vetëm në degën bazë.",
         "rebase": "Riprodho të gjithë commit-et nga kjo degë në degën bazë pa një commit shkrirjeje."
+      },
+      "requirements": {
+        "title": "Kërkesat e bashkimit",
+        "reviews": "Rishikimet",
+        "approvals": "{{satisfied}} nga {{required}} miratime",
+        "required": "kërkohet",
+        "notRequired": "Nuk kërkohet",
+        "passed": "Kaluar",
+        "failed": "Dështoi",
+        "pending": "Në pritje",
+        "noRunYet": "Ende pa ekzekutim",
+        "notMet": "Nuk plotësohet",
+        "unavailable": "Kërkesat e bashkimit të padisponueshme",
+        "noProtectionRules": "Ska rregulla mbrojtjeje për degën",
+        "queueTitle": "Rradha e bashkimit",
+        "inQueue": "{{position}} në radhë",
+        "positionUnknown": "Pozicion i panjohur",
+        "queueState": {
+          "QUEUED": "Në radhë",
+          "AWAITING_CHECKS": "Në pritje të kontrolleve",
+          "MERGEABLE": "I bashkueshëm",
+          "UNMERGEABLE": "I pabashkueshëm",
+          "LOCKED": "I kyçur"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Nuk u konfirmua — kontrollo PR-në përpara se të provosh përsëri.",
       "persistenceFailed": "Nuk arritëm ta regjistronim këtë veprim. Provo përsëri më vonë.",
       "forbidden": "I ndaluar"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Etiketat",
+      "assignees": "Të caktuarit",
+      "reviewers": "Rishikuesit",
+      "team": "Ekipi",
+      "approved": "Miratuar",
+      "changesRequested": "Ndryshime të kërkuara",
+      "dismissed": "E hedhur poshtë",
+      "commented": "Komentuar",
+      "awaiting": "Në pritje",
+      "opened": "Hapur",
+      "updated": "I përditësuar",
+      "closed": "E mbyllur",
+      "merged": "E shkrirë",
+      "mergedBy": "Bashkuar nga",
+      "linkedIssues": "Çështje të lidhura",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Autor i panjohur"
     }
   },
   "notifications": {

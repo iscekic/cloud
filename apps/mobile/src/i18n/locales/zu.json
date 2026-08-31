@@ -320,6 +320,30 @@
         "merge": "Hlanganisa wonke ama-commit asuka kuleli gatsha egatsheni lesisekelo nge-commit yokuhlanganisa.",
         "squash": "Hlanganisa wonke ama-commit asuka kuleli gatsha abe i-commit eyodwa egatsheni lesisekelo.",
         "rebase": "Phinda udlale wonke ama-commit asuka kuleli gatsha egatsheni lesisekelo ngaphandle kwe-commit yokuhlanganisa."
+      },
+      "requirements": {
+        "title": "Izidingo zokuhlanganisa",
+        "reviews": "Ukubuyekezwa",
+        "approvals": "{{satisfied}} kwezingu-{{required}} zokugunyaza",
+        "required": "kuyadingeka",
+        "notRequired": "Akudingeki",
+        "passed": "Iphasisile",
+        "failed": "Kwehlulekile",
+        "pending": "Kulindile",
+        "noRunYet": "Akukabi nobekwenzekayo",
+        "notMet": "Akufinyelelwanga",
+        "unavailable": "Izidingo zokuhlanganisa azitholakali",
+        "noProtectionRules": "Ayikho imithetho yokuvikela igatsha",
+        "queueTitle": "Uluhlu lokuhlanganisa",
+        "inQueue": "{{position}} kulayini",
+        "positionUnknown": "Isikhundla asaziwa",
+        "queueState": {
+          "QUEUED": "Kumisiwe",
+          "AWAITING_CHECKS": "Ilinde ukuhlolwa",
+          "MERGEABLE": "Ingahlanganiswa",
+          "UNMERGEABLE": "Ayikwazi ukuhlanganiswa",
+          "LOCKED": "Ikhiyiwe"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Asikwazanga ukuqinisekisa — hlola i-PR ngaphambi kokuzama futhi.",
       "persistenceFailed": "Asikwazanga ukurekhoda lesi senzo. Sicela uzame futhi kamuva.",
       "forbidden": "Kunqatshelwe"
+    },
+    "context": {
+      "title": "Umongo",
+      "labels": "Amalebula",
+      "assignees": "Ababelwe",
+      "reviewers": "Ababuyekezi",
+      "team": "Ithimba",
+      "approved": "Igunyaziwe",
+      "changesRequested": "Kucelwe izinguquko",
+      "dismissed": "Ichithiwe",
+      "commented": "Kuphawuliwe",
+      "awaiting": "Ilindiwe",
+      "opened": "Ivuliwe",
+      "updated": "Kubuyekezwe",
+      "closed": "Kuvaliwe",
+      "merged": "Kuyahlanganisiwe",
+      "mergedBy": "Kuhlanganiswe ngu",
+      "linkedIssues": "Izinkinga ezixhunyiwe",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Umbhali ongaziwa"
     }
   },
   "notifications": {

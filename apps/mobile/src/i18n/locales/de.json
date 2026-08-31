@@ -2868,6 +2868,30 @@
         "merge": "Fasse alle Commits dieses Branchs mit einem Merge-Commit im Basis-Branch zusammen.",
         "squash": "Fasse alle Commits dieses Branchs zu einem einzigen Commit im Basis-Branch zusammen.",
         "rebase": "Übertrage alle Commits dieses Branchs ohne Merge-Commit auf den Basis-Branch."
+      },
+      "requirements": {
+        "title": "Merge-Anforderungen",
+        "reviews": "Reviews",
+        "approvals": "{{satisfied}} von {{required}} Freigaben",
+        "required": "erforderlich",
+        "notRequired": "Nicht erforderlich",
+        "passed": "Bestanden",
+        "failed": "Fehlgeschlagen",
+        "pending": "Ausstehend",
+        "noRunYet": "Noch kein Lauf",
+        "notMet": "Nicht erfüllt",
+        "unavailable": "Merge-Anforderungen nicht verfügbar",
+        "noProtectionRules": "Keine Branch-Schutzregeln",
+        "queueTitle": "Merge-Warteschlange",
+        "inQueue": "{{position}} in der Warteschlange",
+        "positionUnknown": "Position unbekannt",
+        "queueState": {
+          "QUEUED": "In Warteschlange",
+          "AWAITING_CHECKS": "Warten auf Prüfungen",
+          "MERGEABLE": "Zusammenführbar",
+          "UNMERGEABLE": "Nicht zusammenführbar",
+          "LOCKED": "Gesperrt"
+        }
       }
     },
     "noDescriptionProvided": "Keine Beschreibung vorhanden.",
@@ -2985,6 +3009,26 @@
       "ambiguous": "Konnte nicht bestätigt werden — prüfe den PR, bevor du es erneut versuchst.",
       "persistenceFailed": "Wir konnten diese Aktion nicht aufzeichnen. Bitte versuche es später erneut.",
       "forbidden": "Verboten"
+    },
+    "context": {
+      "title": "Kontext",
+      "labels": "Labels",
+      "assignees": "Zugewiesene",
+      "reviewers": "Reviewer",
+      "team": "Team",
+      "approved": "Genehmigt",
+      "changesRequested": "Änderungen angefordert",
+      "dismissed": "Verworfen",
+      "commented": "Kommentiert",
+      "awaiting": "Ausstehend",
+      "opened": "Geöffnet",
+      "updated": "Aktualisiert",
+      "closed": "Geschlossen",
+      "merged": "Zusammengeführt",
+      "mergedBy": "Zusammengeführt von",
+      "linkedIssues": "Verknüpfte Issues",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Unbekannter Autor"
     }
   },
   "organization": {

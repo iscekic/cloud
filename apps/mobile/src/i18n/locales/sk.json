@@ -324,6 +324,30 @@
         "merge": "Spojte všetky commity z tejto vetvy do základnej vetvy s commitom zlúčenia.",
         "squash": "Spojte všetky commity z tejto vetvy do jedného commitu v základnej vetve.",
         "rebase": "Prehrajte všetky commity z tejto vetvy do základnej vetvy bez commitu zlúčenia."
+      },
+      "requirements": {
+        "title": "Požiadavky na zlúčenie",
+        "reviews": "Kontroly",
+        "approvals": "{{satisfied}} z {{required}} schválení",
+        "required": "povinné",
+        "notRequired": "Nevyžaduje sa",
+        "passed": "Prešlo",
+        "failed": "Zlyhalo",
+        "pending": "Čaká sa",
+        "noRunYet": "Zatiaľ žiadny beh",
+        "notMet": "Nesplnené",
+        "unavailable": "Požiadavky na zlúčenie nie sú dostupné",
+        "noProtectionRules": "Žiadne pravidlá ochrany vetvy",
+        "queueTitle": "Front zlúčenia",
+        "inQueue": "{{position}} vo fronte",
+        "positionUnknown": "Neznáma pozícia",
+        "queueState": {
+          "QUEUED": "Vo fronte",
+          "AWAITING_CHECKS": "Čaká na kontroly",
+          "MERGEABLE": "Dá sa zlúčiť",
+          "UNMERGEABLE": "Nedá sa zlúčiť",
+          "LOCKED": "Zamknuté"
+        }
       }
     },
     "discussion": {
@@ -622,6 +646,26 @@
       "ambiguous": "Nepodarilo sa potvrdiť — skontrolujte PR pred opätovným pokusom.",
       "persistenceFailed": "Túto akciu sa nepodarilo zaznamenať. Skúste to neskôr.",
       "forbidden": "Zakázané"
+    },
+    "context": {
+      "title": "Kontext",
+      "labels": "Štítky",
+      "assignees": "Priradení",
+      "reviewers": "Recenzenti",
+      "team": "Tím",
+      "approved": "Schválené",
+      "changesRequested": "Požadované zmeny",
+      "dismissed": "Odmietnuté",
+      "commented": "Okomentované",
+      "awaiting": "Čaká",
+      "opened": "Otvorené",
+      "updated": "Aktualizované",
+      "closed": "Zatvorené",
+      "merged": "Zlúčené",
+      "mergedBy": "Zlúčené používateľom",
+      "linkedIssues": "Prepojené problémy",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Neznámy autor"
     }
   },
   "notifications": {

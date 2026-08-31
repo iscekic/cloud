@@ -320,6 +320,30 @@
         "merge": "ລວມ commits ທັງໝົດຈາກສາຂານີ້ເຂົ້າໃນສາຂາ base ດ້ວຍ commit ຂອງ merge.",
         "squash": "ລວມ commits ທັງໝົດຈາກສາຂານີ້ເຂົ້າເປັນ commit ດຽວໃນສາຂາ base.",
         "rebase": "ນຳໃຊ້ commits ທັງໝົດຈາກສາຂານີ້ໃສ່ສາຂາ base ໂດຍບໍ່ມີ commit ຂອງ merge."
+      },
+      "requirements": {
+        "title": "ຂໍ້ກຳນົດການລວມ",
+        "reviews": "ການກວດສອບ",
+        "approvals": "{{satisfied}} ໃນ {{required}} ການອະນຸມັດ",
+        "required": "ຕ້ອງການ",
+        "notRequired": "ບໍ່ຈຳເປັນຕ້ອງມີ",
+        "passed": "ຜ່ານ",
+        "failed": "ລົ້ມເຫຼວ",
+        "pending": "ລໍຖ້າ",
+        "noRunYet": "ຍັງບໍ່ມີການເຮັດວຽກ",
+        "notMet": "ບໍ່ບັນລຸ",
+        "unavailable": "ຂໍ້ກຳນົດການລວມບໍ່ສາມາດໃຊ້ໄດ້",
+        "noProtectionRules": "ບໍ່ມີກົດລະບຽບປົກປ້ອງສາຂາ",
+        "queueTitle": "ຄິວການລວມ",
+        "inQueue": "{{position}} ໃນຄິວ",
+        "positionUnknown": "ຕຳແໜ່ງບໍ່ຮູ້",
+        "queueState": {
+          "QUEUED": "ລໍຄິວ",
+          "AWAITING_CHECKS": "ລໍຖ້າການກວດສອບ",
+          "MERGEABLE": "ສາມາດລວມໄດ້",
+          "UNMERGEABLE": "ບໍ່ສາມາດລວມໄດ້",
+          "LOCKED": "ຖືກລັອກ"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "ບໍ່ສາມາດຢືນຢັນໄດ້ — ກວດເບິ່ງ PR ກ່ອນລອງໃໝ່.",
       "persistenceFailed": "ພວກເຮົາບໍ່ສາມາດບັນທຶກການກະທຳນີ້ໄດ້. ກະລຸນາລອງໃໝ່ພາຍຫຼັງ.",
       "forbidden": "ຖືກຫ້າມ"
+    },
+    "context": {
+      "title": "ບໍລິບົດ",
+      "labels": "ປ້າຍກຳກັບ",
+      "assignees": "ຜູ້ຖືກມອບໝາຍ",
+      "reviewers": "ຜູ້ກວດສອບ",
+      "team": "ທີມ",
+      "approved": "ໄດ້ອະນຸມັດ",
+      "changesRequested": "ໄດ້ຮ້ອງຂໍການປ່ຽນແປງ",
+      "dismissed": "ຖືກປິດ",
+      "commented": "ໄດ້ໃຫ້ຄຳເຫັນ",
+      "awaiting": "ກຳລັງລໍຖ້າ",
+      "opened": "ເປີດແລ້ວ",
+      "updated": "ອັບເດດ",
+      "closed": "ປິດ",
+      "merged": "Merge ແລ້ວ",
+      "mergedBy": "ລວມໂດຍ",
+      "linkedIssues": "ບັນຫາທີ່ເຊື່ອມໂຍງ",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "ຜູ້ຂຽນບໍ່ຮູ້ຈັກ"
     }
   },
   "notifications": {

@@ -320,6 +320,30 @@
         "merge": "Sameinaðu alla commits frá þessari grein inn í grunngreinina með sameiningarcommit.",
         "squash": "Sameinaðu alla commits frá þessari grein í einn commit á grunngreininni.",
         "rebase": "Spilaðu alla commits frá þessari grein inn á grunngreinina án sameiningarcommit."
+      },
+      "requirements": {
+        "title": "Kröfur um samruna",
+        "reviews": "Úttektir",
+        "approvals": "{{satisfied}} af {{required}} samþykktum",
+        "required": "áskilið",
+        "notRequired": "Ekki krafist",
+        "passed": "Stóðst",
+        "failed": "Mistókst",
+        "pending": "Í bið",
+        "noRunYet": "Engin keyrsla ennþá",
+        "notMet": "Ekki uppfyllt",
+        "unavailable": "Kröfur um samruna ekki tiltækar",
+        "noProtectionRules": "Engar reglur um greinavörn",
+        "queueTitle": "Samrunaröð",
+        "inQueue": "{{position}} í röð",
+        "positionUnknown": "Óþekkt staða",
+        "queueState": {
+          "QUEUED": "Í biðröð",
+          "AWAITING_CHECKS": "Bíður eftir athugunum",
+          "MERGEABLE": "Samrunanlegt",
+          "UNMERGEABLE": "Ekki samrunanlegt",
+          "LOCKED": "Læst"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Gat ekki staðfest — athugaðu PR áður en þú reynir aftur.",
       "persistenceFailed": "Við gátum ekki skráð þessa aðgerð. Reyndu aftur síðar.",
       "forbidden": "Bannað"
+    },
+    "context": {
+      "title": "Samhengi",
+      "labels": "Merki",
+      "assignees": "Úthlutaðir",
+      "reviewers": "Yfirlesendur",
+      "team": "Teymi",
+      "approved": "Samþykkt",
+      "changesRequested": "Óskað eftir breytingum",
+      "dismissed": "Vísað frá",
+      "commented": "Athugasemd skráð",
+      "awaiting": "Bíður",
+      "opened": "Opnað",
+      "updated": "Uppfært",
+      "closed": "Lokað",
+      "merged": "Sameinað",
+      "mergedBy": "Sameinað af",
+      "linkedIssues": "Tengd vandamál",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Óþekktur höfundur"
     }
   },
   "notifications": {

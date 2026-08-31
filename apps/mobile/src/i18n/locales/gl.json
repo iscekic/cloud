@@ -320,6 +320,30 @@
         "merge": "Combina todos os commits desta rama na rama base cun commit de fusión.",
         "squash": "Combina todos os commits desta rama nun único commit na rama base.",
         "rebase": "Reproduce todos os commits desta rama sobre a rama base sen un commit de fusión."
+      },
+      "requirements": {
+        "title": "Requisitos de fusión",
+        "reviews": "Revisións",
+        "approvals": "{{satisfied}} de {{required}} aprobacións",
+        "required": "obrigatorio",
+        "notRequired": "Non obrigatorio",
+        "passed": "Superado",
+        "failed": "Fallou",
+        "pending": "Pendente",
+        "noRunYet": "Aínda sen execución",
+        "notMet": "Non acadado",
+        "unavailable": "Requisitos de fusión non dispoñibles",
+        "noProtectionRules": "Sen regras de protección da rama",
+        "queueTitle": "Cola de fusión",
+        "inQueue": "{{position}} na cola",
+        "positionUnknown": "Posición descoñecida",
+        "queueState": {
+          "QUEUED": "En cola",
+          "AWAITING_CHECKS": "Agardando as comprobacións",
+          "MERGEABLE": "Fusionable",
+          "UNMERGEABLE": "Non fusionable",
+          "LOCKED": "Bloqueado"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Non se puido confirmar — comproba o PR antes de volver intentalo.",
       "persistenceFailed": "Non puidemos rexistrar esta acción. Téntao de novo máis tarde.",
       "forbidden": "Prohibido"
+    },
+    "context": {
+      "title": "Contexto",
+      "labels": "Etiquetas",
+      "assignees": "Asignados",
+      "reviewers": "Revisores",
+      "team": "Equipo",
+      "approved": "Aprobado",
+      "changesRequested": "Cambios solicitados",
+      "dismissed": "Descartado",
+      "commented": "Comentado",
+      "awaiting": "Agardando",
+      "opened": "Aberto",
+      "updated": "Actualizado",
+      "closed": "Pechado",
+      "merged": "Fusionado",
+      "mergedBy": "Fusionado por",
+      "linkedIssues": "Problemas ligados",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Autor descoñecido"
     }
   },
   "notifications": {

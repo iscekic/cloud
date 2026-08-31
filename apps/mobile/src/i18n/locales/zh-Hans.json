@@ -2868,6 +2868,30 @@
         "merge": "使用合并提交将此分支的所有提交合并到基础分支。",
         "squash": "将此分支的所有提交合并为基础分支上的单个提交。",
         "rebase": "不创建合并提交，将此分支的所有提交重放到基础分支上。"
+      },
+      "requirements": {
+        "title": "合并要求",
+        "reviews": "审查",
+        "approvals": "{{required}} 项批准中的 {{satisfied}} 项",
+        "required": "必填",
+        "notRequired": "不要求",
+        "passed": "已通过",
+        "failed": "失败",
+        "pending": "待处理",
+        "noRunYet": "尚未运行",
+        "notMet": "未满足",
+        "unavailable": "合并要求不可用",
+        "noProtectionRules": "无分支保护规则",
+        "queueTitle": "合并队列",
+        "inQueue": "队列中第 {{position}} 位",
+        "positionUnknown": "位置未知",
+        "queueState": {
+          "QUEUED": "已排队",
+          "AWAITING_CHECKS": "等待检查",
+          "MERGEABLE": "可合并",
+          "UNMERGEABLE": "不可合并",
+          "LOCKED": "已锁定"
+        }
       }
     },
     "noDescriptionProvided": "未提供描述。",
@@ -2985,6 +3009,26 @@
       "ambiguous": "无法确认 — 请先检查 PR 再重试。",
       "persistenceFailed": "我们无法记录此操作。请稍后重试。",
       "forbidden": "禁止"
+    },
+    "context": {
+      "title": "上下文",
+      "labels": "标签",
+      "assignees": "负责人",
+      "reviewers": "审核者",
+      "team": "团队",
+      "approved": "已批准",
+      "changesRequested": "要求更改",
+      "dismissed": "已忽略",
+      "commented": "已评论",
+      "awaiting": "等待中",
+      "opened": "已开启",
+      "updated": "已更新",
+      "closed": "已关闭",
+      "merged": "已合并",
+      "mergedBy": "合并者",
+      "linkedIssues": "关联议题",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "未知作者"
     }
   },
   "organization": {

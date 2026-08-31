@@ -320,6 +320,30 @@
         "merge": "Συνδυάστε όλα τα commits από αυτόν τον κλάδο στον βασικό κλάδο με ένα commit συγχώνευσης.",
         "squash": "Συνδυάστε όλα τα commits από αυτόν τον κλάδο σε ένα μόνο commit στον βασικό κλάδο.",
         "rebase": "Αναπαραγάγετε όλα τα commits από αυτόν τον κλάδο στον βασικό κλάδο χωρίς commit συγχώνευσης."
+      },
+      "requirements": {
+        "title": "Απαιτήσεις συγχώνευσης",
+        "reviews": "Αναθεωρήσεις",
+        "approvals": "{{satisfied}} από {{required}} εγκρίσεις",
+        "required": "απαιτείται",
+        "notRequired": "Δεν απαιτείται",
+        "passed": "Πέρασε",
+        "failed": "Απέτυχε",
+        "pending": "Σε εκκρεμότητα",
+        "noRunYet": "Καμία εκτέλεση ακόμα",
+        "notMet": "Δεν πληρείται",
+        "unavailable": "Οι απαιτήσεις συγχώνευσης δεν είναι διαθέσιμες",
+        "noProtectionRules": "Δεν υπάρχουν κανόνες προστασίας κλάδου",
+        "queueTitle": "Ουρά συγχώνευσης",
+        "inQueue": "{{position}} στην ουρά",
+        "positionUnknown": "Άγνωστη θέση",
+        "queueState": {
+          "QUEUED": "Σε αναμονή",
+          "AWAITING_CHECKS": "Αναμονή ελέγχων",
+          "MERGEABLE": "Συγχωνεύσιμο",
+          "UNMERGEABLE": "Μη συγχωνεύσιμο",
+          "LOCKED": "Κλειδωμένο"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Δεν ήταν δυνατή η επιβεβαίωση — ελέγξτε το PR πριν δοκιμάσετε ξανά.",
       "persistenceFailed": "Δεν ήταν δυνατή η καταγραφή αυτής της ενέργειας. Δοκιμάστε ξανά αργότερα.",
       "forbidden": "Απαγορεύεται"
+    },
+    "context": {
+      "title": "Πλαίσιο",
+      "labels": "Ετικέτες",
+      "assignees": "Ανατεθειμένοι",
+      "reviewers": "Ελεγκτές",
+      "team": "Ομάδα",
+      "approved": "Εγκρίθηκε",
+      "changesRequested": "Ζητήθηκαν αλλαγές",
+      "dismissed": "Απορρίφθηκε",
+      "commented": "Σχολιάστηκε",
+      "awaiting": "Σε αναμονή",
+      "opened": "Ανοίχτηκε",
+      "updated": "Ενημερώθηκε",
+      "closed": "Κλειστό",
+      "merged": "Συγχωνεύτηκε",
+      "mergedBy": "Συγχωνεύτηκε από",
+      "linkedIssues": "Συνδεδεμένα ζητήματα",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Άγνωστος συγγραφέας"
     }
   },
   "notifications": {

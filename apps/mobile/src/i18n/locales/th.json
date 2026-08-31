@@ -320,6 +320,30 @@
         "merge": "รวม commit ทั้งหมดจากสาขานี้เข้าสู่สาขา base ด้วย merge commit",
         "squash": "รวม commit ทั้งหมดจากสาขานี้เป็น commit เดียวบนสาขา base",
         "rebase": "เล่นซ้ำ commit ทั้งหมดจากสาขานี้บนสาขา base โดยไม่มี merge commit"
+      },
+      "requirements": {
+        "title": "ข้อกำหนดการผสาน",
+        "reviews": "รีวิว",
+        "approvals": "{{satisfied}} จาก {{required}} การอนุมัติ",
+        "required": "จำเป็น",
+        "notRequired": "ไม่จำเป็นต้องมี",
+        "passed": "ผ่าน",
+        "failed": "ล้มเหลว",
+        "pending": "รอดำเนินการ",
+        "noRunYet": "ยังไม่มีการรัน",
+        "notMet": "ยังไม่บรรลุ",
+        "unavailable": "ข้อกำหนดการผสานไม่พร้อมใช้งาน",
+        "noProtectionRules": "ไม่มีกฎป้องกันสาขา",
+        "queueTitle": "คิวผสาน",
+        "inQueue": "{{position}} ในคิว",
+        "positionUnknown": "ไม่ทราบตำแหน่ง",
+        "queueState": {
+          "QUEUED": "อยู่ในคิว",
+          "AWAITING_CHECKS": "รอการตรวจสอบ",
+          "MERGEABLE": "ผสานได้",
+          "UNMERGEABLE": "ผสานไม่ได้",
+          "LOCKED": "ถูกล็อก"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "ยืนยันไม่ได้ — โปรดตรวจสอบ PR ก่อนลองอีกครั้ง",
       "persistenceFailed": "เราไม่สามารถบันทึกการดำเนินการนี้ได้ โปรดลองอีกครั้งในภายหลัง",
       "forbidden": "ถูกห้าม"
+    },
+    "context": {
+      "title": "บริบท",
+      "labels": "ป้ายกำกับ",
+      "assignees": "ผู้รับผิดชอบ",
+      "reviewers": "ผู้ตรวจสอบ",
+      "team": "ทีม",
+      "approved": "อนุมัติแล้ว",
+      "changesRequested": "ขอการเปลี่ยนแปลง",
+      "dismissed": "ละเว้นแล้ว",
+      "commented": "แสดงความคิดเห็นแล้ว",
+      "awaiting": "กำลังรอ",
+      "opened": "เปิดแล้ว",
+      "updated": "อัปเดตแล้ว",
+      "closed": "ปิดแล้ว",
+      "merged": "รวมแล้ว",
+      "mergedBy": "ผสานโดย",
+      "linkedIssues": "ปัญหาเชื่อมโยง",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "ผู้เขียนที่ไม่รู้จัก"
     }
   },
   "notifications": {

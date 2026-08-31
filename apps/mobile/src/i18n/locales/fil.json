@@ -320,6 +320,30 @@
         "merge": "Pagsamahin ang lahat ng commit mula sa branch na ito papunta sa base branch na may merge commit.",
         "squash": "Pagsamahin ang lahat ng commit mula sa branch na ito sa isang commit sa base branch.",
         "rebase": "I-replay ang lahat ng commit mula sa branch na ito papunta sa base branch nang walang merge commit."
+      },
+      "requirements": {
+        "title": "Mga requirement sa pag-merge",
+        "reviews": "Mga Review",
+        "approvals": "{{satisfied}} sa {{required}} na pag-apruba",
+        "required": "kinakailangan",
+        "notRequired": "Hindi kinakailangan",
+        "passed": "Pumasa",
+        "failed": "Nabigo",
+        "pending": "Nakabinbin",
+        "noRunYet": "Wala pang run",
+        "notMet": "Hindi naabot",
+        "unavailable": "Hindi available ang merge requirements",
+        "noProtectionRules": "Walang branch protection rules",
+        "queueTitle": "Merge queue",
+        "inQueue": "{{position}} sa queue",
+        "positionUnknown": "Hindi alam ang posisyon",
+        "queueState": {
+          "QUEUED": "Naka-queue",
+          "AWAITING_CHECKS": "Naghihintay ng checks",
+          "MERGEABLE": "Pwedeng i-merge",
+          "UNMERGEABLE": "Hindi pwedeng i-merge",
+          "LOCKED": "Naka-lock"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Hindi makumpirma — suriin ang PR bago subukan muli.",
       "persistenceFailed": "Hindi namin maitala ang aksyong ito. Pakisubukan muli mamaya.",
       "forbidden": "Bawal"
+    },
+    "context": {
+      "title": "Konteksto",
+      "labels": "Mga label",
+      "assignees": "Mga assignee",
+      "reviewers": "Mga reviewer",
+      "team": "Team",
+      "approved": "Na-approve",
+      "changesRequested": "Hiniling ang pagbabago",
+      "dismissed": "Na-dismiss",
+      "commented": "Nag-comment",
+      "awaiting": "Naghihintay",
+      "opened": "Binuksan",
+      "updated": "Na-update",
+      "closed": "Sarado",
+      "merged": "Na-merge",
+      "mergedBy": "Ni-merge ni",
+      "linkedIssues": "Mga naka-link na issue",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Hindi kilalang author"
     }
   },
   "notifications": {

@@ -328,6 +328,30 @@
         "merge": "Cyfunwch holl ymrwymiadau'r gangen hon i'r gangen sylfaen gydag ymrwymiad cyfuno.",
         "squash": "Cyfunwch holl ymrwymiadau'r gangen hon yn un ymrwymiad ar y gangen sylfaen.",
         "rebase": "Ailchwaraewch holl ymrwymiadau'r gangen hon ar y gangen sylfaen heb ymrwymiad cyfuno."
+      },
+      "requirements": {
+        "title": "Gofynion cyfuno",
+        "reviews": "Adolygiadau",
+        "approvals": "{{satisfied}} o {{required}} cymeradwyaeth",
+        "required": "gofynnol",
+        "notRequired": "Ddim yn ofynnol",
+        "passed": "Wedi pasio",
+        "failed": "Wedi methu",
+        "pending": "Ar y gweill",
+        "noRunYet": "Dim rhediad eto",
+        "notMet": "Heb ei fodloni",
+        "unavailable": "Gofynion cyfuno ddim ar gael",
+        "noProtectionRules": "Dim rheolau diogelu cangen",
+        "queueTitle": "Ciw cyfuno",
+        "inQueue": "{{position}} yn y ciw",
+        "positionUnknown": "Safle anhysbys",
+        "queueState": {
+          "QUEUED": "Mewn ciw",
+          "AWAITING_CHECKS": "Yn disgwyl am wiriadau",
+          "MERGEABLE": "Cyfuniadwy",
+          "UNMERGEABLE": "Anghyfuniadwy",
+          "LOCKED": "Wedi’i gloi"
+        }
       }
     },
     "discussion": {
@@ -636,6 +660,26 @@
       "ambiguous": "Ni ellid cadarnhau — gwiriwch y PR cyn rhoi cynnig arall arni.",
       "persistenceFailed": "Ni ellid cofnodi'r weithred hon. Rhowch gynnig arall arni yn nes ymlaen.",
       "forbidden": "Gwaharddedig"
+    },
+    "context": {
+      "title": "Cyd-destun",
+      "labels": "Labeli",
+      "assignees": "Aseinwyr",
+      "reviewers": "Adolygwyr",
+      "team": "Tîm",
+      "approved": "Cymeradwywyd",
+      "changesRequested": "Gofynnwyd am newidiadau",
+      "dismissed": "Wedi'i ddiystyru",
+      "commented": "Wedi rhoi sylw",
+      "awaiting": "Yn disgwyl",
+      "opened": "Wedi’i agor",
+      "updated": "Diweddarwyd",
+      "closed": "Ar gau",
+      "merged": "Wedi'i gyfuno",
+      "mergedBy": "Cyfunwyd gan",
+      "linkedIssues": "Problemau cysylltiedig",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Awdur anhysbys"
     }
   },
   "notifications": {

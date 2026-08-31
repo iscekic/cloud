@@ -2902,6 +2902,30 @@
         "merge": "Połącz wszystkie commity z tej gałęzi w gałęzi bazowej za pomocą commita scalającego.",
         "squash": "Połącz wszystkie commity z tej gałęzi w pojedynczy commit w gałęzi bazowej.",
         "rebase": "Odtwórz wszystkie commity z tej gałęzi na gałęzi bazowej bez commita scalającego."
+      },
+      "requirements": {
+        "title": "Wymagania scalania",
+        "reviews": "Recenzje",
+        "approvals": "{{satisfied}} z {{required}} zatwierdzeń",
+        "required": "wymagane",
+        "notRequired": "Niewymagane",
+        "passed": "Zaliczone",
+        "failed": "Nie powiodło się",
+        "pending": "Oczekuje",
+        "noRunYet": "Jeszcze bez uruchomienia",
+        "notMet": "Niespełnione",
+        "unavailable": "Wymagania scalania niedostępne",
+        "noProtectionRules": "Brak reguł ochrony gałęzi",
+        "queueTitle": "Kolejka scalania",
+        "inQueue": "{{position}} w kolejce",
+        "positionUnknown": "Nieznana pozycja",
+        "queueState": {
+          "QUEUED": "W kolejce",
+          "AWAITING_CHECKS": "Oczekiwanie na kontrole",
+          "MERGEABLE": "Można scalić",
+          "UNMERGEABLE": "Nie można scalić",
+          "LOCKED": "Zablokowane"
+        }
       }
     },
     "noDescriptionProvided": "Nie podano opisu.",
@@ -3025,6 +3049,26 @@
       "ambiguous": "Nie udało się potwierdzić — sprawdź PR przed ponowną próbą.",
       "persistenceFailed": "Nie mogliśmy zapisać tej akcji. Spróbuj ponownie później.",
       "forbidden": "Zabronione"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Etykiety",
+      "assignees": "Przypisani",
+      "reviewers": "Recenzenci",
+      "team": "Zespół",
+      "approved": "Zatwierdzone",
+      "changesRequested": "Zażądano zmian",
+      "dismissed": "Odrzucone",
+      "commented": "Skomentowane",
+      "awaiting": "Oczekuje",
+      "opened": "Otwarte",
+      "updated": "Zaktualizowano",
+      "closed": "Zamknięty",
+      "merged": "Scalony",
+      "mergedBy": "Scalone przez",
+      "linkedIssues": "Powiązane zgłoszenia",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Nieznany autor"
     }
   },
   "organization": {

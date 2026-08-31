@@ -2885,6 +2885,30 @@
         "merge": "Combine todos os commits deste branch no branch base com um commit de merge.",
         "squash": "Combine todos os commits deste branch em um único commit no branch base.",
         "rebase": "Reproduza todos os commits deste branch no branch base sem um commit de merge."
+      },
+      "requirements": {
+        "title": "Requisitos de merge",
+        "reviews": "Revisões",
+        "approvals": "{{satisfied}} de {{required}} aprovações",
+        "required": "obrigatório",
+        "notRequired": "Não obrigatório",
+        "passed": "Aprovado",
+        "failed": "Falhou",
+        "pending": "Pendente",
+        "noRunYet": "Ainda sem execução",
+        "notMet": "Não cumprido",
+        "unavailable": "Requisitos de merge indisponíveis",
+        "noProtectionRules": "Sem regras de proteção de branch",
+        "queueTitle": "Fila de merge",
+        "inQueue": "{{position}} na fila",
+        "positionUnknown": "Posição desconhecida",
+        "queueState": {
+          "QUEUED": "Na fila",
+          "AWAITING_CHECKS": "Aguardando verificações",
+          "MERGEABLE": "Mesclável",
+          "UNMERGEABLE": "Não mesclável",
+          "LOCKED": "Bloqueado"
+        }
       }
     },
     "noDescriptionProvided": "Nenhuma descrição fornecida.",
@@ -3005,6 +3029,26 @@
       "ambiguous": "Não foi possível confirmar — verifique o PR antes de tentar novamente.",
       "persistenceFailed": "Não foi possível registrar esta ação. Tente novamente mais tarde.",
       "forbidden": "Proibido"
+    },
+    "context": {
+      "title": "Contexto",
+      "labels": "Etiquetas",
+      "assignees": "Responsáveis",
+      "reviewers": "Revisores",
+      "team": "Equipe",
+      "approved": "Aprovado",
+      "changesRequested": "Mudanças solicitadas",
+      "dismissed": "Dispensado",
+      "commented": "Comentado",
+      "awaiting": "Aguardando",
+      "opened": "Aberto",
+      "updated": "Atualizado",
+      "closed": "Fechado",
+      "merged": "Mesclado",
+      "mergedBy": "Mesclado por",
+      "linkedIssues": "Issues vinculadas",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Autor desconhecido"
     }
   },
   "organization": {

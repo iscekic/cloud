@@ -320,6 +320,30 @@
         "merge": "اس برانچ کی تمام کمیٹوں کو ایک مرج کمیٹ کے ساتھ بیس برانچ میں ملا دیتا ہے۔",
         "squash": "اس برانچ کی تمام کمیٹوں کو بیس برانچ پر ایک ہی کمیٹ میں ملا دیتا ہے۔",
         "rebase": "اس برانچ کی تمام کمیٹوں کو مرج کمیٹ کے بغیر بیس برانچ پر دوبارہ چلاتا ہے۔"
+      },
+      "requirements": {
+        "title": "انضمام کے تقاضے",
+        "reviews": "جائزے",
+        "approvals": "{{required}} میں سے {{satisfied}} منظوریاں",
+        "required": "مطلوبہ",
+        "notRequired": "لازمی نہیں",
+        "passed": "کامیاب",
+        "failed": "ناکام",
+        "pending": "زیر التوا",
+        "noRunYet": "ابھی کوئی رن نہیں",
+        "notMet": "پورا نہیں ہوا",
+        "unavailable": "انضمام کے تقاضے دستیاب نہیں",
+        "noProtectionRules": "برانچ کے تحفظ کے قواعد نہیں",
+        "queueTitle": "انضمام کی قطار",
+        "inQueue": "قطار میں {{position}}",
+        "positionUnknown": "مقام نامعلوم",
+        "queueState": {
+          "QUEUED": "قطار میں",
+          "AWAITING_CHECKS": "چیکس کا انتظار",
+          "MERGEABLE": "انضمام کے قابل",
+          "UNMERGEABLE": "انضمام کے قابل نہیں",
+          "LOCKED": "مقفل"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "تصدیق نہیں ہو سکی — دوبارہ کوشش کرنے سے پہلے PR چیک کریں۔",
       "persistenceFailed": "ہم اس کارروائی کو ریکارڈ نہیں کر سکے۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
       "forbidden": "ممنوع"
+    },
+    "context": {
+      "title": "سیاق",
+      "labels": "لیبل",
+      "assignees": "تفویض کردہ",
+      "reviewers": "جائزہ لینے والے",
+      "team": "ٹیم",
+      "approved": "منظور شدہ",
+      "changesRequested": "تبدیلیوں کی درخواست",
+      "dismissed": "مسترد کیا گیا",
+      "commented": "تبصرہ کیا گیا",
+      "awaiting": "زیر التوا",
+      "opened": "کھولا گیا",
+      "updated": "اپ ڈیٹ کیا گیا",
+      "closed": "بند",
+      "merged": "مرج شدہ",
+      "mergedBy": "انضمام شدہ بذریعہ",
+      "linkedIssues": "منسلک مسائل",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "نامعلوم مصنف"
     }
   },
   "notifications": {

@@ -320,6 +320,30 @@
         "merge": "Kombinera alla commits från den här grenen i basgrenen med en sammanslagningscommit.",
         "squash": "Kombinera alla commits från den här grenen till en enda commit på basgrenen.",
         "rebase": "Spela upp alla commits från den här grenen på basgrenen utan en sammanslagningscommit."
+      },
+      "requirements": {
+        "title": "Krav för sammanslagning",
+        "reviews": "Granskningar",
+        "approvals": "{{satisfied}} av {{required}} godkännanden",
+        "required": "obligatorisk",
+        "notRequired": "Krävs inte",
+        "passed": "Godkänd",
+        "failed": "Misslyckades",
+        "pending": "Väntande",
+        "noRunYet": "Ingen körning ännu",
+        "notMet": "Inte uppfyllt",
+        "unavailable": "Kraven för sammanslagning är inte tillgängliga",
+        "noProtectionRules": "Inga regler för grenskydd",
+        "queueTitle": "Sammanslagningskö",
+        "inQueue": "{{position}} i kön",
+        "positionUnknown": "Okänd position",
+        "queueState": {
+          "QUEUED": "I kö",
+          "AWAITING_CHECKS": "Väntar på kontroller",
+          "MERGEABLE": "Kan slås samman",
+          "UNMERGEABLE": "Kan inte slås samman",
+          "LOCKED": "Låst"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Kunde inte bekräfta — kontrollera PR:en innan du försöker igen.",
       "persistenceFailed": "Vi kunde inte registrera den här åtgärden. Försök igen senare.",
       "forbidden": "Förbjuden"
+    },
+    "context": {
+      "title": "Kontext",
+      "labels": "Etiketter",
+      "assignees": "Tilldelade",
+      "reviewers": "Granskare",
+      "team": "Team",
+      "approved": "Godkänd",
+      "changesRequested": "Ändringar begärda",
+      "dismissed": "Avskriven",
+      "commented": "Kommenterad",
+      "awaiting": "Väntande",
+      "opened": "Öppnad",
+      "updated": "Uppdaterad",
+      "closed": "Stängd",
+      "merged": "Sammanfogad",
+      "mergedBy": "Sammanslagen av",
+      "linkedIssues": "Länkade ärenden",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Okänd författare"
     }
   },
   "notifications": {

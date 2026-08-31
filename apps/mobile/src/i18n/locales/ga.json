@@ -326,6 +326,30 @@
         "merge": "Comhcheangail gach tiomantas ón mbrainse seo isteach sa bhunbrainse le tiomantas cumasc.",
         "squash": "Comhcheangail gach tiomantas ón mbrainse seo in aon tiomantas amháin ar an mbunbrainse.",
         "rebase": "Athsheinn gach tiomantas ón mbrainse seo ar an mbunbrainse gan tiomantas cumasc."
+      },
+      "requirements": {
+        "title": "Riachtanais chumaisc",
+        "reviews": "Athbhreithnithe",
+        "approvals": "{{satisfied}} de {{required}} fhormheas",
+        "required": "riachtanach",
+        "notRequired": "Ní gá",
+        "passed": "Ritheadh",
+        "failed": "Theip",
+        "pending": "Ar feitheamh",
+        "noRunYet": "Gan rith fós",
+        "notMet": "Níor comhlíonadh",
+        "unavailable": "Níl riachtanais chumaisc ar fáil",
+        "noProtectionRules": "Níl rialacha cosanta brainse ann",
+        "queueTitle": "Ciú cumaisc",
+        "inQueue": "{{position}} sa chiú",
+        "positionUnknown": "Suíomh anaithnid",
+        "queueState": {
+          "QUEUED": "Sa scuaine",
+          "AWAITING_CHECKS": "Ag fanacht le seiceálacha",
+          "MERGEABLE": "Inmhearga",
+          "UNMERGEABLE": "Neamh-inmhearga",
+          "LOCKED": "Faoi ghlas"
+        }
       }
     },
     "discussion": {
@@ -629,6 +653,26 @@
       "ambiguous": "Níorbh fhéidir deimhniú — seiceáil an PR sula ndéanann tú iarracht arís.",
       "persistenceFailed": "Níorbh fhéidir linn an gníomh seo a thaifeadadh. Bain triail as arís níos déanaí.",
       "forbidden": "Toirmiscthe"
+    },
+    "context": {
+      "title": "Comhthéacs",
+      "labels": "Lipéid",
+      "assignees": "Daoine sannta",
+      "reviewers": "Léirmheastóirí",
+      "team": "Foireann",
+      "approved": "Ceadaithe",
+      "changesRequested": "Iarradh athruithe",
+      "dismissed": "Díbithe",
+      "commented": "Trácht déanta",
+      "awaiting": "Ag fanacht",
+      "opened": "Oscailte",
+      "updated": "Nuashonraithe",
+      "closed": "Dúnta",
+      "merged": "Cumascaithe",
+      "mergedBy": "Cumascaithe ag",
+      "linkedIssues": "Saincheisteanna nasctha",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Údar anaithnid"
     }
   },
   "notifications": {

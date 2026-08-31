@@ -2868,6 +2868,30 @@
         "merge": "將此分支的所有提交與一個合併提交合併到基礎分支。",
         "squash": "將此分支的所有提交合併為基礎分支上的一個單一提交。",
         "rebase": "將此分支的所有提交重放到基礎分支上，而不建立合併提交。"
+      },
+      "requirements": {
+        "title": "合併要求",
+        "reviews": "審查",
+        "approvals": "{{required}} 項核准中的 {{satisfied}} 項",
+        "required": "必填",
+        "notRequired": "不需要",
+        "passed": "已通過",
+        "failed": "失敗",
+        "pending": "待處理",
+        "noRunYet": "尚未執行",
+        "notMet": "未滿足",
+        "unavailable": "合併要求無法使用",
+        "noProtectionRules": "沒有分支保護規則",
+        "queueTitle": "合併佇列",
+        "inQueue": "佇列中第 {{position}} 位",
+        "positionUnknown": "位置未知",
+        "queueState": {
+          "QUEUED": "已排入佇列",
+          "AWAITING_CHECKS": "等待檢查",
+          "MERGEABLE": "可合併",
+          "UNMERGEABLE": "不可合併",
+          "LOCKED": "已鎖定"
+        }
       }
     },
     "noDescriptionProvided": "未提供說明。",
@@ -2985,6 +3009,26 @@
       "ambiguous": "無法確認 — 請先檢查 PR 再重試。",
       "persistenceFailed": "我們無法記錄此操作。請稍後再試。",
       "forbidden": "禁止"
+    },
+    "context": {
+      "title": "內容",
+      "labels": "標籤",
+      "assignees": "負責人",
+      "reviewers": "審查者",
+      "team": "團隊",
+      "approved": "已核准",
+      "changesRequested": "要求變更",
+      "dismissed": "已忽略",
+      "commented": "已留言",
+      "awaiting": "等待中",
+      "opened": "已開啟",
+      "updated": "已更新",
+      "closed": "已關閉",
+      "merged": "已合併",
+      "mergedBy": "合併者",
+      "linkedIssues": "關聯的議題",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "未知作者"
     }
   },
   "organization": {

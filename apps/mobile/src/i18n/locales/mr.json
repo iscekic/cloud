@@ -320,6 +320,30 @@
         "merge": "या शाखेतील सर्व कमिट्स एका मर्ज कमिटसह बेस शाखेत एकत्र करा.",
         "squash": "या शाखेतील सर्व कमिट्स बेस शाखेवर एकाच कमिटमध्ये एकत्र करा.",
         "rebase": "मर्ज कमिटशिवाय या शाखेतील सर्व कमिट्स बेस शाखेवर पुन्हा लावा."
+      },
+      "requirements": {
+        "title": "मर्ज आवश्यकता",
+        "reviews": "पुनरावलोकने",
+        "approvals": "{{required}} पैकी {{satisfied}} मंजुरी",
+        "required": "आवश्यक",
+        "notRequired": "आवश्यक नाही",
+        "passed": "उत्तीर्ण",
+        "failed": "अयशस्वी",
+        "pending": "प्रलंबित",
+        "noRunYet": "अजून कोणतीही रन नाही",
+        "notMet": "पूर्ण झाले नाही",
+        "unavailable": "मर्ज आवश्यकता अनुपलब्ध",
+        "noProtectionRules": "शाखा संरक्षण नियम नाहीत",
+        "queueTitle": "मर्ज रांग",
+        "inQueue": "रांगेत {{position}}",
+        "positionUnknown": "स्थान अज्ञात",
+        "queueState": {
+          "QUEUED": "रांगेत",
+          "AWAITING_CHECKS": "तपासणीची प्रतीक्षा",
+          "MERGEABLE": "मर्ज करण्यायोग्य",
+          "UNMERGEABLE": "मर्ज न करता येणारे",
+          "LOCKED": "लॉक केलेले"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "पुष्टी करता आली नाही — पुन्हा प्रयत्न करण्यापूर्वी PR तपासा.",
       "persistenceFailed": "आम्ही ही क्रिया नोंदवू शकलो नाही. कृपया नंतर पुन्हा प्रयत्न करा.",
       "forbidden": "निषिद्ध"
+    },
+    "context": {
+      "title": "संदर्भ",
+      "labels": "लेबल्स",
+      "assignees": "असाइनी",
+      "reviewers": "पुनरावलोकनकर्ते",
+      "team": "टीम",
+      "approved": "मंजूर",
+      "changesRequested": "बदल विनंती केले",
+      "dismissed": "रद्द केलेले",
+      "commented": "टिप्पणी केली",
+      "awaiting": "प्रतीक्षेत",
+      "opened": "उघडले",
+      "updated": "अद्ययावत केले",
+      "closed": "बंद",
+      "merged": "मर्ज केले",
+      "mergedBy": "यांनी मर्ज केले",
+      "linkedIssues": "लिंक केलेल्या समस्या",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "अज्ञात लेखक"
     }
   },
   "notifications": {

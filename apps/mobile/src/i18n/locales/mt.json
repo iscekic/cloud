@@ -326,6 +326,30 @@
         "merge": "Għaqqad il-commits kollha minn din il-fergħa fil-fergħa bażi b'commit tal-merge.",
         "squash": "Għaqqad il-commits kollha minn din il-fergħa fi commit wieħed fuq il-fergħa bażi.",
         "rebase": "Irrepeti l-commits kollha minn din il-fergħa fuq il-fergħa bażi mingħajr commit tal-merge."
+      },
+      "requirements": {
+        "title": "Rekwiżiti tal-unifikazzjoni",
+        "reviews": "Reviżjonijiet",
+        "approvals": "{{satisfied}} minn {{required}} approvazzjonijiet",
+        "required": "meħtieġ",
+        "notRequired": "Mhux meħtieġ",
+        "passed": "Għadda",
+        "failed": "Falla",
+        "pending": "Pendenti",
+        "noRunYet": "Għadu m’hemm l-ebda eżekuzzjoni",
+        "notMet": "Mhux milħuqa",
+        "unavailable": "Ir-rekwiżiti tal-unifikazzjoni mhumiex disponibbli",
+        "noProtectionRules": "M’hemmx regoli ta’ protezzjoni tal-fergħa",
+        "queueTitle": "Kju tal-unifikazzjoni",
+        "inQueue": "{{position}} fil-kju",
+        "positionUnknown": "Pożizzjoni mhux magħrufa",
+        "queueState": {
+          "QUEUED": "Fil-kju",
+          "AWAITING_CHECKS": "Jistenna l-kontrolli",
+          "MERGEABLE": "Jista’ jingħaqad",
+          "UNMERGEABLE": "Ma jistax jingħaqad",
+          "LOCKED": "Imsakkar"
+        }
       }
     },
     "discussion": {
@@ -629,6 +653,26 @@
       "ambiguous": "Ma setgħetx tiġi kkonfermata — iċċekkja l-PR qabel terġa' tipprova.",
       "persistenceFailed": "Ma stajniex nirreġistraw din l-azzjoni. Jekk jogħġbok erġa' pprova aktar tard.",
       "forbidden": "Ipprojbit"
+    },
+    "context": {
+      "title": "Kuntest",
+      "labels": "Tikketti",
+      "assignees": "Assenjati",
+      "reviewers": "Reviżuri",
+      "team": "Tim",
+      "approved": "Approvata",
+      "changesRequested": "Mitluba bidliet",
+      "dismissed": "Mwarrab",
+      "commented": "Ikkummentata",
+      "awaiting": "Jistenna",
+      "opened": "Miftuħa",
+      "updated": "Aġġornat",
+      "closed": "Magħluq",
+      "merged": "Ffuż",
+      "mergedBy": "Magħqud minn",
+      "linkedIssues": "Kwistjonijiet marbuta",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Awtur mhux magħruf"
     }
   },
   "notifications": {

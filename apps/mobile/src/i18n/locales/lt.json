@@ -324,6 +324,30 @@
         "merge": "Sujunkite visus šios šakos įsipareigojimus į bazinę šaką sujungimo įsipareigojimu.",
         "squash": "Sujunkite visus šios šakos įsipareigojimus į vieną įsipareigojimą bazinėje šakoje.",
         "rebase": "Perkelkite visus šios šakos įsipareigojimus į bazinę šaką be sujungimo įsipareigojimo."
+      },
+      "requirements": {
+        "title": "Sujungimo reikalavimai",
+        "reviews": "Peržiūros",
+        "approvals": "{{satisfied}} iš {{required}} patvirtinimų",
+        "required": "privaloma",
+        "notRequired": "Nebūtina",
+        "passed": "Praėjo",
+        "failed": "Nepavyko",
+        "pending": "Laukiama",
+        "noRunYet": "Dar nebuvo vykdoma",
+        "notMet": "Neįvykdyta",
+        "unavailable": "Sujungimo reikalavimai nepasiekiami",
+        "noProtectionRules": "Nėra šakos apsaugos taisyklių",
+        "queueTitle": "Sujungimo eilė",
+        "inQueue": "{{position}} eilėje",
+        "positionUnknown": "Pozicija nežinoma",
+        "queueState": {
+          "QUEUED": "Eilėje",
+          "AWAITING_CHECKS": "Laukiama patikrų",
+          "MERGEABLE": "Galima sujungti",
+          "UNMERGEABLE": "Negalima sujungti",
+          "LOCKED": "Užrakinta"
+        }
       }
     },
     "discussion": {
@@ -622,6 +646,26 @@
       "ambiguous": "Nepavyko patvirtinti — prieš bandydami dar kartą patikrinkite PR.",
       "persistenceFailed": "Nepavyko užfiksuoti šio veiksmo. Bandykite dar kartą vėliau.",
       "forbidden": "Draudžiama"
+    },
+    "context": {
+      "title": "Kontekstas",
+      "labels": "Etiketės",
+      "assignees": "Paskirtieji",
+      "reviewers": "Recenzentai",
+      "team": "Komanda",
+      "approved": "Patvirtinta",
+      "changesRequested": "Prašoma pakeitimų",
+      "dismissed": "Atmesta",
+      "commented": "Pakomentuota",
+      "awaiting": "Laukiama",
+      "opened": "Atidaryta",
+      "updated": "Atnaujinta",
+      "closed": "Uždaryta",
+      "merged": "Sujungta",
+      "mergedBy": "Sujungė",
+      "linkedIssues": "Susijusios problemos",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Nežinomas autorius"
     }
   },
   "notifications": {

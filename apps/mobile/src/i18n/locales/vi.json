@@ -2868,6 +2868,30 @@
         "merge": "Gộp tất cả commit từ nhánh này vào nhánh gốc bằng một commit hợp nhất.",
         "squash": "Gộp tất cả commit từ nhánh này thành một commit duy nhất trên nhánh gốc.",
         "rebase": "Phát lại tất cả commit từ nhánh này lên nhánh gốc mà không có commit hợp nhất."
+      },
+      "requirements": {
+        "title": "Yêu cầu gộp",
+        "reviews": "Đánh giá",
+        "approvals": "{{satisfied}} trên {{required}} phê duyệt",
+        "required": "bắt buộc",
+        "notRequired": "Không bắt buộc",
+        "passed": "Đã đạt",
+        "failed": "Thất bại",
+        "pending": "Đang chờ",
+        "noRunYet": "Chưa có lần chạy nào",
+        "notMet": "Chưa đáp ứng",
+        "unavailable": "Không có yêu cầu gộp",
+        "noProtectionRules": "Không có quy tắc bảo vệ nhánh",
+        "queueTitle": "Hàng đợi gộp",
+        "inQueue": "{{position}} trong hàng đợi",
+        "positionUnknown": "Không rõ vị trí",
+        "queueState": {
+          "QUEUED": "Đã xếp hàng",
+          "AWAITING_CHECKS": "Đang chờ kiểm tra",
+          "MERGEABLE": "Có thể gộp",
+          "UNMERGEABLE": "Không thể gộp",
+          "LOCKED": "Đã khóa"
+        }
       }
     },
     "noDescriptionProvided": "Không có mô tả nào được cung cấp.",
@@ -2985,6 +3009,26 @@
       "ambiguous": "Không thể xác nhận — hãy kiểm tra PR trước khi thử lại.",
       "persistenceFailed": "Chúng tôi không thể ghi lại hành động này. Vui lòng thử lại sau.",
       "forbidden": "Bị cấm"
+    },
+    "context": {
+      "title": "Ngữ cảnh",
+      "labels": "Nhãn",
+      "assignees": "Người được giao",
+      "reviewers": "Người đánh giá",
+      "team": "Nhóm",
+      "approved": "Đã phê duyệt",
+      "changesRequested": "Yêu cầu thay đổi",
+      "dismissed": "Đã bỏ qua",
+      "commented": "Đã bình luận",
+      "awaiting": "Đang chờ",
+      "opened": "Đã mở",
+      "updated": "Đã cập nhật",
+      "closed": "Đã đóng",
+      "merged": "Đã hợp nhất",
+      "mergedBy": "Được gộp bởi",
+      "linkedIssues": "Vấn đề liên kết",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Tác giả không xác định"
     }
   },
   "organization": {

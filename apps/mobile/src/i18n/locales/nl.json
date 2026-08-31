@@ -2868,6 +2868,30 @@
         "merge": "Voeg alle commits van deze branch samen in de basisbranch met een merge-commit.",
         "squash": "Voeg alle commits van deze branch samen in één commit op de basisbranch.",
         "rebase": "Speel alle commits van deze branch opnieuw af op de basisbranch zonder een merge-commit."
+      },
+      "requirements": {
+        "title": "Vereisten voor samenvoegen",
+        "reviews": "Reviews",
+        "approvals": "{{satisfied}} van {{required}} goedkeuringen",
+        "required": "verplicht",
+        "notRequired": "Niet vereist",
+        "passed": "Geslaagd",
+        "failed": "Mislukt",
+        "pending": "In behandeling",
+        "noRunYet": "Nog geen uitvoering",
+        "notMet": "Niet voldaan",
+        "unavailable": "Vereisten voor samenvoegen niet beschikbaar",
+        "noProtectionRules": "Geen regels voor branchbeveiliging",
+        "queueTitle": "Samenvoegwachtrij",
+        "inQueue": "{{position}} in wachtrij",
+        "positionUnknown": "Positie onbekend",
+        "queueState": {
+          "QUEUED": "In wachtrij",
+          "AWAITING_CHECKS": "Wacht op controles",
+          "MERGEABLE": "Samenvoegbaar",
+          "UNMERGEABLE": "Niet samenvoegbaar",
+          "LOCKED": "Vergrendeld"
+        }
       }
     },
     "noDescriptionProvided": "Geen beschrijving opgegeven.",
@@ -2985,6 +3009,26 @@
       "ambiguous": "Kon niet bevestigen — controleer de PR voordat je het opnieuw probeert.",
       "persistenceFailed": "We konden deze actie niet vastleggen. Probeer het later opnieuw.",
       "forbidden": "Verboden"
+    },
+    "context": {
+      "title": "Context",
+      "labels": "Labels",
+      "assignees": "Toegewezenen",
+      "reviewers": "Reviewers",
+      "team": "Team",
+      "approved": "Goedgekeurd",
+      "changesRequested": "Wijzigingen gevraagd",
+      "dismissed": "Afgewezen",
+      "commented": "Gereageerd",
+      "awaiting": "In afwachting",
+      "opened": "Geopend",
+      "updated": "Bijgewerkt",
+      "closed": "Gesloten",
+      "merged": "Samengevoegd",
+      "mergedBy": "Samengevoegd door",
+      "linkedIssues": "Gekoppelde issues",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Onbekende auteur"
     }
   },
   "organization": {

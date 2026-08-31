@@ -2902,6 +2902,30 @@
         "merge": "Об'єднує всі коміти з цієї гілки в базову гілку за допомогою коміту злиття.",
         "squash": "Об'єднує всі коміти з цієї гілки в один коміт на базовій гілці.",
         "rebase": "Відтворює всі коміти з цієї гілки на базовій гілці без коміту злиття."
+      },
+      "requirements": {
+        "title": "Вимоги до злиття",
+        "reviews": "Перевірки",
+        "approvals": "{{satisfied}} з {{required}} схвалень",
+        "required": "обов'язково",
+        "notRequired": "Не обов’язково",
+        "passed": "Пройдено",
+        "failed": "Не вдалося",
+        "pending": "Очікує",
+        "noRunYet": "Поки що не запускалося",
+        "notMet": "Не виконано",
+        "unavailable": "Вимоги до злиття недоступні",
+        "noProtectionRules": "Немає правил захисту гілки",
+        "queueTitle": "Черга злиття",
+        "inQueue": "{{position}} у черзі",
+        "positionUnknown": "Невідома позиція",
+        "queueState": {
+          "QUEUED": "У черзі",
+          "AWAITING_CHECKS": "Очікує перевірок",
+          "MERGEABLE": "Можна злити",
+          "UNMERGEABLE": "Не можна злити",
+          "LOCKED": "Заблоковано"
+        }
       }
     },
     "noDescriptionProvided": "Опис не надано.",
@@ -3025,6 +3049,26 @@
       "ambiguous": "Не вдалося підтвердити — перевірте PR, перш ніж повторювати спробу.",
       "persistenceFailed": "Не вдалося зберегти цю дію. Спробуйте ще раз пізніше.",
       "forbidden": "Заборонено"
+    },
+    "context": {
+      "title": "Контекст",
+      "labels": "Мітки",
+      "assignees": "Призначені",
+      "reviewers": "Рецензенти",
+      "team": "Команда",
+      "approved": "Схвалено",
+      "changesRequested": "Запитано зміни",
+      "dismissed": "Відхилено",
+      "commented": "Прокоментовано",
+      "awaiting": "Очікує",
+      "opened": "Відкрито",
+      "updated": "Оновлено",
+      "closed": "Закрито",
+      "merged": "Злито",
+      "mergedBy": "Злив",
+      "linkedIssues": "Пов’язані проблеми",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Невідомий автор"
     }
   },
   "organization": {

@@ -320,6 +320,30 @@
         "merge": "د یوځای کولو کمټ سره د دې څانګې ټول کمټونه په اساس څانګه کې یوځای کړئ.",
         "squash": "د دې څانګې ټول کمټونه په اساس څانګه کې په یو واحد کمټ کې یوځای کړئ.",
         "rebase": "د یوځای کولو کمټ پرته د دې څانګې ټول کمټونه په اساس څانګه کې بیا پلي کړئ."
+      },
+      "requirements": {
+        "title": "د یوځای کولو اړتیاوې",
+        "reviews": "بیاکتنې",
+        "approvals": "{{required}} څخه {{satisfied}} تاییدونه",
+        "required": "اړین",
+        "notRequired": "اړین نه دی",
+        "passed": "بریالی شو",
+        "failed": "ناکام",
+        "pending": "په انتظار",
+        "noRunYet": "تر اوسه هیڅ اجرا نشته",
+        "notMet": "نه دی پوره شوی",
+        "unavailable": "د یوځای کولو اړتیاوې شتون نلري",
+        "noProtectionRules": "د څانګې د ساتنې قواعد نشته",
+        "queueTitle": "د یوځای کولو کتار",
+        "inQueue": "{{position}} په کتار کې",
+        "positionUnknown": "موقف نامعلوم",
+        "queueState": {
+          "QUEUED": "په صف کې",
+          "AWAITING_CHECKS": "د چکونو په انتظار",
+          "MERGEABLE": "د یوځای کولو وړ",
+          "UNMERGEABLE": "د یوځای کولو نا وړ",
+          "LOCKED": "تړل شوی"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "تأیید کیدی نشو — د بیا هڅې څخه مخکې PR وګورئ.",
       "persistenceFailed": "موږ دا کړنه ثبت نه شو کولی. مهرباني وکړئ وروسته بیا هڅه وکړئ.",
       "forbidden": "منع شوی"
+    },
+    "context": {
+      "title": "شرایط",
+      "labels": "نښې",
+      "assignees": "ګومارل شوي",
+      "reviewers": "بیاکتونکي",
+      "team": "ټیم",
+      "approved": "تایید شو",
+      "changesRequested": "بدلونونه غوښتل شوي",
+      "dismissed": "له پامه غورځول شوی",
+      "commented": "تبصره شوې",
+      "awaiting": "په انتظار",
+      "opened": "پرانیستل شو",
+      "updated": "تازه شوی",
+      "closed": "تړل شوی",
+      "merged": "یوځای شو",
+      "mergedBy": "یوځای کړی دی",
+      "linkedIssues": "تړلې ستونزې",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "نامعلوم لیکوال"
     }
   },
   "notifications": {

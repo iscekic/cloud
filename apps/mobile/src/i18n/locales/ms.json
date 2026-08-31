@@ -320,6 +320,30 @@
         "merge": "Gabungkan semua komit daripada cabang ini ke dalam cabang asas dengan komit gabung.",
         "squash": "Gabungkan semua komit daripada cabang ini menjadi satu komit pada cabang asas.",
         "rebase": "Mainkan semula semua komit daripada cabang ini pada cabang asas tanpa komit gabung."
+      },
+      "requirements": {
+        "title": "Keperluan penggabungan",
+        "reviews": "Semakan",
+        "approvals": "{{satisfied}} daripada {{required}} kelulusan",
+        "required": "diperlukan",
+        "notRequired": "Tidak diperlukan",
+        "passed": "Lulus",
+        "failed": "Gagal",
+        "pending": "Tertunda",
+        "noRunYet": "Belum ada larian",
+        "notMet": "Tidak dipenuhi",
+        "unavailable": "Keperluan penggabungan tidak tersedia",
+        "noProtectionRules": "Tiada peraturan perlindungan cabang",
+        "queueTitle": "Barisan penggabungan",
+        "inQueue": "{{position}} dalam barisan",
+        "positionUnknown": "Kedudukan tidak diketahui",
+        "queueState": {
+          "QUEUED": "Dijadualkan",
+          "AWAITING_CHECKS": "Menunggu semakan",
+          "MERGEABLE": "Boleh digabungkan",
+          "UNMERGEABLE": "Tidak boleh digabungkan",
+          "LOCKED": "Dikunci"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Tidak dapat mengesahkan — semak PR sebelum mencuba lagi.",
       "persistenceFailed": "Kami tidak dapat merakam tindakan ini. Sila cuba lagi kemudian.",
       "forbidden": "Dilarang"
+    },
+    "context": {
+      "title": "Konteks",
+      "labels": "Label",
+      "assignees": "Yang ditugaskan",
+      "reviewers": "Peninjau",
+      "team": "Pasukan",
+      "approved": "Diluluskan",
+      "changesRequested": "Perubahan diminta",
+      "dismissed": "Diketepikan",
+      "commented": "Dikomen",
+      "awaiting": "Menunggu",
+      "opened": "Dibuka",
+      "updated": "Dikemas kini",
+      "closed": "Ditutup",
+      "merged": "Digabung",
+      "mergedBy": "Digabungkan oleh",
+      "linkedIssues": "Isu berpaut",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Pengarang tidak diketahui"
     }
   },
   "notifications": {

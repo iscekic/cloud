@@ -2936,6 +2936,30 @@
         "merge": "ادمج جميع الـ commits من هذا الفرع في الفرع الأساسي مع commit دمج.",
         "squash": "ادمج جميع الـ commits من هذا الفرع في commit واحد في الفرع الأساسي.",
         "rebase": "أعد تطبيق جميع الـ commits من هذا الفرع على الفرع الأساسي دون commit دمج."
+      },
+      "requirements": {
+        "title": "متطلبات الدمج",
+        "reviews": "المراجعات",
+        "approvals": "{{satisfied}} من {{required}} موافقات",
+        "required": "مطلوب",
+        "notRequired": "غير مطلوب",
+        "passed": "نجح",
+        "failed": "فشل",
+        "pending": "قيد الانتظار",
+        "noRunYet": "لم يُنفَّذ بعد",
+        "notMet": "غير مستوفٍ",
+        "unavailable": "متطلبات الدمج غير متاحة",
+        "noProtectionRules": "لا توجد قواعد حماية للفرع",
+        "queueTitle": "قائمة انتظار الدمج",
+        "inQueue": "{{position}} في قائمة الانتظار",
+        "positionUnknown": "الموضع غير معروف",
+        "queueState": {
+          "QUEUED": "في قائمة الانتظار",
+          "AWAITING_CHECKS": "بانتظار الفحوصات",
+          "MERGEABLE": "قابل للدمج",
+          "UNMERGEABLE": "غير قابل للدمج",
+          "LOCKED": "مقفل"
+        }
       }
     },
     "noDescriptionProvided": "لم يتم تقديم وصف.",
@@ -3065,6 +3089,26 @@
       "ambiguous": "تعذّر التأكيد — تحقق من PR قبل إعادة المحاولة.",
       "persistenceFailed": "لم نتمكن من تسجيل هذا الإجراء. يرجى المحاولة مرة أخرى لاحقًا.",
       "forbidden": "ممنوع"
+    },
+    "context": {
+      "title": "السياق",
+      "labels": "التسميات",
+      "assignees": "المُسنَد إليهم",
+      "reviewers": "المراجعون",
+      "team": "الفريق",
+      "approved": "تمت الموافقة",
+      "changesRequested": "التغييرات مطلوبة",
+      "dismissed": "مرفوض",
+      "commented": "تم التعليق",
+      "awaiting": "قيد الانتظار",
+      "opened": "مفتوح",
+      "updated": "محدّث",
+      "closed": "مغلق",
+      "merged": "تم الدمج",
+      "mergedBy": "دمجه",
+      "linkedIssues": "مشكلات مرتبطة",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "مؤلف غير معروف"
     }
   },
   "organization": {

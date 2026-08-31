@@ -320,6 +320,30 @@
         "merge": "همهٔ commitهای این شاخه را با یک commit ادغام در شاخهٔ پایه ترکیب کنید.",
         "squash": "همهٔ commitهای این شاخه را در یک commit واحد در شاخهٔ پایه ترکیب کنید.",
         "rebase": "همهٔ commitهای این شاخه را بدون commit ادغام روی شاخهٔ پایه پخش کنید."
+      },
+      "requirements": {
+        "title": "الزام‌های ادغام",
+        "reviews": "بازبینی‌ها",
+        "approvals": "{{satisfied}} از {{required}} تأیید",
+        "required": "الزامی",
+        "notRequired": "الزامی نیست",
+        "passed": "قبول شد",
+        "failed": "شکست خورد",
+        "pending": "در انتظار",
+        "noRunYet": "هنوز اجرایی نشده",
+        "notMet": "برآورده نشده",
+        "unavailable": "الزام‌های ادغام در دسترس نیستند",
+        "noProtectionRules": "قانون محافظت شاخه وجود ندارد",
+        "queueTitle": "صف ادغام",
+        "inQueue": "{{position}} در صف",
+        "positionUnknown": "جایگاه نامشخص",
+        "queueState": {
+          "QUEUED": "در صف",
+          "AWAITING_CHECKS": "در انتظار بررسی‌ها",
+          "MERGEABLE": "قابل ادغام",
+          "UNMERGEABLE": "غیرقابل ادغام",
+          "LOCKED": "قفل شده"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "نمی‌توان تأیید کرد — قبل از تلاش مجدد، PR را بررسی کنید.",
       "persistenceFailed": "نتوانستیم این اقدام را ثبت کنیم. لطفاً بعداً دوباره تلاش کنید.",
       "forbidden": "ممنوع"
+    },
+    "context": {
+      "title": "زمینه",
+      "labels": "برچسب‌ها",
+      "assignees": "مسئولان",
+      "reviewers": "بازبینان",
+      "team": "تیم",
+      "approved": "تأییدشده",
+      "changesRequested": "تغییرات درخواست شد",
+      "dismissed": "رد شده",
+      "commented": "نظر داده شد",
+      "awaiting": "در انتظار",
+      "opened": "باز شد",
+      "updated": "بهروزرسانی شده",
+      "closed": "بسته",
+      "merged": "ادغام شد",
+      "mergedBy": "ادغام توسط",
+      "linkedIssues": "مشکلات پیوندشده",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "نویسندهٔ ناشناس"
     }
   },
   "notifications": {

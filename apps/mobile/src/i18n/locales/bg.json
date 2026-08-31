@@ -320,6 +320,30 @@
         "merge": "Комбинирай всички commits от този клон в основния клон с commit при обединяване.",
         "squash": "Комбинирай всички commits от този клон в един-единствен commit в основния клон.",
         "rebase": "Повтори всички commits от този клон върху основния клон без commit при обединяване."
+      },
+      "requirements": {
+        "title": "Изисквания за сливане",
+        "reviews": "Прегледи",
+        "approvals": "{{satisfied}} от {{required}} одобрения",
+        "required": "задължително",
+        "notRequired": "Не се изисква",
+        "passed": "Преминато",
+        "failed": "Неуспешно",
+        "pending": "В изчакване",
+        "noRunYet": "Все още няма изпълнение",
+        "notMet": "Не е изпълнено",
+        "unavailable": "Изискванията за сливане са недостъпни",
+        "noProtectionRules": "Няма правила за защита на клона",
+        "queueTitle": "Опашка за сливане",
+        "inQueue": "{{position}} в опашката",
+        "positionUnknown": "Позицията е неизвестна",
+        "queueState": {
+          "QUEUED": "В опашка",
+          "AWAITING_CHECKS": "В очакване на проверки",
+          "MERGEABLE": "Може да се слее",
+          "UNMERGEABLE": "Не може да се слее",
+          "LOCKED": "Заключено"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Не можахме да потвърдим — проверете PR-а, преди да опитате отново.",
       "persistenceFailed": "Не успяхме да запишем това действие. Моля, опитайте отново по-късно.",
       "forbidden": "Забранено"
+    },
+    "context": {
+      "title": "Контекст",
+      "labels": "Етикети",
+      "assignees": "Възложени",
+      "reviewers": "Рецензенти",
+      "team": "Екип",
+      "approved": "Одобрено",
+      "changesRequested": "Искани промени",
+      "dismissed": "Отхвърлено",
+      "commented": "Коментирано",
+      "awaiting": "В очакване",
+      "opened": "Отворено",
+      "updated": "Актуализирано",
+      "closed": "Затворено",
+      "merged": "Обединено",
+      "mergedBy": "Слято от",
+      "linkedIssues": "Свързани проблеми",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Неизвестен автор"
     }
   },
   "notifications": {

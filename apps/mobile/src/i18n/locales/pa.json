@@ -320,6 +320,30 @@
         "merge": "ਇਸ ਬ੍ਰਾਂਚ ਦੇ ਸਾਰੇ ਕਮਿਟਾਂ ਨੂੰ ਮਰਜ ਕਮਿਟ ਨਾਲ ਬੇਸ ਬ੍ਰਾਂਚ ਵਿੱਚ ਜੋੜੋ।",
         "squash": "ਇਸ ਬ੍ਰਾਂਚ ਦੇ ਸਾਰੇ ਕਮਿਟਾਂ ਨੂੰ ਬੇਸ ਬ੍ਰਾਂਚ 'ਤੇ ਇੱਕ ਸਿੰਗਲ ਕਮਿਟ ਵਿੱਚ ਜੋੜੋ।",
         "rebase": "ਇਸ ਬ੍ਰਾਂਚ ਦੇ ਸਾਰੇ ਕਮਿਟਾਂ ਨੂੰ ਮਰਜ ਕਮਿਟ ਤੋਂ ਬਿਨਾਂ ਬੇਸ ਬ੍ਰਾਂਚ 'ਤੇ ਦੁਬਾਰਾ ਚਲਾਓ।"
+      },
+      "requirements": {
+        "title": "ਮਰਜ ਲੋੜਾਂ",
+        "reviews": "ਰਿਵਿਊ",
+        "approvals": "{{required}} ਵਿੱਚੋਂ {{satisfied}} ਪ੍ਰਵਾਨਗੀਆਂ",
+        "required": "ਲੋੜੀਂਦਾ",
+        "notRequired": "ਲੋੜੀਂਦਾ ਨਹੀਂ",
+        "passed": "ਪਾਸ ਹੋਇਆ",
+        "failed": "ਅਸਫਲ",
+        "pending": "ਬਕਾਇਆ",
+        "noRunYet": "ਹਾਲੇ ਕੋਈ ਰਨ ਨਹੀਂ",
+        "notMet": "ਪੂਰਾ ਨਹੀਂ ਹੋਇਆ",
+        "unavailable": "ਮਰਜ ਲੋੜਾਂ ਉਪਲਬਧ ਨਹੀਂ",
+        "noProtectionRules": "ਸ਼ਾਖਾ ਸੁਰੱਖਿਆ ਨਿਯਮ ਨਹੀਂ",
+        "queueTitle": "ਮਰਜ ਕਤਾਰ",
+        "inQueue": "ਕਤਾਰ ਵਿੱਚ {{position}}",
+        "positionUnknown": "ਸਥਿਤੀ ਅਣਜਾਣ",
+        "queueState": {
+          "QUEUED": "ਕਤਾਰ ਵਿੱਚ",
+          "AWAITING_CHECKS": "ਜਾਂਚ ਦੀ ਉਡੀਕ",
+          "MERGEABLE": "ਮਰਜ ਕਰਨਯੋਗ",
+          "UNMERGEABLE": "ਮਰਜ ਨਾ ਕਰਨਯੋਗ",
+          "LOCKED": "ਲਾਕ ਕੀਤਾ ਗਿਆ"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "ਪੁਸ਼ਟੀ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ — ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ PR ਚੈੱਕ ਕਰੋ।",
       "persistenceFailed": "ਅਸੀਂ ਇਹ ਕਾਰਵਾਈ ਰਿਕਾਰਡ ਨਹੀਂ ਕਰ ਸਕੇ। ਕਿਰਪਾ ਕਰਕੇ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
       "forbidden": "ਮਨਾਹੀ"
+    },
+    "context": {
+      "title": "ਸੰਦਰਭ",
+      "labels": "ਲੇਬਲ",
+      "assignees": "ਅਸਾਈਨੀਆਂ",
+      "reviewers": "ਸਮੀਖਿਅਕ",
+      "team": "ਟੀਮ",
+      "approved": "ਪ੍ਰਵਾਨਿਤ",
+      "changesRequested": "ਬਦਲਾਅ ਦੀ ਬੇਨਤੀ ਕੀਤੀ",
+      "dismissed": "ਖਾਰਜ ਕੀਤਾ ਗਿਆ",
+      "commented": "ਟਿੱਪਣੀ ਕੀਤੀ",
+      "awaiting": "ਉਡੀਕ ਵਿੱਚ",
+      "opened": "ਖੋਲ੍ਹਿਆ ਗਿਆ",
+      "updated": "ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ",
+      "closed": "ਬੰਦ",
+      "merged": "ਮਰਜ ਹੋਈ",
+      "mergedBy": "ਦੁਆਰਾ ਮਰਜ ਕੀਤਾ ਗਿਆ",
+      "linkedIssues": "ਲਿੰਕ ਕੀਤੇ ਮੁੱਦੇ",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "ਅਣਜਾਣ ਲੇਖਕ"
     }
   },
   "notifications": {

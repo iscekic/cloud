@@ -320,6 +320,30 @@
         "merge": "Kombineer al die commits van hierdie tak in die basis-tak met 'n merge-commit.",
         "squash": "Kombineer al die commits van hierdie tak in 'n enkele commit op die basis-tak.",
         "rebase": "Speel al die commits van hierdie tak op die basis-tak af sonder 'n merge-commit."
+      },
+      "requirements": {
+        "title": "Samevoegvereistes",
+        "reviews": "Resensies",
+        "approvals": "{{satisfied}} van {{required}} goedkeurings",
+        "required": "vereis",
+        "notRequired": "Nie vereis nie",
+        "passed": "Geslaag",
+        "failed": "Misluk",
+        "pending": "Hangend",
+        "noRunYet": "Nog geen uitvoering nie",
+        "notMet": "Nie nagekom nie",
+        "unavailable": "Samevoegvereistes onbeskikbaar",
+        "noProtectionRules": "Geen takbeskermingsreëls nie",
+        "queueTitle": "Samevoegtou",
+        "inQueue": "{{position}} in die tou",
+        "positionUnknown": "Posisie onbekend",
+        "queueState": {
+          "QUEUED": "In die tou",
+          "AWAITING_CHECKS": "Wag op kontrole",
+          "MERGEABLE": "Saamvoegbaar",
+          "UNMERGEABLE": "Nie saamvoegbaar nie",
+          "LOCKED": "Geblokkeer"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Kon nie bevestig nie — kyk na die PR voordat jy weer probeer.",
       "persistenceFailed": "Ons kon nie hierdie aksie aanteken nie. Probeer asseblief later weer.",
       "forbidden": "Verbode"
+    },
+    "context": {
+      "title": "Konteks",
+      "labels": "Etikette",
+      "assignees": "Toegewysdes",
+      "reviewers": "Beoordelaars",
+      "team": "Span",
+      "approved": "Goedgekeur",
+      "changesRequested": "Veranderings versoek",
+      "dismissed": "Verwerp",
+      "commented": "Kommentaar gelewer",
+      "awaiting": "Wag",
+      "opened": "Geopen",
+      "updated": "Bygewerk",
+      "closed": "Gesluit",
+      "merged": "Saamgevoeg",
+      "mergedBy": "Saamgevoeg deur",
+      "linkedIssues": "Gekoppelde kwessies",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Onbekende outeur"
     }
   },
   "notifications": {

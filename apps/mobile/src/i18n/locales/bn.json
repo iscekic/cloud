@@ -320,6 +320,30 @@
         "merge": "মার্জ কমিট দিয়ে এই ব্রাঞ্চের সব কমিট বেস ব্রাঞ্চে একত্রিত করুন।",
         "squash": "এই ব্রাঞ্চের সব কমিট বেস ব্রাঞ্চে একটি একক কমিটে একত্রিত করুন।",
         "rebase": "মার্জ কমিট ছাড়াই এই ব্রাঞ্চের সব কমিট বেস ব্রাঞ্চে পুনরায় চালান।"
+      },
+      "requirements": {
+        "title": "মার্জের প্রয়োজনীয়তা",
+        "reviews": "রিভিউ",
+        "approvals": "{{required}}টি অনুমোদনের মধ্যে {{satisfied}}টি",
+        "required": "আবশ্যক",
+        "notRequired": "প্রয়োজন নেই",
+        "passed": "উত্তীর্ণ",
+        "failed": "ব্যর্থ হয়েছে",
+        "pending": "মুলতুবি",
+        "noRunYet": "এখনও কোনো রান হয়নি",
+        "notMet": "পূরণ হয়নি",
+        "unavailable": "মার্জের প্রয়োজনীয়তা অনুপলব্ধ",
+        "noProtectionRules": "শাখা সুরক্ষার কোনো নিয়ম নেই",
+        "queueTitle": "মার্জ সারি",
+        "inQueue": "সারিতে {{position}}",
+        "positionUnknown": "অবস্থান অজানা",
+        "queueState": {
+          "QUEUED": "সারিবদ্ধ",
+          "AWAITING_CHECKS": "চেকের অপেক্ষায়",
+          "MERGEABLE": "মার্জযোগ্য",
+          "UNMERGEABLE": "মার্জযোগ্য নয়",
+          "LOCKED": "লক করা"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "নিশ্চিত করা যায়নি — আবার চেষ্টা করার আগে PR-টি পরীক্ষা করুন।",
       "persistenceFailed": "এই কাজটি রেকর্ড করা যায়নি। অনুগ্রহ করে পরে আবার চেষ্টা করুন।",
       "forbidden": "নিষিদ্ধ"
+    },
+    "context": {
+      "title": "প্রসঙ্গ",
+      "labels": "লেবেল",
+      "assignees": "অ্যাসাইনি",
+      "reviewers": "রিভিউয়ার",
+      "team": "দল",
+      "approved": "অনুমোদিত",
+      "changesRequested": "পরিবর্তন অনুরোধ করা হয়েছে",
+      "dismissed": "খারিজ করা হয়েছে",
+      "commented": "মন্তব্য করা হয়েছে",
+      "awaiting": "অপেক্ষমাণ",
+      "opened": "খোলা হয়েছে",
+      "updated": "আপডেট করা হয়েছে",
+      "closed": "বন্ধ",
+      "merged": "মার্জ হয়েছে",
+      "mergedBy": "মার্জ করেছেন",
+      "linkedIssues": "সংযুক্ত সমস্যা",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "অজানা লেখক"
     }
   },
   "notifications": {

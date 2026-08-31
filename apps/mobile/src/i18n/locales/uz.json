@@ -320,6 +320,30 @@
         "merge": "Bu filialdagi barcha commitlarni birlashtirish commiti bilan asosiy filialga birlashtiring.",
         "squash": "Bu filialdagi barcha commitlarni asosiy filialda bitta commitga birlashtiring.",
         "rebase": "Bu filialdagi barcha commitlarni birlashtirish commitisiz asosiy filialga qayta yozing."
+      },
+      "requirements": {
+        "title": "Birlashtirish talablari",
+        "reviews": "Sharhlar",
+        "approvals": "{{required}} tasdiqlashdan {{satisfied}}tasi",
+        "required": "shart",
+        "notRequired": "Majburiy emas",
+        "passed": "O‘tdi",
+        "failed": "Amalga oshmadi",
+        "pending": "Kutilmoqda",
+        "noRunYet": "Hozircha ishga tushirish yo‘q",
+        "notMet": "Bajarilmadi",
+        "unavailable": "Birlashtirish talablari mavjud emas",
+        "noProtectionRules": "Tarmoqni himoya qilish qoidalari yo‘q",
+        "queueTitle": "Birlashtirish navbati",
+        "inQueue": "{{position}} navbatda",
+        "positionUnknown": "Joylashuv noma’lum",
+        "queueState": {
+          "QUEUED": "Navbatda",
+          "AWAITING_CHECKS": "Tekshiruvlarni kutmoqda",
+          "MERGEABLE": "Birlashtirsa bo‘ladi",
+          "UNMERGEABLE": "Birlashtirib bo‘lmaydi",
+          "LOCKED": "Qulflangan"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Tasdiqlab bo'lmadi — qayta urinishdan oldin PR'ni tekshiring.",
       "persistenceFailed": "Bu amalni yozib ololmadik. Iltimos, keyinroq qayta urinib ko'ring.",
       "forbidden": "Taqiqlangan"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Yorliqlar",
+      "assignees": "Tayinlanganlar",
+      "reviewers": "Taqrizchilar",
+      "team": "Jamoa",
+      "approved": "Tasdiqlangan",
+      "changesRequested": "O‘zgartirishlar so‘ralgan",
+      "dismissed": "Rad etilgan",
+      "commented": "Izoh qoldirilgan",
+      "awaiting": "Kutmoqda",
+      "opened": "Ochilgan",
+      "updated": "Yangilangan",
+      "closed": "Yopilgan",
+      "merged": "Birlashtirildi",
+      "mergedBy": "Birlashtirgan",
+      "linkedIssues": "Bog‘langan muammolar",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Noma'lum muallif"
     }
   },
   "notifications": {

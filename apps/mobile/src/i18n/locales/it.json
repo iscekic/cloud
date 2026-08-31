@@ -2885,6 +2885,30 @@
         "merge": "Combina tutti i commit di questo branch nel branch di base con un commit di merge.",
         "squash": "Combina tutti i commit di questo branch in un unico commit sul branch di base.",
         "rebase": "Ripropone tutti i commit di questo branch sul branch di base senza un commit di merge."
+      },
+      "requirements": {
+        "title": "Requisiti di unione",
+        "reviews": "Revisioni",
+        "approvals": "{{satisfied}} di {{required}} approvazioni",
+        "required": "obbligatorio",
+        "notRequired": "Non richiesto",
+        "passed": "Superato",
+        "failed": "Non riuscita",
+        "pending": "In sospeso",
+        "noRunYet": "Nessuna esecuzione ancora",
+        "notMet": "Non soddisfatto",
+        "unavailable": "Requisiti di unione non disponibili",
+        "noProtectionRules": "Nessuna regola di protezione del ramo",
+        "queueTitle": "Coda di unione",
+        "inQueue": "{{position}} in coda",
+        "positionUnknown": "Posizione sconosciuta",
+        "queueState": {
+          "QUEUED": "In coda",
+          "AWAITING_CHECKS": "In attesa dei controlli",
+          "MERGEABLE": "Unibile",
+          "UNMERGEABLE": "Non unibile",
+          "LOCKED": "Bloccato"
+        }
       }
     },
     "noDescriptionProvided": "Nessuna descrizione fornita.",
@@ -3005,6 +3029,26 @@
       "ambiguous": "Impossibile confermare — controlla la PR prima di riprovare.",
       "persistenceFailed": "Non abbiamo potuto registrare questa azione. Riprova più tardi.",
       "forbidden": "Vietato"
+    },
+    "context": {
+      "title": "Contesto",
+      "labels": "Etichette",
+      "assignees": "Assegnatari",
+      "reviewers": "Revisori",
+      "team": "Team",
+      "approved": "Approvata",
+      "changesRequested": "Modifiche richieste",
+      "dismissed": "Ignorato",
+      "commented": "Commentata",
+      "awaiting": "In attesa",
+      "opened": "Aperta",
+      "updated": "Aggiornato",
+      "closed": "Chiusa",
+      "merged": "Unita",
+      "mergedBy": "Unita da",
+      "linkedIssues": "Problemi collegati",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Autore sconosciuto"
     }
   },
   "organization": {

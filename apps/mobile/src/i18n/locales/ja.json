@@ -2868,6 +2868,30 @@
         "merge": "このブランチのすべてのコミットをマージコミットとしてベースブランチに統合します。",
         "squash": "このブランチのすべてのコミットをベースブランチ上の1つのコミットにまとめます。",
         "rebase": "このブランチのすべてのコミットを、マージコミットなしでベースブランチに適用し直します。"
+      },
+      "requirements": {
+        "title": "マージ要件",
+        "reviews": "レビュー",
+        "approvals": "{{required}}件中{{satisfied}}件の承認",
+        "required": "必須",
+        "notRequired": "必須ではありません",
+        "passed": "合格",
+        "failed": "失敗",
+        "pending": "保留中",
+        "noRunYet": "まだ実行されていません",
+        "notMet": "未達です",
+        "unavailable": "マージ要件を利用できません",
+        "noProtectionRules": "ブランチ保護ルールはありません",
+        "queueTitle": "マージキュー",
+        "inQueue": "キュー内{{position}}番目",
+        "positionUnknown": "位置不明",
+        "queueState": {
+          "QUEUED": "きゅーまち",
+          "AWAITING_CHECKS": "チェック待ち",
+          "MERGEABLE": "マージ可能",
+          "UNMERGEABLE": "マージ不可",
+          "LOCKED": "ロック済み"
+        }
       }
     },
     "noDescriptionProvided": "説明はありません。",
@@ -2985,6 +3009,26 @@
       "ambiguous": "確認できませんでした — 再試行する前にPRを確認してください。",
       "persistenceFailed": "この操作を記録できませんでした。後でもう一度お試しください。",
       "forbidden": "禁止"
+    },
+    "context": {
+      "title": "コンテキスト",
+      "labels": "ラベル",
+      "assignees": "担当者",
+      "reviewers": "レビュアー",
+      "team": "チーム",
+      "approved": "承認済み",
+      "changesRequested": "変更リクエストあり",
+      "dismissed": "却下済み",
+      "commented": "コメント済み",
+      "awaiting": "待機中",
+      "opened": "オープン",
+      "updated": "こうしん",
+      "closed": "くろーずずみ",
+      "merged": "まーじずみ",
+      "mergedBy": "マージしたユーザー",
+      "linkedIssues": "リンクされたIssue",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "不明な作成者"
     }
   },
   "organization": {

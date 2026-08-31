@@ -320,6 +320,30 @@
         "merge": "Yhdistä kaikki tämän haaran commitit pohjahaaraan yhdistämiscommitilla.",
         "squash": "Yhdistä kaikki tämän haaran commitit yhdeksi commitiksi pohjahaarassa.",
         "rebase": "Toista kaikki tämän haaran commitit pohjahaarassa ilman yhdistämiscommittia."
+      },
+      "requirements": {
+        "title": "Yhdistämisen vaatimukset",
+        "reviews": "Arvioinnit",
+        "approvals": "{{satisfied}} / {{required}} hyväksyntää",
+        "required": "pakollinen",
+        "notRequired": "Ei vaadita",
+        "passed": "Läpäisty",
+        "failed": "Epäonnistui",
+        "pending": "Odottaa",
+        "noRunYet": "Ei vielä ajoa",
+        "notMet": "Ei täytetty",
+        "unavailable": "Yhdistämisen vaatimukset eivät ole käytettävissä",
+        "noProtectionRules": "Ei haaran suojaussääntöjä",
+        "queueTitle": "Yhdistämisjono",
+        "inQueue": "{{position}} jonossa",
+        "positionUnknown": "Sijainti tuntematon",
+        "queueState": {
+          "QUEUED": "Jonossa",
+          "AWAITING_CHECKS": "Odottaa tarkistuksia",
+          "MERGEABLE": "Yhdistettävissä",
+          "UNMERGEABLE": "Ei yhdistettävissä",
+          "LOCKED": "Lukittu"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Vahvistusta ei saatu — tarkista PR ennen uudelleen yrittämistä.",
       "persistenceFailed": "Emme voineet tallentaa tätä toimintoa. Yritä myöhemmin uudelleen.",
       "forbidden": "Kielletty"
+    },
+    "context": {
+      "title": "Konteksti",
+      "labels": "Tunnisteet",
+      "assignees": "Vastuuhenkilöt",
+      "reviewers": "Arvioijat",
+      "team": "Tiimi",
+      "approved": "Hyväksytty",
+      "changesRequested": "Muutoksia pyydetty",
+      "dismissed": "Hylätty",
+      "commented": "Kommentoitu",
+      "awaiting": "Odottaa",
+      "opened": "Avattu",
+      "updated": "Päivitetty",
+      "closed": "Suljettu",
+      "merged": "Yhdistetty",
+      "mergedBy": "Yhdistänyt",
+      "linkedIssues": "Linkitetyt ongelmat",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Tuntematon tekijä"
     }
   },
   "notifications": {

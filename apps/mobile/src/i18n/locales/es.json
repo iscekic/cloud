@@ -2885,6 +2885,30 @@
         "merge": "Combina todos los commits de esta rama en la rama base con un commit de fusión.",
         "squash": "Combina todos los commits de esta rama en un único commit en la rama base.",
         "rebase": "Reproduce todos los commits de esta rama sobre la rama base sin un commit de fusión."
+      },
+      "requirements": {
+        "title": "Requisitos de fusión",
+        "reviews": "Revisiones",
+        "approvals": "{{satisfied}} de {{required}} aprobaciones",
+        "required": "obligatorio",
+        "notRequired": "No obligatorio",
+        "passed": "Superado",
+        "failed": "Fallido",
+        "pending": "Pendiente",
+        "noRunYet": "Aún sin ejecución",
+        "notMet": "No cumplido",
+        "unavailable": "Requisitos de fusión no disponibles",
+        "noProtectionRules": "Sin reglas de protección de rama",
+        "queueTitle": "Cola de fusión",
+        "inQueue": "{{position}} en la cola",
+        "positionUnknown": "Posición desconocida",
+        "queueState": {
+          "QUEUED": "En cola",
+          "AWAITING_CHECKS": "Esperando comprobaciones",
+          "MERGEABLE": "Fusionable",
+          "UNMERGEABLE": "No fusionable",
+          "LOCKED": "Bloqueado"
+        }
       }
     },
     "noDescriptionProvided": "No se ha proporcionado ninguna descripción.",
@@ -3005,6 +3029,26 @@
       "ambiguous": "No se pudo confirmar — comprueba el PR antes de reintentar.",
       "persistenceFailed": "No se pudo registrar esta acción. Inténtalo de nuevo más tarde.",
       "forbidden": "Prohibido"
+    },
+    "context": {
+      "title": "Contexto",
+      "labels": "Etiquetas",
+      "assignees": "Asignados",
+      "reviewers": "Revisores",
+      "team": "Equipo",
+      "approved": "Aprobada",
+      "changesRequested": "Cambios solicitados",
+      "dismissed": "Descartado",
+      "commented": "Comentada",
+      "awaiting": "En espera",
+      "opened": "Abierta",
+      "updated": "Actualizado",
+      "closed": "Cerrada",
+      "merged": "Fusionada",
+      "mergedBy": "Fusionada por",
+      "linkedIssues": "Problemas vinculados",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Autor desconocido"
     }
   },
   "organization": {

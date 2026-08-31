@@ -2868,6 +2868,30 @@
         "merge": "इस शाखा के सभी कमिटों को मर्ज कमिट के साथ बेस शाखा में मिलाएँ।",
         "squash": "इस शाखा के सभी कमिटों को बेस शाखा पर एक ही कमिट में मिलाएँ।",
         "rebase": "इस शाखा के सभी कमिटों को मर्ज कमिट के बिना बेस शाखा पर फिर से चलाएँ।"
+      },
+      "requirements": {
+        "title": "मर्ज आवश्यकताएँ",
+        "reviews": "समीक्षाएँ",
+        "approvals": "{{required}} में से {{satisfied}} स्वीकृतियाँ",
+        "required": "आवश्यक",
+        "notRequired": "आवश्यक नहीं",
+        "passed": "उत्तीर्ण",
+        "failed": "विफल",
+        "pending": "लंबित",
+        "noRunYet": "अभी कोई रन नहीं",
+        "notMet": "पूरा नहीं हुआ",
+        "unavailable": "मर्ज आवश्यकताएँ अनुपलब्ध",
+        "noProtectionRules": "कोई शाखा सुरक्षा नियम नहीं",
+        "queueTitle": "मर्ज कतार",
+        "inQueue": "कतार में {{position}}",
+        "positionUnknown": "स्थिति अज्ञात",
+        "queueState": {
+          "QUEUED": "कतार में",
+          "AWAITING_CHECKS": "जाँच की प्रतीक्षा में",
+          "MERGEABLE": "मर्ज योग्य",
+          "UNMERGEABLE": "मर्ज योग्य नहीं",
+          "LOCKED": "लॉक किया गया"
+        }
       }
     },
     "noDescriptionProvided": "कोई विवरण नहीं दिया गया।",
@@ -2985,6 +3009,26 @@
       "ambiguous": "पुष्टि नहीं हो सकी — दोबारा कोशिश करने से पहले PR जाँचें।",
       "persistenceFailed": "हम इस कार्रवाई को रिकॉर्ड नहीं कर सके। कृपया बाद में फिर से प्रयास करें।",
       "forbidden": "निषिद्ध"
+    },
+    "context": {
+      "title": "संदर्भ",
+      "labels": "लेबल",
+      "assignees": "असाइनी",
+      "reviewers": "समीक्षक",
+      "team": "टीम",
+      "approved": "स्वीकृत",
+      "changesRequested": "बदलाव का अनुरोध किया गया",
+      "dismissed": "खारिज किया गया",
+      "commented": "टिप्पणी की गई",
+      "awaiting": "प्रतीक्षारत",
+      "opened": "खोला गया",
+      "updated": "अपडेट किया गया",
+      "closed": "बंद",
+      "merged": "मर्ज हो गया",
+      "mergedBy": "के द्वारा मर्ज किया गया",
+      "linkedIssues": "लिंक किए गए मुद्दे",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "अज्ञात लेखक"
     }
   },
   "organization": {

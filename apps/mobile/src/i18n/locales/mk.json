@@ -320,6 +320,30 @@
         "merge": "Спојте ги сите commits од оваа гранка во основната гранка со commit за спојување.",
         "squash": "Спојте ги сите commits од оваа гранка во еден commit на основната гранка.",
         "rebase": "Повторно применете ги сите commits од оваа гранка на основната гранка без commit за спојување."
+      },
+      "requirements": {
+        "title": "Барања за спојување",
+        "reviews": "Прегледи",
+        "approvals": "{{satisfied}} од {{required}} одобрувања",
+        "required": "задолжително",
+        "notRequired": "Не е задолжително",
+        "passed": "Поминато",
+        "failed": "Не успеа",
+        "pending": "Во чекање",
+        "noRunYet": "Сѐ уште нема извршување",
+        "notMet": "Не е исполнето",
+        "unavailable": "Барањата за спојување се недостапни",
+        "noProtectionRules": "Нема правила за заштита на гранка",
+        "queueTitle": "Ред за спојување",
+        "inQueue": "{{position}} во редот",
+        "positionUnknown": "Непозната позиција",
+        "queueState": {
+          "QUEUED": "Во ред",
+          "AWAITING_CHECKS": "Се чекаат проверки",
+          "MERGEABLE": "Може да се спои",
+          "UNMERGEABLE": "Не може да се спои",
+          "LOCKED": "Заклучено"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Не можеше да се потврди — проверете го PR-от пред да се обидете повторно.",
       "persistenceFailed": "Не можевме да ја забележиме оваа акција. Обидете се повторно подоцна.",
       "forbidden": "Забрането"
+    },
+    "context": {
+      "title": "Контекст",
+      "labels": "Ознаки",
+      "assignees": "Доделени",
+      "reviewers": "Рецензенти",
+      "team": "Тим",
+      "approved": "Одобрено",
+      "changesRequested": "Побарани промени",
+      "dismissed": "Отфрлен",
+      "commented": "Коментирано",
+      "awaiting": "Се чека",
+      "opened": "Отворено",
+      "updated": "Ажурирано",
+      "closed": "Затворено",
+      "merged": "Споено",
+      "mergedBy": "Споено од",
+      "linkedIssues": "Поврзани проблеми",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Непознат автор"
     }
   },
   "notifications": {

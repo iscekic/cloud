@@ -320,6 +320,30 @@
         "merge": "Միավորեք այս ճյուղի բոլոր commit-ները բազային ճյուղի մեջ merge commit-ով:",
         "squash": "Միավորեք այս ճյուղի բոլոր commit-ները մեկ commit-ի բազային ճյուղում:",
         "rebase": "Կրկնեք այս ճյուղի բոլոր commit-ները բազային ճյուղի վրա՝ առանց merge commit-ի:"
+      },
+      "requirements": {
+        "title": "Միաձուլման պահանջներ",
+        "reviews": "Վերանայումներ",
+        "approvals": "{{required}}-ից {{satisfied}} հաստատում",
+        "required": "պարտադիր",
+        "notRequired": "Պարտադիր չէ",
+        "passed": "Անցել է",
+        "failed": "Ձախողված",
+        "pending": "Սպասվում է",
+        "noRunYet": "Դեռ գործարկում չկա",
+        "notMet": "Չի բավարարվել",
+        "unavailable": "Միաձուլման պահանջներն անհասանելի են",
+        "noProtectionRules": "Ճյուղի պաշտպանության կանոններ չկան",
+        "queueTitle": "Միաձուլման հերթ",
+        "inQueue": "{{position}} հերթում",
+        "positionUnknown": "Դիրքն անհայտ է",
+        "queueState": {
+          "QUEUED": "Հերթագրված",
+          "AWAITING_CHECKS": "Ստուգումներին սպասող",
+          "MERGEABLE": "Միաձուլելի",
+          "UNMERGEABLE": "Չմիաձուլվող",
+          "LOCKED": "Կողպված"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Չհաջողվեց հաստատել — նախքան նորից փորձելը ստուգեք PR-ը։",
       "persistenceFailed": "Մենք չկարողացանք գրանցել այս գործողությունը: Խնդրում ենք կրկին փորձել ավելի ուշ:",
       "forbidden": "Արգելված"
+    },
+    "context": {
+      "title": "Համատեքստ",
+      "labels": "Պիտակներ",
+      "assignees": "Նշանակվածներ",
+      "reviewers": "Վերանայողներ",
+      "team": "Թիմ",
+      "approved": "Հաստատված",
+      "changesRequested": "Փոփոխություններ են պահանջվում",
+      "dismissed": "Մերժված",
+      "commented": "Մեկնաբանված",
+      "awaiting": "Սպասում է",
+      "opened": "Բացված",
+      "updated": "Թարմացված",
+      "closed": "Փակ",
+      "merged": "Միավորված",
+      "mergedBy": "Միավորել է",
+      "linkedIssues": "Կապված խնդիրներ",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Անհայտ հեղինակ"
     }
   },
   "notifications": {

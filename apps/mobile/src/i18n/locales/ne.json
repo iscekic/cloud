@@ -320,6 +320,30 @@
         "merge": "यस शाखाका सबै कमिटहरूलाई मर्ज कमिटसँगै आधार शाखामा मिलाउनुहोस्।",
         "squash": "यस शाखाका सबै कमिटहरूलाई आधार शाखामा एउटै कमिटमा मिलाउनुहोस्।",
         "rebase": "यस शाखाका सबै कमिटहरूलाई मर्ज कमिट बिना आधार शाखामा पुनः लागू गर्नुहोस्।"
+      },
+      "requirements": {
+        "title": "मर्ज आवश्यकताहरू",
+        "reviews": "समीक्षाहरू",
+        "approvals": "{{required}} मध्ये {{satisfied}} स्वीकृतिहरू",
+        "required": "आवश्यक",
+        "notRequired": "आवश्यक छैन",
+        "passed": "उत्तीर्ण",
+        "failed": "असफल",
+        "pending": "प्रतीक्षामा",
+        "noRunYet": "अहिलेसम्म कुनै रन छैन",
+        "notMet": "पूरा भएको छैन",
+        "unavailable": "मर्ज आवश्यकताहरू उपलब्ध छैनन्",
+        "noProtectionRules": "शाखा सुरक्षा नियमहरू छैनन्",
+        "queueTitle": "मर्ज लाम",
+        "inQueue": "लाममा {{position}}",
+        "positionUnknown": "स्थान अज्ञात",
+        "queueState": {
+          "QUEUED": "कतारमा",
+          "AWAITING_CHECKS": "जाँचको प्रतीक्षामा",
+          "MERGEABLE": "मर्ज गर्न सकिने",
+          "UNMERGEABLE": "मर्ज गर्न नसकिने",
+          "LOCKED": "लक गरिएको"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "पुष्टि गर्न सकिएन — पुनः प्रयास गर्नुअघि PR जाँच्नुहोस्।",
       "persistenceFailed": "हामीले यो कार्य रेकर्ड गर्न सकेनौं। कृपया पछि फेरि प्रयास गर्नुहोस्।",
       "forbidden": "निषेध गरिएको"
+    },
+    "context": {
+      "title": "सन्दर्भ",
+      "labels": "लेबलहरू",
+      "assignees": "तोकिएकाहरू",
+      "reviewers": "समीक्षकहरू",
+      "team": "टोली",
+      "approved": "स्वीकृत",
+      "changesRequested": "परिवर्तन अनुरोध गरियो",
+      "dismissed": "खारेज गरियो",
+      "commented": "टिप्पणी गरियो",
+      "awaiting": "प्रतीक्षारत",
+      "opened": "खोलियो",
+      "updated": "अद्यावधिक गरियो",
+      "closed": "बन्द",
+      "merged": "मर्ज गरियो",
+      "mergedBy": "ले मर्ज गरे",
+      "linkedIssues": "लिंक गरिएका समस्याहरू",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "अज्ञात लेखक"
     }
   },
   "notifications": {

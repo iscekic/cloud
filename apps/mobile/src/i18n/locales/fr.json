@@ -2885,6 +2885,30 @@
         "merge": "Combinez tous les commits de cette branche dans la branche de base avec un commit de fusion.",
         "squash": "Combinez tous les commits de cette branche en un seul commit sur la branche de base.",
         "rebase": "Rejouez tous les commits de cette branche sur la branche de base sans commit de fusion."
+      },
+      "requirements": {
+        "title": "Conditions de fusion",
+        "reviews": "Revues",
+        "approvals": "{{satisfied}} approbations sur {{required}} requises",
+        "required": "obligatoire",
+        "notRequired": "Non requis",
+        "passed": "Réussi",
+        "failed": "Échoué",
+        "pending": "En attente",
+        "noRunYet": "Aucune exécution pour l’instant",
+        "notMet": "Non rempli",
+        "unavailable": "Conditions de fusion indisponibles",
+        "noProtectionRules": "Aucune règle de protection de branche",
+        "queueTitle": "File de fusion",
+        "inQueue": "{{position}} dans la file",
+        "positionUnknown": "Position inconnue",
+        "queueState": {
+          "QUEUED": "En file d'attente",
+          "AWAITING_CHECKS": "En attente des vérifications",
+          "MERGEABLE": "Fusionnable",
+          "UNMERGEABLE": "Non fusionnable",
+          "LOCKED": "Verrouillé"
+        }
       }
     },
     "noDescriptionProvided": "Aucune description fournie.",
@@ -3005,6 +3029,26 @@
       "ambiguous": "Impossible de confirmer — vérifiez la PR avant de réessayer.",
       "persistenceFailed": "Nous n'avons pas pu enregistrer cette action. Veuillez réessayer plus tard.",
       "forbidden": "Interdit"
+    },
+    "context": {
+      "title": "Contexte",
+      "labels": "Étiquettes",
+      "assignees": "Assignés",
+      "reviewers": "Réviseurs",
+      "team": "Équipe",
+      "approved": "Approuvée",
+      "changesRequested": "Modifications demandées",
+      "dismissed": "Ignoré",
+      "commented": "Commentée",
+      "awaiting": "En attente",
+      "opened": "Ouverte",
+      "updated": "Mis à jour",
+      "closed": "Fermée",
+      "merged": "Fusionnée",
+      "mergedBy": "Fusionnée par",
+      "linkedIssues": "Tickets liés",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Auteur inconnu"
     }
   },
   "organization": {

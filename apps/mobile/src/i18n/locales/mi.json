@@ -320,6 +320,30 @@
         "merge": "Whakakotahitia ngā commit katoa o tēnei peka ki te peka papamuri me tētahi commit whakakotahi.",
         "squash": "Whakakotahitia ngā commit katoa o tēnei peka ki tētahi commit kotahi i te peka papamuri.",
         "rebase": "Tākarohia anō ngā commit katoa o tēnei peka ki te peka papamuri me te kore commit whakakotahi."
+      },
+      "requirements": {
+        "title": "Ngā whakaritenga hanumi",
+        "reviews": "Ngā Arotake",
+        "approvals": "{{satisfied}} o {{required}} whakaaetanga",
+        "required": "e hiahiatia ana",
+        "notRequired": "Kāore e hiahiatia",
+        "passed": "I tutuki",
+        "failed": "I rahua",
+        "pending": "E tatari ana",
+        "noRunYet": "Kāhore anō kia oma",
+        "notMet": "Kāore i tutuki",
+        "unavailable": "Kāore i te wātea ngā whakaritenga hanumi",
+        "noProtectionRules": "Kāore he ture ārai peka",
+        "queueTitle": "Rārangi hanumi",
+        "inQueue": "{{position}} i te rārangi",
+        "positionUnknown": "Tūnga kāore i mōhiotia",
+        "queueState": {
+          "QUEUED": "Kua tūtaki",
+          "AWAITING_CHECKS": "E tatari ana ki ngā arowhai",
+          "MERGEABLE": "Ka taea te hanumi",
+          "UNMERGEABLE": "Kāore e taea te hanumi",
+          "LOCKED": "Kua raka"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Kāore i taea te whakaū — tirohia te PR i mua i te whakamātau anō.",
       "persistenceFailed": "Kāore i taea e mātou te tuhia tēnei mahi. Tēnā whakamātau anō ā muri ake.",
       "forbidden": "Kua rāhuitia"
+    },
+    "context": {
+      "title": "Horopaki",
+      "labels": "Ngā tapanga",
+      "assignees": "Ngā mea kua tohua",
+      "reviewers": "Ngā kaiarotake",
+      "team": "Te tira",
+      "approved": "Kua whakamanahia",
+      "changesRequested": "I tonoa ngā panoni",
+      "dismissed": "Kua whakakorea",
+      "commented": "Kua kōrero",
+      "awaiting": "E tatari ana",
+      "opened": "Kua tuwhera",
+      "updated": "Kua whakahoutia",
+      "closed": "Kua kati",
+      "merged": "Kua whakakotahitia",
+      "mergedBy": "Nā te tangata i hanumi",
+      "linkedIssues": "Ngā take hono",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Kaituhi kāore e mōhiotia"
     }
   },
   "notifications": {

@@ -320,6 +320,30 @@
         "merge": "გააერთიანეთ ამ განშტოების ყველა commit საბაზო განშტოებაში შერწყმის commit-ით.",
         "squash": "გააერთიანეთ ამ განშტოების ყველა commit საბაზო განშტოებაზე ერთ commit-ად.",
         "rebase": "გაიმეორეთ ამ განშტოების ყველა commit საბაზო განშტოებაზე შერწყმის commit-ის გარეშე."
+      },
+      "requirements": {
+        "title": "შერწყმის მოთხოვნები",
+        "reviews": "რეცენზიები",
+        "approvals": "{{required}}-დან {{satisfied}} დამტკიცება",
+        "required": "აუცილებელი",
+        "notRequired": "სავალდებულო არ არის",
+        "passed": "გავიდა",
+        "failed": "ჩაიშალა",
+        "pending": "მოლოდინშია",
+        "noRunYet": "ჯერ არ გაშვებულა",
+        "notMet": "არ დაკმაყოფილდა",
+        "unavailable": "შერწყმის მოთხოვნები მიუწვდომელია",
+        "noProtectionRules": "ტოტის დაცვის წესები არ არსებობს",
+        "queueTitle": "შერწყმის რიგი",
+        "inQueue": "{{position}} რიგში",
+        "positionUnknown": "პოზიცია უცნობია",
+        "queueState": {
+          "QUEUED": "რიგშია",
+          "AWAITING_CHECKS": "ელოდება შემოწმებებს",
+          "MERGEABLE": "შესაძლებელია შერწყმა",
+          "UNMERGEABLE": "შეუძლებელია შერწყმა",
+          "LOCKED": "ჩაკეტილია"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "დადასტურება ვერ მოხერხდა — PR-ის ხელახლა ცდამდე შეამოწმეთ იგი.",
       "persistenceFailed": "ამ მოქმედების ჩაწერა ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
       "forbidden": "აკრძალულია"
+    },
+    "context": {
+      "title": "კონტექსტი",
+      "labels": "ჭდეები",
+      "assignees": "დანიშნულები",
+      "reviewers": "რეცენზენტები",
+      "team": "გუნდი",
+      "approved": "დამტკიცებულია",
+      "changesRequested": "მოთხოვნილია ცვლილებები",
+      "dismissed": "გაუქმებულია",
+      "commented": "კომენტარი დაემატა",
+      "awaiting": "ელოდება",
+      "opened": "გაიხსნა",
+      "updated": "განახლებულია",
+      "closed": "დახურულია",
+      "merged": "შერწყმულია",
+      "mergedBy": "შეერწყა",
+      "linkedIssues": "დაკავშირებული პრობლემები",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "უცნობი ავტორი"
     }
   },
   "notifications": {

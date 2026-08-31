@@ -320,6 +320,30 @@
         "merge": "Jikọta commit niile sitere na alaka a n'ime alaka isi na commit njikọta.",
         "squash": "Jikọta commit niile sitere na alaka a n'ime otu commit na alaka isi.",
         "rebase": "Meegharịa commit niile sitere na alaka a na alaka isi na-enweghị commit njikọta."
+      },
+      "requirements": {
+        "title": "Ihe ndị chọrọ ijikọ",
+        "reviews": "Nyocha",
+        "approvals": "{{satisfied}} n’ime {{required}} nnabata",
+        "required": "achọrọ",
+        "notRequired": "Achọghị",
+        "passed": "Ọ gafere",
+        "failed": "Dara",
+        "pending": "Na-echere",
+        "noRunYet": "Enweghị ọsọ ọ bụla",
+        "notMet": "Ezutebeghị",
+        "unavailable": "Ihe dị mkpa ijikọ adịghị",
+        "noProtectionRules": "Enweghị iwu nchebe alaka",
+        "queueTitle": "Ahịrị ijikọ",
+        "inQueue": "{{position}} n’ahịrị",
+        "positionUnknown": "Ọnọdụ amaghị",
+        "queueState": {
+          "QUEUED": "Edobelere",
+          "AWAITING_CHECKS": "Na-eche nyocha",
+          "MERGEABLE": "Enwere ike ijikọ",
+          "UNMERGEABLE": "Enweghị ike ijikọ",
+          "LOCKED": "Emechibidoro"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Enweghị ike ikwenye — lelee PR tupu ị nwaa ọzọ.",
       "persistenceFailed": "Anyị enweghị ike ịdekọ omume a. Biko nwaa ọzọ ma emechaa.",
       "forbidden": "Amachibidoro"
+    },
+    "context": {
+      "title": "Ọdịnaya",
+      "labels": "Aha mmado",
+      "assignees": "Ndị e kenyere",
+      "reviewers": "Ndị na-enyocha",
+      "team": "Ìgwè",
+      "approved": "Anabatara",
+      "changesRequested": "A rịọrọ mgbanwe",
+      "dismissed": "Ekagburu",
+      "commented": "A zara ya",
+      "awaiting": "Na-eche",
+      "opened": "Emeghere",
+      "updated": "Emelitere",
+      "closed": "Emechiri",
+      "merged": "Ejikọtara",
+      "mergedBy": "Jikọtara site na",
+      "linkedIssues": "Okwu ndị ejikọtara",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Onye edemede amaghị"
     }
   },
   "notifications": {

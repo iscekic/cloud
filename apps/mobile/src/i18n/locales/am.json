@@ -320,6 +320,30 @@
         "merge": "ከዚህ ቅርንጫፍ ያሉትን ሁሉንም መግባቶች በውህደት መግባት ወደ መሠረት ቅርንጫፉ ያጣምሩ።",
         "squash": "ከዚህ ቅርንጫፍ ያሉትን ሁሉንም መግባቶች በመሠረት ቅርንጫፉ ላይ ወደ አንድ ነጠላ መግባት ያጣምሩ።",
         "rebase": "ከዚህ ቅርንጫፍ ያሉትን ሁሉንም መግባቶች ያለ ውህደት መግባት ወደ መሠረት ቅርንጫፉ እንደገና ያስኬዱ።"
+      },
+      "requirements": {
+        "title": "የውህደት መስፈርቶች",
+        "reviews": "ግምገማዎች",
+        "approvals": "{{required}} ውስጥ {{satisfied}} ማጽደቂያዎች",
+        "required": "ይፈለጋል",
+        "notRequired": "አይፈለግም",
+        "passed": "አልፏል",
+        "failed": "አልተሳካም",
+        "pending": "በመጠበቅ ላይ",
+        "noRunYet": "ገና ሩጫ የለም",
+        "notMet": "አልተሟላም",
+        "unavailable": "የውህደት መስፈርቶች አይገኙም",
+        "noProtectionRules": "የቅርንጫፍ ጥበቃ ሕጎች የሉም",
+        "queueTitle": "የውህደት ወረፋ",
+        "inQueue": "{{position}} በወረፋ ውስጥ",
+        "positionUnknown": "ቦታ ያልታወቀ",
+        "queueState": {
+          "QUEUED": "ተሰልፏል",
+          "AWAITING_CHECKS": "ቼኮችን በመጠበቅ ላይ",
+          "MERGEABLE": "ሊዋሃድ የሚችል",
+          "UNMERGEABLE": "ሊዋሃድ የማይችል",
+          "LOCKED": "ተቆልፏል"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "ማረጋገጥ አልተቻለም — እንደገና ከመሞከርዎ በፊት PRን ያረጋግጡ።",
       "persistenceFailed": "ይህን እርምጃ መመዝገብ አልቻልን። እባክዎ በኋላ እንደገና ይሞክሩ።",
       "forbidden": "የተከለከለ"
+    },
+    "context": {
+      "title": "አውድ",
+      "labels": "መለያዎች",
+      "assignees": "ተመድበዋል",
+      "reviewers": "ገምጋሚዎች",
+      "team": "ቡድን",
+      "approved": "ጸድቋል",
+      "changesRequested": "ለውጦች ተጠይቀዋል",
+      "dismissed": "ተወግዷል",
+      "commented": "አስተያየት ተሰጥቷል",
+      "awaiting": "በመጠበቅ ላይ",
+      "opened": "ተከፍቷል",
+      "updated": "ተዘምኗል",
+      "closed": "ተዘግቷል",
+      "merged": "ተዋህዷል",
+      "mergedBy": "የተዋሃደው በ",
+      "linkedIssues": "የተገናኙ ጉዳዮች",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "ያልታወቀ ደራሲ"
     }
   },
   "notifications": {

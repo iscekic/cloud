@@ -320,6 +320,30 @@
         "merge": "Darapọ gbogbo awọn iṣẹ lati ẹ̀ka yii sinu ẹ̀ka ipilẹ pẹlu iṣẹ darapọ.",
         "squash": "Darapọ gbogbo awọn iṣẹ lati ẹ̀ka yii sinu iṣẹ ẹyọkan lori ẹ̀ka ipilẹ.",
         "rebase": "Tun ṣiṣẹ gbogbo awọn iṣẹ lati ẹ̀ka yii si ẹ̀ka ipilẹ laisi iṣẹ darapọ."
+      },
+      "requirements": {
+        "title": "Awọn ibeere àkópọ̀",
+        "reviews": "Awọn atunyẹwo",
+        "approvals": "{{satisfied}} nínú {{required}} ìfọwọ́sí",
+        "required": "nbeere",
+        "notRequired": "Kò pọn dandan",
+        "passed": "Kọjá",
+        "failed": "Kuna",
+        "pending": "Ti nduro",
+        "noRunYet": "Kò sí ìmúṣiṣẹ́ kankan",
+        "notMet": "Kò tíì dé",
+        "unavailable": "Àwọn ibeere àkópọ̀ kò sí",
+        "noProtectionRules": "Kò sí àwọn òfin ààbò ẹ̀ka",
+        "queueTitle": "Ìlà àkópọ̀",
+        "inQueue": "{{position}} nínú ìlà",
+        "positionUnknown": "Ipò àìmọ̀",
+        "queueState": {
+          "QUEUED": "Ti wa ni ila",
+          "AWAITING_CHECKS": "Ń dúró de àwọn àyẹ̀wò",
+          "MERGEABLE": "Ẹ̀tọ́ àkópọ̀",
+          "UNMERGEABLE": "Kò ṣeé kópọ̀",
+          "LOCKED": "Ti tì pa"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "A ko le fi idi rẹ mulẹ — ṣayẹwo PR naa ki o to gbiyanju lẹẹkansi.",
       "persistenceFailed": "A ko le gbasilẹ iṣe yii. Jọwọ gbiyanju lẹẹkansi nigbamii.",
       "forbidden": "Eewọ"
+    },
+    "context": {
+      "title": "Àyíká",
+      "labels": "Àwọn àmì",
+      "assignees": "Àwọn tí a yàn",
+      "reviewers": "Àwọn olùyẹ̀wò",
+      "team": "Ẹgbẹ́",
+      "approved": "Ti fọwọ́sí",
+      "changesRequested": "A béèrè àwọn àyípadà",
+      "dismissed": "Ti fi silẹ",
+      "commented": "A ti sọ̀rọ̀",
+      "awaiting": "Ń dúró",
+      "opened": "Ti ṣí",
+      "updated": "Ti ṣe imudojuiwọn",
+      "closed": "Tí a pa",
+      "merged": "Ti darapọ",
+      "mergedBy": "Ti kópọ̀ nípasẹ̀",
+      "linkedIssues": "Àwọn ọ̀ràn tó so mọ́",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Onkọwe aimọ"
     }
   },
   "notifications": {

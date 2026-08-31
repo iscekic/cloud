@@ -322,6 +322,30 @@
         "merge": "Combine todos os commits deste ramo no ramo base com um commit de fusão.",
         "squash": "Combine todos os commits deste ramo num único commit no ramo base.",
         "rebase": "Reproduza todos os commits deste ramo no ramo base sem um commit de fusão."
+      },
+      "requirements": {
+        "title": "Requisitos de fusão",
+        "reviews": "Revisões",
+        "approvals": "{{satisfied}} de {{required}} aprovações",
+        "required": "obrigatório",
+        "notRequired": "Não obrigatório",
+        "passed": "Aprovado",
+        "failed": "Falhou",
+        "pending": "Pendente",
+        "noRunYet": "Ainda sem execução",
+        "notMet": "Não cumprido",
+        "unavailable": "Requisitos de fusão indisponíveis",
+        "noProtectionRules": "Sem regras de proteção de ramo",
+        "queueTitle": "Fila de fusão",
+        "inQueue": "{{position}} na fila",
+        "positionUnknown": "Posição desconhecida",
+        "queueState": {
+          "QUEUED": "Na fila",
+          "AWAITING_CHECKS": "A aguardar verificações",
+          "MERGEABLE": "Fusível",
+          "UNMERGEABLE": "Não fusível",
+          "LOCKED": "Bloqueado"
+        }
       }
     },
     "discussion": {
@@ -615,6 +639,26 @@
       "ambiguous": "Não foi possível confirmar — verifique o PR antes de tentar novamente.",
       "persistenceFailed": "Não foi possível registar esta ação. Tente novamente mais tarde.",
       "forbidden": "Proibido"
+    },
+    "context": {
+      "title": "Contexto",
+      "labels": "Etiquetas",
+      "assignees": "Atribuídos",
+      "reviewers": "Revisores",
+      "team": "Equipa",
+      "approved": "Aprovado",
+      "changesRequested": "Alterações pedidas",
+      "dismissed": "Dispensada",
+      "commented": "Comentado",
+      "awaiting": "A aguardar",
+      "opened": "Aberto",
+      "updated": "Atualizado",
+      "closed": "Fechado",
+      "merged": "Fundido",
+      "mergedBy": "Fundido por",
+      "linkedIssues": "Problemas ligados",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Autor desconhecido"
     }
   },
   "notifications": {

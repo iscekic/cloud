@@ -2868,6 +2868,30 @@
         "merge": "Bu daldaki tüm commit'leri bir birleştirme commit'iyle temel dala birleştirir.",
         "squash": "Bu daldaki tüm commit'leri temel dalda tek bir commit'te birleştirir.",
         "rebase": "Bu daldaki tüm commit'leri bir birleştirme commit'i olmadan temel dalda yeniden uygular."
+      },
+      "requirements": {
+        "title": "Birleştirme gereksinimleri",
+        "reviews": "İncelemeler",
+        "approvals": "{{required}} onaydan {{satisfied}} tanesi",
+        "required": "zorunlu",
+        "notRequired": "Gerekli değil",
+        "passed": "Geçti",
+        "failed": "Başarısız oldu",
+        "pending": "Bekliyor",
+        "noRunYet": "Henüz çalıştırma yok",
+        "notMet": "Karşılanmadı",
+        "unavailable": "Birleştirme gereksinimleri kullanılamıyor",
+        "noProtectionRules": "Dal koruması kuralı yok",
+        "queueTitle": "Birleştirme kuyruğu",
+        "inQueue": "Kuyrukta {{position}}. sırada",
+        "positionUnknown": "Konum bilinmiyor",
+        "queueState": {
+          "QUEUED": "Kuyruğa alındı",
+          "AWAITING_CHECKS": "Kontrolleri bekliyor",
+          "MERGEABLE": "Birleştirilebilir",
+          "UNMERGEABLE": "Birleştirilemez",
+          "LOCKED": "Kilitli"
+        }
       }
     },
     "noDescriptionProvided": "Açıklama sağlanmadı.",
@@ -2985,6 +3009,26 @@
       "ambiguous": "Doğrulanamadı — yeniden denemeden önce PR'yi kontrol edin.",
       "persistenceFailed": "Bu işlemi kaydedemedik. Lütfen daha sonra tekrar deneyin.",
       "forbidden": "Yasak"
+    },
+    "context": {
+      "title": "Bağlam",
+      "labels": "Etiketler",
+      "assignees": "Atananlar",
+      "reviewers": "İnceleyenler",
+      "team": "Ekip",
+      "approved": "Onaylandı",
+      "changesRequested": "Değişiklik istendi",
+      "dismissed": "Yok sayıldı",
+      "commented": "Yorum yapıldı",
+      "awaiting": "Bekliyor",
+      "opened": "Açıldı",
+      "updated": "Güncellendi",
+      "closed": "Kapalı",
+      "merged": "Birleştirildi",
+      "mergedBy": "Birleştiren",
+      "linkedIssues": "Bağlantılı sorunlar",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Bilinmeyen yazar"
     }
   },
   "organization": {

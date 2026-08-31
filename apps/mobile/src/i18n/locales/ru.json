@@ -2902,6 +2902,30 @@
         "merge": "Объедините все коммиты из этой ветки в базовую ветку с commit слияния.",
         "squash": "Объедините все коммиты из этой ветки в один коммит в базовой ветке.",
         "rebase": "Воспроизведите все коммиты из этой ветки в базовой ветке без commit слияния."
+      },
+      "requirements": {
+        "title": "Требования к слиянию",
+        "reviews": "Проверки",
+        "approvals": "{{satisfied}} из {{required}} одобрений",
+        "required": "обязательно",
+        "notRequired": "Не требуется",
+        "passed": "Пройдено",
+        "failed": "Не удалось",
+        "pending": "Ожидается",
+        "noRunYet": "Пока не запускалось",
+        "notMet": "Не выполнено",
+        "unavailable": "Требования к слиянию недоступны",
+        "noProtectionRules": "Нет правил защиты ветки",
+        "queueTitle": "Очередь слияния",
+        "inQueue": "{{position}} в очереди",
+        "positionUnknown": "Позиция неизвестна",
+        "queueState": {
+          "QUEUED": "В очереди",
+          "AWAITING_CHECKS": "Ожидание проверок",
+          "MERGEABLE": "Можно слить",
+          "UNMERGEABLE": "Нельзя слить",
+          "LOCKED": "Заблокировано"
+        }
       }
     },
     "noDescriptionProvided": "Описание не предоставлено.",
@@ -3025,6 +3049,26 @@
       "ambiguous": "Не удалось подтвердить — проверьте PR перед повторной попыткой.",
       "persistenceFailed": "Не удалось записать это действие. Повторите попытку позже.",
       "forbidden": "Запрещено"
+    },
+    "context": {
+      "title": "Контекст",
+      "labels": "Метки",
+      "assignees": "Назначенные",
+      "reviewers": "Проверяющие",
+      "team": "Команда",
+      "approved": "Одобрено",
+      "changesRequested": "Запрошены изменения",
+      "dismissed": "Отклонено",
+      "commented": "Прокомментировано",
+      "awaiting": "Ожидает",
+      "opened": "Открыто",
+      "updated": "Обновлено",
+      "closed": "Закрыт",
+      "merged": "Объединен",
+      "mergedBy": "Слито",
+      "linkedIssues": "Связанные задачи",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Неизвестный автор"
     }
   },
   "organization": {

@@ -320,6 +320,30 @@
         "merge": "បញ្ចូល commit ទាំងអស់ពីសាខានេះទៅក្នុងសាខាមូលដ្ឋាន ជាមួយនឹង commit បញ្ចូលមួយ។",
         "squash": "បញ្ចូល commit ទាំងអស់ពីសាខានេះទៅជា commit តែមួយនៅលើសាខាមូលដ្ឋាន។",
         "rebase": "ចាក់ឡើងវិញនូវ commit ទាំងអស់ពីសាខានេះទៅលើសាខាមូលដ្ឋាន ដោយគ្មាន commit បញ្ចូល។"
+      },
+      "requirements": {
+        "title": "តម្រូវការបញ្ចូលគ្នា",
+        "reviews": "ការពិនិត្យ",
+        "approvals": "{{satisfied}} ក្នុងចំណោម {{required}} ការយល់ព្រម",
+        "required": "ទាមទារ",
+        "notRequired": "មិនទាមទារ",
+        "passed": "បានជាប់",
+        "failed": "បានបរាជ័យ",
+        "pending": "កំពុងរង់ចាំ",
+        "noRunYet": "មិនទាន់មានការដំណើរការ",
+        "notMet": "មិនបានបំពេញ",
+        "unavailable": "តម្រូវការបញ្ចូលគ្នាមិនអាចប្រើបាន",
+        "noProtectionRules": "គ្មានច្បាប់ការពារសាខា",
+        "queueTitle": "ជួរបញ្ចូលគ្នា",
+        "inQueue": "{{position}} ក្នុងជួរ",
+        "positionUnknown": "ទីតាំងមិនស្គាល់",
+        "queueState": {
+          "QUEUED": "បានដាក់ក្នុងជួរ",
+          "AWAITING_CHECKS": "កំពុងរង់ចាំការត្រួតពិនិត្យ",
+          "MERGEABLE": "អាចបញ្ចូលគ្នាបាន",
+          "UNMERGEABLE": "មិនអាចបញ្ចូលគ្នាបាន",
+          "LOCKED": "បានចាក់សោ"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "មិនអាចបញ្ជាក់បានទេ — សូមពិនិត្យ PR មុនពេលព្យាយាមម្តងទៀត។",
       "persistenceFailed": "យើងមិនអាចកត់ត្រាសកម្មភាពនេះបានទេ។ សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ។",
       "forbidden": "ហាមឃាត់"
+    },
+    "context": {
+      "title": "បរិបទ",
+      "labels": "ស្លាក",
+      "assignees": "អ្នកដែលបានចាត់តាំង",
+      "reviewers": "អ្នកពិនិត្យ",
+      "team": "ក្រុម",
+      "approved": "បានយល់ព្រម",
+      "changesRequested": "បានស្នើសុំការផ្លាស់ប្តូរ",
+      "dismissed": "បានបដិសេធ",
+      "commented": "បានបញ្ចេញមតិ",
+      "awaiting": "កំពុងរង់ចាំ",
+      "opened": "បានបើក",
+      "updated": "បានធ្វើបច្ចុប្បន្នភាព",
+      "closed": "បានបិទ",
+      "merged": "បានបញ្ចូល",
+      "mergedBy": "បញ្ចូលគ្នាដោយ",
+      "linkedIssues": "បញ្ហាដែលបានភ្ជាប់",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "អ្នកនិពន្ធមិនស្គាល់"
     }
   },
   "notifications": {

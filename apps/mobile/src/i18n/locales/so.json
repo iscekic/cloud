@@ -320,6 +320,30 @@
         "merge": "Isku dar dhammaan commits-ka laantan kuna laanta saldhigga iyadoo la isticmaalayo commit merge ah.",
         "squash": "Isku dar dhammaan commits-ka laantan hal commit oo keliya oo ku yaal laanta saldhigga.",
         "rebase": "Dib u ciyaar dhammaan commits-ka laantan ee laanta saldhigga iyadoon la isticmaalin commit merge ah."
+      },
+      "requirements": {
+        "title": "Shuruudaha isku-darka",
+        "reviews": "Dib-u-eegisyo",
+        "approvals": "{{satisfied}} ka mid ah {{required}} ansixin",
+        "required": "loo baahan yahay",
+        "notRequired": "Looma baahna",
+        "passed": "Dhaafay",
+        "failed": "Way fashilantay",
+        "pending": "Sugaya",
+        "noRunYet": "Weli ma jiro socod",
+        "notMet": "Lama buuxin",
+        "unavailable": "Shuruudaha isku-darka lama heli karo",
+        "noProtectionRules": "Ma jiraan xeerar ilaalin laan",
+        "queueTitle": "Safka isku-darka",
+        "inQueue": "{{position}} safka",
+        "positionUnknown": "Boos la aqoon",
+        "queueState": {
+          "QUEUED": "Safan",
+          "AWAITING_CHECKS": "Sugaya baadhista",
+          "MERGEABLE": "Isku-darki kara",
+          "UNMERGEABLE": "Lama isku-dari karo",
+          "LOCKED": "La xidhay"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Lama xaqiijin karin — hubi PR-ka ka hor intaadan mar kale isku dayin.",
       "persistenceFailed": "Falkan lama diwaangelin karin. Fadlan mar kale isku day markii dambe.",
       "forbidden": "Waa mamnuuc"
+    },
+    "context": {
+      "title": "Xaalad",
+      "labels": "Xargaha",
+      "assignees": "Loo xilsaaray",
+      "reviewers": "Dib-u-eegayaasha",
+      "team": "Kooxda",
+      "approved": "La ansixiyay",
+      "changesRequested": "Isbeddello ayaa la codsaday",
+      "dismissed": "Waa la xiray",
+      "commented": "Faallo laga dhigay",
+      "awaiting": "Sugaya",
+      "opened": "La furay",
+      "updated": "La cusboonaysiiyay",
+      "closed": "Waa xiran",
+      "merged": "Waa la daray",
+      "mergedBy": "Isku daray",
+      "linkedIssues": "Arrimo isku xiran",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Qoraa aan la aqoon"
     }
   },
   "notifications": {

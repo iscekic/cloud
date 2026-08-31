@@ -324,6 +324,30 @@
         "merge": "Аб'яднайце ўсе каміты з гэтай галіны ў базавую галіну з камітам зліцця.",
         "squash": "Аб'яднайце ўсе каміты з гэтай галіны ў адзін каміт на базавай галіне.",
         "rebase": "Паўторыце ўсе каміты з гэтай галіны на базавай галіне без каміта зліцця."
+      },
+      "requirements": {
+        "title": "Патрабаванні да зліцця",
+        "reviews": "Рэцэнзіі",
+        "approvals": "{{satisfied}} з {{required}} пацвярджэнняў",
+        "required": "абавязкова",
+        "notRequired": "Не абавязкова",
+        "passed": "Пройдзена",
+        "failed": "Не атрымалася",
+        "pending": "Чакае",
+        "noRunYet": "Пакуль не запускалася",
+        "notMet": "Не выканана",
+        "unavailable": "Патрабаванні да зліцця недаступныя",
+        "noProtectionRules": "Няма правіл абароны галіны",
+        "queueTitle": "Чарга зліцця",
+        "inQueue": "{{position}} у чарзе",
+        "positionUnknown": "Пазіцыя невядомая",
+        "queueState": {
+          "QUEUED": "У чарзе",
+          "AWAITING_CHECKS": "Чакае праверкі",
+          "MERGEABLE": "Можна зліць",
+          "UNMERGEABLE": "Нельга зліць",
+          "LOCKED": "Заблакіравана"
+        }
       }
     },
     "discussion": {
@@ -622,6 +646,26 @@
       "ambiguous": "Не атрымалася пацвердзіць — праверце PR перад паўторнай спробай.",
       "persistenceFailed": "Не ўдалося запісаць гэтае дзеянне. Паспрабуйце яшчэ раз пазней.",
       "forbidden": "Забаронена"
+    },
+    "context": {
+      "title": "Кантэкст",
+      "labels": "Меткі",
+      "assignees": "Прызначаныя",
+      "reviewers": "Рэцэнзенты",
+      "team": "Каманда",
+      "approved": "Ухвалена",
+      "changesRequested": "Запытаны змены",
+      "dismissed": "Адхілена",
+      "commented": "Пракаментавана",
+      "awaiting": "Чакае",
+      "opened": "Адкрыта",
+      "updated": "Абноўлена",
+      "closed": "Закрыты",
+      "merged": "Зліта",
+      "mergedBy": "Зліў",
+      "linkedIssues": "Звязаныя пытанні",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Невядомы аўтар"
     }
   },
   "notifications": {

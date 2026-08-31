@@ -320,6 +320,30 @@
         "merge": "Энэ салбарын бүх commit-уудыг merge commit-той суурь салбарт нэгтгээрэй.",
         "squash": "Энэ салбарын бүх commit-уудыг суурь салбар дээр нэг commit болгон нэгтгээрэй.",
         "rebase": "Merge commit-гүйгээр энэ салбарын бүх commit-уудыг суурь салбар дээр дахин хэрэгжүүлээрэй."
+      },
+      "requirements": {
+        "title": "Нэгтгэх шаардлагууд",
+        "reviews": "Тоймууд",
+        "approvals": "{{required}} баталгаажуулалтаас {{satisfied}}",
+        "required": "шаардлагатай",
+        "notRequired": "Шаардлагагүй",
+        "passed": "Тэнцсэн",
+        "failed": "Амжилтгүй болсон",
+        "pending": "Хүлээгдэж байна",
+        "noRunYet": "Одоогоор ажиллаагүй",
+        "notMet": "Хангаагүй",
+        "unavailable": "Нэгтгэх шаардлагууд боломжгүй",
+        "noProtectionRules": "Салбар хамгаалах дүрэм байхгүй",
+        "queueTitle": "Нэгтгэх дараалал",
+        "inQueue": "{{position}} дараалалд",
+        "positionUnknown": "Байрлал тодорхойгүй",
+        "queueState": {
+          "QUEUED": "Дараалалд орсон",
+          "AWAITING_CHECKS": "Шалгалтыг хүлээж байна",
+          "MERGEABLE": "Нэгтгэх боломжтой",
+          "UNMERGEABLE": "Нэгтгэх боломжгүй",
+          "LOCKED": "Түгжигдсэн"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Баталгаажуулж чадсангүй — дахин оролдохын өмнө PR-г шалгана уу.",
       "persistenceFailed": "Бид энэ үйлдлийг бүртгэж чадсангүй. Дараа дахин оролдоно уу.",
       "forbidden": "Хориглосон"
+    },
+    "context": {
+      "title": "Контекст",
+      "labels": "Шошгууд",
+      "assignees": "Томилогдсон",
+      "reviewers": "Хянагчид",
+      "team": "Баг",
+      "approved": "Зөвшөөрөгдсөн",
+      "changesRequested": "Өөрчлөлт хүссэн",
+      "dismissed": "Хасагдсан",
+      "commented": "Сэтгэгдэл үлдээсэн",
+      "awaiting": "Хүлээж байна",
+      "opened": "Нээгдсэн",
+      "updated": "Шинэчлэгдсэн",
+      "closed": "Хаалттай",
+      "merged": "Нэгтгэсэн",
+      "mergedBy": "Нэгтгэсэн",
+      "linkedIssues": "Холбоотой асуудлууд",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Тодорхойгүй зохиолч"
     }
   },
   "notifications": {

@@ -320,6 +320,30 @@
         "merge": "Konbine tout komit yo sou branch sa a nan branch baz la ak yon komit fizyon.",
         "squash": "Konbine tout komit yo sou branch sa a nan yon sèl komit sou branch baz la.",
         "rebase": "Rejoue tout komit yo sou branch sa a sou branch baz la san yon komit fizyon."
+      },
+      "requirements": {
+        "title": "Kondisyon pou fusion",
+        "reviews": "Revizyon",
+        "approvals": "{{satisfied}} sou {{required}} apwobasyon",
+        "required": "obligatwa",
+        "notRequired": "Pa obligatwa",
+        "passed": "Pase",
+        "failed": "Echwe",
+        "pending": "Annatant",
+        "noRunYet": "Pokoen gen egzekisyon",
+        "notMet": "Pa atenn",
+        "unavailable": "Kondisyon pou fusion pa disponib",
+        "noProtectionRules": "Pa gen règ pwoteksyon branch",
+        "queueTitle": "File fusion",
+        "inQueue": "{{position}} nan file",
+        "positionUnknown": "Pozisyon enkoni",
+        "queueState": {
+          "QUEUED": "An pwosesis",
+          "AWAITING_CHECKS": "Ap tann chèk yo",
+          "MERGEABLE": "Kapab fusion",
+          "UNMERGEABLE": "Pa kapab fusion",
+          "LOCKED": "Bloke"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Pa t ka konfime — tcheke PR a anvan ou eseye ankò.",
       "persistenceFailed": "Nou pa t ka anrejistre aksyon sa a. Tanpri eseye ankò pita.",
       "forbidden": "Entèdi"
+    },
+    "context": {
+      "title": "Kontèks",
+      "labels": "Etikèt",
+      "assignees": "Moun asiyen yo",
+      "reviewers": "Revizè yo",
+      "team": "Ekip",
+      "approved": "Apwouve",
+      "changesRequested": "Chanjman mande",
+      "dismissed": "Rejte",
+      "commented": "Kòmante",
+      "awaiting": "Ap tann",
+      "opened": "Louvri",
+      "updated": "Miz ajou",
+      "closed": "Fèmen",
+      "merged": "Fizyonnen",
+      "mergedBy": "Fizyonnen pa",
+      "linkedIssues": "Pwoblèm lye",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Otè enkoni"
     }
   },
   "notifications": {

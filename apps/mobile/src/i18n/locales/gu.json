@@ -320,6 +320,30 @@
         "merge": "આ બ્રાન્ચના બધા કમિટ્સને મર્જ કમિટ સાથે બેઝ બ્રાન્ચમાં ભેગા કરો.",
         "squash": "આ બ્રાન્ચના બધા કમિટ્સને બેઝ બ્રાન્ચ પર એક જ કમિટમાં ભેગા કરો.",
         "rebase": "આ બ્રાન્ચના બધા કમિટ્સને મર્જ કમિટ વિના બેઝ બ્રાન્ચ પર ફરી ચલાવો."
+      },
+      "requirements": {
+        "title": "મર્જ આવશ્યકતાઓ",
+        "reviews": "સમીક્ષાઓ",
+        "approvals": "{{required}} માંથી {{satisfied}} મંજૂરીઓ",
+        "required": "જરૂરી",
+        "notRequired": "જરૂરી નથી",
+        "passed": "પાસ થયું",
+        "failed": "નિષ્ફળ",
+        "pending": "બાકી",
+        "noRunYet": "હજી કોઈ રન નથી",
+        "notMet": "પૂર્ણ નથી",
+        "unavailable": "મર્જ આવશ્યકતાઓ અનુપલબ્ધ",
+        "noProtectionRules": "શાખા સુરક્ષા નિયમો નથી",
+        "queueTitle": "મર્જ કતાર",
+        "inQueue": "કતારમાં {{position}}",
+        "positionUnknown": "સ્થિતિ અજાણી",
+        "queueState": {
+          "QUEUED": "કતારમાં છે",
+          "AWAITING_CHECKS": "ચકાસણીની રાહ જોઈ રહ્યું છે",
+          "MERGEABLE": "મર્જ કરી શકાય તેવું",
+          "UNMERGEABLE": "મર્જ ન કરી શકાય તેવું",
+          "LOCKED": "લૉક કરેલું"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "પુષ્ટિ કરી શકાઈ નહીં — ફરી પ્રયાસ કરતાં પહેલાં PR તપાસો.",
       "persistenceFailed": "અમે આ ક્રિયા રેકોર્ડ કરી શક્યા નથી. કૃપા કરીને પછીથી ફરી પ્રયત્ન કરો.",
       "forbidden": "પ્રતિબંધિત"
+    },
+    "context": {
+      "title": "સંદર્ભ",
+      "labels": "લેબલ્સ",
+      "assignees": "અસાઇનીઓ",
+      "reviewers": "સમીક્ષકો",
+      "team": "ટીમ",
+      "approved": "મંજૂર",
+      "changesRequested": "ફેરફારોની વિનંતી",
+      "dismissed": "કાઢી નાખેલ",
+      "commented": "ટિપ્પણી કરેલ",
+      "awaiting": "રાહ જોઈ રહ્યું છે",
+      "opened": "ખોલેલું",
+      "updated": "અપડેટ કરેલ",
+      "closed": "બંધ",
+      "merged": "મર્જ થયું",
+      "mergedBy": "દ્વારા મર્જ કરેલ",
+      "linkedIssues": "લિંક કરેલી સમસ્યાઓ",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "અજાણ્યો લેખક"
     }
   },
   "notifications": {

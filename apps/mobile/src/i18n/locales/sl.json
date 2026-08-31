@@ -324,6 +324,30 @@
         "merge": "Združi vse commit-e s te veje v osnovno vejo z združevalnim commit-om.",
         "squash": "Združi vse commit-e s te veje v en sam commit na osnovni veji.",
         "rebase": "Ponovno izvedi vse commit-e s te veje na osnovni veji brez združevalnega commit-a."
+      },
+      "requirements": {
+        "title": "Zahteve za združitev",
+        "reviews": "Pregledi",
+        "approvals": "{{satisfied}} od {{required}} odobritev",
+        "required": "obvezno",
+        "notRequired": "Ni obvezno",
+        "passed": "Opravljeno",
+        "failed": "Ni uspelo",
+        "pending": "Na čakanju",
+        "noRunYet": "Še ni zagona",
+        "notMet": "Ni izpolnjeno",
+        "unavailable": "Zahteve za združitev niso na voljo",
+        "noProtectionRules": "Ni pravil za zaščito veje",
+        "queueTitle": "Čakalna vrsta za združitev",
+        "inQueue": "{{position}} v čakalni vrsti",
+        "positionUnknown": "Neznan položaj",
+        "queueState": {
+          "QUEUED": "V čakalni vrsti",
+          "AWAITING_CHECKS": "Čaka na preverjanja",
+          "MERGEABLE": "Združljivo",
+          "UNMERGEABLE": "Ni mogoče združiti",
+          "LOCKED": "Zaklenjeno"
+        }
       }
     },
     "discussion": {
@@ -622,6 +646,26 @@
       "ambiguous": "Ni bilo mogoče potrditi — preverite PR, preden poskusite znova.",
       "persistenceFailed": "Tega dejanja ni bilo mogoče zabeležiti. Poskusite znova pozneje.",
       "forbidden": "Prepovedano"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Oznake",
+      "assignees": "Dodeljeni",
+      "reviewers": "Pregledovalci",
+      "team": "Ekipa",
+      "approved": "Odobreno",
+      "changesRequested": "Zahtevane spremembe",
+      "dismissed": "Zavrženo",
+      "commented": "Komentirano",
+      "awaiting": "Čaka",
+      "opened": "Odprto",
+      "updated": "Posodobljeno",
+      "closed": "Zaprto",
+      "merged": "Združeno",
+      "mergedBy": "Združil",
+      "linkedIssues": "Povezane težave",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Neznan avtor"
     }
   },
   "notifications": {

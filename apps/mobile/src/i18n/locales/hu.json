@@ -320,6 +320,30 @@
         "merge": "Az ág összes commitját egyesíti az alapágba egy összevonási committal.",
         "squash": "Az ág összes commitját egyetlen committá egyesíti az alapágon.",
         "rebase": "Az ág összes commitját összevonási commit nélkül játssza újra az alapágra."
+      },
+      "requirements": {
+        "title": "Összevonási követelmények",
+        "reviews": "Ellenőrzések",
+        "approvals": "{{satisfied}} / {{required}} jóváhagyás",
+        "required": "kötelező",
+        "notRequired": "Nem kötelező",
+        "passed": "Sikeres",
+        "failed": "Sikertelen",
+        "pending": "Függőben",
+        "noRunYet": "Még nincs futtatás",
+        "notMet": "Nem teljesült",
+        "unavailable": "Az összevonási követelmények nem érhetők el",
+        "noProtectionRules": "Nincsenek ágvédelmi szabályok",
+        "queueTitle": "Összevonási sor",
+        "inQueue": "{{position}} a sorban",
+        "positionUnknown": "Ismeretlen pozíció",
+        "queueState": {
+          "QUEUED": "Sorban",
+          "AWAITING_CHECKS": "Ellenőrzésekre vár",
+          "MERGEABLE": "Összevonható",
+          "UNMERGEABLE": "Nem vonható össze",
+          "LOCKED": "Zárolva"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Nem sikerült megerősíteni — ellenőrizze a PR-t az újrapróbálás előtt.",
       "persistenceFailed": "Nem sikerült rögzíteni ezt a műveletet. Kérjük, próbálja újra később.",
       "forbidden": "Tiltott"
+    },
+    "context": {
+      "title": "Kontextus",
+      "labels": "Címkék",
+      "assignees": "Kijelöltek",
+      "reviewers": "Ellenőrzők",
+      "team": "Csapat",
+      "approved": "Jóváhagyva",
+      "changesRequested": "Módosítások kérve",
+      "dismissed": "Elvetve",
+      "commented": "Kommentelve",
+      "awaiting": "Függőben",
+      "opened": "Megnyitva",
+      "updated": "Frissítve",
+      "closed": "Lezárva",
+      "merged": "Összevonva",
+      "mergedBy": "Összevonva általa",
+      "linkedIssues": "Kapcsolódó hibajegyek",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Ismeretlen szerző"
     }
   },
   "notifications": {

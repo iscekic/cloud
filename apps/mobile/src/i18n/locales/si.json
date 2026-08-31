@@ -320,6 +320,30 @@
         "merge": "මෙම ශාඛාවේ සියලුම commits ඒකාබද්ධ commit එකක් සමඟ පාද ශාඛාවට ඒකාබද්ධ කරන්න.",
         "squash": "මෙම ශාඛාවේ සියලුම commits පාද ශාඛාවේ තනි commit එකකට ඒකාබද්ධ කරන්න.",
         "rebase": "ඒකාබද්ධ commit එකක් නොමැතිව මෙම ශාඛාවේ සියලුම commits පාද ශාඛාවට නැවත ධාවනය කරන්න."
+      },
+      "requirements": {
+        "title": "ඒකාබද්ධ කිරීමේ අවශ්‍යතා",
+        "reviews": "සමාලෝචන",
+        "approvals": "{{required}} අනුමත කිරීම් වලින් {{satisfied}}",
+        "required": "අවශ්‍යයි",
+        "notRequired": "අවශ්‍ය නොවේ",
+        "passed": "සමත් විය",
+        "failed": "අසමත් විය",
+        "pending": "බලා සිටී",
+        "noRunYet": "තවම ධාවනයක් නැත",
+        "notMet": "සම්පූර්ණ වී නැත",
+        "unavailable": "ඒකාබද්ධ කිරීමේ අවශ්‍යතා ලබාගත නොහැක",
+        "noProtectionRules": "ශාඛා ආරක්ෂණ නීති නැත",
+        "queueTitle": "ඒකාබද්ධ කිරීමේ පෝලිම",
+        "inQueue": "පෝලිමේ {{position}}",
+        "positionUnknown": "ස්ථානය නොදනී",
+        "queueState": {
+          "QUEUED": "පෝලිම් කර ඇත",
+          "AWAITING_CHECKS": "පරීක්ෂණ බලා සිටී",
+          "MERGEABLE": "ඒකාබද්ධ කළ හැක",
+          "UNMERGEABLE": "ඒකාබද්ධ කළ නොහැක",
+          "LOCKED": "අගුළු දමා ඇත"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "තහවුරු කිරීමට නොහැකි විය — නැවත උත්සාහ කිරීමට පෙර PR එක පරීක්ෂා කරන්න.",
       "persistenceFailed": "මෙම ක්‍රියාව වාර්තා කිරීමට නොහැකි විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.",
       "forbidden": "තහනම්"
+    },
+    "context": {
+      "title": "සන්දර්භය",
+      "labels": "ලේබල",
+      "assignees": "පවරන ලද අය",
+      "reviewers": "සමාලෝචකයින්",
+      "team": "කණ්ඩායම",
+      "approved": "අනුමත කර ඇත",
+      "changesRequested": "වෙනස්කම් ඉල්ලා ඇත",
+      "dismissed": "ඉවතලා ඇත",
+      "commented": "අදහස් දක්වා ඇත",
+      "awaiting": "බලා සිටී",
+      "opened": "විවෘත කර ඇත",
+      "updated": "යාවත්කාලීන කර ඇත",
+      "closed": "වසා ඇත",
+      "merged": "ඒකාබද්ධ කරන ලදී",
+      "mergedBy": "විසින් ඒකාබද්ධ කර ඇත",
+      "linkedIssues": "සම්බන්ධිත ගැටළු",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "නොදන්නා කතෘ"
     }
   },
   "notifications": {

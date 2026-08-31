@@ -2885,6 +2885,30 @@
         "merge": "שלב את כל ה-commits מהענף הזה לענף הבסיס עם commit מיזוג.",
         "squash": "שלב את כל ה-commits מהענף הזה ל-commit יחיד על ענף הבסיס.",
         "rebase": "הרץ מחדש את כל ה-commits מהענף הזה על ענף הבסיס, ללא commit מיזוג."
+      },
+      "requirements": {
+        "title": "דרישות מיזוג",
+        "reviews": "סקירות",
+        "approvals": "{{satisfied}} מתוך {{required}} אישורים",
+        "required": "חובה",
+        "notRequired": "לא נדרש",
+        "passed": "עבר",
+        "failed": "נכשל",
+        "pending": "ממתין",
+        "noRunYet": "אין עדיין הרצה",
+        "notMet": "לא מולא",
+        "unavailable": "דרישות המיזוג אינן זמינות",
+        "noProtectionRules": "אין כללי הגנה על ענף",
+        "queueTitle": "תור מיזוג",
+        "inQueue": "{{position}} בתור",
+        "positionUnknown": "מיקום לא ידוע",
+        "queueState": {
+          "QUEUED": "בתור",
+          "AWAITING_CHECKS": "ממתין לבדיקות",
+          "MERGEABLE": "ניתן למיזוג",
+          "UNMERGEABLE": "לא ניתן למיזוג",
+          "LOCKED": "נעול"
+        }
       }
     },
     "noDescriptionProvided": "לא סופק תיאור.",
@@ -3005,6 +3029,26 @@
       "ambiguous": "לא ניתן היה לאשר — בדוק את ה-PR לפני שתנסה שוב.",
       "persistenceFailed": "לא הצלחנו לתעד פעולה זו. אנא נסה שוב מאוחר יותר.",
       "forbidden": "אין הרשאה"
+    },
+    "context": {
+      "title": "הקשר",
+      "labels": "תוויות",
+      "assignees": "מוקצים",
+      "reviewers": "סוקרים",
+      "team": "צוות",
+      "approved": "אושר",
+      "changesRequested": "התבקשו שינויים",
+      "dismissed": "נדחה",
+      "commented": "נרשמה תגובה",
+      "awaiting": "ממתין",
+      "opened": "נפתח",
+      "updated": "עודכן",
+      "closed": "סגור",
+      "merged": "מוזג",
+      "mergedBy": "מוזג על ידי",
+      "linkedIssues": "בעיות מקושרות",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "מחבר לא ידוע"
     }
   },
   "organization": {

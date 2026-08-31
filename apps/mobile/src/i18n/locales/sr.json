@@ -322,6 +322,30 @@
         "merge": "Spojite sve commit-ove sa ove grane u osnovnu granu pomoću merge commit-a.",
         "squash": "Spojite sve commit-ove sa ove grane u jedan commit na osnovnoj grani.",
         "rebase": "Ponovite sve commit-ove sa ove grane na osnovnoj grani bez merge commit-a."
+      },
+      "requirements": {
+        "title": "Zahtevi za spajanje",
+        "reviews": "Pregledi",
+        "approvals": "{{satisfied}} od {{required}} odobrenja",
+        "required": "obavezno",
+        "notRequired": "Nije obavezno",
+        "passed": "Prošlo",
+        "failed": "Nije uspelo",
+        "pending": "Na čekanju",
+        "noRunYet": "Još nema pokretanja",
+        "notMet": "Nije ispunjeno",
+        "unavailable": "Zahtevi za spajanje nedostupni",
+        "noProtectionRules": "Nema pravila zaštite grane",
+        "queueTitle": "Red za spajanje",
+        "inQueue": "{{position}} u redu",
+        "positionUnknown": "Pozicija nepoznata",
+        "queueState": {
+          "QUEUED": "U redu",
+          "AWAITING_CHECKS": "Čeka provere",
+          "MERGEABLE": "Može da se spoji",
+          "UNMERGEABLE": "Ne može da se spoji",
+          "LOCKED": "Zaključano"
+        }
       }
     },
     "discussion": {
@@ -615,6 +639,26 @@
       "ambiguous": "Nije moguće potvrditi — proverite PR pre ponovnog pokušaja.",
       "persistenceFailed": "Nismo mogli da zabeležimo ovu radnju. Pokušajte ponovo kasnije.",
       "forbidden": "Zabranjeno"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Oznake",
+      "assignees": "Dodeljeni",
+      "reviewers": "Recenzenti",
+      "team": "Tim",
+      "approved": "Odobreno",
+      "changesRequested": "Zatražene izmene",
+      "dismissed": "Odbijeno",
+      "commented": "Komentarisano",
+      "awaiting": "Čeka",
+      "opened": "Otvoreno",
+      "updated": "Ažurirano",
+      "closed": "Zatvoreno",
+      "merged": "Spojeno",
+      "mergedBy": "Spojio",
+      "linkedIssues": "Povezani problemi",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Nepoznat autor"
     }
   },
   "notifications": {

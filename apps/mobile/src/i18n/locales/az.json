@@ -320,6 +320,30 @@
         "merge": "Bu branch'dakı bütün commit'ləri merge commit ilə əsas branch'a birləşdirin.",
         "squash": "Bu branch'dakı bütün commit'ləri əsas branch'da tək commit-ə birləşdirin.",
         "rebase": "Bu branch'dakı bütün commit'ləri merge commit olmadan əsas branch'a təkrar tətbiq edin."
+      },
+      "requirements": {
+        "title": "Birləşdirmə tələbləri",
+        "reviews": "İcmallar",
+        "approvals": "{{required}} razılıqdan {{satisfied}}",
+        "required": "vacibdir",
+        "notRequired": "Tələb olunmur",
+        "passed": "Keçdi",
+        "failed": "Uğursuz",
+        "pending": "Gözlənilir",
+        "noRunYet": "Hələ icra yoxdur",
+        "notMet": "Yerinə yetirilməyib",
+        "unavailable": "Birləşdirmə tələbləri əlçatan deyil",
+        "noProtectionRules": "Budaq qoruma qaydaları yoxdur",
+        "queueTitle": "Birləşdirmə növbəsi",
+        "inQueue": "{{position}} növbədə",
+        "positionUnknown": "Mövqe naməlumdur",
+        "queueState": {
+          "QUEUED": "Növbəyə alınıb",
+          "AWAITING_CHECKS": "Yoxlamaları gözləyir",
+          "MERGEABLE": "Birləşdirilə bilər",
+          "UNMERGEABLE": "Birləşdirilə bilməz",
+          "LOCKED": "Kilidlənib"
+        }
       }
     },
     "discussion": {
@@ -608,6 +632,26 @@
       "ambiguous": "Təsdiqləmək mümkün olmadı — yenidən cəhd etməzdən əvvəl PR-ə baxın.",
       "persistenceFailed": "Bu əməliyyatı qeyd edə bilmədik. Zəhmət olmasa daha sonra yenidən cəhd edin.",
       "forbidden": "Qadağandır"
+    },
+    "context": {
+      "title": "Kontekst",
+      "labels": "Etiketlər",
+      "assignees": "Təyin olunanlar",
+      "reviewers": "Rəyçilər",
+      "team": "Komanda",
+      "approved": "Təsdiqlənib",
+      "changesRequested": "Dəyişikliklər tələb olunur",
+      "dismissed": "Rədd edilib",
+      "commented": "Şərh yazılıb",
+      "awaiting": "Gözləyir",
+      "opened": "Açılıb",
+      "updated": "Yenilənib",
+      "closed": "Bağlıdır",
+      "merged": "Mergeləndi",
+      "mergedBy": "Birləşdirən",
+      "linkedIssues": "Əlaqəli məsələlər",
+      "linkedIssueA11y": "#{{number}} {{title}}",
+      "unknownAuthor": "Naməlum müəllif"
     }
   },
   "notifications": {

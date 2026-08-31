@@ -76,6 +76,7 @@ const ENGLISH_IDENTICAL_ALLOWLIST = new Set([
   // title and a placeholder-plus-UTC time-range label.
   'prReview.screen.title',
   'securityAgent.auditReport.periodUtc',
+  'prReview.context.linkedIssueA11y',
 ]);
 
 /** The supported tags, read from the one source of truth. */
