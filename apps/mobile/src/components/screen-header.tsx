@@ -77,6 +77,7 @@ export function ScreenHeader({
   // keeps the slot's height when the label is absent so the title does not jump.
   const showEyebrow = eyebrow != null && eyebrow !== '';
   const reserveEyebrowSlot = reserveEyebrow === true && !showEyebrow;
+  const hasEyebrowSlot = showEyebrow || reserveEyebrowSlot;
 
   let titleNode: React.ReactNode = null;
   if (title != null) {
@@ -108,7 +109,10 @@ export function ScreenHeader({
 
   return (
     <View className={cn('bg-background px-4 pb-3', className)} style={{ paddingTop }}>
-      <View className="flex-row items-center">
+      {/* The header right action sits on the eyebrow's row when an eyebrow is
+          present (e.g. the Agents "SEE ALL" next to the "3 LIVE" count), and
+          centers against the title when the header is a single line. */}
+      <View className={cn('flex-row', hasEyebrowSlot ? 'items-start' : 'items-center')}>
         <View className="flex-1 flex-row items-center gap-1">
           {canGoBack && (
             <Pressable
@@ -133,7 +137,7 @@ export function ScreenHeader({
             </Pressable>
           )}
           <View className="min-w-0 flex-1">
-            {showEyebrow || reserveEyebrowSlot ? (
+            {hasEyebrowSlot ? (
               <Eyebrow
                 className={cn('mb-0.5', reserveEyebrowSlot && 'opacity-0')}
                 accessibilityElementsHidden={reserveEyebrowSlot || undefined}

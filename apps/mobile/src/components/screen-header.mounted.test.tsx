@@ -1,4 +1,4 @@
-/* eslint-disable typescript-eslint/no-deprecated -- react-test-renderer is the DOM-free renderer used to mount React/RN trees under vitest (same pattern as composer-paste-button.mounted.test.tsx) */
+/* eslint-disable max-lines, typescript-eslint/no-deprecated -- react-test-renderer is the DOM-free renderer used to mount React/RN trees under vitest (same pattern as composer-paste-button.mounted.test.tsx); the back-target, RTL, title-slop, and header-alignment contracts live in one mount suite. */
 import { type ComponentProps, createElement } from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -338,5 +338,50 @@ describe('ScreenHeader mounted', () => {
     expect(eyebrow.props.children).toBe('Agents');
     expect(eyebrow.props.className).not.toContain('opacity-0');
     expect(eyebrow.props.accessibilityElementsHidden).toBeUndefined();
+  });
+
+  it('top-aligns the header right with the eyebrow and centers it without one', () => {
+    const withEyebrow = renderHeader({ title: 'Sessions', eyebrow: 'Agents', headerRight: 'RIGHT' });
+    const eyebrowRow = withEyebrow.root.findAll(
+      node =>
+        typeof node.type === 'string' &&
+        (node.type as string) === 'View' &&
+        typeof node.props.className === 'string' &&
+        node.props.className.includes('items-')
+    )[0];
+    if (!eyebrowRow) {
+      throw new Error('outer header row not found');
+    }
+    expect(eyebrowRow.props.className).toContain('items-start');
+    expect(eyebrowRow.props.className).toContain('flex-row');
+
+    const withoutEyebrow = renderHeader({ title: 'Sessions', headerRight: 'RIGHT' });
+    const titleRow = withoutEyebrow.root.findAll(
+      node =>
+        typeof node.type === 'string' &&
+        (node.type as string) === 'View' &&
+        typeof node.props.className === 'string' &&
+        node.props.className.includes('items-')
+    )[0];
+    if (!titleRow) {
+      throw new Error('outer header row not found');
+    }
+    expect(titleRow.props.className).toContain('items-center');
+    expect(titleRow.props.className).toContain('flex-row');
+  });
+
+  it('keeps the header right on the reserved eyebrow row too', () => {
+    const renderer = renderHeader({ title: 'Sessions', reserveEyebrow: true, headerRight: 'RIGHT' });
+    const row = renderer.root.findAll(
+      node =>
+        typeof node.type === 'string' &&
+        (node.type as string) === 'View' &&
+        typeof node.props.className === 'string' &&
+        node.props.className.includes('items-')
+    )[0];
+    if (!row) {
+      throw new Error('outer header row not found');
+    }
+    expect(row.props.className).toContain('items-start');
   });
 });

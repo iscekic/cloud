@@ -6,6 +6,7 @@ import {
   Platform,
   Pressable,
   RefreshControl,
+  ScrollView,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -201,17 +202,20 @@ export function AgentSessionListScreen() {
   // the unfiltered list first would drop rows once the stored filter arrives.
   if (!query.hasLoaded || (loading && !hasLiveRows)) {
     body = (
-      <View className="pt-[18px]">
+      // The tab bar is an overlay, so the skeleton stack scrolls to clear it
+      // (a non-scrollable View's padding cannot lift rows above the overlay).
+      <ScrollView className="pt-[18px]" contentContainerStyle={{ paddingBottom: tabBarHeight }}>
         {Array.from({ length: SKELETON_ROW_COUNT }, (_, i) => (
           <View key={i} className="py-1.5">
             <Skeleton className="mx-[22px] h-[76px] rounded-none" />
           </View>
         ))}
-      </View>
+      </ScrollView>
     );
   } else if (isError && !hasLiveRows) {
     body = (
       <QueryError
+        placement="top"
         message={t('agents.sessionList.couldNotLoadActive')}
         onRetry={() => {
           void refetch();
@@ -221,6 +225,7 @@ export function AgentSessionListScreen() {
   } else if (hasLiveRows && !hasVisibleRows) {
     body = (
       <EmptyState
+        placement="top"
         icon={Bot}
         title={t('agents.sessionList.noMatches')}
         description={
@@ -243,6 +248,7 @@ export function AgentSessionListScreen() {
   } else if (!hasLiveRows) {
     body = (
       <EmptyState
+        placement="top"
         icon={Bot}
         title={t('home.noLiveSessions')}
         description={t('agents.sessionList.noSessionsYetDescription')}

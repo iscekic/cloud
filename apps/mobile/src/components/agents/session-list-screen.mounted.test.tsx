@@ -60,6 +60,7 @@ vi.mock('react-native', () => ({
   FlatList: 'FlatList',
   Pressable: 'Pressable',
   RefreshControl: 'RefreshControl',
+  ScrollView: 'ScrollView',
   View: 'View',
   useWindowDimensions: () => ({ fontScale: 1 }),
 }));
@@ -539,6 +540,7 @@ describe('AgentSessionListScreen live tab', () => {
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
     expect(emptyState.props.title).toBe('agents.sessionList.noMatches');
+    expect(emptyState.props.placement).toBe('top');
 
     const clearAction = emptyState.props.action as { props: { onPress: () => void } };
     act(() => {
@@ -583,6 +585,14 @@ describe('AgentSessionListScreen live tab', () => {
     expect(findTypeCount(renderer, 'Skeleton')).toBe(8);
     expect(findTypeCount(renderer, 'EmptyState')).toBe(0);
     expect(findTypeCount(renderer, 'QueryError')).toBe(0);
+
+    // The skeleton stack scrolls to clear the overlay tab bar like the live
+    // list (see `listPadding`), so the last skeleton row is not clipped.
+    const skeletonScroll = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'ScrollView'
+    );
+    expect(skeletonScroll.props.contentContainerStyle).toEqual({ paddingBottom: 0 });
+    expect(skeletonScroll.props.className).toBe('pt-[18px]');
   });
 
   it('renders the empty state when there are no live sessions', async () => {
@@ -591,6 +601,7 @@ describe('AgentSessionListScreen live tab', () => {
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
     expect(emptyState.props.title).toBe('home.noLiveSessions');
+    expect(emptyState.props.placement).toBe('top');
     expect(emptyState.props.description).toBe('agents.sessionList.noSessionsYetDescription');
     expect(findTypeCount(renderer, 'EmptyState')).toBe(1);
     expect(findTypeCount(renderer, 'FlatList')).toBe(0);
@@ -612,6 +623,7 @@ describe('AgentSessionListScreen live tab', () => {
       node => typeof node.type === 'string' && (node.type as string) === 'QueryError'
     );
     expect(queryError.props.message).toBe('agents.sessionList.couldNotLoadActive');
+    expect(queryError.props.placement).toBe('top');
 
     const onRetry = queryError.props.onRetry as () => void;
     onRetry();
