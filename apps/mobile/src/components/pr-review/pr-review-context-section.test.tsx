@@ -25,7 +25,7 @@ vi.mock('react-i18next', async importOriginal => {
   };
 });
 
-vi.mock('@/components/ui/icons', () => ({ ExternalLink: 'ExternalLink' }));
+vi.mock('@/components/ui/icons', () => ({ ExternalLink: 'ExternalLink', Users: 'Users' }));
 vi.mock('@/components/ui/image', () => ({ Image: 'Image' }));
 vi.mock('@/components/ui/text', () => ({ Text: 'Text' }));
 
@@ -179,6 +179,37 @@ describe('PrReviewContextSection', () => {
     // bob is only in `reviews` (no longer requested), so his approved decision
     // renders its exact submission time.
     expect(hasText(renderer, '2026-01-03T00:00:00.000Z')).toBe(true);
+
+    renderer.unmount();
+  });
+
+  it('renders a styled team avatar instead of a blank circle', () => {
+    const renderer = render(makeOverview());
+
+    // The team reviewer (core-team) renders a Users icon inside its avatar
+    // circle so the row reads as a team, not an unstyled empty dot.
+    const teamIcons = renderer.root.findAll(
+      node => typeof node.type === 'string' && (node.type as string) === 'Users'
+    );
+    expect(teamIcons).toHaveLength(1);
+
+    renderer.unmount();
+  });
+
+  it('hides the Context heading when there is no context content', () => {
+    const overview = makeOverview();
+    overview.labels = [];
+    overview.assignees = [];
+    overview.requestedReviewers = [];
+    overview.requestedTeams = [];
+    overview.reviews = [];
+    overview.mergedBy = null;
+    overview.linkedIssues = [];
+    const renderer = render(overview);
+
+    expect(hasText(renderer, 'prReview.context.title')).toBe(false);
+    // The dates still render so the section is never an empty shell.
+    expect(hasText(renderer, 'prReview.context.opened')).toBe(true);
 
     renderer.unmount();
   });

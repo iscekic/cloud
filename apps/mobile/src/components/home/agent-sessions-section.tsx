@@ -88,20 +88,27 @@ export function AgentSessionsSection({ organizationId }: Readonly<AgentSessionsS
   const navigateToSession = useAgentSessionNavigator();
 
   const rows = buildRows({ activeSessions, storedSessions, activeSessionIds });
+  // "See all" only means something when there are live rows to see more of.
+  // On an empty list the link would point at the same empty list.
+  const showSeeAll = rows.length > 0;
 
   return (
     <View>
       <SectionHeader
         label={t('home.agentSessions')}
-        actionLabel={t('home.seeAll')}
-        onActionPress={() => {
-          // `navigate` switches to the Agents tab but keeps a pushed history
-          // screen on top (expo-router turns the cross-tab navigate into a
-          // JUMP_TO). The follow-up `dismissTo` pops that nested stack to the
-          // index route, so Home See-all always lands on the live list.
-          router.navigate(AGENTS_INDEX_HREF as Href);
-          router.dismissTo(AGENTS_INDEX_HREF as Href);
-        }}
+        actionLabel={showSeeAll ? t('home.seeAll') : undefined}
+        onActionPress={
+          showSeeAll
+            ? () => {
+                // `navigate` switches to the Agents tab but keeps a pushed history
+                // screen on top (expo-router turns the cross-tab navigate into a
+                // JUMP_TO). The follow-up `dismissTo` pops that nested stack to the
+                // index route, so Home See-all always lands on the live list.
+                router.navigate(AGENTS_INDEX_HREF as Href);
+                router.dismissTo(AGENTS_INDEX_HREF as Href);
+              }
+            : undefined
+        }
       />
       <View className="mx-4 gap-2">
         {rows.length === 0 && <LiveNowEmpty />}

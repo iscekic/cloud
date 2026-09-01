@@ -3,7 +3,7 @@ import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';
 
-import { ExternalLink } from '@/components/ui/icons';
+import { ExternalLink, Users } from '@/components/ui/icons';
 import { Image } from '@/components/ui/image';
 import { Text } from '@/components/ui/text';
 import { i18n } from '@/i18n';
@@ -113,10 +113,13 @@ function LabelChip({ name, color }: Readonly<{ name: string; color: string | nul
 
 function ReviewerRow({ decision }: Readonly<{ decision: DerivedReviewDecision }>) {
   const { t } = useTranslation();
+  const colors = useThemeColors();
   if (decision.kind === 'team') {
     return (
       <View className="flex-row items-center gap-2">
-        <View className="size-6 shrink-0 rounded-full bg-muted" />
+        <View className="size-6 shrink-0 items-center justify-center rounded-full bg-secondary">
+          <Users size={12} color={colors.mutedForeground} />
+        </View>
         <Text className="min-w-0 flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
           {decision.name}
         </Text>
@@ -215,12 +218,25 @@ export function PrReviewContextSection({
     overview.requestedReviewers,
     overview.requestedTeams
   );
+  // The Context section always renders the opened/updated dates, so it is
+  // never truly empty. The eyebrow only makes sense when there is real
+  // context metadata below it; for a PR with no labels, assignees,
+  // reviewers, merged-by, or linked issues the heading would sit alone and
+  // read as "heading with no content".
+  const hasContextContent =
+    overview.labels.length > 0 ||
+    overview.assignees.length > 0 ||
+    decisions.length > 0 ||
+    overview.mergedBy !== null ||
+    overview.linkedIssues.length > 0;
 
   return (
     <View className="gap-4">
-      <Text variant="eyebrow" className="uppercase tracking-wide text-muted-foreground">
-        {t('prReview.context.title')}
-      </Text>
+      {hasContextContent ? (
+        <Text variant="eyebrow" className="uppercase tracking-wide text-muted-foreground">
+          {t('prReview.context.title')}
+        </Text>
+      ) : null}
 
       {overview.labels.length > 0 ? (
         <View className="gap-2">

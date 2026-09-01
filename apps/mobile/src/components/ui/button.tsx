@@ -101,10 +101,29 @@ function Button({
 }: ButtonProps) {
   const colors = useThemeColors();
   const isDisabled = Boolean(disabled) || Boolean(loading);
+  // A solid-fill CTA (primary/destructive) faded to opacity-50 washes out the
+  // fill and the label together, reading as a broken CTA instead of a
+  // disabled one. Give those variants a solid muted treatment when disabled.
+  // Subtle variants (outline/secondary/ghost/link) keep opacity-50, matching
+  // the web design system's `disabled:opacity-50`.
+  const isMutedDisabled =
+    Boolean(disabled) &&
+    !loading &&
+    (variant === undefined ||
+      variant === null ||
+      variant === 'default' ||
+      variant === 'destructive');
   return (
-    <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
+    <TextClassContext.Provider
+      value={cn(buttonTextVariants({ variant, size }), isMutedDisabled && 'text-muted-foreground')}
+    >
       <Pressable
-        className={cn(isDisabled && 'opacity-50', buttonVariants({ variant, size }), className)}
+        className={cn(
+          buttonVariants({ variant, size }),
+          isMutedDisabled && 'bg-muted',
+          isDisabled && !isMutedDisabled && 'opacity-50',
+          className
+        )}
         role="button"
         disabled={isDisabled}
         accessibilityState={{ ...accessibilityState, disabled: isDisabled, busy: loading }}

@@ -8,6 +8,7 @@ import { type ActiveSession, type StoredSession } from '@/lib/hooks/use-agent-se
 
 const navigateSpy = vi.hoisted(() => vi.fn());
 const dismissToSpy = vi.hoisted(() => vi.fn());
+const useAgentSessionsMock = vi.hoisted(() => vi.fn());
 
 vi.mock('expo-router', () => ({
   useRouter: () => ({ navigate: navigateSpy, dismissTo: dismissToSpy }),
@@ -39,12 +40,7 @@ vi.mock('@/components/agents/use-agent-session-navigator', () => ({
 }));
 
 vi.mock('@/lib/hooks/use-agent-sessions', () => ({
-  useAgentSessions: () => ({
-    activeSessions: [],
-    storedSessions: [],
-    activeSessionIds: new Set(),
-    activeIsError: false,
-  }),
+  useAgentSessions: useAgentSessionsMock,
 }));
 
 function makeActive(over: Partial<ActiveSession> = {}): ActiveSession {
@@ -139,10 +135,22 @@ describe('Home See-all navigation', () => {
   beforeEach(() => {
     navigateSpy.mockClear();
     dismissToSpy.mockClear();
+    useAgentSessionsMock.mockReturnValue({
+      activeSessions: [],
+      storedSessions: [],
+      activeSessionIds: new Set(),
+      activeIsError: false,
+    });
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
   });
 
   it('switches to the Agents index and dismisses the history subpage', async () => {
+    useAgentSessionsMock.mockReturnValue({
+      activeSessions: [makeActive()],
+      storedSessions: [],
+      activeSessionIds: new Set(['a1']),
+      activeIsError: false,
+    });
     const rendererRef: { current: TestRenderer.ReactTestRenderer | undefined } = {
       current: undefined,
     };
@@ -175,6 +183,30 @@ describe('Home See-all navigation', () => {
     expect(navigateSpy.mock.invocationCallOrder[0] ?? 0).toBeLessThan(
       dismissToSpy.mock.invocationCallOrder[0] ?? 0
     );
+
+    renderer.unmount();
+  });
+
+  it('hides See all when there are no live sessions', async () => {
+    const rendererRef: { current: TestRenderer.ReactTestRenderer | undefined } = {
+      current: undefined,
+    };
+    await act(async () => {
+      await Promise.resolve();
+      rendererRef.current = TestRenderer.create(
+        createElement(AgentSessionsSection, { organizationId: 'org-1' })
+      );
+    });
+    const renderer = rendererRef.current;
+    if (!renderer) {
+      throw new Error('renderer was not created');
+    }
+
+    const header = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'SectionHeader'
+    );
+    expect(header.props.actionLabel).toBeUndefined();
+    expect(header.props.onActionPress).toBeUndefined();
 
     renderer.unmount();
   });

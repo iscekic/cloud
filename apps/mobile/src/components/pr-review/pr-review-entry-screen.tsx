@@ -142,6 +142,9 @@ export function PrReviewEntryScreen() {
         title={t('prReview.entry.noRecentPrs')}
         description={t('prReview.entry.noRecentPrsDescription')}
         placement="top"
+        // Inline in the list footer, not a full-screen empty state: drop the
+        // placement's large pt-16 so RECENT does not float above a big gap.
+        className="pt-2"
         action={
           <Button variant="outline" onPress={focusInput}>
             <Text>{t('prReview.entry.pastePrLink')}</Text>
