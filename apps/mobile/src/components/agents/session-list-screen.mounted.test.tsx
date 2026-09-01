@@ -51,7 +51,10 @@ type MockActiveSession = {
 const sessionListState = vi.hoisted(() => ({
   activeSessions: [] as MockActiveSession[],
   isLoading: false,
+  isFetching: false,
+  isSuccess: true,
   isError: false,
+  error: undefined as unknown,
 }));
 
 vi.mock('react-native', () => ({
@@ -83,7 +86,10 @@ vi.mock('@tanstack/react-query', () => ({
   useQueryClient: () => ({ invalidateQueries }),
 }));
 vi.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key: string) => key }),
+  useTranslation: () => ({
+    t: (key: string, options?: { context?: string }) =>
+      typeof options?.context === 'string' ? `${key}:${options.context}` : key,
+  }),
 }));
 vi.mock('@/i18n', () => ({
   i18n: { t: (key: string) => key, language: 'en' },
@@ -137,7 +143,10 @@ vi.mock('@/components/agents/active-now-section', () => ({
   ActiveNowSection: 'ActiveNowSection',
 }));
 vi.mock('@/components/agents/session-list-routes', () => ({
-  getNewAgentSessionPath: () => '/(app)/agent-chat/new',
+  getNewAgentSessionPath: (organizationId: string | null) =>
+    organizationId
+      ? `/(app)/agent-chat/new?organizationId=${organizationId}`
+      : '/(app)/agent-chat/new',
 }));
 vi.mock('@/components/agents/use-agent-session-navigator', () => ({
   useAgentSessionNavigator: () => vi.fn(),
@@ -177,7 +186,10 @@ vi.mock('@/lib/hooks/use-agent-sessions', () => ({
   useLiveAgentSessions: () => ({
     activeSessions: sessionListState.activeSessions,
     isLoading: sessionListState.isLoading,
+    isFetching: sessionListState.isFetching,
+    isSuccess: sessionListState.isSuccess,
     isError: sessionListState.isError,
+    error: sessionListState.error,
     refetch: refetchSpy,
   }),
 }));
@@ -252,7 +264,10 @@ describe('AgentSessionListScreen live tab', () => {
     orgState.isLoaded = true;
     sessionListState.activeSessions = [];
     sessionListState.isLoading = false;
+    sessionListState.isFetching = false;
+    sessionListState.isSuccess = true;
     sessionListState.isError = false;
+    sessionListState.error = undefined;
     readFilterRecord.mockReset();
     readFilterRecord.mockResolvedValue(null);
     refetchSpy.mockClear();
@@ -345,16 +360,17 @@ describe('AgentSessionListScreen live tab', () => {
     expect(findTypeCount(withRows, 'SessionListSearchHeader')).toBe(1);
   });
 
-  it('holds the skeletons until the persisted filter record resolves', async () => {
-    // A never-settling read stands in for a slow SecureStore: the list must not
-    // paint unfiltered rows that a stored filter would then remove.
+  it('keeps cached rows visible until the persisted filter record resolves', async () => {
     readFilterRecord.mockReturnValue(new Promise<string | null>(() => undefined));
     sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
 
     const renderer = await renderScreen();
 
-    expect(findTypeCount(renderer, 'Skeleton')).toBe(8);
-    expect(findTypeCount(renderer, 'FlatList')).toBe(0);
+    const list = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'FlatList'
+    );
+    expect(list.props.data).toEqual(sessionListState.activeSessions);
+    expect(findTypeCount(renderer, 'Skeleton')).toBe(0);
   });
 
   it('applies a persisted filter without first painting the unfiltered list', async () => {
@@ -552,7 +568,7 @@ describe('AgentSessionListScreen live tab', () => {
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
     expect(emptyState.props.title).toBe('home.noLiveSessions');
-    expect(emptyState.props.description).toBe('agents.sessionList.noSessionsYetDescription');
+    expect(emptyState.props.description).toBe('profile.personal');
     expect(findTypeCount(renderer, 'EmptyState')).toBe(1);
     expect(findTypeCount(renderer, 'FlatList')).toBe(0);
 
@@ -611,62 +627,39 @@ describe('AgentSessionListScreen live tab', () => {
 
   it('sets refreshFailed on the strip and keeps the cached row after a failed pull', async () => {
     sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
-    refetchSpy.mockResolvedValue(false);
+    sessionListState.isError = true;
+    sessionListState.isFetching = false;
+    sessionListState.isSuccess = false;
 
     const renderer = await renderScreen();
 
     const flatList = renderer.root.find(
       node => typeof node.type === 'string' && (node.type as string) === 'FlatList'
     );
-    const refreshControl = flatList.props.refreshControl as {
-      props: { onRefresh: () => void };
-    };
-    act(() => {
-      refreshControl.props.onRefresh();
-    });
-
-    const updatingStrip = findStrip(renderer);
-    expect(updatingStrip.props.hasLiveRows).toBe(true);
-    expect(updatingStrip.props.updating).toBe(true);
-
-    await act(async () => {
-      await Promise.resolve();
-    });
+    expect(findTypeCount(renderer, 'QueryError')).toBe(0);
+    expect(flatList.props.data).toHaveLength(1);
+    expect(
+      renderer.root.findAll(node => node.props.testID === 'agents-new-session-fab')
+    ).toHaveLength(1);
 
     const failedStrip = findStrip(renderer);
     expect(failedStrip.props.hasLiveRows).toBe(true);
     expect(failedStrip.props.updating).toBe(false);
     expect(failedStrip.props.refreshFailed).toBe(true);
-    expect(flatList.props.data).toHaveLength(1);
+
+    act(() => {
+      (failedStrip.props.onRetryRefresh as () => void)();
+    });
+    expect(refetchSpy).toHaveBeenCalledTimes(1);
   });
 
   it('clears refreshFailed on the strip after a successful pull', async () => {
     sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
-    refetchSpy.mockResolvedValueOnce(false).mockResolvedValueOnce(true);
+    sessionListState.isError = false;
+    sessionListState.isFetching = false;
+    sessionListState.isSuccess = true;
 
     const renderer = await renderScreen();
-
-    const flatList = renderer.root.find(
-      node => typeof node.type === 'string' && (node.type as string) === 'FlatList'
-    );
-    const refreshControl = flatList.props.refreshControl as {
-      props: { onRefresh: () => void };
-    };
-
-    act(() => {
-      refreshControl.props.onRefresh();
-    });
-    await act(async () => {
-      await Promise.resolve();
-    });
-    expect(findStrip(renderer).props.refreshFailed).toBe(true);
-
-    act(() => {
-      refreshControl.props.onRefresh();
-    });
-    await act(async () => {
-      await Promise.resolve();
-    });
 
     const strip = findStrip(renderer);
     expect(strip.props.hasLiveRows).toBe(true);
@@ -676,6 +669,8 @@ describe('AgentSessionListScreen live tab', () => {
 
   it('shows only the strip indicator on a pull', async () => {
     sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+    sessionListState.isFetching = true;
+    sessionListState.isSuccess = true;
 
     const renderer = await renderScreen();
 
@@ -687,14 +682,16 @@ describe('AgentSessionListScreen live tab', () => {
       props: { onRefresh: () => void; refreshing: boolean };
     };
     expect(refreshControl.type).toBe('RefreshControl');
+    expect(refreshControl.props.refreshing).toBe(false);
+
+    const strip = findStrip(renderer);
+    expect(strip.props.updating).toBe(true);
+    expect(strip.props.refreshFailed).toBe(false);
 
     act(() => {
       refreshControl.props.onRefresh();
     });
-
-    const strip = findStrip(renderer);
-    expect(strip.props.updating).toBe(true);
-    expect(refreshControl.props.refreshing).toBe(false);
+    expect(refetchSpy).toHaveBeenCalledTimes(1);
   });
 
   it('refetches live sessions on route focus', async () => {
@@ -761,5 +758,124 @@ describe('AgentSessionListScreen live tab', () => {
 
     expect(refetchSpy).toHaveBeenCalledTimes(1);
     expect(invalidateQueries).not.toHaveBeenCalled();
+  });
+
+  it('shows rows and the New Task FAB with no status message when the query succeeds', async () => {
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+    sessionListState.isSuccess = true;
+
+    const renderer = await renderScreen();
+
+    expect(findTypeCount(renderer, 'FlatList')).toBe(1);
+    expect(findTypeCount(renderer, 'QueryError')).toBe(0);
+    expect(findTypeCount(renderer, 'EmptyState')).toBe(0);
+    const strip = findStrip(renderer);
+    expect(strip.props.updating).toBe(false);
+    expect(strip.props.refreshFailed).toBe(false);
+    expect(
+      renderer.root.findAll(node => node.props.testID === 'agents-new-session-fab')
+    ).toHaveLength(1);
+  });
+
+  it.each([
+    { label: 'personal', organizationId: null as string | null, path: '/(app)/agent-chat/new' },
+    {
+      label: 'organization',
+      organizationId: 'org-1' as string | null,
+      path: '/(app)/agent-chat/new?organizationId=org-1',
+    },
+  ])('opens the $label creation route from the New Task FAB', async ({ organizationId, path }) => {
+    orgState.organizationId = organizationId;
+    sessionListState.activeSessions = [{ id: 'a1', organizationId }];
+
+    const renderer = await renderScreen();
+    const fab = renderer.root.find(node => node.props.testID === 'agents-new-session-fab');
+    (fab.props.onPress as () => void)();
+    expect(routerPushSpy).toHaveBeenCalledWith(path);
+  });
+
+  it('does not declare empty before the query succeeds', async () => {
+    sessionListState.isSuccess = false;
+    sessionListState.isLoading = false;
+    sessionListState.isError = false;
+    sessionListState.activeSessions = [];
+
+    const renderer = await renderScreen();
+
+    expect(findTypeCount(renderer, 'EmptyState')).toBe(0);
+    expect(findTypeCount(renderer, 'Skeleton')).toBe(8);
+  });
+
+  it('names Organization in the empty description and opens the org creation route', async () => {
+    orgState.organizationId = 'org-1';
+    sessionListState.isSuccess = true;
+    sessionListState.activeSessions = [];
+
+    const renderer = await renderScreen();
+    const emptyState = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
+    );
+    expect(emptyState.props.description).toBe('profile.organization');
+    expect(
+      renderer.root.findAll(node => node.props.testID === 'agents-new-session-fab')
+    ).toHaveLength(0);
+
+    const createAction = emptyState.props.action as {
+      type: string;
+      props: { onPress: () => void };
+    };
+    createAction.props.onPress();
+    expect(routerPushSpy).toHaveBeenCalledWith('/(app)/agent-chat/new?organizationId=org-1');
+  });
+
+  it('shows Access denied with no CTA for a terminal permission error', async () => {
+    sessionListState.isError = true;
+    sessionListState.isSuccess = false;
+    sessionListState.error = { data: { code: 'FORBIDDEN' } };
+
+    const renderer = await renderScreen();
+    const queryError = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'QueryError'
+    );
+    expect(queryError.props.variant).toBe('permission');
+    expect(queryError.props.onRetry).toBeUndefined();
+    expect(queryError.props.message).toBeUndefined();
+    expect(
+      renderer.root.findAll(node => node.props.testID === 'agents-new-session-fab')
+    ).toHaveLength(0);
+    expect(findTypeCount(renderer, 'EmptyState')).toBe(0);
+  });
+
+  it('shows a terminal non-permission error without Retry or New Task', async () => {
+    sessionListState.isError = true;
+    sessionListState.isSuccess = false;
+    sessionListState.error = { data: { code: 'NOT_FOUND' } };
+
+    const renderer = await renderScreen();
+    const queryError = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'QueryError'
+    );
+    expect(queryError.props.variant).toBe('neutral');
+    expect(queryError.props.onRetry).toBeUndefined();
+    expect(queryError.props.message).toBe('agents.sessionList.couldNotLoadActive');
+    expect(
+      renderer.root.findAll(node => node.props.testID === 'agents-new-session-fab')
+    ).toHaveLength(0);
+  });
+
+  it('does not invent startup progress while loading with no rows', async () => {
+    sessionListState.isLoading = true;
+    sessionListState.isSuccess = false;
+    sessionListState.activeSessions = [];
+
+    const renderer = await renderScreen();
+
+    expect(findTypeCount(renderer, 'Skeleton')).toBe(8);
+    expect(findTypeCount(renderer, 'RemoteSessionRow')).toBe(0);
+    expect(findTypeCount(renderer, 'EmptyState')).toBe(0);
+    const texts = renderer.root
+      .findAll(node => typeof node.type === 'string' && (node.type as string) === 'Text')
+      .map(node => String(node.props.children ?? ''));
+    expect(texts.join(' ').toLowerCase()).not.toMatch(/start/);
   });
 });

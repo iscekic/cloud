@@ -51,11 +51,14 @@ const connection = vi.hoisted(() => {
 vi.mock('react-native', () => ({
   View: 'View',
   Pressable: 'Pressable',
-  ActivityIndicator: 'ActivityIndicator',
 }));
 vi.mock('@/components/ui/icons', () => ({
   AlertCircle: 'AlertCircle',
+  Loader2: 'Loader2',
   WifiOff: 'WifiOff',
+}));
+vi.mock('@/components/ui/spinning-icon', () => ({
+  SpinningIcon: 'SpinningIcon',
 }));
 vi.mock('@/components/ui/text', () => ({
   Text: 'Text',
@@ -111,11 +114,13 @@ describe('SessionListConnectionStrip mounted', () => {
     connection.retryConnection.mockClear();
   });
 
-  it('renders nothing when ready', async () => {
+  it('reserves strip height when ready', async () => {
     const renderer = await mount(baseProps);
 
-    expect(renderer.toJSON()).toBeNull();
-    expect(findHost(renderer.root, 'View')).toHaveLength(0);
+    const views = findHost(renderer.root, 'View');
+    expect(views).toHaveLength(1);
+    expect(views[0]?.props.className).toContain('h-[18px]');
+    expect(findHost(renderer.root, 'Text')).toHaveLength(0);
   });
 
   it('reads Connecting… on a cold start while disconnected', async () => {
@@ -128,7 +133,7 @@ describe('SessionListConnectionStrip mounted', () => {
 
   it('reads Reconnecting… after a drop from a committed up state', async () => {
     const renderer = await mount(baseProps);
-    expect(renderer.toJSON()).toBeNull();
+    expect(findHost(renderer.root, 'Text')).toHaveLength(0);
 
     await act(async () => {
       await Promise.resolve();
@@ -137,6 +142,7 @@ describe('SessionListConnectionStrip mounted', () => {
 
     expect(findHost(renderer.root, 'WifiOff')).toHaveLength(1);
     expect(textContents(renderer.root)).toContain('agentChat.sessionConnection.reconnecting');
+    expect(textContents(renderer.root).join(' ').toLowerCase()).not.toMatch(/start/);
   });
 
   it('renders Connection lost with a Retry connection action when reconnects are exhausted', async () => {
@@ -175,7 +181,8 @@ describe('SessionListConnectionStrip mounted', () => {
   it('renders the Updating spinner while a live-row update is in flight', async () => {
     const renderer = await mount({ ...baseProps, updating: true });
 
-    expect(findHost(renderer.root, 'ActivityIndicator')).toHaveLength(1);
+    expect(findHost(renderer.root, 'SpinningIcon')).toHaveLength(1);
+    expect(findHost(renderer.root, 'View')[0]?.props.className).toContain('h-[18px]');
     expect(textContents(renderer.root)).toContain('agents.sessionList.updating');
   });
 

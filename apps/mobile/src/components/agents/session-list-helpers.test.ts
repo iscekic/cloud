@@ -388,3 +388,20 @@ describe('selectRemoteRowSpokenMeta', () => {
     ).toBeNull();
   });
 });
+
+describe('live row never invents startup progress', () => {
+  it('labels an unenriched row LIVE and omits meta', () => {
+    expect(remoteSessionEyebrowLabel({ gitUrl: null, createdOnPlatform: undefined })).toBe('LIVE');
+    expect(remoteMeta({})).toBeUndefined();
+  });
+
+  it('does not turn a starting-like status word into a meta label', () => {
+    const startingRow: { updatedAt?: string; lastActivityAt?: string; status?: string } = {
+      status: 'starting',
+    };
+    expect(remoteMeta(startingRow)).toBeUndefined();
+    expect(remoteSessionEyebrowLabel({ gitUrl: null, createdOnPlatform: undefined })).not.toMatch(
+      /start/i
+    );
+  });
+});

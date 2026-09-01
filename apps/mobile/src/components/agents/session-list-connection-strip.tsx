@@ -1,9 +1,10 @@
-import { AlertCircle, WifiOff } from '@/components/ui/icons';
-import { useEffect, useRef } from 'react';
-import { ActivityIndicator, Pressable, View } from 'react-native';
+import { type ReactNode, useEffect, useRef } from 'react';
+import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useUserWebConnection } from '@/components/agents/user-web-connection-provider';
+import { AlertCircle, Loader2, WifiOff } from '@/components/ui/icons';
+import { SpinningIcon } from '@/components/ui/spinning-icon';
 import { Text } from '@/components/ui/text';
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { useUserWebConnectionHealth } from '@/lib/hooks/use-user-web-connection-state';
@@ -17,12 +18,14 @@ type SessionListConnectionStripProps = {
   onRetryRefresh: () => void;
 };
 
+const STRIP_CLASS = 'h-[18px] flex-row items-center justify-center gap-1.5';
+
 /**
  * Presentational connection/refresh strip for the Agents session list.
  *
- * Reads the phone↔server socket directly and renders exactly one line, or
- * nothing. The line is fixed at `h-6` / text-xs so the row dimensions never
- * shift when it appears.
+ * Reads the phone↔server socket directly and renders exactly one line inside a
+ * reserved 18px inset so the list below never shifts. Ready still occupies
+ * that height with no message.
  */
 export function SessionListConnectionStrip({
   hasLiveRows,
@@ -54,13 +57,10 @@ export function SessionListConnectionStrip({
     refreshFailed,
   });
 
-  if (status.kind === 'ready') {
-    return null;
-  }
-
+  let content: ReactNode = null;
   if (status.kind === 'connecting' || status.kind === 'reconnecting') {
-    return (
-      <View className="h-6 flex-row items-center justify-center gap-1.5">
+    content = (
+      <>
         <WifiOff size={12} color={colors.mutedForeground} />
         <Text className="text-xs text-muted-foreground">
           {t(
@@ -69,13 +69,11 @@ export function SessionListConnectionStrip({
               : 'agentChat.sessionConnection.reconnecting'
           )}
         </Text>
-      </View>
+      </>
     );
-  }
-
-  if (status.kind === 'connection-lost') {
-    return (
-      <View className="h-6 flex-row items-center justify-center gap-1.5">
+  } else if (status.kind === 'connection-lost') {
+    content = (
+      <>
         <WifiOff size={12} color={colors.mutedForeground} />
         <Text className="text-xs text-muted-foreground">
           {t('agentChat.sessionConnection.connectionLost')}
@@ -93,35 +91,43 @@ export function SessionListConnectionStrip({
             {t('agentChat.sessionConnection.retryConnection')}
           </Text>
         </Pressable>
-      </View>
+      </>
     );
-  }
-
-  if (status.kind === 'updating') {
-    return (
-      <View className="h-6 flex-row items-center justify-center gap-1.5">
-        <ActivityIndicator size="small" color={colors.mutedForeground} />
+  } else if (status.kind === 'updating') {
+    content = (
+      <>
+        <SpinningIcon icon={Loader2} size={12} color={colors.mutedForeground} />
         <Text className="text-xs text-muted-foreground">{t('agents.sessionList.updating')}</Text>
-      </View>
+      </>
+    );
+  } else if (status.kind === 'refresh-failed') {
+    content = (
+      <>
+        <AlertCircle size={12} color={colors.mutedForeground} />
+        <Text className="text-xs text-muted-foreground">
+          {t('agents.sessionList.refreshFailed')}
+        </Text>
+        <Pressable
+          onPress={onRetryRefresh}
+          hitSlop={8}
+          className="active:opacity-70"
+          accessibilityRole="button"
+          accessibilityLabel={t('common.retry')}
+        >
+          <Text className="text-xs font-medium text-primary">{t('common.retry')}</Text>
+        </Pressable>
+      </>
     );
   }
 
-  // refresh-failed
+  const ready = status.kind === 'ready';
   return (
-    <View className="h-6 flex-row items-center justify-center gap-1.5">
-      <AlertCircle size={12} color={colors.mutedForeground} />
-      <Text className="text-xs text-muted-foreground">
-        {t('agents.sessionList.refreshFailed')}
-      </Text>
-      <Pressable
-        onPress={onRetryRefresh}
-        hitSlop={8}
-        className="active:opacity-70"
-        accessibilityRole="button"
-        accessibilityLabel={t('common.retry')}
-      >
-        <Text className="text-xs font-medium text-primary">{t('common.retry')}</Text>
-      </Pressable>
+    <View
+      className={STRIP_CLASS}
+      accessibilityElementsHidden={ready}
+      importantForAccessibility={ready ? 'no-hide-descendants' : 'auto'}
+    >
+      {content}
     </View>
   );
 }

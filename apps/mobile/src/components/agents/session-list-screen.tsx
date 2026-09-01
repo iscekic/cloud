@@ -34,6 +34,7 @@ import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { getRevisionSnapshot } from '@/lib/session-attention';
 import { getEffectiveTabBarHeight } from '@/lib/tab-bar-layout';
 import { type ActiveSession, useLiveAgentSessions } from '@/lib/hooks/use-agent-sessions';
+import { isTerminalTrpcCode, readTrpcErrorField } from '@/lib/trpc-error';
 
 import { type Href, useFocusEffect, useNavigation, useRouter, useScrollToTop } from 'expo-router';
 
@@ -54,49 +55,31 @@ export function AgentSessionListScreen() {
   );
 
   const { organizationId, isLoaded: orgLoaded } = useOrganization();
-  const { activeSessions, isLoading, isError, refetch } = useLiveAgentSessions({
-    organizationId,
-    enabled: orgLoaded,
-  });
+  const { activeSessions, isLoading, isFetching, isSuccess, isError, error, refetch } =
+    useLiveAgentSessions({
+      organizationId,
+      enabled: orgLoaded,
+    });
 
   const query = useLiveSessionQuery(activeSessions);
   const { visibleSessions, isSearching } = query;
+  const displayedSessions = query.hasLoaded ? visibleSessions : activeSessions;
   const [showFilterModal, setShowFilterModal] = useState(false);
 
   // Treat !orgLoaded as loading so the empty state cannot flash before skeletons.
   const loading = isLoading || !orgLoaded;
   const hasLiveRows = activeSessions.length > 0;
-  const hasVisibleRows = visibleSessions.length > 0;
+  const hasDisplayedRows = displayedSessions.length > 0;
+  const updating = hasLiveRows && isFetching;
+  const refreshFailed = hasLiveRows && isError && !isFetching;
 
-  const [updating, setUpdating] = useState(false);
-  const [refreshFailed, setRefreshFailed] = useState(false);
-
-  const runRefresh = useCallback(async () => {
-    setUpdating(true);
-    try {
-      const ok = await refetch();
-      setRefreshFailed(!ok);
-    } finally {
-      setUpdating(false);
-    }
+  const refetchRef = useRef(refetch);
+  useEffect(() => {
+    refetchRef.current = refetch;
   }, [refetch]);
-
-  // A stale refresh failure must not outlive a recovery that bypassed
-  // `runRefresh`: the live poll clears `isError` on its own success. Reset the
-  // banner whenever the list is not in error.
-  useEffect(() => {
-    if (!isError) {
-      setRefreshFailed(false);
-    }
-  }, [isError]);
-
-  const runRefreshRef = useRef(runRefresh);
-  useEffect(() => {
-    runRefreshRef.current = runRefresh;
-  }, [runRefresh]);
   useFocusEffect(
     useCallback(() => {
-      void runRefreshRef.current();
+      void refetchRef.current();
     }, [])
   );
 
@@ -125,7 +108,7 @@ export function AgentSessionListScreen() {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'active' && navigation.isFocused()) {
-        void runRefreshRef.current();
+        void refetchRef.current();
         void queryClient.invalidateQueries({ queryKey: [['activeSessions']] });
       }
     });
@@ -167,8 +150,8 @@ export function AgentSessionListScreen() {
   );
 
   const handleRefresh = useCallback(() => {
-    void runRefresh();
-  }, [runRefresh]);
+    void refetch();
+  }, [refetch]);
 
   const renderItem = useCallback(
     ({ item }: { item: ActiveSession }) => (
@@ -186,11 +169,10 @@ export function AgentSessionListScreen() {
 
   // The tab bar is an absolutely-positioned overlay, so scrollable content
   // must clear it. The FAB adds its own inset when it shows so the last row
-  // scrolls clear of the button too. paddingTop merges here (not a className)
-  // to match the historical first-row inset without a separate wrapper.
+  // scrolls clear of the button too. The connection strip reuses the 18px
+  // first-row inset, so the list itself has no extra top padding.
   const listPadding = useMemo(
     () => ({
-      paddingTop: 18,
       paddingBottom: tabBarHeight + (hasLiveRows ? FAB_SIZE + FAB_MARGIN : 0),
     }),
     [tabBarHeight, hasLiveRows]
@@ -206,29 +188,31 @@ export function AgentSessionListScreen() {
     [tabBarHeight]
   );
 
+  const skeletonBody = (
+    <View>
+      {Array.from({ length: SKELETON_ROW_COUNT }, (_, i) => (
+        <View key={i} className="py-1.5">
+          <Skeleton className="mx-[22px] h-[76px] rounded-none" />
+        </View>
+      ))}
+    </View>
+  );
+
   let body: ReactNode = null;
-  // An unread filter record holds the skeletons even over cached rows: painting
-  // the unfiltered list first would drop rows once the stored filter arrives.
-  if (!query.hasLoaded || (loading && !hasLiveRows)) {
+  if (hasDisplayedRows) {
     body = (
-      <View className="pt-[18px]">
-        {Array.from({ length: SKELETON_ROW_COUNT }, (_, i) => (
-          <View key={i} className="py-1.5">
-            <Skeleton className="mx-[22px] h-[76px] rounded-none" />
-          </View>
-        ))}
-      </View>
-    );
-  } else if (isError && !hasLiveRows) {
-    body = (
-      <QueryError
-        message={t('agents.sessionList.couldNotLoadActive')}
-        onRetry={() => {
-          void runRefresh();
-        }}
+      <FlatList
+        ref={listRef}
+        data={displayedSessions}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        extraData={attentionFocusRevision}
+        contentContainerStyle={listPadding}
+        refreshControl={<RefreshControl refreshing={false} onRefresh={handleRefresh} />}
+        maintainVisibleContentPosition={{ minIndexForVisible: 0, autoscrollToTopThreshold: 10 }}
       />
     );
-  } else if (hasLiveRows && !hasVisibleRows) {
+  } else if (hasLiveRows) {
     body = (
       <EmptyState
         icon={Bot}
@@ -250,12 +234,31 @@ export function AgentSessionListScreen() {
         }
       />
     );
-  } else if (!hasLiveRows) {
+  } else if (loading) {
+    body = skeletonBody;
+  } else if (isError) {
+    const code = readTrpcErrorField(error, 'code');
+    const terminal = isTerminalTrpcCode(code);
+    const permission = code === 'FORBIDDEN' || code === 'UNAUTHORIZED';
+    body = (
+      <QueryError
+        variant={permission ? 'permission' : 'neutral'}
+        message={permission ? undefined : t('agents.sessionList.couldNotLoadActive')}
+        onRetry={
+          terminal
+            ? undefined
+            : () => {
+                void refetch();
+              }
+        }
+      />
+    );
+  } else if (isSuccess) {
     body = (
       <EmptyState
         icon={Bot}
         title={t('home.noLiveSessions')}
-        description={t('agents.sessionList.noSessionsYetDescription')}
+        description={organizationId ? t('profile.organization') : t('profile.personal')}
         action={
           <Button
             variant="outline"
@@ -270,18 +273,7 @@ export function AgentSessionListScreen() {
       />
     );
   } else {
-    body = (
-      <FlatList
-        ref={listRef}
-        data={visibleSessions}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        extraData={attentionFocusRevision}
-        contentContainerStyle={listPadding}
-        refreshControl={<RefreshControl refreshing={false} onRefresh={handleRefresh} />}
-        maintainVisibleContentPosition={{ minIndexForVisible: 0, autoscrollToTopThreshold: 10 }}
-      />
-    );
+    body = skeletonBody;
   }
 
   return (
@@ -315,7 +307,7 @@ export function AgentSessionListScreen() {
         updating={updating}
         refreshFailed={refreshFailed}
         onRetryRefresh={() => {
-          void runRefresh();
+          void refetch();
         }}
       />
       {body}

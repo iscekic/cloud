@@ -419,6 +419,23 @@ export function useLiveAgentSessions(options?: UseAgentSessionsOptions) {
     [active.data, options?.organizationId]
   );
 
+  const refetchActive = active.refetch;
+  const refetch = useCallback(async (): Promise<boolean> => {
+    // The live-sync owner writes and cancels this same query key, so a plain
+    // refetch alone can be swallowed by it. Drive the owner when one is
+    // attached — it is keyed to the same organization context this hook is
+    // given — and fall back to the plain refetch otherwise.
+    if (await refreshActiveSessionsNow()) {
+      // The owner drove the refresh and swallows its own failures; read the
+      // settled query state to report success to the caller. Match by the
+      // exact owner query key (`getQueryState` is exact by default), not by
+      // a loose prefix.
+      return queryClient.getQueryState(queryKey)?.status !== 'error';
+    }
+    const result = await refetchActive();
+    return !result.isError;
+  }, [queryClient, queryKey, refetchActive]);
+
   return {
     activeSessions,
     // Compatibility: the old combined `stored.isLoading || active.isLoading`
@@ -426,21 +443,10 @@ export function useLiveAgentSessions(options?: UseAgentSessionsOptions) {
     // use it — it reads only the active poll. Remove the split only when no
     // caller needs stored and active loading apart.
     isLoading: active.isLoading,
+    isFetching: active.isFetching,
+    isSuccess: active.isSuccess,
     isError: active.isError,
-    refetch: async (): Promise<boolean> => {
-      // The live-sync owner writes and cancels this same query key, so a plain
-      // refetch alone can be swallowed by it. Drive the owner when one is
-      // attached — it is keyed to the same organization context this hook is
-      // given — and fall back to the plain refetch otherwise.
-      if (await refreshActiveSessionsNow()) {
-        // The owner drove the refresh and swallows its own failures; read the
-        // settled query state to report success to the caller. Match by the
-        // exact owner query key (`getQueryState` is exact by default), not by
-        // a loose prefix.
-        return queryClient.getQueryState(queryKey)?.status !== 'error';
-      }
-      const result = await active.refetch();
-      return !result.isError;
-    },
+    error: active.error,
+    refetch,
   };
 }
