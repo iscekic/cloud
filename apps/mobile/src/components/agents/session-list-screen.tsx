@@ -4,6 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import {
   AppState,
   FlatList,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
   Platform,
   Pressable,
   RefreshControl,
@@ -39,6 +41,8 @@ import { isTerminalTrpcCode, readTrpcErrorField } from '@/lib/trpc-error';
 import { type Href, useFocusEffect, useNavigation, useRouter, useScrollToTop } from 'expo-router';
 
 const SKELETON_ROW_COUNT = 8;
+/** iOS overscroll past this offset starts a pull refresh. Skip UIRefreshControl: it spins and shifts the first row. */
+const PULL_REFRESH_OFFSET = 64;
 
 export function AgentSessionListScreen() {
   const router = useRouter();
@@ -167,6 +171,16 @@ export function AgentSessionListScreen() {
     void runRefresh();
   }, [runRefresh]);
 
+  const handleScrollEndDrag = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (event.nativeEvent.contentOffset.y >= -PULL_REFRESH_OFFSET) {
+        return;
+      }
+      handleRefresh();
+    },
+    [handleRefresh]
+  );
+
   const renderItem = useCallback(
     ({ item }: { item: ActiveSession }) => (
       <RemoteSessionRow
@@ -222,7 +236,16 @@ export function AgentSessionListScreen() {
         keyExtractor={keyExtractor}
         extraData={attentionFocusRevision}
         contentContainerStyle={listPadding}
-        refreshControl={<RefreshControl refreshing={false} onRefresh={handleRefresh} />}
+        onScrollEndDrag={handleScrollEndDrag}
+        // Keep the overscroll pull available when the list is shorter than the
+        // viewport (a single live row), so pull-to-refresh works without the
+        // native RefreshControl.
+        alwaysBounceVertical
+        refreshControl={
+          Platform.OS === 'android' ? (
+            <RefreshControl refreshing={false} onRefresh={handleRefresh} colors={['transparent']} />
+          ) : undefined
+        }
         maintainVisibleContentPosition={{ minIndexForVisible: 0, autoscrollToTopThreshold: 10 }}
       />
     );

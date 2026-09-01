@@ -244,8 +244,7 @@ function findTypeCount(renderer: MountedRenderer, type: string): number {
 
 function findStrip(renderer: MountedRenderer) {
   return renderer.root.find(
-    node =>
-      typeof node.type === 'string' && (node.type as string) === 'SessionListConnectionStrip'
+    node => typeof node.type === 'string' && (node.type as string) === 'SessionListConnectionStrip'
   );
 }
 
@@ -253,6 +252,19 @@ function fireFocus(): void {
   for (const effect of focusCallbacks.current) {
     effect();
   }
+}
+
+function findFlatList(renderer: MountedRenderer) {
+  return renderer.root.find(
+    node => typeof node.type === 'string' && (node.type as string) === 'FlatList'
+  );
+}
+
+function fireScrollEndDrag(renderer: MountedRenderer, offsetY: number): void {
+  const onScrollEndDrag = findFlatList(renderer).props.onScrollEndDrag as (event: {
+    nativeEvent: { contentOffset: { y: number } };
+  }) => void;
+  onScrollEndDrag({ nativeEvent: { contentOffset: { y: offsetY } } });
 }
 
 function createDeferred<T>(): { promise: Promise<T>; resolve: (value: T) => void } {
@@ -581,7 +593,9 @@ describe('AgentSessionListScreen live tab', () => {
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
     expect(emptyState.props.title).toBe('home.noLiveSessions');
-    expect(emptyState.props.description).toBe('agents.sessionList.emptyDescription:profile.personal');
+    expect(emptyState.props.description).toBe(
+      'agents.sessionList.emptyDescription:profile.personal'
+    );
     expect(findTypeCount(renderer, 'EmptyState')).toBe(1);
     expect(findTypeCount(renderer, 'FlatList')).toBe(0);
 
@@ -702,21 +716,14 @@ describe('AgentSessionListScreen live tab', () => {
 
     const renderer = await renderScreen();
 
-    const flatList = renderer.root.find(
-      node => typeof node.type === 'string' && (node.type as string) === 'FlatList'
-    );
-    const refreshControl = flatList.props.refreshControl as {
-      type: string;
-      props: { onRefresh: () => void; refreshing: boolean };
-    };
-    expect(refreshControl.type).toBe('RefreshControl');
-    expect(refreshControl.props.refreshing).toBe(false);
+    expect(findFlatList(renderer).props.refreshControl).toBeUndefined();
+    expect(findFlatList(renderer).props.alwaysBounceVertical).toBe(true);
 
     // Before the pull, the strip reports nothing.
     expect(findStrip(renderer).props.updating).toBe(false);
 
     act(() => {
-      refreshControl.props.onRefresh();
+      fireScrollEndDrag(renderer, -80);
     });
 
     // Only the strip indicator shows while the pull is in flight.
@@ -728,6 +735,20 @@ describe('AgentSessionListScreen live tab', () => {
       deferred.resolve(true);
       await Promise.resolve();
     });
+    expect(findStrip(renderer).props.updating).toBe(false);
+  });
+
+  it('does not start a pull refresh below the overscroll threshold', async () => {
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+    sessionListState.isSuccess = true;
+
+    const renderer = await renderScreen();
+
+    act(() => {
+      fireScrollEndDrag(renderer, -20);
+    });
+
+    expect(refetchSpy).not.toHaveBeenCalled();
     expect(findStrip(renderer).props.updating).toBe(false);
   });
 
@@ -852,7 +873,9 @@ describe('AgentSessionListScreen live tab', () => {
     const emptyState = renderer.root.find(
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
-    expect(emptyState.props.description).toBe('agents.sessionList.emptyDescription:profile.organization');
+    expect(emptyState.props.description).toBe(
+      'agents.sessionList.emptyDescription:profile.organization'
+    );
     expect(
       renderer.root.findAll(node => node.props.testID === 'agents-new-session-fab')
     ).toHaveLength(0);
