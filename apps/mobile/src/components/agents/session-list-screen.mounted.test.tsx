@@ -568,7 +568,7 @@ describe('AgentSessionListScreen live tab', () => {
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
     expect(emptyState.props.title).toBe('home.noLiveSessions');
-    expect(emptyState.props.description).toBe('profile.personal');
+    expect(emptyState.props.description).toBe('agents.sessionList.emptyDescription:profile.personal');
     expect(findTypeCount(renderer, 'EmptyState')).toBe(1);
     expect(findTypeCount(renderer, 'FlatList')).toBe(0);
 
@@ -815,7 +815,7 @@ describe('AgentSessionListScreen live tab', () => {
     const emptyState = renderer.root.find(
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
-    expect(emptyState.props.description).toBe('profile.organization');
+    expect(emptyState.props.description).toBe('agents.sessionList.emptyDescription:profile.organization');
     expect(
       renderer.root.findAll(node => node.props.testID === 'agents-new-session-fab')
     ).toHaveLength(0);

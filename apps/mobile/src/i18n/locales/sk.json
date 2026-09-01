@@ -2091,12 +2091,12 @@
       "couldNotLoadActive": "Aktívne sedenia sa nepodarilo načítať",
       "updating": "Obnovuje sa",
       "refreshFailed": "Obnovenie sa nepodarilo",
-      "noSessionsYetDescription": "Spustite programátorskú úlohu z telefónu. Vaše sedenia sa zobrazia tu.",
       "noMatches": "Žiadne sedenia nezodpovedajú",
       "tryDifferentSearch": "Skúste iný vyhľadávací výraz.",
       "tryAdjustFilters": "Skúste upraviť alebo vymazať filtre.",
       "couldNotSearch": "Sedenie sa nepodarilo vyhľadať",
       "completedWillAppear": "Dokončené sedenia sa zobrazia tu.",
+      "emptyDescription": "Žiadne sedenia v {{context}}",
       "noPastSessions": "Žiadne minulé sedenia",
       "live": "NAŽIVO"
     },

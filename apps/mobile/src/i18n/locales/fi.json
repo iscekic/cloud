@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Aktiivisia istuntoja ei voitu ladata",
       "updating": "Päivitetään",
       "refreshFailed": "Päivitys epäonnistui",
-      "noSessionsYetDescription": "Aloita koodaustehtävä puhelimellasi. Istunnot näkyvät tässä.",
       "noMatches": "Mikään istunto ei vastaa",
       "tryDifferentSearch": "Kokeile toista hakusanaa.",
       "tryAdjustFilters": "Yritä muuttaa tai poistaa suodattimesi.",
       "couldNotSearch": "Istuntoja ei voitu hakea",
       "completedWillAppear": "Valmistuneet istunnot näkyvät tässä.",
+      "emptyDescription": "Ei istuntoja: {{context}}",
       "noPastSessions": "Ei aiempia istuntoja",
       "live": "LIVE"
     },

@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Kunne ikke indlæse aktive sessioner",
       "updating": "Opdaterer",
       "refreshFailed": "Kunne ikke opdatere",
-      "noSessionsYetDescription": "Start en kodningsopgave fra din telefon. Dine sessioner vises her.",
       "noMatches": "Ingen sessioner matcher",
       "tryDifferentSearch": "Prøv et andet søgeord.",
       "tryAdjustFilters": "Prøv at justere eller fjerne dine filtre.",
       "couldNotSearch": "Kunne ikke søge i sessioner",
       "completedWillAppear": "Fuldførte sessioner vises her.",
+      "emptyDescription": "Ingen sessioner i {{context}}",
       "noPastSessions": "Ingen tidligere sessioner",
       "live": "LIVE"
     },

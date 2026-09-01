@@ -2078,12 +2078,12 @@
       "couldNotLoadActive": "Aktivne sesije se ne mogu učitati",
       "updating": "Osvežavanje",
       "refreshFailed": "Nije moguće osvežiti",
-      "noSessionsYetDescription": "Započni zadatak kodiranja sa svog telefona. Tvoje sesije će se pojaviti ovde.",
       "noMatches": "Nijedna sesija ne odgovara",
       "tryDifferentSearch": "Probaj drugi termin za pretragu.",
       "tryAdjustFilters": "Probaj da podesiš ili obrišeš svoje filtere.",
       "couldNotSearch": "Sesije se ne mogu pretražiti",
       "completedWillAppear": "Završene sesije će se pojaviti ovde.",
+      "emptyDescription": "Nema sesija u {{context}}",
       "noPastSessions": "Nema prošlih sesija",
       "live": "UŽIVO"
     },

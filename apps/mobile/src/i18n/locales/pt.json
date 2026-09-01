@@ -2078,12 +2078,12 @@
       "couldNotLoadActive": "Não foi possível carregar as sessões ativas",
       "updating": "A atualizar",
       "refreshFailed": "Não foi possível atualizar",
-      "noSessionsYetDescription": "Comece uma tarefa de programação a partir do seu telemóvel. As suas sessões aparecerão aqui.",
       "noMatches": "Nenhuma sessão corresponde",
       "tryDifferentSearch": "Experimente um termo de pesquisa diferente.",
       "tryAdjustFilters": "Experimente ajustar ou limpar os seus filtros.",
       "couldNotSearch": "Não foi possível pesquisar as sessões",
       "completedWillAppear": "As sessões concluídas aparecerão aqui.",
+      "emptyDescription": "Nenhuma sessão em {{context}}",
       "noPastSessions": "Sem sessões anteriores",
       "live": "AO VIVO"
     },

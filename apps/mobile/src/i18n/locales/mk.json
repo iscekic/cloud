@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Не можеше да се вчитаат активните сесии",
       "updating": "Освежување",
       "refreshFailed": "Не можеше да се освежи",
-      "noSessionsYetDescription": "Започни задача за кодирање од твојот телефон. Твоите сесии ќе се појават тука.",
       "noMatches": "Нема соодветни сесии",
       "tryDifferentSearch": "Обиди се со различен поим за пребарување.",
       "tryAdjustFilters": "Обиди се да ги прилагодиш или исчистиш филтрите.",
       "couldNotSearch": "Не можеше да се пребаруваат сесиите",
       "completedWillAppear": "Завршените сесии ќе се појават тука.",
+      "emptyDescription": "Нема сесии во {{context}}",
       "noPastSessions": "Нема минати сесии",
       "live": "ВОЖИВО"
     },

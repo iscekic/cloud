@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Ezin dira saio aktiboak kargatu",
       "updating": "Freskatzen",
       "refreshFailed": "Ezin izan da freskatu",
-      "noSessionsYetDescription": "Hasi kodetze-lan bat zure telefonotik. Zure saioak hemen agertuko dira.",
       "noMatches": "Ez dago bat datorren saiorik",
       "tryDifferentSearch": "Saiatu bilaketa-termino desberdin batekin.",
       "tryAdjustFilters": "Saiatu iragazkiak doitzen edo ezabatzen.",
       "couldNotSearch": "Ezin dira saioak bilatu",
       "completedWillAppear": "Amaitutako saioak hemen agertuko dira.",
+      "emptyDescription": "Ez dago saiorik {{context}} eremuan",
       "noPastSessions": "Ez dago iraganeko saiorik",
       "live": "ZUZENEAN"
     },

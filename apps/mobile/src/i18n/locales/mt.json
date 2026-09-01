@@ -2104,12 +2104,12 @@
       "couldNotLoadActive": "Ma setgħux jintgħabbu s-sessjonijiet attivi",
       "updating": "Qed jaġġorna",
       "refreshFailed": "Ma setgħux jiġu aġġornati",
-      "noSessionsYetDescription": "Ibda biċċa xogħol ta' kodifikazzjoni mit-telefon tiegħek. Is-sessjonijiet tiegħek se jidhru hawn.",
       "noMatches": "L-ebda sessjoni ma taqbel",
       "tryDifferentSearch": "Ipprova terminu ta' tfittxija differenti.",
       "tryAdjustFilters": "Ipprova aġġusta jew neħħi l-filtri tiegħek.",
       "couldNotSearch": "Ma setgħux jinstabu s-sessjonijiet",
       "completedWillAppear": "Is-sessjonijiet kompluti se jidhru hawn.",
+      "emptyDescription": "Ebda sessjoni fi {{context}}",
       "noPastSessions": "L-ebda sessjoni tal-passat",
       "live": "DIRETT"
     },

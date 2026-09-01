@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "មិនអាចផ្ទុកវគ្គសកម្ម",
       "updating": "កំពុងធ្វើឱ្យស្រស់",
       "refreshFailed": "មិនអាចធ្វើឱ្យស្រស់បានទេ",
-      "noSessionsYetDescription": "ចាប់ផ្តើមកិច្ចការកូដពីទូរស័ព្ទរបស់អ្នក។ វគ្គរបស់អ្នកនឹងបង្ហាញនៅទីនេះ។",
       "noMatches": "គ្មានវគ្គដែលត្រូវគ្នា",
       "tryDifferentSearch": "សាកល្បងពាក្យស្វែងរកផ្សេង។",
       "tryAdjustFilters": "សាកល្បងកែតម្រូវ ឬសម្អាតតម្រងរបស់អ្នក។",
       "couldNotSearch": "មិនអាចស្វែងរកវគ្គ",
       "completedWillAppear": "វគ្គដែលបានបញ្ចប់នឹងបង្ហាញនៅទីនេះ។",
+      "emptyDescription": "គ្មានវគ្គក្នុង {{context}}",
       "noPastSessions": "គ្មានវគ្គកន្លងមក",
       "live": "LIVE"
     },

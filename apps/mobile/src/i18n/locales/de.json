@@ -1611,12 +1611,12 @@
       "couldNotLoadActive": "Aktive Sitzungen konnten nicht geladen werden",
       "updating": "Wird aktualisiert",
       "refreshFailed": "Aktualisieren nicht möglich",
-      "noSessionsYetDescription": "Starte eine Codieraufgabe von deinem Telefon. Deine Sitzungen erscheinen hier.",
       "noMatches": "Keine Sitzungen gefunden",
       "tryDifferentSearch": "Versuche einen anderen Suchbegriff.",
       "tryAdjustFilters": "Versuche, deine Filter anzupassen oder zu löschen.",
       "couldNotSearch": "Sitzungen konnten nicht durchsucht werden",
       "completedWillAppear": "Abgeschlossene Sitzungen erscheinen hier.",
+      "emptyDescription": "Keine Sitzungen in {{context}}",
       "noPastSessions": "Keine vergangenen Sitzungen",
       "live": "LIVE"
     },

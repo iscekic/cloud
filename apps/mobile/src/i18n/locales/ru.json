@@ -1623,12 +1623,12 @@
       "couldNotLoadActive": "Не удалось загрузить активные сеансы",
       "updating": "Обновление",
       "refreshFailed": "Не удалось обновить",
-      "noSessionsYetDescription": "Начните задачу кодирования с телефона. Ваши сеансы появятся здесь.",
       "noMatches": "Нет подходящих сеансов",
       "tryDifferentSearch": "Попробуйте другой поисковый запрос.",
       "tryAdjustFilters": "Попробуйте изменить или очистить фильтры.",
       "couldNotSearch": "Не удалось выполнить поиск сеансов",
       "completedWillAppear": "Завершенные сеансы появятся здесь.",
+      "emptyDescription": "Нет сеансов в {{context}}",
       "noPastSessions": "Нет прошлых сеансов",
       "live": "LIVE"
     },

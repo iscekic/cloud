@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "აქტიური სესიები ვერ ჩაირთო",
       "updating": "განახლდება",
       "refreshFailed": "განახლება ვერ მოხერხდა",
-      "noSessionsYetDescription": "დაიწყეთ კოდირების დავალება თქვენი ტელეფონიდან. თქვენი სესიები აქ გამოჩნდება.",
       "noMatches": "არცერთი სესია არ ემთხვევა",
       "tryDifferentSearch": "სცადეთ სხვა საძიებო სიტყვა.",
       "tryAdjustFilters": "სცადეთ ფილტრების შეცვლა ან გასუფთავება.",
       "couldNotSearch": "სესიების ძიება ვერ მოხერხდა",
       "completedWillAppear": "დასრულებული სესიები აქ გამოჩნდება.",
+      "emptyDescription": "{{context}}-ში სესიები არ არის",
       "noPastSessions": "წარსული სესიები არ არის",
       "live": "პირდაპირი"
     },

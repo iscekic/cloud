@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Hindi ma-load ang mga aktibong session",
       "updating": "Nire-refresh",
       "refreshFailed": "Hindi ma-refresh",
-      "noSessionsYetDescription": "Magsimula ng coding task mula sa iyong phone. Lalabas dito ang iyong mga session.",
       "noMatches": "Walang session na tugma",
       "tryDifferentSearch": "Subukan ang ibang termino sa paghahanap.",
       "tryAdjustFilters": "Subukang ayusin o i-clear ang iyong mga filter.",
       "couldNotSearch": "Hindi ma-search ang mga session",
       "completedWillAppear": "Lalabas dito ang mga natapos na session.",
+      "emptyDescription": "Walang mga session sa {{context}}",
       "noPastSessions": "Walang nakaraang session",
       "live": "LIVE"
     },

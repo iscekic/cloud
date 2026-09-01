@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Չհաջողվեց բեռնել ակտիվ նիստերը",
       "updating": "Թարմացվում է",
       "refreshFailed": "Չհաջողվեց թարմացնել",
-      "noSessionsYetDescription": "Սկսեք ծածկագրման առաջադրանք ձեր հեռախոսից։ Ձեր նիստերը կհայտնվեն այստեղ։",
       "noMatches": "Ոչ մի նիստ չի համապատասխանում",
       "tryDifferentSearch": "Փորձեք որոնման այլ տերմին։",
       "tryAdjustFilters": "Փորձեք ճշգրտել կամ մաքրել ձեր զտիչները։",
       "couldNotSearch": "Չհաջողվեց որոնել նիստերը",
       "completedWillAppear": "Ավարտված նիստերը կհայտնվեն այստեղ։",
+      "emptyDescription": "{{context}} բաժնում նիստեր չկան",
       "noPastSessions": "Անցյալի նիստեր չկան",
       "live": "ՈՒՂԻՂ"
     },

@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Lama xiri karin kalfadhiyada firfircoon",
       "updating": "La cusboonaysiinayaa",
       "refreshFailed": "Ma cusboonaysiin karin",
-      "noSessionsYetDescription": "Ka bilow hawsha coding-ga taleefankaaga. Kalfadhiyadaagu halkan ayay soo muuqan doonaan.",
       "noMatches": "Ma jiraan kalfadhiyo u dhigma",
       "tryDifferentSearch": "Isku day erey raadin oo kala duwan.",
       "tryAdjustFilters": "Isku day inaad hagaajiso ama baabi'iso shaandhadaada.",
       "couldNotSearch": "Lama raadin karin kalfadhiyada",
       "completedWillAppear": "Kalfadhiyada la dhammaystiray halkan ayay soo muuqan doonaan.",
+      "emptyDescription": "Ma jiraan kalfadhiyo ku jira {{context}}",
       "noPastSessions": "Ma jiraan kalfadhiyo hore",
       "live": "TOOS AH"
     },

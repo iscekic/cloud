@@ -1599,12 +1599,12 @@
       "couldNotLoadActive": "Impossibile caricare le sessioni attive",
       "updating": "Aggiornamento in corso",
       "refreshFailed": "Impossibile aggiornare",
-      "noSessionsYetDescription": "Avvia un'attività di codifica dal telefono. Le tue sessioni appariranno qui.",
       "noMatches": "Nessuna sessione corrisponde",
       "tryDifferentSearch": "Prova un termine di ricerca diverso.",
       "tryAdjustFilters": "Prova a modificare o cancellare i filtri.",
       "couldNotSearch": "Impossibile cercare le sessioni",
       "completedWillAppear": "Le sessioni completate appariranno qui.",
+      "emptyDescription": "Nessuna sessione in {{context}}",
       "noPastSessions": "Nessuna sessione passata",
       "live": "LIVE"
     },

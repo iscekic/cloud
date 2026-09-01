@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Tsy afaka namaky ny sessions mavitrika",
       "updating": "Eo am-panavaozana",
       "refreshFailed": "Tsy afaka navaozina",
-      "noSessionsYetDescription": "Atombohy asa fandaharana avy amin'ny findainao. Hisetra eto ny sessions-nao.",
       "noMatches": "Tsy misy sessions mifanaraka",
       "tryDifferentSearch": "Andramo teny fikarohana hafa.",
       "tryAdjustFilters": "Andramo manitsy na manala ny sivanao.",
       "couldNotSearch": "Tsy afaka nanao fikarohana sessions",
       "completedWillAppear": "Hiseho eto ny sessions vita.",
+      "emptyDescription": "Tsy misy sessions ao amin'ny {{context}}",
       "noPastSessions": "Tsy misy sessions taloha",
       "live": "LIVE"
     },

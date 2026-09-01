@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Non se puido cargar as sesións activas",
       "updating": "Actualizando",
       "refreshFailed": "Non se puido actualizar",
-      "noSessionsYetDescription": "Inicia unha tarefa de codificación desde o teu teléfono. As túas sesións aparecerán aquí.",
       "noMatches": "Ningunha sesión coincide",
       "tryDifferentSearch": "Probas un termo de busca diferente.",
       "tryAdjustFilters": "Probas axustar ou borrar os teus filtros.",
       "couldNotSearch": "Non se puido buscar nas sesións",
       "completedWillAppear": "As sesións completadas aparecerán aquí.",
+      "emptyDescription": "Non hai sesións en {{context}}",
       "noPastSessions": "Sen sesións pasadas",
       "live": "EN DIRECTO"
     },

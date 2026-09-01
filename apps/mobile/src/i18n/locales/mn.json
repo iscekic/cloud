@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Идэвхтэй сессийг ачаалах боломжгүй",
       "updating": "Сэргээж байна",
       "refreshFailed": "Сэргээх боломжгүй",
-      "noSessionsYetDescription": "Утаснаасаа кодлох даалгаврыг эхлүүлээрэй. Таны сессүүд энд гарч ирнэ.",
       "noMatches": "Таарсан сесси байхгүй",
       "tryDifferentSearch": "Өөр хайлтын нэр томьёо туршиж үзнэ үү.",
       "tryAdjustFilters": "Шүүлтүүрүүдээ тохируулах эсвэл арилгаж үзнэ үү.",
       "couldNotSearch": "Сессийг хайх боломжгүй",
       "completedWillAppear": "Дууссан сессүүд энд гарч ирнэ.",
+      "emptyDescription": "{{context}}-д сесс байхгүй",
       "noPastSessions": "Өмнөх сесс байхгүй",
       "live": "ШУУД"
     },

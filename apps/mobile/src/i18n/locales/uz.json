@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Faol sessiyalar yuklab olinmadi",
       "updating": "Yangilanmoqda",
       "refreshFailed": "Yangilab bo'lmadi",
-      "noSessionsYetDescription": "Telefoningizdan kodlash vazifasini boshlang. Sessiyalaringiz shu yerda paydo bo'ladi.",
       "noMatches": "Sessiyalar mos kelmadi",
       "tryDifferentSearch": "Boshqa qidiruv so'zini sinab ko'ring.",
       "tryAdjustFilters": "Filtrlaringizni sozlab yoki tozalab ko'ring.",
       "couldNotSearch": "Sessiyalarni qidirib bo'lmadi",
       "completedWillAppear": "Tugallangan sessiyalar shu yerda paydo bo'ladi.",
+      "emptyDescription": "{{context}} bo'limida sessiya yo'q",
       "noPastSessions": "O'tgan sessiyalar yo'q",
       "live": "JO'N"
     },

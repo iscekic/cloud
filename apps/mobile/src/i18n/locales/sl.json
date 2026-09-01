@@ -2091,12 +2091,12 @@
       "couldNotLoadActive": "Aktivnih sej ni bilo mogoče naložiti",
       "updating": "Osveževanje",
       "refreshFailed": "Osveževanje ni uspelo",
-      "noSessionsYetDescription": "Začni nalogo kodiranja s telefona. Tvoje seje bodo prikazane tukaj.",
       "noMatches": "Nobena seja se ne ujema",
       "tryDifferentSearch": "Poskusi z drugim iskalnim izrazom.",
       "tryAdjustFilters": "Poskusi prilagoditi ali počistiti filtre.",
       "couldNotSearch": "Sej ni bilo mogoče iskati",
       "completedWillAppear": "Dokončane seje bodo prikazane tukaj.",
+      "emptyDescription": "Ni sej v {{context}}",
       "noPastSessions": "Ni preteklih sej",
       "live": "V ŽIVO"
     },

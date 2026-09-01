@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "සක්රීය සැසි පූරණය කළ නොහැක",
       "updating": "නැවුම් කරමින්",
       "refreshFailed": "නැවුම් කිරීමට නොහැකි විය",
-      "noSessionsYetDescription": "ඔබගේ දුරකථනයෙන් කේතීකරණ කාර්යයක් ආරම්භ කරන්න. ඔබේ සැසි මෙහි දිස්වනු ඇත.",
       "noMatches": "සැසි ගැළපෙන්නේ නැත",
       "tryDifferentSearch": "වෙනස් සෙවුම් පදයක් උත්සාහ කරන්න.",
       "tryAdjustFilters": "පෙරහන් සීරුමාරු කිරීමට හෝ ඉවත් කිරීමට උත්සාහ කරන්න.",
       "couldNotSearch": "සැසි සෙවීමට නොහැකි විය",
       "completedWillAppear": "සම්පූර්ණ කළ සැසි මෙහි දිස්වනු ඇත.",
+      "emptyDescription": "{{context}} හි සැසි නොමැත",
       "noPastSessions": "පසුගිය සැසි නැත",
       "live": "සජීවී"
     },

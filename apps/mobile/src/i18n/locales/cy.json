@@ -2117,12 +2117,12 @@
       "couldNotLoadActive": "Methwyd llwytho sesiynau gweithredol",
       "updating": "Yn adnewyddu",
       "refreshFailed": "Methwyd adnewyddu",
-      "noSessionsYetDescription": "Dechreuwch dasg codio o'ch ffôn. Bydd eich sesiynau'n ymddangos yma.",
       "noMatches": "Dim sesiynau'n cyfateb",
       "tryDifferentSearch": "Ceisiwch derm chwilio gwahanol.",
       "tryAdjustFilters": "Ceisiwch addasu neu glirio'ch hidlwyr.",
       "couldNotSearch": "Methwyd chwilio sesiynau",
       "completedWillAppear": "Bydd sesiynau wedi'u cwblhau'n ymddangos yma.",
+      "emptyDescription": "Dim sesiynau yn {{context}}",
       "noPastSessions": "Dim sesiynau yn y gorffennol",
       "live": "BYW"
     },

@@ -1608,6 +1608,7 @@
     },
     "sessionList": {
       "completedWillAppear": "पूर्ण सत्र यहाँ दिखाई देंगे।",
+      "emptyDescription": "{{context}} में कोई सत्र नहीं",
       "couldNotLoad": "सत्र लोड नहीं हो सके",
       "couldNotLoadActive": "सक्रिय सत्र लोड नहीं हो सके",
       "updating": "रीफ़्रेश हो रहा है",
@@ -1615,7 +1616,6 @@
       "couldNotSearch": "सत्र खोजे नहीं जा सके",
       "noMatches": "कोई सत्र मेल नहीं खाता",
       "noPastSessions": "कोई पिछले सत्र नहीं",
-      "noSessionsYetDescription": "अपने फ़ोन से कोडिंग कार्य शुरू करें। आपके सत्र यहाँ दिखाई देंगे।",
       "tryAdjustFilters": "अपने फ़िल्टर समायोजित करने या साफ़ करने का प्रयास करें।",
       "tryDifferentSearch": "कोई दूसरा खोज शब्द आज़माएँ।",
       "live": "लाइव"

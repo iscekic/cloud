@@ -1611,12 +1611,12 @@
       "couldNotLoadActive": "Không thể tải các phiên đang hoạt động",
       "updating": "Đang làm mới",
       "refreshFailed": "Không thể làm mới",
-      "noSessionsYetDescription": "Bắt đầu tác vụ lập trình từ điện thoại. Các phiên của bạn sẽ xuất hiện tại đây.",
       "noMatches": "Không có phiên nào khớp",
       "tryDifferentSearch": "Hãy thử một cụm từ tìm kiếm khác.",
       "tryAdjustFilters": "Hãy thử điều chỉnh hoặc xóa bộ lọc của bạn.",
       "couldNotSearch": "Không thể tìm kiếm phiên",
       "completedWillAppear": "Các phiên đã hoàn tất sẽ xuất hiện tại đây.",
+      "emptyDescription": "Không có phiên nào trong {{context}}",
       "noPastSessions": "Không có phiên trước đây",
       "live": "TRỰC TIẾP"
     },

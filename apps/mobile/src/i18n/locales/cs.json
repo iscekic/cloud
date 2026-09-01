@@ -2091,12 +2091,12 @@
       "couldNotLoadActive": "Aktivní relace se nepodařilo načíst",
       "updating": "Obnovování",
       "refreshFailed": "Obnovení se nepodařilo",
-      "noSessionsYetDescription": "Spusťte programátorskou úlohu z telefonu. Vaše relace se zde zobrazí.",
       "noMatches": "Žádné relace neodpovídají",
       "tryDifferentSearch": "Zkuste jiný hledaný výraz.",
       "tryAdjustFilters": "Zkuste upravit nebo vymazat své filtry.",
       "couldNotSearch": "Relace se nepodařilo vyhledat",
       "completedWillAppear": "Dokončené relace se zde zobrazí.",
+      "emptyDescription": "Žádné relace v {{context}}",
       "noPastSessions": "Žádné minulé relace",
       "live": "ŽIVĚ"
     },

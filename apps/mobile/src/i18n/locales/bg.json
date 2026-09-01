@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Не може да се заредят активните сесии",
       "updating": "Опресняване",
       "refreshFailed": "Не можахме да опресним",
-      "noSessionsYetDescription": "Започни задача за кодиране от телефона си. Сесиите ти ще се появят тук.",
       "noMatches": "Няма съвпадащи сесии",
       "tryDifferentSearch": "Опитай с различен термин за търсене.",
       "tryAdjustFilters": "Опитай да промениш или изчистиш филтрите си.",
       "couldNotSearch": "Не може да се търсят сесии",
       "completedWillAppear": "Завършените сесии ще се появят тук.",
+      "emptyDescription": "Няма сесии в {{context}}",
       "noPastSessions": "Няма минали сесии",
       "live": "НА ЖИВО"
     },

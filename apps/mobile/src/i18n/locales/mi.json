@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Kāore i taea te uta ngā wātūtū mahi",
       "updating": "E whakahou ana",
       "refreshFailed": "Kāore i taea te whakahou",
-      "noSessionsYetDescription": "Tīmatatia tētahi mahi whakawaehere mai i tō waea. Ka puta ō wātūtū ki konei.",
       "noMatches": "Kāore he wātūtū e hāngai ana",
       "tryDifferentSearch": "Whakamātauhia tētahi kupu rapu rerekē.",
       "tryAdjustFilters": "Whakamātauhia te whakatika, te whakakore rānei i ō tātari.",
       "couldNotSearch": "Kāore i taea te rapu ngā wātūtū",
       "completedWillAppear": "Ka puta ngā wātūtū kua oti ki konei.",
+      "emptyDescription": "Karekau he wātū i {{context}}",
       "noPastSessions": "Kāore he wātūtū o mua",
       "live": "ORA"
     },

@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Aktiivseid seansse ei õnnestunud laadida",
       "updating": "Värskendamine",
       "refreshFailed": "Värskendamine ebaõnnestus",
-      "noSessionsYetDescription": "Alusta oma telefonis kodeerimisülesannet. Sinu seansid ilmuvad siia.",
       "noMatches": "Ükski seanss ei vasta",
       "tryDifferentSearch": "Proovi teistsugust otsingusõna.",
       "tryAdjustFilters": "Proovi filtreid kohandada või tühjendada.",
       "couldNotSearch": "Seansside otsimine ebaõnnestus",
       "completedWillAppear": "Lõpetatud seansid ilmuvad siia.",
+      "emptyDescription": "{{context}}-s pole seansse",
       "noPastSessions": "Minevikuseansse pole",
       "live": "OTSE"
     },

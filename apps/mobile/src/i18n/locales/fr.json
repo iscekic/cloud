@@ -2487,12 +2487,12 @@
       "couldNotLoadActive": "Impossible de charger les sessions actives",
       "updating": "Actualisation en cours",
       "refreshFailed": "Actualisation impossible",
-      "noSessionsYetDescription": "Démarrez une tâche de codage depuis votre téléphone. Vos sessions apparaîtront ici.",
       "noMatches": "Aucune session ne correspond",
       "tryDifferentSearch": "Essayez un autre terme de recherche.",
       "tryAdjustFilters": "Essayez d'ajuster ou d'effacer vos filtres.",
       "couldNotSearch": "Impossible de rechercher des sessions",
       "completedWillAppear": "Les sessions terminées apparaîtront ici.",
+      "emptyDescription": "Aucune session dans {{context}}",
       "noPastSessions": "Aucune session passée",
       "live": "EN DIRECT"
     },

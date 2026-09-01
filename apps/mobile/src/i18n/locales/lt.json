@@ -2091,12 +2091,12 @@
       "couldNotLoadActive": "Nepavyko įkelti aktyvių sesijų",
       "updating": "Atnaujinama",
       "refreshFailed": "Nepavyko atnaujinti",
-      "noSessionsYetDescription": "Pradėkite kodavimo užduotį iš savo telefono. Jūsų sesijos bus rodomos čia.",
       "noMatches": "Sesijų neatitikimų nėra",
       "tryDifferentSearch": "Pabandykite kitą paieškos terminą.",
       "tryAdjustFilters": "Pabandykite pakoreguoti arba išvalyti filtrus.",
       "couldNotSearch": "Nepavyko ieškoti sesijų",
       "completedWillAppear": "Baigtos sesijos bus rodomos čia.",
+      "emptyDescription": "Nėra sesijų: {{context}}",
       "noPastSessions": "Nėra ankstesnių sesijų",
       "live": "TIESIOGIAI"
     },

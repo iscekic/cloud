@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "ንቁ ክፍለ ጊዜዎችን ማግኘት አልተቻለም",
       "updating": "በማደስ ላይ",
       "refreshFailed": "ማደስ አልተቻለም",
-      "noSessionsYetDescription": "ከስልክዎ የኮዲንግ ተግባር ይጀምሩ። ክፍለ ጊዜዎችዎ እዚህ ይታያሉ።",
       "noMatches": "ምንም ክፍለ ጊዜ አይዛመድም",
       "tryDifferentSearch": "የተለየ የፍለጋ ቃል ይሞክሩ።",
       "tryAdjustFilters": "ማጣሪያዎችዎን ለማስተካከል ወይም ለማጽዳት ይሞክሩ።",
       "couldNotSearch": "ክፍለ ጊዜዎችን መፈለግ አልተቻለም",
       "completedWillAppear": "የተጠናቀቁ ክፍለ ጊዜዎች እዚህ ይታያሉ።",
+      "emptyDescription": "በ{{context}} ውስጥ ምንም ክፍለ ጊዜ የለም",
       "noPastSessions": "ምንም ያለፉ ክፍለ ጊዜዎች የሉም",
       "live": "ቀጥታ"
     },

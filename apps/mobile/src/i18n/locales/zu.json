@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Akukwazanga ukulayisha iziseshini ezisebenzayo",
       "updating": "Iyavuselela",
       "refreshFailed": "Asikwazanga ukuvuselela",
-      "noSessionsYetDescription": "Qala umsebenzi wokufaka ikhodi kusukela kufoni yakho. Iziseshini zakho zizovela lapha.",
       "noMatches": "Akukho ziseshini ezihambisanayo",
       "tryDifferentSearch": "Zama igama lokusesha elihlukile.",
       "tryAdjustFilters": "Zama ukulungisa noma ukusula izihlungi zakho.",
       "couldNotSearch": "Akukwazanga ukusesha iziseshini",
       "completedWillAppear": "Iziseshini eziqediwe zizovela lapha.",
+      "emptyDescription": "Azikho iziseshini ku-{{context}}",
       "noPastSessions": "Akukho ziseshini ezidlule",
       "live": "LIVE"
     },

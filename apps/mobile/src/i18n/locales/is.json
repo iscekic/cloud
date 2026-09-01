@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Ekki tókst að hlaða virkar lotur",
       "updating": "Endurnýjar",
       "refreshFailed": "Ekki tókst að endurnýja",
-      "noSessionsYetDescription": "Byrjaðu kóðunarverkefni frá símanum þínum. Loturnar þínar birtast hér.",
       "noMatches": "Engar lotur passa",
       "tryDifferentSearch": "Prófaðu annað leitarorð.",
       "tryAdjustFilters": "Reyndu að breyta eða hreinsa síurnar þínar.",
       "couldNotSearch": "Ekki tókst að leita í lotum",
       "completedWillAppear": "Lokið lotur birtast hér.",
+      "emptyDescription": "Engar lotur í {{context}}",
       "noPastSessions": "Engar fyrri lotur",
       "live": "BEIN"
     },

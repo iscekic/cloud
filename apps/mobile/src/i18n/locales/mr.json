@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "सक्रिय सत्रे लोड करता आली नाहीत",
       "updating": "रीफ्रेश होत आहे",
       "refreshFailed": "रीफ्रेश करता आले नाही",
-      "noSessionsYetDescription": "तुमच्या फोनवरून कोडिंग कार्य सुरू करा. तुमची सत्रे येथे दिसतील.",
       "noMatches": "जुळणारी सत्रे नाहीत",
       "tryDifferentSearch": "भिन्न शोध संज्ञा वापरून पहा.",
       "tryAdjustFilters": "तुमचे फिल्टर समायोजित किंवा साफ करून पहा.",
       "couldNotSearch": "सत्रे शोधता आली नाहीत",
       "completedWillAppear": "पूर्ण झालेली सत्रे येथे दिसतील.",
+      "emptyDescription": "{{context}}मध्ये कोणतेही सत्र नाही",
       "noPastSessions": "भूतकाळातील सत्रे नाहीत",
       "live": "LIVE"
     },

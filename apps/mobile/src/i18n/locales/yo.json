@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Ko le ṣe ikojọpọ awọn akoko to n ṣiṣẹ",
       "updating": "Ń túnṣe",
       "refreshFailed": "Ko le tunse",
-      "noSessionsYetDescription": "Bẹrẹ iṣẹ-ṣiṣe coding lati foonu rẹ. Awọn akoko rẹ yoo han nibi.",
       "noMatches": "Ko si awọn akoko ti o ba mu",
       "tryDifferentSearch": "Gbiyanju ọrọ wiwa ti o yatọ.",
       "tryAdjustFilters": "Gbiyanju lati ṣatunṣe tabi paarẹ awọn àlẹ̀ rẹ.",
       "couldNotSearch": "Ko le wa awọn akoko",
       "completedWillAppear": "Awọn akoko ti o pari yoo han nibi.",
+      "emptyDescription": "Ko si akoko ni {{context}}",
       "noPastSessions": "Ko si awọn akoko ti o kọja",
       "live": "LIVE"
     },

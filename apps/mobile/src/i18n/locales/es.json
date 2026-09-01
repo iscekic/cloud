@@ -1617,12 +1617,12 @@
       "couldNotLoadActive": "No se pudieron cargar las sesiones activas",
       "updating": "Actualizando",
       "refreshFailed": "No se pudo actualizar",
-      "noSessionsYetDescription": "Inicia una tarea de codificación desde tu teléfono. Tus sesiones aparecerán aquí.",
       "noMatches": "Ninguna sesión coincide",
       "tryDifferentSearch": "Prueba con otro término de búsqueda.",
       "tryAdjustFilters": "Prueba a ajustar o borrar tus filtros.",
       "couldNotSearch": "No se pudieron buscar las sesiones",
       "completedWillAppear": "Las sesiones completadas aparecerán aquí.",
+      "emptyDescription": "No hay sesiones en {{context}}",
       "noPastSessions": "No hay sesiones pasadas",
       "live": "EN VIVO"
     },

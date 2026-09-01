@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "Kon aktiewe sessies nie laai nie",
       "updating": "Word verfris",
       "refreshFailed": "Kon nie verfris nie",
-      "noSessionsYetDescription": "Begin 'n koderings taak vanaf jou foon. Jou sessies sal hier verskyn.",
       "noMatches": "Geen sessies pas nie",
       "tryDifferentSearch": "Probeer 'n ander soekterm.",
       "tryAdjustFilters": "Probeer jou filters aanpas of uitvee.",
       "couldNotSearch": "Kon sessies nie soek nie",
       "completedWillAppear": "Voltooide sessies sal hier verskyn.",
+      "emptyDescription": "Geen sessies in {{context}}",
       "noPastSessions": "Geen vorige sessies nie",
       "live": "LEWEND"
     },

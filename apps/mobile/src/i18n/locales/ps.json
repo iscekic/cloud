@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "فعالې ناستې بار نه شوې",
       "updating": "تازه کېږي",
       "refreshFailed": "تازه کیدی نشو",
-      "noSessionsYetDescription": "له خپل تلیفون څخه د کوډ کولو دنده پیل کړئ. ستاسو ناستې به دلته ښکاره شي.",
       "noMatches": "هیڅ ناسته سمون نه خوري",
       "tryDifferentSearch": "مختلف لټون شرط هڅه کړئ.",
       "tryAdjustFilters": "فلټرونه تنظیم یا پاک کړئ.",
       "couldNotSearch": "ناستې پلټل نشو",
       "completedWillAppear": "بشپړې شوې ناستې به دلته ښکاره شي.",
+      "emptyDescription": "په {{context}} کې هېڅ ناسته نشته",
       "noPastSessions": "هیڅ تېرې ناستې نشته",
       "live": "ژوندۍ"
     },

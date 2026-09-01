@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "સક્રિય સત્રો લોડ થઈ શક્યા નથી",
       "updating": "તાજું થઈ રહ્યું છે",
       "refreshFailed": "તાજું કરી શકાયું નહીં",
-      "noSessionsYetDescription": "તમારા ફોન પરથી કોડિંગ કાર્ય શરૂ કરો. તમારા સત્રો અહીં દેખાશે.",
       "noMatches": "કોઈ સત્ર મેળ ખાતું નથી",
       "tryDifferentSearch": "અલગ શોધ શબ્દ અજમાવો.",
       "tryAdjustFilters": "તમારા ફિલ્ટર ગોઠવવાનો અથવા સાફ કરવાનો પ્રયાસ કરો.",
       "couldNotSearch": "સત્રો શોધી શકાયા નથી",
       "completedWillAppear": "પૂર્ણ થયેલ સત્રો અહીં દેખાશે.",
+      "emptyDescription": "{{context}}માં કોઈ સત્ર નથી",
       "noPastSessions": "કોઈ ભૂતકાળના સત્ર નથી",
       "live": "લાઇવ"
     },

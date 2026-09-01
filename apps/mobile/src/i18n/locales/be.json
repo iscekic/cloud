@@ -2091,12 +2091,12 @@
       "couldNotLoadActive": "Не атрымалася загрузіць актыўныя сеансы",
       "updating": "Абнаўленне",
       "refreshFailed": "Не атрымалася абнавіць",
-      "noSessionsYetDescription": "Пачніце задачу кадавання з тэлефона. Вашы сеансы з'явяцца тут.",
       "noMatches": "Ніводны сеанс не адпавядае",
       "tryDifferentSearch": "Паспрабуйце іншы пошукавы запыт.",
       "tryAdjustFilters": "Паспрабуйце змяніць або ачысціць фільтры.",
       "couldNotSearch": "Не атрымалася выканаць пошук па сеансах",
       "completedWillAppear": "Завершаныя сеансы з'явяцца тут.",
+      "emptyDescription": "Няма сеансаў у {{context}}",
       "noPastSessions": "Няма мінулых сеансаў",
       "live": "LIVE"
     },

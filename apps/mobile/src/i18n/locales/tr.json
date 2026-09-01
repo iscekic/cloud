@@ -1611,12 +1611,12 @@
       "couldNotLoadActive": "Etkin oturumlar yüklenemedi",
       "updating": "Yenileniyor",
       "refreshFailed": "Yenilenemedi",
-      "noSessionsYetDescription": "Telefonunuzdan bir kodlama görevi başlatın. Oturumlarınız burada görünecek.",
       "noMatches": "Eşleşen oturum yok",
       "tryDifferentSearch": "Farklı bir arama terimi deneyin.",
       "tryAdjustFilters": "Filtrelerinizi ayarlamayı veya temizlemeyi deneyin.",
       "couldNotSearch": "Oturumlar aranamadı",
       "completedWillAppear": "Tamamlanan oturumlar burada görünecek.",
+      "emptyDescription": "{{context}} içinde oturum yok",
       "noPastSessions": "Geçmiş oturum yok",
       "live": "CANLI"
     },

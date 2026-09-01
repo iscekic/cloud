@@ -258,7 +258,9 @@ export function AgentSessionListScreen() {
       <EmptyState
         icon={Bot}
         title={t('home.noLiveSessions')}
-        description={organizationId ? t('profile.organization') : t('profile.personal')}
+        description={t('agents.sessionList.emptyDescription', {
+          context: organizationId ? t('profile.organization') : t('profile.personal'),
+        })}
         action={
           <Button
             variant="outline"

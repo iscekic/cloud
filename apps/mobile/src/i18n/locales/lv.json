@@ -2078,12 +2078,12 @@
       "couldNotLoadActive": "Neizdevās ielādēt aktīvās sesijas",
       "updating": "Atjaunina",
       "refreshFailed": "Neizdevās atjaunināt",
-      "noSessionsYetDescription": "Sāc kodēšanas uzdevumu no sava tālruņa. Tavas sesijas parādīsies šeit.",
       "noMatches": "Neviena sesija neatbilst",
       "tryDifferentSearch": "Izmēģini citu meklēšanas vārdu.",
       "tryAdjustFilters": "Mēģini pielāgot vai notīrīt savus filtrus.",
       "couldNotSearch": "Neizdevās meklēt sesijas",
       "completedWillAppear": "Pabeigtās sesijas parādīsies šeit.",
+      "emptyDescription": "Nav sesiju: {{context}}",
       "noPastSessions": "Nav pagājušo sesiju",
       "live": "TIŠRAIDĒ"
     },

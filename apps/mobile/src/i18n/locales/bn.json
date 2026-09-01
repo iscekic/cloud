@@ -2065,12 +2065,12 @@
       "couldNotLoadActive": "সক্রিয় সেশন লোড করা যায়নি",
       "updating": "রিফ্রেশ হচ্ছে",
       "refreshFailed": "রিফ্রেশ করা যায়নি",
-      "noSessionsYetDescription": "আপনার ফোন থেকে একটি কোডিং কাজ শুরু করুন। আপনার সেশন এখানে দেখাবে।",
       "noMatches": "কোনো সেশন মেলে না",
       "tryDifferentSearch": "একটি ভিন্ন অনুসন্ধান শব্দ চেষ্টা করুন।",
       "tryAdjustFilters": "আপনার ফিল্টার সামঞ্জস্য বা পরিষ্কার করার চেষ্টা করুন।",
       "couldNotSearch": "সেশন খোঁজা যায়নি",
       "completedWillAppear": "সম্পন্ন সেশন এখানে দেখাবে।",
+      "emptyDescription": "{{context}}-এ কোনো সেশন নেই",
       "noPastSessions": "কোনো অতীত সেশন নেই",
       "live": "LIVE"
     },

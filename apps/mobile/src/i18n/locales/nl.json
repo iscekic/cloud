@@ -1611,12 +1611,12 @@
       "couldNotLoadActive": "Kon actieve sessies niet laden",
       "updating": "Wordt vernieuwd",
       "refreshFailed": "Vernieuwen mislukt",
-      "noSessionsYetDescription": "Start een codeertaak vanaf je telefoon. Je sessies verschijnen hier.",
       "noMatches": "Geen sessies komen overeen",
       "tryDifferentSearch": "Probeer een andere zoekterm.",
       "tryAdjustFilters": "Probeer je filters aan te passen of te wissen.",
       "couldNotSearch": "Kon sessies niet doorzoeken",
       "completedWillAppear": "Voltooide sessies verschijnen hier.",
+      "emptyDescription": "Geen sessies in {{context}}",
       "noPastSessions": "Geen eerdere sessies",
       "live": "LIVE"
     },
