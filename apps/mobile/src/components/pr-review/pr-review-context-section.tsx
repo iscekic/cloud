@@ -82,7 +82,7 @@ function AuthorRow({ author }: Readonly<{ author: ReviewAuthor | null }>) {
       ) : (
         <View className="size-6 rounded-full bg-muted" />
       )}
-      <Text className="text-sm font-medium text-foreground" numberOfLines={1}>
+      <Text className="flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
         {author.login}
       </Text>
     </View>
