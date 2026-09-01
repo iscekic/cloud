@@ -120,7 +120,11 @@ export function ScreenHeader({
             </Pressable>
           )}
           <View className="min-w-0 flex-1">
-            {eyebrow ? <Eyebrow className="mb-0.5">{eyebrow}</Eyebrow> : null}
+            {eyebrow ? (
+              <Eyebrow className="mb-0.5" numberOfLines={1}>
+                {eyebrow}
+              </Eyebrow>
+            ) : null}
             {titleNode}
           </View>
         </View>

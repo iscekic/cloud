@@ -276,6 +276,15 @@ describe('ScreenHeader mounted', () => {
     expect(back.props.hitSlop).toBeUndefined();
   });
 
+  it('keeps the eyebrow on one line', () => {
+    const renderer = renderHeader({ title: '#1', eyebrow: 'owner/a-very-long-repository-name' });
+    const eyebrow = renderer.root.findAll(
+      node => typeof node.type === 'string' && (node.type as string) === 'Eyebrow'
+    )[0];
+
+    expect(eyebrow?.props.numberOfLines).toBe(1);
+  });
+
   it('renders every layout variant without error and keeps the back classes', () => {
     const variants: ScreenHeaderProps[] = [
       { title: 'Sessions' },
