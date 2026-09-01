@@ -2475,10 +2475,16 @@
       "waitingForPermission": "The agent is waiting for permission. While this request is open, your message to the agent is paused."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maximum nesting depth reached.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Open subagent session",
+      "status": {
+        "completed": "Completed",
+        "error": "Failed",
+        "pending": "Pending",
+        "running": "Running"
+      },
       "subagent": "Subagent",
       "task": "Task"
     },

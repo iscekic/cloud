@@ -2445,10 +2445,16 @@
       "waitingForPermission": "اجنټ د اجازې انتظار باسي. تر هغه چې دا غوښتنه خلاصه وي، اجنټ ته ستاسو پیغام درول شوی دی."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{latestActivityLabel}}، {{status}}",
+      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{status}}",
       "maxNestingDepth": "اعظمي د ځای ناستي ژوروالي ته رسېدلی دی.",
       "modelAccessibility": "ماډل: {{modelLabel}}",
       "openHint": "د فرعي اجنټ غونډه پرانیزئ",
+      "status": {
+        "completed": "بشپړ شوی",
+        "error": "ناکام",
+        "pending": "په انتظار",
+        "running": "روان"
+      },
       "subagent": "فرعي اجنټ",
       "task": "دنده"
     },

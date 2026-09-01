@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Агент рұқсатты күтуде. Сұраныс ашық тұрғанда, агентке жіберілетін хабарлама кідіртілген."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Ұялаудың ең жоғары тереңдігіне жетілді.",
       "modelAccessibility": "Модель: {{modelLabel}}",
       "openHint": "Субаргент сессиясын ашу",
+      "status": {
+        "completed": "Аяқталды",
+        "error": "Сәтсіз аяқталды",
+        "pending": "Күтілуде",
+        "running": "Орындалуда"
+      },
       "subagent": "Субаргент",
       "task": "Тапсырма"
     },

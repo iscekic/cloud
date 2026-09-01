@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Az ügynök engedélyre vár. Amíg ez a kérés nyitva van, az ügynöknek küldött üzeneted szünetel."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Elérted a maximális beágyazási mélységet.",
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Alügynök munkamenet megnyitása",
+      "status": {
+        "completed": "Befejezve",
+        "error": "Sikertelen",
+        "pending": "Függőben",
+        "running": "Folyamatban"
+      },
       "subagent": "Alügynök",
       "task": "Feladat"
     },

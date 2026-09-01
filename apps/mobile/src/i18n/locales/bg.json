@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Агентът чака разрешение. Докато тази заявка е отворена, съобщението ви до агента е на пауза."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Достигната е максималната дълбочина на влагане.",
       "modelAccessibility": "Модел: {{modelLabel}}",
       "openHint": "Отворете сесия на субагент",
+      "status": {
+        "completed": "Завършен",
+        "error": "Неуспешно",
+        "pending": "В изчакване",
+        "running": "Изпълнява се"
+      },
       "subagent": "Субагент",
       "task": "Задача"
     },

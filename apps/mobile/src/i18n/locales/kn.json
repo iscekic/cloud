@@ -2445,10 +2445,16 @@
       "waitingForPermission": "ಏಜೆಂಟ್ ಅನುಮತಿಗಾಗಿ ಕಾಯುತ್ತಿದೆ. ಈ ವಿನಂತಿ ತೆರೆದಿರುವಾಗ, ಏಜೆಂಟ್ಗೆ ನಿಮ್ಮ ಸಂದೇಶ ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "ಗರಿಷ್ಠ ನೆಸ್ಟಿಂಗ್ ಆಳ ತಲುಪಲಾಗಿದೆ.",
       "modelAccessibility": "ಮಾದರಿ: {{modelLabel}}",
       "openHint": "ಉಪ-ಏಜೆಂಟ್ ಸೆಷನ್ ತೆರೆಯಿರಿ",
+      "status": {
+        "completed": "ಪೂರ್ಣಗೊಂಡಿದೆ",
+        "error": "ವಿಫಲವಾಗಿದೆ",
+        "pending": "ಬಾಕಿ ಇದೆ",
+        "running": "ಚಾಲನೆಯಲ್ಲಿದೆ"
+      },
       "subagent": "ಉಪ-ಏಜೆಂಟ್",
       "task": "ಕಾರ್ಯ"
     },

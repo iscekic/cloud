@@ -1982,10 +1982,16 @@
       "waitingForPermission": "L'agente attende l'autorizzazione. Mentre questa richiesta è aperta, il tuo messaggio all'agente è in pausa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Raggiunta la profondità massima di annidamento.",
       "modelAccessibility": "Modello: {{modelLabel}}",
       "openHint": "Apri sessione del subagente",
+      "status": {
+        "completed": "Completata",
+        "error": "Non riuscita",
+        "pending": "In sospeso",
+        "running": "In esecuzione"
+      },
       "subagent": "Subagente",
       "task": "Attività"
     },

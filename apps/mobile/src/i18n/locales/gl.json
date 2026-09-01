@@ -2445,10 +2445,16 @@
       "waitingForPermission": "O axente está agardando permiso. Mentres esta solicitude estea aberta, a túa mensaxe para o axente está en pausa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Acadouse a profundidade máxima de anidación.",
       "modelAccessibility": "Modelo: {{modelLabel}}",
       "openHint": "Abrir sesión de subaxente",
+      "status": {
+        "completed": "Completado",
+        "error": "Fallou",
+        "pending": "Pendente",
+        "running": "Executando"
+      },
       "subagent": "Subaxente",
       "task": "Tarefa"
     },

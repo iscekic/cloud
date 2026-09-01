@@ -2445,10 +2445,16 @@
       "waitingForPermission": "ភ្នាក់ងារកំពុងរង់ចាំការអនុញ្ញាត។ ខណៈពេលសំណើនេះបើក សាររបស់អ្នកទៅកាន់ភ្នាក់ងារត្រូវបានផ្អាក។"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "ឈានដល់ជម្រៅនៃការដាក់ក្នុងអតិបរមា។",
       "modelAccessibility": "ម៉ូដែល: {{modelLabel}}",
       "openHint": "បើកវគ្គភ្នាក់ងាររង",
+      "status": {
+        "completed": "បានបញ្ចប់",
+        "error": "បានបរាជ័យ",
+        "pending": "កំពុងរង់ចាំ",
+        "running": "កំពុងដំណើរការ"
+      },
       "subagent": "ភ្នាក់ងាររង",
       "task": "កិច្ចការ"
     },

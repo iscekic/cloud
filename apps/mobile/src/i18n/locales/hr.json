@@ -2461,10 +2461,16 @@
       "waitingForPermission": "Agent čeka dozvolu. Dok je ovaj zahtjev otvoren, vaša je poruka agentu pauzirana."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Dosegnuta je najveća dubina ugniježđenja.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otvori sesiju podagenta",
+      "status": {
+        "completed": "Dovršeno",
+        "error": "Nije uspjelo",
+        "pending": "Na čekanju",
+        "running": "RADI"
+      },
       "subagent": "Podagent",
       "task": "Zadatak"
     },

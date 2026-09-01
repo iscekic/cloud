@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agenten väntar på behörighet. Medan denna förfrågan är öppen är ditt meddelande till agenten pausat."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maximalt kapslingsdjup nått.",
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Öppna undersessionssession",
+      "status": {
+        "completed": "Slutförd",
+        "error": "Misslyckades",
+        "pending": "Väntande",
+        "running": "Körs"
+      },
       "subagent": "Underagent",
       "task": "Uppgift"
     },

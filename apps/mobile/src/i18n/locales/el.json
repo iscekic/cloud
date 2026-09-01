@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Ο πράκτορας περιμένει άδεια. Όσο αυτό το αίτημα είναι ανοιχτό, το μήνυμά σας προς τον πράκτορα είναι σε παύση."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Επιτεύχθηκε το μέγιστο βάθος ένθεσης.",
       "modelAccessibility": "Μοντέλο: {{modelLabel}}",
       "openHint": "Άνοιγμα συνεδρίας υποπράκτορα",
+      "status": {
+        "completed": "Ολοκληρώθηκε",
+        "error": "Απέτυχε",
+        "pending": "Σε εκκρεμότητα",
+        "running": "Σε εξέλιξη"
+      },
       "subagent": "Υποπράκτορας",
       "task": "Εργασία"
     },

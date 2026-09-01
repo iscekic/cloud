@@ -2445,10 +2445,16 @@
       "waitingForPermission": "ወኪሉ ፈቃድን እየጠበቀ ነው። ይህ ጥያቄ ክፍት ሆኖ እስካለ ድረስ፣ ለወኪሉ የሚልኩት መልእክት ቆሟል።"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}፣ {{taskName}}{{modelLabel}}፣ {{latestActivityLabel}}፣ {{status}}",
+      "accessibilityLabel": "{{agentName}}፣ {{taskName}}{{modelLabel}}፣ {{status}}",
       "maxNestingDepth": "ከፍተኛው ጥልቀት ደርሷል።",
       "modelAccessibility": "ሞዴል፡ {{modelLabel}}",
       "openHint": "የንዑስ-ወኪል ክፍለ-ጊዜ ይክፈቱ",
+      "status": {
+        "completed": "ተጠናቀቀ",
+        "error": "አልተሳካም",
+        "pending": "በመጠበቅ ላይ",
+        "running": "በስራ ላይ"
+      },
       "subagent": "ንዑስ-ወኪል",
       "task": "ተግባር"
     },

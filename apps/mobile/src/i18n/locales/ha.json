@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Wakili yana jiran izini. Yayin da wannan buƙata ke a buɗe, sakonka zuwa wakili yana dakatarwa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Matsakaicin zurfin gida ya kai ga iyaka.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buɗe zaman subagent",
+      "status": {
+        "completed": "An kammala",
+        "error": "Ya kasa",
+        "pending": "Yana jira",
+        "running": "Ana gudana"
+      },
       "subagent": "Subagent",
       "task": "Aiki"
     },

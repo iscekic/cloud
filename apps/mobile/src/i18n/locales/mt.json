@@ -2493,10 +2493,16 @@
       "waitingForPermission": "L-aġent qed jistenna l-permess. Waqt li din it-talba tkun miftuħa, il-messaġġ tiegħek lill-aġent ikun waqaf."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Il-fond massimu ta' nesting intlaħaq.",
       "modelAccessibility": "Mudell: {{modelLabel}}",
       "openHint": "Iftaħ is-sessjoni tas-subaġent",
+      "status": {
+        "completed": "Tlesta",
+        "error": "Falla",
+        "pending": "Pendenti",
+        "running": "Għaddej"
+      },
       "subagent": "Subaġent",
       "task": "Kompitu"
     },

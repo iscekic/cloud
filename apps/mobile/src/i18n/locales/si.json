@@ -2445,10 +2445,16 @@
       "waitingForPermission": "ඒජන්තයා අවසරය එනතුරු බලා සිටී. මෙම ඉල්ලීම විවෘතව ඇති අතරතුර, ඒජන්තයාට ඔබගේ පණිවිඩය විරාම කර ඇත."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "උපරිම කැදලි ගැඹුරට ළඟා විය.",
       "modelAccessibility": "මාදිලිය: {{modelLabel}}",
       "openHint": "උපඒජන්ත සැසිය විවෘත කරන්න",
+      "status": {
+        "completed": "සම්පූර්ණ කරන ලදී",
+        "error": "අසමත් විය",
+        "pending": "බලා සිටී",
+        "running": "ධාවනය වෙමින්"
+      },
       "subagent": "උපඒජන්තයා",
       "task": "කාර්යය"
     },

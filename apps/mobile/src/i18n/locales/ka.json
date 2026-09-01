@@ -2445,10 +2445,16 @@
       "waitingForPermission": "აგენტი ელოდება ნებართვას. სანამ ეს მოთხოვნა ღიაა, აგენტისთვის გაგზავნილი თქვენი შეტყობინება შეჩერებულია."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "მაქსიმალური ბუდირების სიღრმე მიღწეულია.",
       "modelAccessibility": "მოდელი: {{modelLabel}}",
       "openHint": "ქვეაგენტის სესიის გახსნა",
+      "status": {
+        "completed": "დასრულებულია",
+        "error": "ჩაიშალა",
+        "pending": "მოლოდინშია",
+        "running": "მუშაობს"
+      },
       "subagent": "ქვეაგენტი",
       "task": "დავალება"
     },

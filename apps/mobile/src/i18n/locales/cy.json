@@ -2509,10 +2509,16 @@
       "waitingForPermission": "Mae'r asiant yn aros am ganiatâd. Tra bod y cais hwn ar agor, mae eich neges at yr asiant wedi'i hoedi."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Cyrhaeddwyd dyfnder nythu uchaf.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Agor sesiwn is-asiant",
+      "status": {
+        "completed": "Wedi'i gwblhau",
+        "error": "Wedi methu",
+        "pending": "Ar y gweill",
+        "running": "Yn rhedeg"
+      },
       "subagent": "Is-asiant",
       "task": "Tasg"
     },

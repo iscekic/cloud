@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Wakiilku wuxuu sugayaa ogolaansho. Inta codkani furan yahay, fariintaada wakiilka waa hakad ah."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Qotada ugu sarreysa ee guntinta waa la gaaray.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Fur kalfadhiga subagent",
+      "status": {
+        "completed": "Waa la dhammeeyay",
+        "error": "Way fashilantay",
+        "pending": "Sugaya",
+        "running": "Socodaya"
+      },
       "subagent": "Subagent",
       "task": "Hawsha"
     },

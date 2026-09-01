@@ -1991,10 +1991,16 @@
       "waitingForPermission": "에이전트가 권한을 기다리고 있습니다. 이 요청이 열려 있는 동안 에이전트에게 보내는 메시지가 일시 중지됩니다."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "최대 중첩 깊이에 도달했습니다.",
       "modelAccessibility": "모델: {{modelLabel}}",
       "openHint": "하위 에이전트 세션 열기",
+      "status": {
+        "completed": "완료됨",
+        "error": "실패",
+        "pending": "대기 중",
+        "running": "실행 중"
+      },
       "subagent": "하위 에이전트",
       "task": "작업"
     },

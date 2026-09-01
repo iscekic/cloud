@@ -2445,10 +2445,16 @@
       "waitingForPermission": "এজেন্ট অনুমতির জন্য অপেক্ষা করছে। এই অনুরোধটি খোলা থাকলে, এজেন্টে আপনার বার্তা বিরতিতে থাকে।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "সর্বাধিক নেস্টিং গভীরতায় পৌঁছেছে।",
       "modelAccessibility": "মডেল: {{modelLabel}}",
       "openHint": "সাবএজেন্ট সেশন খুলুন",
+      "status": {
+        "completed": "সম্পন্ন",
+        "error": "ব্যর্থ হয়েছে",
+        "pending": "মুলতুবি",
+        "running": "চলছে"
+      },
       "subagent": "সাবএজেন্ট",
       "task": "কাজ"
     },

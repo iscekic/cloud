@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Kei te tatari te kaihoko ki te whakaaetanga. I te wā e tuwhera ana tēnei tono, kua tū tō karere ki te kaihoko."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Kua tae ki te hōhonu kāho mōrahi.",
       "modelAccessibility": "Tauira: {{modelLabel}}",
       "openHint": "Whakatuwhera wātū kaihoko-iti",
+      "status": {
+        "completed": "Kua oti",
+        "error": "I rahua",
+        "pending": "E tatari ana",
+        "running": "Kei te oma"
+      },
       "subagent": "Kaihoko-iti",
       "task": "Mahi"
     },

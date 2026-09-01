@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Miandry alalana ny agent. Raha mbola misokatra ity fangatahana ity dia mijanona ny hafatrao ho an'ny agent."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Tafakatra ny fetran'ny halalina ambony indrindra.",
       "modelAccessibility": "Modely: {{modelLabel}}",
       "openHint": "Sokafy ny session subagent",
+      "status": {
+        "completed": "Vita",
+        "error": "Tsy nahomby",
+        "pending": "Miandry",
+        "running": "Mandeha"
+      },
       "subagent": "Subagent",
       "task": "Asa"
     },

@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agentti odottaa lupaa. Kun pyyntö on avoinna, viestisi agentille on keskeytetty."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Suurin sisäkkäissyvyys saavutettu.",
       "modelAccessibility": "Malli: {{modelLabel}}",
       "openHint": "Avaa alagentin istunto",
+      "status": {
+        "completed": "Valmis",
+        "error": "Epäonnistui",
+        "pending": "Odottaa",
+        "running": "Käynnissä"
+      },
       "subagent": "Alagentti",
       "task": "Tehtävä"
     },

@@ -2477,10 +2477,16 @@
       "waitingForPermission": "Agent čaká na povolenie. Kým je táto požiadavka otvorená, vaša správa agentovi je pozastavená."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Dosiahla sa maximálna hĺbka vnorenia.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otvoriť reláciu subagenta",
+      "status": {
+        "completed": "Dokončené",
+        "error": "Zlyhalo",
+        "pending": "Čaká sa",
+        "running": "Prebieha"
+      },
       "subagent": "Subagent",
       "task": "Úloha"
     },

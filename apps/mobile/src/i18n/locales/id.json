@@ -1991,10 +1991,16 @@
       "waitingForPermission": "Agen sedang menunggu izin. Saat permintaan ini terbuka, pesan Anda ke agen dijeda."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Kedalaman sarang maksimum tercapai.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buka sesi subagen",
+      "status": {
+        "completed": "Selesai",
+        "error": "Gagal",
+        "pending": "Tertunda",
+        "running": "Berjalan"
+      },
       "subagent": "Subagen",
       "task": "Tugas"
     },

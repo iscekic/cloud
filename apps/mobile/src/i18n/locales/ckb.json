@@ -2445,10 +2445,16 @@
       "waitingForPermission": "ئەجێنتەکە چاوەڕوانی مۆڵەتە. تا ئەم داواکارییە کراوە بێت، نامەکەی تۆ بۆ ئەجێنتەکە ڕاوەستاوە."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{latestActivityLabel}}، {{status}}",
+      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{status}}",
       "maxNestingDepth": "زۆرترین قوڵایی لەتکراوە گەیشتە.",
       "modelAccessibility": "مۆدێل: {{modelLabel}}",
       "openHint": "کردنەوەی دانیشتنی ساب‌ئەجێنت",
+      "status": {
+        "completed": "تەواو بوو",
+        "error": "شکستی هێنا",
+        "pending": "چاوەڕوان",
+        "running": "لە کاردایە"
+      },
       "subagent": "ساب‌ئەجێنت",
       "task": "ئەرک"
     },

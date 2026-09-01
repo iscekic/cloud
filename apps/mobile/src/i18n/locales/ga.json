@@ -2493,10 +2493,16 @@
       "waitingForPermission": "Tá an gníomhaire ag fanacht ar chead. Agus an t-iarratas seo ar oscailt, tá do theachtaireacht chuig an ngníomhaire ar sos."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Baineadh an t-uasdoimhneacht neadaithe amach.",
       "modelAccessibility": "Samhail: {{modelLabel}}",
       "openHint": "Oscail seisiún foghníomhaire",
+      "status": {
+        "completed": "Críochnaithe",
+        "error": "Theip",
+        "pending": "Ar feitheamh",
+        "running": "AG RITH"
+      },
       "subagent": "Foghníomhaire",
       "task": "Tasc"
     },

@@ -2027,10 +2027,16 @@
       "waitingForPermission": "الوكيل في انتظار الإذن. أثناء فتح هذا الطلب، تتوقف رسالتك إلى الوكيل مؤقتًا."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{latestActivityLabel}}، {{status}}",
+      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{status}}",
       "maxNestingDepth": "تم الوصول إلى أقصى عمق تداخل.",
       "modelAccessibility": "النموذج: {{modelLabel}}",
       "openHint": "فتح جلسة الوكيل الفرعي",
+      "status": {
+        "completed": "مكتمل",
+        "error": "فشل",
+        "pending": "قيد الانتظار",
+        "running": "قيد التشغيل"
+      },
       "subagent": "وكيل فرعي",
       "task": "المهمة"
     },

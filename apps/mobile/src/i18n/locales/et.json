@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agent ootab luba. Kuni see taotlus on avatud, on sinu sõnum agendile peatatud."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maksimaalne pesastussügavus saavutatud.",
       "modelAccessibility": "Mudel: {{modelLabel}}",
       "openHint": "Ava alaseansi seanss",
+      "status": {
+        "completed": "Lõpetatud",
+        "error": "Ebaõnnestus",
+        "pending": "Ootel",
+        "running": "TÖÖTAB"
+      },
       "subagent": "Alasell",
       "task": "Ülesanne"
     },

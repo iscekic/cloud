@@ -2000,10 +2000,16 @@
       "waitingForPermission": "הסוכן ממתין להרשאה. בזמן שהבקשה הזו פתוחה, ההודעה שלך לסוכן מושהה."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "הגעת לעומק הקינון המרבי.",
       "modelAccessibility": "דגם: {{modelLabel}}",
       "openHint": "פתח הפעלת תת-סוכן",
+      "status": {
+        "completed": "הושלם",
+        "error": "נכשל",
+        "pending": "ממתין",
+        "running": "רץ"
+      },
       "subagent": "תת-סוכן",
       "task": "משימה"
     },

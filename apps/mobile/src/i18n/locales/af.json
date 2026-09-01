@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Die agent wag op toestemming. Terwyl hierdie versoek oop is, is jou boodskap aan die agent onderbreek."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maksimum nesdiepte bereik.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Maak subsessie oop",
+      "status": {
+        "completed": "Voltooi",
+        "error": "Misluk",
+        "pending": "Hangend",
+        "running": "Loop"
+      },
       "subagent": "Subagent",
       "task": "Taak"
     },

@@ -2461,10 +2461,16 @@
       "waitingForPermission": "L'agent espera un permís. Mentre aquesta petició sigui oberta, el teu missatge a l'agent està en pausa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "S'ha assolit la profunditat màxima de nidificació.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Obre la sessió de subagent",
+      "status": {
+        "completed": "Completat",
+        "error": "Fallit",
+        "pending": "Pendent",
+        "running": "En execució"
+      },
       "subagent": "Subagent",
       "task": "Tasca"
     },

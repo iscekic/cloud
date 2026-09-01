@@ -1991,10 +1991,16 @@
       "waitingForPermission": "De agent wacht op toestemming. Zolang dit verzoek open is, is je bericht aan de agent gepauzeerd."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maximale nestdiepte bereikt.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Subagentsessie openen",
+      "status": {
+        "completed": "Voltooid",
+        "error": "Mislukt",
+        "pending": "In behandeling",
+        "running": "Bezig"
+      },
       "subagent": "Subagent",
       "task": "Taak"
     },

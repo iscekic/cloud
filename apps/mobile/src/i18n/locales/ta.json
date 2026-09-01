@@ -2445,10 +2445,16 @@
       "waitingForPermission": "முகவர் அனுமதிக்காக காத்திருக்கிறார். இந்த கோரிக்கை திறந்திருக்கும்போது, முகவருக்கான உங்கள் செய்தி இடைநிறுத்தப்பட்டுள்ளது."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "அதிகபட்ச உள்ளமைவு ஆழத்தை எட்டியது.",
       "modelAccessibility": "மாதிரி: {{modelLabel}}",
       "openHint": "துணை முகவர் அமர்வைத் திறக்கவும்",
+      "status": {
+        "completed": "முடிந்தது",
+        "error": "தோல்வியடைந்தது",
+        "pending": "நிலுவையில்",
+        "running": "இயங்குகிறது"
+      },
       "subagent": "துணை முகவர்",
       "task": "பணி"
     },

@@ -2477,10 +2477,16 @@
       "waitingForPermission": "Agent čaka na dovoljenje. Dokler je ta zahteva odprta, je tvoje sporočilo agentu začasno ustavljeno."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Dosežena je največja globina gnezdenja.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Odpri podagentovo sejo",
+      "status": {
+        "completed": "Dokončano",
+        "error": "Ni uspelo",
+        "pending": "Na čakanju",
+        "running": "DELUJE"
+      },
       "subagent": "Podagent",
       "task": "Naloga"
     },

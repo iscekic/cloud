@@ -2445,10 +2445,16 @@
       "waitingForPermission": "एजेन्ट अनुमतिको पर्खाइमा छ। यो अनुरोध खुला हुँदा, एजेन्टलाई तपाईंको सन्देश रोकिएको छ।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "अधिकतम नेस्टिङ गहिराइ पुग्यो।",
       "modelAccessibility": "मोडेल: {{modelLabel}}",
       "openHint": "सबएजेन्ट सत्र खोल्नुहोस्",
+      "status": {
+        "completed": "सम्पन्न",
+        "error": "असफल",
+        "pending": "प्रतीक्षामा",
+        "running": "चलिरहेको"
+      },
       "subagent": "सबएजेन्ट",
       "task": "कार्य"
     },

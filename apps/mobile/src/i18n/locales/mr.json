@@ -2445,10 +2445,16 @@
       "waitingForPermission": "एजंट परवानगीची वाट पाहत आहे. ही विनंती उघडी असताना, एजंटला तुमचा संदेश थांबलेला आहे."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "कमाल नेस्टिंग खोलीपर्यंत पोहोचले.",
       "modelAccessibility": "मॉडेल: {{modelLabel}}",
       "openHint": "सबएजंट सत्र उघडा",
+      "status": {
+        "completed": "पूर्ण झाले",
+        "error": "अयशस्वी",
+        "pending": "प्रलंबित",
+        "running": "चालू आहे"
+      },
       "subagent": "सबएजंट",
       "task": "कार्य"
     },

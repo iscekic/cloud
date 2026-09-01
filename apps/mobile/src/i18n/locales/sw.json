@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Wakala anasubiri ruhusa. Wakati ombi hili liko wazi, ujumbe wako kwa wakala umesimamishwa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Kina cha juu zaidi cha kupachika kimefikiwa.",
       "modelAccessibility": "Mfano: {{modelLabel}}",
       "openHint": "Fungua kikao cha subagent",
+      "status": {
+        "completed": "Imekamilika",
+        "error": "Imeshindwa",
+        "pending": "Inasubiri",
+        "running": "Inaendelea"
+      },
       "subagent": "Subagent",
       "task": "Kazi"
     },

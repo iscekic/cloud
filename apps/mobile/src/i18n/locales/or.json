@@ -2445,10 +2445,16 @@
       "waitingForPermission": "ଏଜେଣ୍ଟ ଅନୁମତି ଅପେକ୍ଷା କରୁଛି। ଏହି ଅନୁରୋଧ ଖୋଲା ଥିବାବେଳେ, ଏଜେଣ୍ଟଙ୍କୁ ଆପଣଙ୍କ ବାର୍ତ୍ତା ବିରତ ହୋଇଛି।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "ସର୍ବାଧିକ ନେଷ୍ଟିଂ ଗଭୀରତାରେ ପହଞ୍ଚିଛି।",
       "modelAccessibility": "ମଡେଲ: {{modelLabel}}",
       "openHint": "ସବଏଜେଣ୍ଟ ସେସନ୍ ଖୋଲନ୍ତୁ",
+      "status": {
+        "completed": "ସମାପ୍ତ",
+        "error": "ବିଫଳ",
+        "pending": "ବାକି",
+        "running": "ଚାଲୁଛି"
+      },
       "subagent": "ସବଏଜେଣ୍ଟ",
       "task": "କାର୍ଯ୍ୟ"
     },

@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agent သည် ခွင့်ပြုချက်ကို စောင့်နေသည်။ ဤတောင်းဆိုမှု ဖွင့်ထားစဉ် agent သို့ သင့်စာသည် ရပ်နေသည်။"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}၊ {{taskName}}{{modelLabel}}၊ {{latestActivityLabel}}၊ {{status}}",
+      "accessibilityLabel": "{{agentName}}၊ {{taskName}}{{modelLabel}}၊ {{status}}",
       "maxNestingDepth": "အများဆုံး nesting အတိမ်အနက်သို့ ရောက်ရှိပြီးပါပြီ။",
       "modelAccessibility": "မော်ဒယ်: {{modelLabel}}",
       "openHint": "subagent session ဖွင့်ရန်",
+      "status": {
+        "completed": "ပြီးစီး",
+        "error": "မအောင်မြင်",
+        "pending": "ဆိုင်းငံ့",
+        "running": "လည်ပတ်နေသည်"
+      },
       "subagent": "Subagent",
       "task": "Task"
     },

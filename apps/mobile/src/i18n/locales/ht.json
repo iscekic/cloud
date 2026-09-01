@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Ajant lan ap tann pèmisyon. Pandan demann sa a ouvè, mesaj ou bay ajant lan ap sispann."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Pwofondè maksimòm kouche rive jwenn.",
       "modelAccessibility": "Modèl: {{modelLabel}}",
       "openHint": "Louvri sesyon subajant",
+      "status": {
+        "completed": "Konplete",
+        "error": "Echwe",
+        "pending": "Annatant",
+        "running": "Ap kouri"
+      },
       "subagent": "Subajant",
       "task": "Travay"
     },

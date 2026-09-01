@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agent'ichi hayyama eegaa jira. Waanti kun banaa yeroo jiru, ergaa kee agent'ichaf dhaabameera."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Sadarkaan foyyoomuu baay'een ga'eera.",
       "modelAccessibility": "Moodela: {{modelLabel}}",
       "openHint": "Shumarra subagent bani",
+      "status": {
+        "completed": "Xumurame",
+        "error": "Dadhabe",
+        "pending": "Eeggachaa",
+        "running": "Hojii irra jira"
+      },
       "subagent": "Subagent",
       "task": "Hojii"
     },

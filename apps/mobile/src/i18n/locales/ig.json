@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Onye nnọchite na-eche ikike. Ọ bụrụhaala na arịrịọ a meghere, ozi gị nye onye nnọchite na-akwụsị."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Omimi kachasị ruru.",
       "modelAccessibility": "Ụdị: {{modelLabel}}",
       "openHint": "Mepee nnọkọ onye nnọchite",
+      "status": {
+        "completed": "Emechara",
+        "error": "Dara",
+        "pending": "Na-echere",
+        "running": "Na-agba"
+      },
       "subagent": "Onye nnọchite",
       "task": "Ọrụ"
     },

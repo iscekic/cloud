@@ -2009,10 +2009,16 @@
       "waitingForPermission": "Агент чекає на дозвіл. Поки цей запит відкритий, ваше повідомлення агенту призупинено."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Досягнуто максимальної глибини вкладеності.",
       "modelAccessibility": "Модель: {{modelLabel}}",
       "openHint": "Відкрити сеанс субагента",
+      "status": {
+        "completed": "Завершено",
+        "error": "Не вдалося",
+        "pending": "Очікує",
+        "running": "Виконується"
+      },
       "subagent": "Субагент",
       "task": "Завдання"
     },

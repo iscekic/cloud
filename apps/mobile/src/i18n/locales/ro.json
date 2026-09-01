@@ -2461,10 +2461,16 @@
       "waitingForPermission": "Agentul așteaptă permisiunea. Cât timp această cerere este deschisă, mesajul tău către agent este în pauză."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "S-a atins adâncimea maximă de cuibărire.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Deschide sesiunea de subagent",
+      "status": {
+        "completed": "Finalizat",
+        "error": "Eșuat",
+        "pending": "În așteptare",
+        "running": "Rulează"
+      },
       "subagent": "Subagent",
       "task": "Sarcină"
     },

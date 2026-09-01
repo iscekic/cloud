@@ -2477,10 +2477,16 @@
       "waitingForPermission": "Agent čeká na oprávnění. Dokud je tento požadavek otevřený, vaše zpráva agentovi je pozastavena."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Dosažena maximální hloubka vnoření.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otevřít relaci subagenta",
+      "status": {
+        "completed": "Dokončeno",
+        "error": "Selhalo",
+        "pending": "Čeká",
+        "running": "Běží"
+      },
       "subagent": "Subagent",
       "task": "Úkol"
     },

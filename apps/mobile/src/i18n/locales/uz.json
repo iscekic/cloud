@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agent ruxsatni kutmoqda. Bu so'rov ochiq ekan, agentga xabaringiz pauza qilinadi."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maksimal ichki o'rnatish chuqurligiga yetildi.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Subagent sessiyasini ochish",
+      "status": {
+        "completed": "Yakunlangan",
+        "error": "Amalga oshmadi",
+        "pending": "Kutilmoqda",
+        "running": "Ishlamoqda"
+      },
       "subagent": "Subagent",
       "task": "Vazifa"
     },

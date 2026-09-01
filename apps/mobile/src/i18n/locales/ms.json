@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Ejen sedang menunggu kebenaran. Semasa permintaan ini terbuka, mesej anda kepada ejen dijeda."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Kedalaman penyarangan maksimum dicapai.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buka sesi subejen",
+      "status": {
+        "completed": "Selesai",
+        "error": "Gagal",
+        "pending": "Tertunda",
+        "running": "Sedang berjalan"
+      },
       "subagent": "Subejen",
       "task": "tugasan"
     },

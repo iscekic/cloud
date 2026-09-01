@@ -2445,10 +2445,16 @@
       "waitingForPermission": "I-agent ilinde imvume. Ngenkathi lesi sicelo sivulekile, umlayezo wakho ku-agent umisiwe."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Ukujula kokufakela kwafinyelelwa.",
       "modelAccessibility": "Imodeli: {{modelLabel}}",
       "openHint": "Vula iseshini ye-subagent",
+      "status": {
+        "completed": "Kupheliwe",
+        "error": "Kwehlulekile",
+        "pending": "Kulindile",
+        "running": "Iyasebenza"
+      },
       "subagent": "I-subagent",
       "task": "Umsebenzi"
     },

@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Aṣoju n duro fun igbanilaye. Nigba ti ibeere yii ba wa ni sisi, ifiranṣẹ rẹ si aṣoju ti duro si."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Ijinle ẹgbẹ ti de opin.",
       "modelAccessibility": "Awoṣe: {{modelLabel}}",
       "openHint": "Ṣii igba-ijiroro subagent",
+      "status": {
+        "completed": "Tí a parí",
+        "error": "Kuna",
+        "pending": "Ti nduro",
+        "running": "ǸJẸ́ ṢÍṢIṢẸ́"
+      },
       "subagent": "Subagent",
       "task": "Iṣẹ-ṣiṣe"
     },

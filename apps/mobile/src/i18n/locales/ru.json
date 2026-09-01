@@ -2009,10 +2009,16 @@
       "waitingForPermission": "Агент ждет разрешения. Пока этот запрос открыт, ваше сообщение агенту приостановлено."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Достигнута максимальная глубина вложенности.",
       "modelAccessibility": "Модель: {{modelLabel}}",
       "openHint": "Открыть сеанс субагента",
+      "status": {
+        "completed": "Завершено",
+        "error": "Не удалось",
+        "pending": "Ожидается",
+        "running": "Выполняется"
+      },
       "subagent": "Субагент",
       "task": "Задача"
     },

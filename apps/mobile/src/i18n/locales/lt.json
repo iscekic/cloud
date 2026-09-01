@@ -2477,10 +2477,16 @@
       "waitingForPermission": "Agentas laukia leidimo. Kol šis prašymas atviras, jūsų žinutė agentui pristabdyta."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Pasiekta didžiausias įdėjimo gylis.",
       "modelAccessibility": "Modelis: {{modelLabel}}",
       "openHint": "Atidaryti subagento sesiją",
+      "status": {
+        "completed": "Baigta",
+        "error": "Nepavyko",
+        "pending": "Laukiama",
+        "running": "Vykdoma"
+      },
       "subagent": "Subagentas",
       "task": "Užduotis"
     },

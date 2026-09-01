@@ -2009,10 +2009,16 @@
       "waitingForPermission": "Agent czeka na uprawnienie. Dopóki ta prośba jest otwarta, Twoja wiadomość do agenta jest wstrzymana."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Osiągnięto maksymalną głębokość zagnieżdżenia.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otwórz sesję podagenta",
+      "status": {
+        "completed": "Ukończono",
+        "error": "Nie powiodło się",
+        "pending": "Oczekuje",
+        "running": "W toku"
+      },
       "subagent": "Podagent",
       "task": "Zadanie"
     },

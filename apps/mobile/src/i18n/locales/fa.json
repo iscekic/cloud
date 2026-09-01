@@ -2445,10 +2445,16 @@
       "waitingForPermission": "عامل منتظر مجوز است. تا باز بودن این درخواست، پیام شما به عامل متوقف است."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{latestActivityLabel}}، {{status}}",
+      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{status}}",
       "maxNestingDepth": "حداکثر عمق تو در تو به دست آمده است.",
       "modelAccessibility": "مدل: {{modelLabel}}",
       "openHint": "باز کردن جلسه زیرعامل",
+      "status": {
+        "completed": "تکمیل شد",
+        "error": "شکست خورد",
+        "pending": "در انتظار",
+        "running": "در حال اجرا"
+      },
       "subagent": "زیرعامل",
       "task": "وظیفه"
     },

@@ -2445,10 +2445,16 @@
       "waitingForPermission": "ਏਜੰਟ ਇਜਾਜ਼ਤ ਦੀ ਉਡੀਕ ਕਰ ਰਿਹਾ ਹੈ। ਜਦੋਂ ਇਹ ਬੇਨਤੀ ਖੁੱਲ੍ਹੀ ਹੈ, ਏਜੰਟ ਨੂੰ ਤੁਹਾਡਾ ਸੁਨੇਹਾ ਰੁਕਿਆ ਰਹਿੰਦਾ ਹੈ।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "ਵੱਧ ਤੋਂ ਵੱਧ ਨੇਸਟਿੰਗ ਡੂੰਘਾਈ ਪਹੁੰਚ ਗਈ।",
       "modelAccessibility": "ਮਾਡਲ: {{modelLabel}}",
       "openHint": "ਸਬਏਜੰਟ ਸੈਸ਼ਨ ਖੋਲ੍ਹੋ",
+      "status": {
+        "completed": "ਪੂਰਾ ਹੋਇਆ",
+        "error": "ਅਸਫਲ",
+        "pending": "ਬਕਾਇਆ",
+        "running": "ਚੱਲ ਰਿਹਾ ਹੈ"
+      },
       "subagent": "ਸਬਏਜੰਟ",
       "task": "ਕੰਮ"
     },

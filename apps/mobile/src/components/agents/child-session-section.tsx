@@ -18,6 +18,7 @@ import { type SessionModelOption } from '@/lib/hooks/use-session-model-options';
 
 import {
   type ChildSessionCardState,
+  type ChildSessionStatus,
   getChildSessionCardState,
   getTaskToolSessionId,
 } from './child-session-card-state';
@@ -29,6 +30,13 @@ import { isToolPart } from './part-types';
 export { getTaskToolSessionId } from './child-session-card-state';
 
 const MAX_NESTING_DEPTH = 5;
+
+const CHILD_SESSION_STATUS_LABEL_KEYS = {
+  running: 'agentChat.childSession.status.running',
+  pending: 'agentChat.childSession.status.pending',
+  completed: 'agentChat.childSession.status.completed',
+  error: 'agentChat.childSession.status.error',
+} satisfies Record<ChildSessionStatus, string>;
 
 export type RenderPartFn = (props: {
   part: Part;
@@ -83,8 +91,7 @@ export function ChildSessionSection({
           agentName,
           taskName,
           modelLabel: modelLabel ? `, ${modelLabel}` : '',
-          latestActivityLabel: status,
-          status,
+          status: t(CHILD_SESSION_STATUS_LABEL_KEYS[status]),
         })}
         accessibilityHint={sessionId ? t('agentChat.childSession.openHint') : undefined}
         accessibilityState={{ disabled: !sessionId }}

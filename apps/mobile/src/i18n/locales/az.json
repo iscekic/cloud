@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agent icazə gözləyir. Bu sorğu açıq olduğu müddətdə agentə mesajınız dayandırılıb."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maksimum yuvalama dərinliyinə çatıldı.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Subagent sessiyasını aç",
+      "status": {
+        "completed": "Tamamlanıb",
+        "error": "Uğursuz",
+        "pending": "Gözlənilir",
+        "running": "İŞLƏYİR"
+      },
       "subagent": "Subagent",
       "task": "Tapşırıq"
     },

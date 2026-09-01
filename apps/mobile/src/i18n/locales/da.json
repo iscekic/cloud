@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Agenten venter på tilladelse. Mens denne anmodning er åben, er din besked til agenten sat på pause."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Maksimal redeniveau nået.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Åbn subagent-session",
+      "status": {
+        "completed": "Afsluttet",
+        "error": "Mislykkedes",
+        "pending": "Afventer",
+        "running": "Kører"
+      },
       "subagent": "Subagent",
       "task": "Opgave"
     },

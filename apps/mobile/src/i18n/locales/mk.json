@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Агентот чека дозвола. Додека ова барање е отворено, вашата порака до агентот е паузирана."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Достигната е максималната длабочина на вгнездување.",
       "modelAccessibility": "Модел: {{modelLabel}}",
       "openHint": "Отвори сесија на субагент",
+      "status": {
+        "completed": "Завршено",
+        "error": "Не успеа",
+        "pending": "Во чекање",
+        "running": "Во тек"
+      },
       "subagent": "Субагент",
       "task": "Задача"
     },

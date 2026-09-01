@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Umboðið bíður heimildar. Meðan þessi beiðni er opin er skilaboðum þínum til umboðsins haldið í bið."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Hámarks varpaningsdýpt náð.",
       "modelAccessibility": "Líkan: {{modelLabel}}",
       "openHint": "Opna undirumboðslotu",
+      "status": {
+        "completed": "Lokið",
+        "error": "Mistókst",
+        "pending": "Í bið",
+        "running": "Í gangi"
+      },
       "subagent": "Undirumboð",
       "task": "Verkefni"
     },

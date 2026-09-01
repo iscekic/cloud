@@ -2445,10 +2445,16 @@
       "waitingForPermission": "Агент зөвшөөрлийг хүлээж байна. Энэ хүсэлт нээлттэй байхад таны агент руу илгээсэн мэдээлэл түр зогсоно."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{latestActivityLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
       "maxNestingDepth": "Хамгийн их үүрлэлтийн гүнд хүрлээ.",
       "modelAccessibility": "Загвар: {{modelLabel}}",
       "openHint": "Дэд агентын сессийг нээх",
+      "status": {
+        "completed": "Дууссан",
+        "error": "Амжилтгүй болсон",
+        "pending": "Хүлээгдэж байна",
+        "running": "Ажиллаж байна"
+      },
       "subagent": "Дэд агент",
       "task": "Даалгавар"
     },
