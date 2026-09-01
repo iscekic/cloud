@@ -354,7 +354,7 @@ describe('ProfileScreen deferred queries', () => {
     const insetRoots = renderer.root.findAll(
       node =>
         typeof node.type === 'string' &&
-        node.type === 'View' &&
+        (node.type as string) === 'View' &&
         (node.props.style as { paddingBottom?: number } | undefined)?.paddingBottom === 100
     );
     expect(insetRoots.length).toBe(1);
