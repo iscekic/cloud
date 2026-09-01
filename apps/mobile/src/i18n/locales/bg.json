@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Агентът чака разрешение. Докато тази заявка е отворена, съобщението ви до агента е на пауза."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Достигната е максималната дълбочина на влагане.",
       "modelAccessibility": "Модел: {{modelLabel}}",
       "openHint": "Отворете сесия на субагент",

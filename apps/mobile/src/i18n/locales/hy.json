@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Գործակալը սպասում է թույլտվության: Քանի դեռ այս հարցումը բաց է, ձեր հաղորդագրությունը գործակալին դադարեցված է:"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Հասել է բնադրման առավելագույն խորությանը:",
       "modelAccessibility": "Մոդել: {{modelLabel}}",
       "openHint": "Բացել ենթագործակալի նիստ",

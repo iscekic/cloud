@@ -2445,7 +2445,7 @@
       "waitingForPermission": "ଏଜେଣ୍ଟ ଅନୁମତି ଅପେକ୍ଷା କରୁଛି। ଏହି ଅନୁରୋଧ ଖୋଲା ଥିବାବେଳେ, ଏଜେଣ୍ଟଙ୍କୁ ଆପଣଙ୍କ ବାର୍ତ୍ତା ବିରତ ହୋଇଛି।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "ସର୍ବାଧିକ ନେଷ୍ଟିଂ ଗଭୀରତାରେ ପହଞ୍ଚିଛି।",
       "modelAccessibility": "ମଡେଲ: {{modelLabel}}",
       "openHint": "ସବଏଜେଣ୍ଟ ସେସନ୍ ଖୋଲନ୍ତୁ",

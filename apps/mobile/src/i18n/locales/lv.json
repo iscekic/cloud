@@ -2461,7 +2461,7 @@
       "waitingForPermission": "Aģents gaida atļauju. Kamēr šis pieprasījums ir atvērts, tavs ziņojums aģentam ir apturēts."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Sasniegts maksimālais ligzdošanas dziļums.",
       "modelAccessibility": "Modelis: {{modelLabel}}",
       "openHint": "Atvērt apakšaģenta sesiju",

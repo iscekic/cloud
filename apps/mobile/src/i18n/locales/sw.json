@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Wakala anasubiri ruhusa. Wakati ombi hili liko wazi, ujumbe wako kwa wakala umesimamishwa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Kina cha juu zaidi cha kupachika kimefikiwa.",
       "modelAccessibility": "Mfano: {{modelLabel}}",
       "openHint": "Fungua kikao cha subagent",

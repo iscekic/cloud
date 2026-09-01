@@ -2477,7 +2477,7 @@
       "waitingForPermission": "Агент чакае дазволу. Пакуль запыт адкрыты, ваша паведамленне агенту прыпыненае."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Дасягнутая максімальная глыбіня ўкладання.",
       "modelAccessibility": "Мадэль: {{modelLabel}}",
       "openHint": "Адкрыць сеанс падагента",

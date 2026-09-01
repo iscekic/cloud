@@ -1964,7 +1964,7 @@
       "waitingForPermission": "एजेंट अनुमति की प्रतीक्षा कर रहा है। जब तक यह अनुरोध खुला है, एजेंट को आपका संदेश रुका हुआ है।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "अधिकतम नेस्टिंग गहराई तक पहुँच गए।",
       "modelAccessibility": "मॉडल: {{modelLabel}}",
       "openHint": "सबएजेंट सत्र खोलें",

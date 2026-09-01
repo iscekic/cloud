@@ -2445,7 +2445,7 @@
       "waitingForPermission": "เอเจนต์กำลังรอสิทธิ์ ในขณะที่คำขอนี้ยังเปิดอยู่ ข้อความของคุณถึงเอเจนต์จะถูกหยุดชั่วคราว"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "ถึงความลึกสูงสุดของการซ้อนแล้ว",
       "modelAccessibility": "โมเดล: {{modelLabel}}",
       "openHint": "เปิดเซสชันซับเอเจนต์",

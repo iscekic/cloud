@@ -1991,7 +1991,7 @@
       "waitingForPermission": "Tác nhân đang chờ quyền. Trong khi yêu cầu này đang mở, tin nhắn của bạn đến tác nhân bị tạm dừng."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Đã đạt độ sâu lồng tối đa.",
       "modelAccessibility": "Mô hình: {{modelLabel}}",
       "openHint": "Mở phiên tác nhân phụ",

@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Aṣoju n duro fun igbanilaye. Nigba ti ibeere yii ba wa ni sisi, ifiranṣẹ rẹ si aṣoju ti duro si."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Ijinle ẹgbẹ ti de opin.",
       "modelAccessibility": "Awoṣe: {{modelLabel}}",
       "openHint": "Ṣii igba-ijiroro subagent",

@@ -2445,7 +2445,7 @@
       "waitingForPermission": "ایجنٹ اجازت کا انتظار کر رہا ہے۔ جب تک یہ درخواست کھلی ہے، ایجنٹ کو آپ کا پیغام روکا ہوا ہے۔"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "زیادہ سے زیادہ گہرائی تک پہنچ گئی۔",
       "modelAccessibility": "ماڈل: {{modelLabel}}",
       "openHint": "ذیلی ایجنٹ سیشن کھولیں",

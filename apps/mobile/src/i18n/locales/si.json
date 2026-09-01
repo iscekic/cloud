@@ -2445,7 +2445,7 @@
       "waitingForPermission": "ඒජන්තයා අවසරය එනතුරු බලා සිටී. මෙම ඉල්ලීම විවෘතව ඇති අතරතුර, ඒජන්තයාට ඔබගේ පණිවිඩය විරාම කර ඇත."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "උපරිම කැදලි ගැඹුරට ළඟා විය.",
       "modelAccessibility": "මාදිලිය: {{modelLabel}}",
       "openHint": "උපඒජන්ත සැසිය විවෘත කරන්න",

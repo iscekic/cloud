@@ -2445,7 +2445,7 @@
       "waitingForPermission": "ഏജന്റ് അനുമതിക്കായി കാത്തിരിക്കുന്നു. ഈ അഭ്യർത്ഥന തുറന്നിരിക്കുമ്പോൾ, ഏജന്റിനുള്ള നിങ്ങളുടെ സന്ദേശം താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "പരമാവധി നെസ്റ്റിംഗ് ആഴത്തിൽ എത്തി.",
       "modelAccessibility": "മോഡൽ: {{modelLabel}}",
       "openHint": "സബ്ഏജന്റ് സെഷൻ തുറക്കുക",

@@ -2445,7 +2445,7 @@
       "waitingForPermission": "აგენტი ელოდება ნებართვას. სანამ ეს მოთხოვნა ღიაა, აგენტისთვის გაგზავნილი თქვენი შეტყობინება შეჩერებულია."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "მაქსიმალური ბუდირების სიღრმე მიღწეულია.",
       "modelAccessibility": "მოდელი: {{modelLabel}}",
       "openHint": "ქვეაგენტის სესიის გახსნა",

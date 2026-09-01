@@ -2445,7 +2445,7 @@
       "waitingForPermission": "ຕົວແທນກຳລັງລໍຖ້າການອະນຸຍາດ. ໃນຂະນະທີ່ຄຳຂໍນີ້ເປີດຢູ່, ຂໍ້ຄວາມຂອງທ່ານໄປຫາຕົວແທນຖືກຢຸດ."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "ຄວາມເລິກຂອງການຊ້ອນກັນສູງສຸດຮອດແລ້ວ.",
       "modelAccessibility": "ຮູບແບບ: {{modelLabel}}",
       "openHint": "ເປີດເຊດຊັນຂອງຕົວແທນຍ່ອຍ",

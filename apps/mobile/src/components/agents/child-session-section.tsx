@@ -22,8 +22,6 @@ import {
   getChildSessionCardState,
   getTaskToolSessionId,
 } from './child-session-card-state';
-import { getChildSessionModelLabel } from './child-session-model';
-import { ChildSessionModelLabel } from './child-session-model-label';
 import { MessageErrorBoundary } from './message-error-boundary';
 import { isToolPart } from './part-types';
 
@@ -55,16 +53,12 @@ type ChildSessionSectionProps = {
 
 export function ChildSessionSection({
   part,
-  childMessages,
   onOpenChildSession,
-  modelOptions,
 }: Readonly<ChildSessionSectionProps>) {
   const colors = useThemeColors();
   const { t } = useTranslation();
 
   const { agentName, taskName, status }: ChildSessionCardState = getChildSessionCardState(part);
-  const modelLabel =
-    childMessages.length > 0 ? getChildSessionModelLabel(childMessages, modelOptions ?? []) : null;
 
   const isRunning = status === 'running' || status === 'pending';
   const sessionId = getTaskToolSessionId(part);
@@ -90,7 +84,6 @@ export function ChildSessionSection({
         accessibilityLabel={t('agentChat.childSession.accessibilityLabel', {
           agentName,
           taskName,
-          modelLabel: modelLabel ? `, ${modelLabel}` : '',
           status: t(CHILD_SESSION_STATUS_LABEL_KEYS[status]),
         })}
         accessibilityHint={sessionId ? t('agentChat.childSession.openHint') : undefined}
@@ -111,7 +104,6 @@ export function ChildSessionSection({
           <Text className="text-sm leading-5 text-foreground" numberOfLines={1}>
             {taskName}
           </Text>
-          {modelLabel ? <ChildSessionModelLabel modelLabel={modelLabel} /> : null}
         </View>
 
         <StatusBadge status={status} />

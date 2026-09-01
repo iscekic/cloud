@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Agentea baimenaren zain dago. Eskari hau irekita dagoen bitartean, agentearentzako mezua pausatuta dago."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Gehieneko habiaratze-sakonera iritsi da.",
       "modelAccessibility": "Modeloa: {{modelLabel}}",
       "openHint": "Ireki subagentearen saioa",

@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Onye nnọchite na-eche ikike. Ọ bụrụhaala na arịrịọ a meghere, ozi gị nye onye nnọchite na-akwụsị."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Omimi kachasị ruru.",
       "modelAccessibility": "Ụdị: {{modelLabel}}",
       "openHint": "Mepee nnọkọ onye nnọchite",

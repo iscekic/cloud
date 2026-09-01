@@ -2445,7 +2445,7 @@
       "waitingForPermission": "عامل منتظر مجوز است. تا باز بودن این درخواست، پیام شما به عامل متوقف است."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{status}}",
+      "accessibilityLabel": "{{agentName}}، {{taskName}}، {{status}}",
       "maxNestingDepth": "حداکثر عمق تو در تو به دست آمده است.",
       "modelAccessibility": "مدل: {{modelLabel}}",
       "openHint": "باز کردن جلسه زیرعامل",

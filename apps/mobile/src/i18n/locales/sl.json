@@ -2477,7 +2477,7 @@
       "waitingForPermission": "Agent čaka na dovoljenje. Dokler je ta zahteva odprta, je tvoje sporočilo agentu začasno ustavljeno."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Dosežena je največja globina gnezdenja.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Odpri podagentovo sejo",

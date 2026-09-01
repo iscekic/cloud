@@ -2477,7 +2477,7 @@
       "waitingForPermission": "Agent čaká na povolenie. Kým je táto požiadavka otvorená, vaša správa agentovi je pozastavená."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Dosiahla sa maximálna hĺbka vnorenia.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otvoriť reláciu subagenta",

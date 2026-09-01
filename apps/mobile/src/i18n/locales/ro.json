@@ -2461,7 +2461,7 @@
       "waitingForPermission": "Agentul așteaptă permisiunea. Cât timp această cerere este deschisă, mesajul tău către agent este în pauză."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "S-a atins adâncimea maximă de cuibărire.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Deschide sesiunea de subagent",

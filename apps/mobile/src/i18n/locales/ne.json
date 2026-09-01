@@ -2445,7 +2445,7 @@
       "waitingForPermission": "एजेन्ट अनुमतिको पर्खाइमा छ। यो अनुरोध खुला हुँदा, एजेन्टलाई तपाईंको सन्देश रोकिएको छ।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "अधिकतम नेस्टिङ गहिराइ पुग्यो।",
       "modelAccessibility": "मोडेल: {{modelLabel}}",
       "openHint": "सबएजेन्ट सत्र खोल्नुहोस्",

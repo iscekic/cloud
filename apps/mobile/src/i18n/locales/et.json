@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Agent ootab luba. Kuni see taotlus on avatud, on sinu sõnum agendile peatatud."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Maksimaalne pesastussügavus saavutatud.",
       "modelAccessibility": "Mudel: {{modelLabel}}",
       "openHint": "Ava alaseansi seanss",

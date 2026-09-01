@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Wakili yana jiran izini. Yayin da wannan buƙata ke a buɗe, sakonka zuwa wakili yana dakatarwa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Matsakaicin zurfin gida ya kai ga iyaka.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buɗe zaman subagent",

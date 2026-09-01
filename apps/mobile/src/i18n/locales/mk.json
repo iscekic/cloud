@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Агентот чека дозвола. Додека ова барање е отворено, вашата порака до агентот е паузирана."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Достигната е максималната длабочина на вгнездување.",
       "modelAccessibility": "Модел: {{modelLabel}}",
       "openHint": "Отвори сесија на субагент",

@@ -2445,7 +2445,7 @@
       "waitingForPermission": "ಏಜೆಂಟ್ ಅನುಮತಿಗಾಗಿ ಕಾಯುತ್ತಿದೆ. ಈ ವಿನಂತಿ ತೆರೆದಿರುವಾಗ, ಏಜೆಂಟ್ಗೆ ನಿಮ್ಮ ಸಂದೇಶ ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "ಗರಿಷ್ಠ ನೆಸ್ಟಿಂಗ್ ಆಳ ತಲುಪಲಾಗಿದೆ.",
       "modelAccessibility": "ಮಾದರಿ: {{modelLabel}}",
       "openHint": "ಉಪ-ಏಜೆಂಟ್ ಸೆಷನ್ ತೆರೆಯಿರಿ",

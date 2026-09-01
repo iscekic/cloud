@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Umboðið bíður heimildar. Meðan þessi beiðni er opin er skilaboðum þínum til umboðsins haldið í bið."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Hámarks varpaningsdýpt náð.",
       "modelAccessibility": "Líkan: {{modelLabel}}",
       "openHint": "Opna undirumboðslotu",

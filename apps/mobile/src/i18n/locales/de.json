@@ -1991,7 +1991,7 @@
       "waitingForPermission": "Der Agent wartet auf eine Berechtigung. Solange diese Anfrage offen ist, ist deine Nachricht an den Agenten pausiert."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Maximale Verschachtelungstiefe erreicht.",
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Subagent-Sitzung öffnen",

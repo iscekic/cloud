@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Agentti odottaa lupaa. Kun pyyntö on avoinna, viestisi agentille on keskeytetty."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Suurin sisäkkäissyvyys saavutettu.",
       "modelAccessibility": "Malli: {{modelLabel}}",
       "openHint": "Avaa alagentin istunto",

@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Agenten venter på tilladelse. Mens denne anmodning er åben, er din besked til agenten sat på pause."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Maksimal redeniveau nået.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Åbn subagent-session",

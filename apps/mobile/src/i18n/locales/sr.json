@@ -2461,7 +2461,7 @@
       "waitingForPermission": "Agent čeka dozvolu. Dok je ovaj zahtev otvoren, vaša poruka agentu je pauzirana."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Dostignuta je maksimalna dubina ugnježđivanja.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otvori sesiju podagenta",

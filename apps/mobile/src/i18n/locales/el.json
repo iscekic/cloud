@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Ο πράκτορας περιμένει άδεια. Όσο αυτό το αίτημα είναι ανοιχτό, το μήνυμά σας προς τον πράκτορα είναι σε παύση."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Επιτεύχθηκε το μέγιστο βάθος ένθεσης.",
       "modelAccessibility": "Μοντέλο: {{modelLabel}}",
       "openHint": "Άνοιγμα συνεδρίας υποπράκτορα",

@@ -239,8 +239,8 @@ describe('ChildSessionMessage routing seam', () => {
   });
 });
 
-describe('ChildSessionSection model label', () => {
-  it('renders the model label when child messages carry model data', () => {
+describe('ChildSessionSection card metadata', () => {
+  it('does not render a transcript-derived model label on the card', () => {
     const childMessages = [makeMessage([makeTextPart('child text')])];
     const onOpenChildSession = vi.fn<(sessionId: string, title: string) => void>();
     const part = makeToolPart('task', taskCompletedState);
@@ -249,23 +249,6 @@ describe('ChildSessionSection model label', () => {
     const root = ChildSessionSection({
       part,
       childMessages,
-      modelOptions: [modelOption],
-      onOpenChildSession,
-    });
-
-    const labels = findByType(root, ChildSessionModelLabel);
-    expect(labels).toHaveLength(1);
-    expect(labels[0]?.props).toMatchObject({ modelLabel: 'Test Model' });
-  });
-
-  it('hides the model label when child messages are empty and still renders the card', () => {
-    const onOpenChildSession = vi.fn<(sessionId: string, title: string) => void>();
-    const part = makeToolPart('task', taskCompletedState);
-
-    // eslint-disable-next-line new-cap, react-compiler-runtime/react-compiler-runtime -- direct function call
-    const root = ChildSessionSection({
-      part,
-      childMessages: [],
       modelOptions: [modelOption],
       onOpenChildSession,
     });

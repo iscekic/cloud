@@ -1991,7 +1991,7 @@
       "waitingForPermission": "代理正在等待权限。此请求打开期间，您发给代理的消息已暂停。"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}，{{taskName}}{{modelLabel}}，{{status}}",
+      "accessibilityLabel": "{{agentName}}，{{taskName}}，{{status}}",
       "maxNestingDepth": "已达到最大嵌套深度。",
       "modelAccessibility": "模型：{{modelLabel}}",
       "openHint": "打开子代理会话",

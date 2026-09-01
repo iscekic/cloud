@@ -2493,7 +2493,7 @@
       "waitingForPermission": "Tá an gníomhaire ag fanacht ar chead. Agus an t-iarratas seo ar oscailt, tá do theachtaireacht chuig an ngníomhaire ar sos."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Baineadh an t-uasdoimhneacht neadaithe amach.",
       "modelAccessibility": "Samhail: {{modelLabel}}",
       "openHint": "Oscail seisiún foghníomhaire",

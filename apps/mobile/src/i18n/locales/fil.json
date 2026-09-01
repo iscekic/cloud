@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Naghihintay ang agent ng pahintulot. Habang bukas ang kahilingang ito, naka-pause ang iyong mensahe sa agent."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Naabot ang maximum na lalim ng nesting.",
       "modelAccessibility": "Modelo: {{modelLabel}}",
       "openHint": "Buksan ang subagent session",

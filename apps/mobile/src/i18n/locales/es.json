@@ -2000,7 +2000,7 @@
       "waitingForPermission": "El agente está esperando permiso. Mientras esta solicitud esté abierta, tu mensaje al agente está en pausa."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Profundidad máxima de anidamiento alcanzada.",
       "modelAccessibility": "Modelo: {{modelLabel}}",
       "openHint": "Abrir sesión del subagente",

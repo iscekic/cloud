@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Агент зөвшөөрлийг хүлээж байна. Энэ хүсэлт нээлттэй байхад таны агент руу илгээсэн мэдээлэл түр зогсоно."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Хамгийн их үүрлэлтийн гүнд хүрлээ.",
       "modelAccessibility": "Загвар: {{modelLabel}}",
       "openHint": "Дэд агентын сессийг нээх",

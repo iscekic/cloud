@@ -2445,7 +2445,7 @@
       "waitingForPermission": "এজেন্ট অনুমতির জন্য অপেক্ষা করছে। এই অনুরোধটি খোলা থাকলে, এজেন্টে আপনার বার্তা বিরতিতে থাকে।"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "সর্বাধিক নেস্টিং গভীরতায় পৌঁছেছে।",
       "modelAccessibility": "মডেল: {{modelLabel}}",
       "openHint": "সাবএজেন্ট সেশন খুলুন",

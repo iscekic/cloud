@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Agjenti po pret lejen. Ndërsa kjo kërkesë është e hapur, mesazhi juaj te agjenti është i ndërprerë."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "U arrit thellësia maksimale e folezimit.",
       "modelAccessibility": "Modeli: {{modelLabel}}",
       "openHint": "Hap seancën e nënagjentit",

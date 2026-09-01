@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Agent icazə gözləyir. Bu sorğu açıq olduğu müddətdə agentə mesajınız dayandırılıb."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Maksimum yuvalama dərinliyinə çatıldı.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Subagent sessiyasını aç",

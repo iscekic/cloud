@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Kei te tatari te kaihoko ki te whakaaetanga. I te wā e tuwhera ana tēnei tono, kua tū tō karere ki te kaihoko."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Kua tae ki te hōhonu kāho mōrahi.",
       "modelAccessibility": "Tauira: {{modelLabel}}",
       "openHint": "Whakatuwhera wātū kaihoko-iti",

@@ -1991,7 +1991,7 @@
       "waitingForPermission": "Ajan izin bekliyor. Bu istek açıkken ajana gönderdiğiniz mesaj duraklatılır."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Maksimum yuvalama derinliğine ulaşıldı.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Alt ajan oturumunu aç",

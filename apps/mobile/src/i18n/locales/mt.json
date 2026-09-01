@@ -2493,7 +2493,7 @@
       "waitingForPermission": "L-aġent qed jistenna l-permess. Waqt li din it-talba tkun miftuħa, il-messaġġ tiegħek lill-aġent ikun waqaf."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Il-fond massimu ta' nesting intlaħaq.",
       "modelAccessibility": "Mudell: {{modelLabel}}",
       "openHint": "Iftaħ is-sessjoni tas-subaġent",

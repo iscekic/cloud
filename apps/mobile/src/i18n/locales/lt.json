@@ -2477,7 +2477,7 @@
       "waitingForPermission": "Agentas laukia leidimo. Kol šis prašymas atviras, jūsų žinutė agentui pristabdyta."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Pasiekta didžiausias įdėjimo gylis.",
       "modelAccessibility": "Modelis: {{modelLabel}}",
       "openHint": "Atidaryti subagento sesiją",

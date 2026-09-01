@@ -2009,7 +2009,7 @@
       "waitingForPermission": "Agent czeka na uprawnienie. Dopóki ta prośba jest otwarta, Twoja wiadomość do agenta jest wstrzymana."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Osiągnięto maksymalną głębokość zagnieżdżenia.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Otwórz sesję podagenta",

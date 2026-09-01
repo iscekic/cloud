@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Ejen sedang menunggu kebenaran. Semasa permintaan ini terbuka, mesej anda kepada ejen dijeda."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Kedalaman penyarangan maksimum dicapai.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Buka sesi subejen",

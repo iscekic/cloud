@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Miandry alalana ny agent. Raha mbola misokatra ity fangatahana ity dia mijanona ny hafatrao ho an'ny agent."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Tafakatra ny fetran'ny halalina ambony indrindra.",
       "modelAccessibility": "Modely: {{modelLabel}}",
       "openHint": "Sokafy ny session subagent",

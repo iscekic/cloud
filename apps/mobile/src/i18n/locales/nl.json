@@ -1991,7 +1991,7 @@
       "waitingForPermission": "De agent wacht op toestemming. Zolang dit verzoek open is, is je bericht aan de agent gepauzeerd."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Maximale nestdiepte bereikt.",
       "modelAccessibility": "Model: {{modelLabel}}",
       "openHint": "Subagentsessie openen",

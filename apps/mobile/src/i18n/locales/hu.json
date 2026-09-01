@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Az ügynök engedélyre vár. Amíg ez a kérés nyitva van, az ügynöknek küldött üzeneted szünetel."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Elérted a maximális beágyazási mélységet.",
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Alügynök munkamenet megnyitása",

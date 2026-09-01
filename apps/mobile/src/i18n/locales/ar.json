@@ -2027,7 +2027,7 @@
       "waitingForPermission": "الوكيل في انتظار الإذن. أثناء فتح هذا الطلب، تتوقف رسالتك إلى الوكيل مؤقتًا."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}، {{taskName}}{{modelLabel}}، {{status}}",
+      "accessibilityLabel": "{{agentName}}، {{taskName}}، {{status}}",
       "maxNestingDepth": "تم الوصول إلى أقصى عمق تداخل.",
       "modelAccessibility": "النموذج: {{modelLabel}}",
       "openHint": "فتح جلسة الوكيل الفرعي",

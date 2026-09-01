@@ -1991,7 +1991,7 @@
       "waitingForPermission": "エージェントが権限を待っています。このリクエストが開いている間、エージェントへのメッセージは一時停止されます。"
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}、{{taskName}}{{modelLabel}}、{{status}}",
+      "accessibilityLabel": "{{agentName}}、{{taskName}}、{{status}}",
       "maxNestingDepth": "最大ネスト深度に達しました。",
       "modelAccessibility": "モデル: {{modelLabel}}",
       "openHint": "サブエージェントセッションを開く",

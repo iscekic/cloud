@@ -2445,7 +2445,7 @@
       "waitingForPermission": "ఏజెంట్ అనుమతి కోసం వేచి ఉంది. ఈ అభ్యర్థన తెరిచి ఉన్నప్పుడు, ఏజెంట్కు మీ సందేశం పాజ్ చేయబడుతుంది."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "గరిష్ట గూడు లోతు చేరుకుంది.",
       "modelAccessibility": "మోడల్: {{modelLabel}}",
       "openHint": "సబ్ఏజెంట్ సెషన్ను తెరవండి",

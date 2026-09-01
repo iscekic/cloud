@@ -2445,7 +2445,7 @@
       "waitingForPermission": "એજન્ટ પરવાનગીની રાહ જોઈ રહ્યો છે. આ વિનંતી ખુલ્લી હોય ત્યાં સુધી, એજન્ટને તમારો સંદેશ થંભેલો છે."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "મહત્તમ નેસ્ટિંગ ઊંડાઈ સુધી પહોંચી ગયું.",
       "modelAccessibility": "મોડલ: {{modelLabel}}",
       "openHint": "સબએજન્ટ સત્ર ખોલો",

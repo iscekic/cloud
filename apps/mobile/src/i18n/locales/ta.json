@@ -2445,7 +2445,7 @@
       "waitingForPermission": "முகவர் அனுமதிக்காக காத்திருக்கிறார். இந்த கோரிக்கை திறந்திருக்கும்போது, முகவருக்கான உங்கள் செய்தி இடைநிறுத்தப்பட்டுள்ளது."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "அதிகபட்ச உள்ளமைவு ஆழத்தை எட்டியது.",
       "modelAccessibility": "மாதிரி: {{modelLabel}}",
       "openHint": "துணை முகவர் அமர்வைத் திறக்கவும்",

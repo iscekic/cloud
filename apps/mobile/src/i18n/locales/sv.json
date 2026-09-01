@@ -2445,7 +2445,7 @@
       "waitingForPermission": "Agenten väntar på behörighet. Medan denna förfrågan är öppen är ditt meddelande till agenten pausat."
     },
     "childSession": {
-      "accessibilityLabel": "{{agentName}}, {{taskName}}{{modelLabel}}, {{status}}",
+      "accessibilityLabel": "{{agentName}}, {{taskName}}, {{status}}",
       "maxNestingDepth": "Maximalt kapslingsdjup nått.",
       "modelAccessibility": "Modell: {{modelLabel}}",
       "openHint": "Öppna undersessionssession",
