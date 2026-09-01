@@ -82,6 +82,10 @@ type WSAttachment =
       // are enabled. Undefined on sockets that predate the field or that have
       // CLI tasks disabled. Used to target `browser_task` relay events.
       browserProfileId?: string;
+      // Stable human-readable provider name advertised by the extension (e.g.
+      // the browser family `chrome`). Undefined on sockets that predate the
+      // field. Used to resolve a caller-named provider to its profile id.
+      provider?: string;
     };
 
 // Type re-export so test files and other internal callers can reference the
@@ -416,12 +420,15 @@ export class UserConnectionDO extends DurableObject<Env> {
       const kiloUserId = url.searchParams.get('kiloUserId') ?? undefined;
       const rawBrowserProfileId = url.searchParams.get('browserProfileId');
       const browserProfileId = rawBrowserProfileId ? rawBrowserProfileId : undefined;
+      const rawProvider = url.searchParams.get('provider');
+      const provider = rawProvider ? rawProvider : undefined;
       const attachment: WSAttachment = {
         role: 'web',
         connectionId,
         subscribedSessions: [],
         kiloUserId,
         browserProfileId,
+        provider,
       };
       this.ctx.acceptWebSocket(server, ['web']);
       server.serializeAttachment(attachment);
@@ -2040,6 +2047,28 @@ export class UserConnectionDO extends DurableObject<Env> {
       }
     }
     return false;
+  }
+
+  /**
+   * Resolve a stable human provider name (e.g. `chrome`) to the connected
+   * profile id. Returns the single matching profile id, or `undefined` when
+   * none or more than one distinct profile advertises the name — the route
+   * never falls back to a first profile.
+   */
+  async resolveBrowserProfileId(provider: string): Promise<string | undefined> {
+    this.ensureState();
+    if (!provider) return undefined;
+    const wanted = provider.toLowerCase();
+    const matches = new Set<string>();
+    for (const ws of this.activeWebSockets()) {
+      const attachment = ws.deserializeAttachment() as WSAttachment | null;
+      if (attachment?.role !== 'web' || !attachment.browserProfileId) continue;
+      if (attachment.provider?.toLowerCase() === wanted) {
+        matches.add(attachment.browserProfileId);
+      }
+    }
+    if (matches.size !== 1) return undefined;
+    return [...matches][0];
   }
 
   /**

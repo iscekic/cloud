@@ -280,6 +280,17 @@ export const createBrowserTaskRuntime = ({
 /** Local storage key for the extension's stable browser profile id. */
 export const BROWSER_PROFILE_ID_STORAGE_KEY = 'local:kiloBrowserProfileId';
 
+/**
+ * Stable, human-readable provider name the extension advertises so a CLI
+ * caller can name one enabled, connected provider. Derived from the browser
+ * the extension is built for (e.g. `chrome`, `firefox`, `safari`). Falls back
+ * to `browser` when the build does not expose a browser name (tests).
+ */
+export const getBrowserProviderName = (): string => {
+  const browserName: string | undefined = import.meta.env.BROWSER;
+  return browserName && browserName.trim() !== '' ? browserName.trim().toLowerCase() : 'browser';
+};
+
 const browserProfileIdSchema = z.string().min(1).max(128);
 
 type MaybePromise<Value> = Promise<Value> | Value;

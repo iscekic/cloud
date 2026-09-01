@@ -8168,6 +8168,78 @@ describe('UserConnectionDO', () => {
       expect(cliWs.send).not.toHaveBeenCalled();
     });
   });
+
+  describe('browser profile resolution', () => {
+    function addBrowserWebSocket(
+      mockCtx: ReturnType<typeof createMockCtx>,
+      connectionId: string,
+      browserProfileId: string,
+      provider?: string
+    ): MockWS {
+      const attachment: Record<string, unknown> = {
+        role: 'web',
+        connectionId,
+        subscribedSessions: [],
+        kiloUserId: 'usr_1',
+        browserProfileId,
+      };
+      if (provider !== undefined) attachment.provider = provider;
+      const ws = createMockWs(['web'], attachment);
+      mockCtx.addSocket(ws);
+      return ws;
+    }
+
+    it('resolves a single connected provider to its profile id', async () => {
+      const { doInstance, mockCtx } = setup();
+      addBrowserWebSocket(mockCtx, 'web-1', 'uuid-1', 'chrome');
+
+      await expect(doInstance.resolveBrowserProfileId('chrome')).resolves.toBe('uuid-1');
+    });
+
+    it('matches the provider name case-insensitively', async () => {
+      const { doInstance, mockCtx } = setup();
+      addBrowserWebSocket(mockCtx, 'web-1', 'uuid-1', 'CHROME');
+
+      await expect(doInstance.resolveBrowserProfileId('chrome')).resolves.toBe('uuid-1');
+    });
+
+    it('dedupes sockets that share one profile id', async () => {
+      const { doInstance, mockCtx } = setup();
+      addBrowserWebSocket(mockCtx, 'web-1', 'uuid-1', 'chrome');
+      addBrowserWebSocket(mockCtx, 'web-2', 'uuid-1', 'chrome');
+
+      await expect(doInstance.resolveBrowserProfileId('chrome')).resolves.toBe('uuid-1');
+    });
+
+    it('returns undefined when no connected socket advertises the provider', async () => {
+      const { doInstance, mockCtx } = setup();
+      addBrowserWebSocket(mockCtx, 'web-1', 'uuid-1', 'firefox');
+
+      await expect(doInstance.resolveBrowserProfileId('chrome')).resolves.toBeUndefined();
+    });
+
+    it('returns undefined when two distinct profiles advertise the same provider', async () => {
+      const { doInstance, mockCtx } = setup();
+      addBrowserWebSocket(mockCtx, 'web-1', 'uuid-1', 'chrome');
+      addBrowserWebSocket(mockCtx, 'web-2', 'uuid-2', 'chrome');
+
+      await expect(doInstance.resolveBrowserProfileId('chrome')).resolves.toBeUndefined();
+    });
+
+    it('returns undefined for an empty provider', async () => {
+      const { doInstance, mockCtx } = setup();
+      addBrowserWebSocket(mockCtx, 'web-1', 'uuid-1', 'chrome');
+
+      await expect(doInstance.resolveBrowserProfileId('')).resolves.toBeUndefined();
+    });
+
+    it('ignores a web socket that predates the provider field', async () => {
+      const { doInstance, mockCtx } = setup();
+      addBrowserWebSocket(mockCtx, 'web-1', 'uuid-1');
+
+      await expect(doInstance.resolveBrowserProfileId('chrome')).resolves.toBeUndefined();
+    });
+  });
 });
 
 describe('closeViewerSockets', () => {

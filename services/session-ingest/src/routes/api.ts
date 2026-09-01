@@ -923,19 +923,26 @@ api.post('/browser-task', zodJsonValidator(submitBrowserTaskSchema), async c => 
   const kiloUserId = c.get('user_id');
 
   const userConnection = getUserConnectionDO(c.env, { kiloUserId });
-  // Reject when the named profile is not an enabled, connected browser profile
-  // for this user. Never fall back to a first/other profile.
-  if (!(await userConnection.hasConnectedBrowserProfile(body.browserProfileId))) {
+  // Resolve the named provider to its connected profile id. The provider is a
+  // stable human name (e.g. `chrome`) the extension advertises alongside its
+  // random profile UUID, so the caller never names the undiscoverable UUID.
+  // A raw profile id in `browserProfileId` is still accepted for callers that
+  // already know it. Never fall back to a first/other profile.
+  let browserProfileId = body.browserProfileId;
+  if (!(await userConnection.hasConnectedBrowserProfile(browserProfileId))) {
+    browserProfileId = (await userConnection.resolveBrowserProfileId(body.provider)) ?? '';
+  }
+  if (!browserProfileId) {
     return c.json({ success: false, error: 'browser_profile_not_connected' }, 404);
   }
 
   const { getBrowserTaskDO } = await import('../dos/browser-task-do');
   const { task, created } = await withDORetry(
-    () => getBrowserTaskDO(c.env, { browserProfileId: body.browserProfileId }),
+    () => getBrowserTaskDO(c.env, { browserProfileId }),
     stub =>
       stub.enqueue({
         ownerKiloUserId: kiloUserId,
-        browserProfileId: body.browserProfileId,
+        browserProfileId,
         provider: body.provider,
         goal: body.goal,
         invocationId: body.invocationId,
@@ -946,7 +953,7 @@ api.post('/browser-task', zodJsonValidator(submitBrowserTaskSchema), async c => 
   // Only relay a newly queued task; a dedupe hit was already relayed on first
   // submission and must not be delivered a second time.
   if (created) {
-    await userConnection.relayBrowserTask(body.browserProfileId, {
+    await userConnection.relayBrowserTask(browserProfileId, {
       taskId: task.taskId,
       provider: task.provider,
       goal: task.goal,
@@ -962,9 +969,7 @@ api.post('/browser-task/:taskId', zodJsonValidator(extensionBrowserTaskUpdateSch
   const taskId = c.req.param('taskId');
   const body = c.req.valid('json');
 
-  const { getBrowserTaskDO, browserProfileIdFromTaskId } = await import(
-    '../dos/browser-task-do'
-  );
+  const { getBrowserTaskDO, browserProfileIdFromTaskId } = await import('../dos/browser-task-do');
   const browserProfileId = browserProfileIdFromTaskId(taskId);
   if (!browserProfileId) {
     return c.json({ success: false, error: 'Invalid taskId' }, 400);
@@ -1008,9 +1013,7 @@ api.get('/browser-task/:taskId', async c => {
   const kiloUserId = c.get('user_id');
   const taskId = c.req.param('taskId');
 
-  const { getBrowserTaskDO, browserProfileIdFromTaskId } = await import(
-    '../dos/browser-task-do'
-  );
+  const { getBrowserTaskDO, browserProfileIdFromTaskId } = await import('../dos/browser-task-do');
   const browserProfileId = browserProfileIdFromTaskId(taskId);
   if (!browserProfileId) {
     return c.json({ success: false, error: 'Invalid taskId' }, 400);

@@ -101,6 +101,7 @@ import { createExtensionTrpcClient } from '@/src/shared/extension-trpc-client';
 import {
   createBrowserTaskPoster,
   createBrowserTaskRuntime,
+  getBrowserProviderName,
   getOrCreateBrowserProfileId,
 } from '@/src/shared/browser-task-runtime';
 import type { BrowserTaskRuntime, BrowserTaskTurnResult } from '@/src/shared/browser-task-runtime';
@@ -970,7 +971,7 @@ export const AgentChatPanel = ({
         lifecycleHooks: createBrowserLifecycleHooks(),
         websocketUrl: `${sessionIngestWebSocketUrl}/api/user/web?browserProfileId=${encodeURIComponent(
           browserProfileId
-        )}`,
+        )}&provider=${encodeURIComponent(getBrowserProviderName())}`,
       });
 
       if (cancelled) {
