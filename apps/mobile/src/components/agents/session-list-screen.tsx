@@ -279,6 +279,7 @@ export function AgentSessionListScreen() {
       <ScreenHeader
         title={t('tabs.agents')}
         eyebrow={count != null ? t('agents.sessionList.liveCount', { count }) : undefined}
+        reserveEyebrow
         size="large"
         showBackButton={false}
         className="px-[22px]"

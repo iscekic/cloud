@@ -15,6 +15,13 @@ type ScreenHeaderProps = {
   title?: string;
   /** Optional mono-uppercase line above the title. */
   eyebrow?: string;
+  /**
+   * Reserve the eyebrow's vertical space even when `eyebrow` is absent, so the
+   * title never shifts when the eyebrow appears (e.g. a live-count line that is
+   * hidden while loading or empty). The placeholder is invisible and hidden
+   * from accessibility.
+   */
+  reserveEyebrow?: boolean;
   /** Use Focus's large 30px H1 style (list roots). Default 18px (detail). */
   size?: 'default' | 'large';
   headerRight?: React.ReactNode;
@@ -37,6 +44,7 @@ type ScreenHeaderProps = {
 export function ScreenHeader({
   title,
   eyebrow,
+  reserveEyebrow,
   size = 'default',
   headerRight,
   modal,
@@ -64,6 +72,11 @@ export function ScreenHeader({
     size === 'large'
       ? 'shrink text-[30px] font-bold tracking-tight text-foreground'
       : 'shrink text-lg font-semibold text-foreground';
+
+  // A visible eyebrow only when a non-empty label is supplied; `reserveEyebrow`
+  // keeps the slot's height when the label is absent so the title does not jump.
+  const showEyebrow = eyebrow != null && eyebrow !== '';
+  const reserveEyebrowSlot = reserveEyebrow === true && !showEyebrow;
 
   let titleNode: React.ReactNode = null;
   if (title != null) {
@@ -120,7 +133,15 @@ export function ScreenHeader({
             </Pressable>
           )}
           <View className="min-w-0 flex-1">
-            {eyebrow ? <Eyebrow className="mb-0.5">{eyebrow}</Eyebrow> : null}
+            {showEyebrow || reserveEyebrowSlot ? (
+              <Eyebrow
+                className={cn('mb-0.5', reserveEyebrowSlot && 'opacity-0')}
+                accessibilityElementsHidden={reserveEyebrowSlot || undefined}
+                importantForAccessibility={reserveEyebrowSlot ? 'no-hide-descendants' : undefined}
+              >
+                {showEyebrow ? eyebrow : '\u00A0'}
+              </Eyebrow>
+            ) : null}
             {titleNode}
           </View>
         </View>

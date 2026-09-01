@@ -341,6 +341,17 @@ describe('AgentSessionListScreen live tab', () => {
     expect(screenHeaderOf(renderer).props.eyebrow).toBeUndefined();
   });
 
+  it('reserves the eyebrow slot so the title never shifts across states', async () => {
+    const empty = await renderScreen();
+    expect(screenHeaderOf(empty).props.reserveEyebrow).toBe(true);
+    expect(screenHeaderOf(empty).props.eyebrow).toBeUndefined();
+
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+    const live = await renderScreen();
+    expect(screenHeaderOf(live).props.reserveEyebrow).toBe(true);
+    expect(screenHeaderOf(live).props.eyebrow).toBe('agents.sessionList.liveCount');
+  });
+
   it('pushes the history route when See-all is pressed', async () => {
     const renderer = await renderScreen();
     const seeAll = requireHeaderAction(renderer, 'agents-view-history');

@@ -82,6 +82,23 @@ function findIcon(back: TestInstance, type: string): TestInstance {
   return icon;
 }
 
+function findEyebrow(root: TestInstance): TestInstance {
+  const nodes = root.findAll(
+    node => typeof node.type === 'string' && (node.type as string) === 'Eyebrow'
+  );
+  const node = nodes[0];
+  if (!node) {
+    throw new Error('eyebrow not found');
+  }
+  return node;
+}
+
+function eyebrowCount(root: TestInstance): number {
+  return root.findAll(
+    node => typeof node.type === 'string' && (node.type as string) === 'Eyebrow'
+  ).length;
+}
+
 function deriveTitleFontSize(className: string): number {
   const arbitrary = /text-\[(\d+)px\]/.exec(className);
   if (arbitrary) {
@@ -292,5 +309,34 @@ describe('ScreenHeader mounted', () => {
       expect(back.props.className).toContain('items-center');
       expect(back.props.className).toContain('justify-center');
     }
+  });
+
+  it('renders no eyebrow slot when neither eyebrow nor reserveEyebrow is set', () => {
+    const renderer = renderHeader({ title: 'Sessions' });
+    expect(eyebrowCount(renderer.root)).toBe(0);
+  });
+
+  it('renders the eyebrow normally when a label is supplied', () => {
+    const renderer = renderHeader({ title: 'Sessions', eyebrow: 'Agents' });
+    const eyebrow = findEyebrow(renderer.root);
+    expect(eyebrow.props.children).toBe('Agents');
+    expect(eyebrow.props.className).not.toContain('opacity-0');
+  });
+
+  it('reserves the eyebrow height with an invisible placeholder when reserveEyebrow is set', () => {
+    const renderer = renderHeader({ title: 'Sessions', reserveEyebrow: true });
+    const eyebrow = findEyebrow(renderer.root);
+    expect(eyebrow.props.children).toBe('\u00A0');
+    expect(eyebrow.props.className).toContain('opacity-0');
+    expect(eyebrow.props.accessibilityElementsHidden).toBe(true);
+    expect(eyebrow.props.importantForAccessibility).toBe('no-hide-descendants');
+  });
+
+  it('renders the visible label when both eyebrow and reserveEyebrow are set', () => {
+    const renderer = renderHeader({ title: 'Sessions', eyebrow: 'Agents', reserveEyebrow: true });
+    const eyebrow = findEyebrow(renderer.root);
+    expect(eyebrow.props.children).toBe('Agents');
+    expect(eyebrow.props.className).not.toContain('opacity-0');
+    expect(eyebrow.props.accessibilityElementsHidden).toBeUndefined();
   });
 });
