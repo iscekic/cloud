@@ -6,10 +6,11 @@ import { useUserWebConnection } from '@/components/agents/user-web-connection-pr
 import { AlertCircle, Loader2, WifiOff } from '@/components/ui/icons';
 import { SpinningIcon } from '@/components/ui/spinning-icon';
 import { Text } from '@/components/ui/text';
+import { announceForA11y } from '@/lib/a11y/announce';
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { useUserWebConnectionHealth } from '@/lib/hooks/use-user-web-connection-state';
 
-import { selectLiveListStatus } from './session-list-live-status';
+import { type LiveListStatus, selectLiveListStatus } from './session-list-live-status';
 
 type SessionListConnectionStripProps = {
   hasLiveRows: boolean;
@@ -56,6 +57,23 @@ export function SessionListConnectionStrip({
     updating,
     refreshFailed,
   });
+
+  // Consequential error outcomes must reach assistive technologies: the
+  // failure text and its Retry action are otherwise silent until manually
+  // focused. Announce on committed transitions only (never the initial mount)
+  // so a cold-start offline or already-failed list never re-announces.
+  const prevKindRef = useRef<LiveListStatus['kind'] | null>(null);
+  useEffect(() => {
+    const kind = status.kind;
+    if (prevKindRef.current !== null && prevKindRef.current !== kind) {
+      if (kind === 'refresh-failed') {
+        announceForA11y(t('agents.sessionList.refreshFailed'));
+      } else if (kind === 'connection-lost') {
+        announceForA11y(t('agentChat.sessionConnection.connectionLost'));
+      }
+    }
+    prevKindRef.current = kind;
+  }, [status.kind, t]);
 
   let content: ReactNode = null;
   if (status.kind === 'connecting' || status.kind === 'reconnecting') {
