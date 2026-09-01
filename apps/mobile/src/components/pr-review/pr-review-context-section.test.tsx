@@ -93,15 +93,28 @@ function render(overview: Overview): TestRenderer.ReactTestRenderer {
   return renderer;
 }
 
-function hasText(renderer: TestRenderer.ReactTestRenderer, value: string): boolean {
-  return (
-    renderer.root.findAll(
-      node =>
-        typeof node.type === 'string' &&
-        (node.type as string) === 'Text' &&
-        node.props.children === value
-    ).length > 0
+function textNodes(
+  renderer: TestRenderer.ReactTestRenderer,
+  value: string
+): TestRenderer.ReactTestInstance[] {
+  return renderer.root.findAll(
+    node =>
+      typeof node.type === 'string' &&
+      (node.type as string) === 'Text' &&
+      node.props.children === value
   );
+}
+
+function hasText(renderer: TestRenderer.ReactTestRenderer, value: string): boolean {
+  return textNodes(renderer, value).length > 0;
+}
+
+function parentClassName(node: TestRenderer.ReactTestInstance): string {
+  const parent = node.parent;
+  if (parent === null) {
+    throw new Error('Expected a parent View');
+  }
+  return typeof parent.props.className === 'string' ? parent.props.className : '';
 }
 
 describe('PrReviewContextSection', () => {
@@ -173,6 +186,99 @@ describe('PrReviewContextSection', () => {
         timeZoneName: 'short',
       });
     }
+    renderer.unmount();
+  });
+
+  it('keeps the reviewer decision column on-screen when the login wants remaining width', () => {
+    const renderer = render(makeOverview());
+
+    const approved = textNodes(renderer, 'prReview.context.approved')[0];
+    expect(approved).toBeDefined();
+    const statusClass = parentClassName(approved);
+    expect(statusClass).toContain('max-w-[60%]');
+    expect(statusClass).toContain('shrink-0');
+
+    const row = approved.parent?.parent;
+    expect(row).toBeDefined();
+    const authorWrap = row?.children[0] as TestRenderer.ReactTestInstance;
+    expect(authorWrap.props.className).toContain('min-w-0');
+    expect(authorWrap.props.className).toContain('flex-1');
+
+    renderer.unmount();
+  });
+
+  it('omits a time next to an awaiting reviewer', () => {
+    const renderer = render(makeOverview());
+
+    const awaiting = textNodes(renderer, 'prReview.context.awaiting')[0];
+    expect(awaiting).toBeDefined();
+    const statusCol = awaiting.parent;
+    expect(statusCol).not.toBeNull();
+    const labels = statusCol
+      ?.findAll(node => typeof node.type === 'string' && (node.type as string) === 'Text')
+      .map(node => node.props.children);
+    expect(labels).toEqual(['prReview.context.awaiting']);
+
+    renderer.unmount();
+  });
+
+  it('renders a dismissed reviewer with the dismissed time, never approved', () => {
+    const overview = makeOverview();
+    overview.reviews = [
+      {
+        author: { login: 'dave', avatarUrl: 'https://avatars.example/dave' },
+        state: 'DISMISSED',
+        submittedAt: '2026-01-05T00:00:00Z',
+      },
+    ];
+    overview.requestedReviewers = [];
+    overview.requestedTeams = [];
+    const renderer = render(overview);
+
+    expect(hasText(renderer, 'dave')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.dismissed')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.approved')).toBe(false);
+    expect(hasText(renderer, '2026-01-05T00:00:00.000Z')).toBe(true);
+
+    renderer.unmount();
+  });
+
+  it('renders a re-requested reviewer as awaiting, never approved', () => {
+    const overview = makeOverview();
+    overview.requestedReviewers = [{ login: 'bob', avatarUrl: 'https://avatars.example/bob' }];
+    overview.requestedTeams = [];
+    const renderer = render(overview);
+
+    expect(hasText(renderer, 'bob')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.awaiting')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.approved')).toBe(false);
+
+    renderer.unmount();
+  });
+
+  it('truncates a long reviewer login instead of overlapping the decision column', () => {
+    const login = 'a-very-long-reviewer-login-name-that-must-truncate';
+    const overview = makeOverview();
+    overview.reviews = [
+      {
+        author: { login, avatarUrl: 'https://avatars.example/long' },
+        state: 'APPROVED',
+        submittedAt: '2026-01-03T00:00:00Z',
+      },
+    ];
+    overview.requestedReviewers = [];
+    overview.requestedTeams = [];
+    const renderer = render(overview);
+
+    const loginNode = textNodes(renderer, login)[0];
+    expect(loginNode).toBeDefined();
+    expect(loginNode.props.numberOfLines).toBe(1);
+    expect(loginNode.props.className).toContain('min-w-0');
+    expect(loginNode.props.className).toContain('flex-1');
+    expect(parentClassName(textNodes(renderer, 'prReview.context.approved')[0])).toContain(
+      'shrink-0'
+    );
+
     renderer.unmount();
   });
 });

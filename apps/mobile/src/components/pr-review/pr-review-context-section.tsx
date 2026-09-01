@@ -65,16 +65,16 @@ function AuthorRow({ author }: Readonly<{ author: ReviewAuthor | null }>) {
   const { t } = useTranslation();
   if (!author) {
     return (
-      <View className="flex-row items-center gap-2">
+      <View className="min-w-0 flex-row items-center gap-2">
         <View className="size-6 rounded-full bg-muted" />
-        <Text variant="muted" className="text-sm">
+        <Text variant="muted" className="min-w-0 flex-1 text-sm" numberOfLines={1}>
           {t('prReview.context.unknownAuthor')}
         </Text>
       </View>
     );
   }
   return (
-    <View className="flex-row items-center gap-2">
+    <View className="min-w-0 flex-row items-center gap-2">
       {author.avatarUrl ? (
         <Image
           source={{ uri: author.avatarUrl }}
@@ -86,7 +86,7 @@ function AuthorRow({ author }: Readonly<{ author: ReviewAuthor | null }>) {
       ) : (
         <View className="size-6 rounded-full bg-muted" />
       )}
-      <Text className="flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
+      <Text className="min-w-0 flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
         {author.login}
       </Text>
     </View>
@@ -110,11 +110,11 @@ function ReviewerRow({ decision }: Readonly<{ decision: DerivedReviewDecision }>
   if (decision.kind === 'team') {
     return (
       <View className="flex-row items-center gap-2">
-        <View className="size-6 rounded-full bg-muted" />
-        <Text className="flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
+        <View className="size-6 shrink-0 rounded-full bg-muted" />
+        <Text className="min-w-0 flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
           {decision.name}
         </Text>
-        <Text variant="muted" className="text-xs">
+        <Text variant="muted" className="shrink-0 text-xs">
           {t('prReview.context.team')}
         </Text>
       </View>
@@ -123,13 +123,19 @@ function ReviewerRow({ decision }: Readonly<{ decision: DerivedReviewDecision }>
   const submission = decision.decision;
   return (
     <View className="flex-row items-center justify-between gap-3">
-      <AuthorRow author={{ login: decision.login, avatarUrl: decision.avatarUrl }} />
-      <View className="items-end gap-0.5">
-        <Text className="text-sm text-foreground">{t(DECISION_LABEL_KEY[submission.kind])}</Text>
+      <View className="min-w-0 flex-1">
+        <AuthorRow author={{ login: decision.login, avatarUrl: decision.avatarUrl }} />
+      </View>
+      <View className="max-w-[60%] shrink-0 items-end gap-0.5">
+        <Text className="text-right text-sm text-foreground">
+          {t(DECISION_LABEL_KEY[submission.kind])}
+        </Text>
         {submission.kind !== 'awaiting' && submission.submittedAt !== null ? (
           <>
-            <Text className="text-sm text-foreground">{formatContextDate(submission.submittedAt)}</Text>
-            <Text variant="muted" className="text-xs">
+            <Text className="text-right text-sm text-foreground">
+              {formatContextDate(submission.submittedAt)}
+            </Text>
+            <Text variant="muted" className="text-right text-xs">
               {timeAgo(parseTimestamp(submission.submittedAt))}
             </Text>
           </>
