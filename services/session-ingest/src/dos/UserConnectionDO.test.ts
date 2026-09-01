@@ -35,6 +35,7 @@ import {
   MAX_DURABLE_RESULT_BYTES,
   UserConnectionDO,
 } from './UserConnectionDO';
+import type { Instance } from '../types/user-connection-protocol';
 
 // ---------------------------------------------------------------------------
 // Mock WebSocket
@@ -258,7 +259,7 @@ function addCliSocket(
     title: string;
     platform?: string;
   }> = [],
-  instance?: { name: string; projectName: string; version?: string },
+  instance?: Instance,
   kiloUserId?: string
 ): MockWS {
   const attachment: {
@@ -302,7 +303,7 @@ function sendHeartbeat(
   options: {
     protocolVersion?: string;
     capabilities?: { attachments?: boolean };
-    instance?: { name: string; projectName: string; version?: string };
+    instance?: Instance;
   } = {}
 ) {
   const msg = JSON.stringify({
@@ -4269,6 +4270,89 @@ describe('UserConnectionDO', () => {
 
       const att = cliWs.deserializeAttachment() as { instance?: unknown };
       expect(att.instance).toBeUndefined();
+    });
+  });
+
+  describe('startedAt pinning', () => {
+    it('keeps the first startedAt across heartbeats', () => {
+      const { doInstance, mockCtx } = setup();
+      const cliWs = addCliSocket(mockCtx, 'cli-1');
+
+      sendHeartbeat(doInstance, cliWs, [], {
+        instance: { name: 'laptop-1', projectName: 'kilo', startedAt: 1000 },
+      });
+      sendHeartbeat(doInstance, cliWs, [], {
+        instance: { name: 'laptop-1', projectName: 'kilo', startedAt: 2000 },
+      });
+
+      expect(doInstance.getConnectedInstances().instances[0]?.startedAt).toBe(1000);
+    });
+
+    it('keeps the first startedAt across reconnects', async () => {
+      const { doInstance, mockCtx } = setup();
+      const first = addCliSocket(mockCtx, 'cli-1');
+      sendHeartbeat(doInstance, first, [], {
+        instance: { name: 'laptop-1', projectName: 'kilo', startedAt: 1000 },
+      });
+
+      const replacement = addCliSocket(mockCtx, 'cli-1');
+      sendHeartbeat(doInstance, replacement, [], {
+        instance: { name: 'laptop-1', projectName: 'kilo', startedAt: 2000 },
+      });
+      mockCtx.removeSocket(first);
+      await disconnectCli(doInstance, first);
+
+      expect(doInstance.getConnectedInstances().instances[0]?.startedAt).toBe(1000);
+    });
+
+    it('pins startedAt independently for distinct connections', () => {
+      const { doInstance, mockCtx } = setup();
+      const first = addCliSocket(mockCtx, 'cli-A');
+      const second = addCliSocket(mockCtx, 'cli-B');
+
+      sendHeartbeat(doInstance, first, [], {
+        instance: { name: 'laptop-A', projectName: 'kilo', startedAt: 1000 },
+      });
+      sendHeartbeat(doInstance, second, [], {
+        instance: { name: 'laptop-B', projectName: 'kilo', startedAt: 3000 },
+      });
+
+      expect(doInstance.getConnectedInstances().instances).toEqual([
+        expect.objectContaining({ connectionId: 'cli-A', startedAt: 1000 }),
+        expect.objectContaining({ connectionId: 'cli-B', startedAt: 3000 }),
+      ]);
+    });
+
+    it('pins a new startedAt after a full disconnect', async () => {
+      const { doInstance, mockCtx } = setup();
+      const first = addCliSocket(mockCtx, 'cli-1');
+      sendHeartbeat(doInstance, first, [], {
+        instance: { name: 'laptop-1', projectName: 'kilo', startedAt: 1000 },
+      });
+      mockCtx.removeSocket(first);
+      await disconnectCli(doInstance, first);
+
+      const replacement = addCliSocket(mockCtx, 'cli-1');
+      sendHeartbeat(doInstance, replacement, [], {
+        instance: { name: 'laptop-1', projectName: 'kilo', startedAt: 2000 },
+      });
+
+      expect(doInstance.getConnectedInstances().instances[0]?.startedAt).toBe(2000);
+    });
+
+    it('restores the pinned startedAt from an attachment after hibernation', () => {
+      const { doInstance, mockCtx } = setup();
+      const cliWs = addCliSocket(mockCtx, 'cli-1', [], {
+        name: 'laptop-1',
+        projectName: 'kilo',
+        startedAt: 1000,
+      });
+
+      sendHeartbeat(doInstance, cliWs, [], {
+        instance: { name: 'laptop-1', projectName: 'kilo', startedAt: 2000 },
+      });
+
+      expect(doInstance.getConnectedInstances().instances[0]?.startedAt).toBe(1000);
     });
   });
 

@@ -283,6 +283,7 @@ export class UserConnectionDO extends DurableObject<Env> {
   private connectionProtocolVersion = new Map<string, string | undefined>();
   // Capabilities per CLI connection (from heartbeat); absent = legacy CLI
   private connectionCapabilities = new Map<string, ConnectionCapabilities | undefined>();
+  private connectionStartedAt = new Map<string, number>();
   // Pending command responses: correlationId → originating web socket
   private pendingCommands = new Map<
     string,
@@ -330,10 +331,13 @@ export class UserConnectionDO extends DurableObject<Env> {
 
       if (attachment.role === 'cli') {
         cliCount++;
-        const { connectionId, sessions, protocolVersion, capabilities } = attachment;
+        const { connectionId, sessions, protocolVersion, capabilities, instance } = attachment;
         this.connectionSessions.set(connectionId, sessions);
         this.connectionProtocolVersion.set(connectionId, protocolVersion);
         this.connectionCapabilities.set(connectionId, capabilities);
+        if (instance?.startedAt !== undefined && !this.connectionStartedAt.has(connectionId)) {
+          this.connectionStartedAt.set(connectionId, instance.startedAt);
+        }
         sessionCount += sessions.length;
         for (const session of sessions) {
           this.sessionOwners.set(session.id, connectionId);
@@ -609,6 +613,15 @@ export class UserConnectionDO extends DurableObject<Env> {
     this.lastHeartbeatAt.set(connectionId, now);
     this.connectionProtocolVersion.set(connectionId, protocolVersion);
     this.connectionCapabilities.set(connectionId, capabilities);
+    let pinnedInstance = instance;
+    if (instance?.startedAt !== undefined) {
+      const pinnedStartedAt = this.connectionStartedAt.get(connectionId);
+      if (pinnedStartedAt === undefined) {
+        this.connectionStartedAt.set(connectionId, instance.startedAt);
+      } else {
+        pinnedInstance = { ...instance, startedAt: pinnedStartedAt };
+      }
+    }
     this.scheduleNextAlarm(now);
 
     // Remove sessions this connection previously owned but no longer reports
@@ -682,7 +695,7 @@ export class UserConnectionDO extends DurableObject<Env> {
       protocolVersion,
       capabilities,
       kiloUserId: attachment.kiloUserId,
-      ...(instance ? { instance } : {}),
+      ...(pinnedInstance ? { instance: pinnedInstance } : {}),
     };
     ws.serializeAttachment(updatedAttachment);
 
@@ -1814,6 +1827,7 @@ export class UserConnectionDO extends DurableObject<Env> {
     this.connectionProtocolVersion.delete(connectionId);
     this.connectionCapabilities.delete(connectionId);
     this.lastHeartbeatAt.delete(connectionId);
+    this.connectionStartedAt.delete(connectionId);
 
     console.log('CLI socket disconnected', {
       connectionId,
@@ -1954,9 +1968,15 @@ export class UserConnectionDO extends DurableObject<Env> {
         projectName: att.instance.projectName,
         ...(att.instance.version ? { version: att.instance.version } : {}),
         ...(att.instance.kind ? { kind: att.instance.kind } : {}),
-        ...(att.instance.startedAt !== undefined ? { startedAt: att.instance.startedAt } : {}),
+        ...(att.instance.startedAt !== undefined
+          ? {
+              startedAt: this.connectionStartedAt.get(att.connectionId) ?? att.instance.startedAt,
+            }
+          : {}),
         ...(att.instance.branch ? { branch: att.instance.branch } : {}),
-        ...(att.instance.workingDirectory ? { workingDirectory: att.instance.workingDirectory } : {}),
+        ...(att.instance.workingDirectory
+          ? { workingDirectory: att.instance.workingDirectory }
+          : {}),
         ...(att.capabilities ? { capabilities: att.capabilities } : {}),
       });
     }
