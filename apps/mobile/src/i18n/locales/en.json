@@ -592,6 +592,8 @@
       "mergedBy": "Merged by",
       "linkedIssues": "Linked issues",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Open",
+      "issueClosed": "Closed",
       "unknownAuthor": "Unknown author"
     },
     "pendingComment": {

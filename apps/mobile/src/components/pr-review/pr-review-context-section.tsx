@@ -36,6 +36,11 @@ const DECISION_LABEL_KEY = {
   awaiting: 'prReview.context.awaiting',
 } satisfies Record<ReviewDecision['kind'], string>;
 
+const ISSUE_STATE_LABEL_KEY = {
+  OPEN: 'prReview.context.issueOpen',
+  CLOSED: 'prReview.context.issueClosed',
+} satisfies Record<LinkedIssue['state'], string>;
+
 function formatContextDate(iso: string): string {
   return formatDate(parseTimestamp(iso), i18n.language, {
     dateStyle: 'medium',
@@ -170,7 +175,7 @@ function LinkedIssueRow({ issue }: Readonly<{ issue: LinkedIssue }>) {
           {issue.title}
         </Text>
         <Text variant="muted" className="text-xs">
-          {issue.state}
+          {t(ISSUE_STATE_LABEL_KEY[issue.state])}
         </Text>
         <ExternalLink size={14} color={colors.mutedForeground} />
       </View>
