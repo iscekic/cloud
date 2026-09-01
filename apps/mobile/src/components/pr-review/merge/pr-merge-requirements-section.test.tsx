@@ -31,6 +31,12 @@ vi.mock('@/components/ui/icons', () => ({
   XCircle: 'XCircle',
 }));
 
+vi.mock('@/components/pr-review/pr-review-reconnect-notice', () => ({
+  PrReviewReconnectNotice: 'PrReviewReconnectNotice',
+}));
+
+vi.mock('@/components/ui/button', () => ({ Button: 'Button' }));
+
 vi.mock('@/components/ui/text', () => ({ Text: 'Text' }));
 
 vi.mock('@/lib/utils', () => ({
@@ -61,6 +67,7 @@ function makeOverview(overrides: Partial<Overview> = {}): Overview {
       enforceAdmins: null,
     },
     reviews: [],
+    requestedReviewers: [],
     mergeQueue: null,
     ...overrides,
   } as unknown as Overview;
@@ -96,7 +103,101 @@ function hasText(renderer: TestRenderer.ReactTestRenderer, value: string): boole
   );
 }
 
+function requiredCheckOverview(): Overview {
+  return makeOverview({
+    mergeRequirements: {
+      status: 'present',
+      requiredApprovingReviewCount: null,
+      requiredStatusCheckContexts: ['ci'],
+      requireCodeOwnerReviews: null,
+      enforceAdmins: null,
+    },
+  });
+}
+
 describe('PrMergeRequirementsSection', () => {
+  it('renders a reserved skeleton row while checks load', () => {
+    checksQueryResult = { isLoading: true, isError: false };
+    const renderer = render(requiredCheckOverview());
+
+    expect(hasText(renderer, 'prReview.merge.requirements.noRunYet')).toBe(false);
+    expect(
+      renderer.root.findAll(node => node.props.className === 'h-4 w-4 rounded-full bg-muted')
+    ).toHaveLength(1);
+
+    renderer.unmount();
+  });
+
+  it('renders a passed required check after checks load', () => {
+    checksQueryResult = {
+      data: {
+        checkRuns: [{ name: 'ci', status: 'completed', conclusion: 'success' }],
+      },
+      isLoading: false,
+      isError: false,
+    };
+    const renderer = render(requiredCheckOverview());
+
+    expect(hasText(renderer, 'ci')).toBe(true);
+    expect(hasText(renderer, 'prReview.merge.requirements.passed')).toBe(true);
+
+    renderer.unmount();
+  });
+
+  it('renders no run yet only after a successful empty result', () => {
+    checksQueryResult = {
+      data: { checkRuns: [] },
+      isLoading: false,
+      isError: false,
+    };
+    const renderer = render(requiredCheckOverview());
+
+    expect(hasText(renderer, 'prReview.merge.requirements.noRunYet')).toBe(true);
+
+    renderer.unmount();
+  });
+
+  it('renders a working retry action for a retryable error', () => {
+    const refetch = vi.fn();
+    checksQueryResult = {
+      isLoading: false,
+      isError: true,
+      isFetching: false,
+      error: new Error('offline'),
+      refetch,
+    };
+    const renderer = render(requiredCheckOverview());
+
+    expect(hasText(renderer, 'prReview.checks.couldNotLoad')).toBe(true);
+    expect(hasText(renderer, 'prReview.merge.requirements.noRunYet')).toBe(false);
+    const { onPress } = renderer.root
+      .find(node => typeof node.type === 'string' && (node.type as string) === 'Button')
+      .props as { onPress: () => void };
+    act(onPress);
+    expect(refetch).toHaveBeenCalledOnce();
+
+    renderer.unmount();
+  });
+
+  it('renders a permanent error without a retry action', () => {
+    checksQueryResult = {
+      isLoading: false,
+      isError: true,
+      error: { data: { code: 'FORBIDDEN' } },
+    };
+    const renderer = render(requiredCheckOverview());
+
+    expect(hasText(renderer, 'prReview.checks.noAccess')).toBe(true);
+    expect(
+      renderer.root.findAll(
+        node => typeof node.type === 'string' && (node.type as string) === 'Button'
+      )
+    ).toHaveLength(0);
+    expect(hasText(renderer, 'prReview.merge.requirements.noRunYet')).toBe(false);
+
+    renderer.unmount();
+  });
+
   it('renders the unknown line for unavailable requirements, not a pass', () => {
     checksQueryResult = { data: { checkRuns: [] } };
     const renderer = render(

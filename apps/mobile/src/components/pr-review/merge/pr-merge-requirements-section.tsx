@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
+import { PrReviewReconnectNotice } from '@/components/pr-review/pr-review-reconnect-notice';
+import { Button } from '@/components/ui/button';
 import {
   AlertTriangle,
   CheckCircle2,
@@ -12,6 +14,7 @@ import {
 } from '@/components/ui/icons';
 import { Text } from '@/components/ui/text';
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
+import { classifyPrReviewQueryState } from '@/lib/pr-review/classify-pr-review-query-state';
 import { type PrOverviewDto } from '@/lib/pr-review/merge/merge-blocked-reasons';
 import {
   deriveMergeRequirements,
@@ -220,22 +223,68 @@ export function PrMergeRequirementsSection({
   const checks = useQuery(
     trpc.githubPrReview.listChecks.queryOptions({ owner, repo, ref: headSha })
   );
+  const errorState = checks.isError ? classifyPrReviewQueryState(checks.error) : null;
 
   const derived = deriveMergeRequirements({
     requirements: overview.mergeRequirements,
-    // While checks are loading or failed, an empty list makes required checks
-    // read as "No run yet" — never "passed" — which is the safe fallback.
     checkRuns: checks.data?.checkRuns ?? [],
     reviews: overview.reviews,
     requestedReviewers: overview.requestedReviewers,
   });
+
+  let requirementsContent = <RequirementsCard derived={derived} />;
+  if (checks.isLoading) {
+    requirementsContent = (
+      <View className="min-h-11 flex-row items-center gap-3 rounded-lg bg-secondary px-4">
+        <View className="h-4 w-4 rounded-full bg-muted" />
+        <View className="flex-1 gap-1.5">
+          <View className="h-3 w-40 rounded bg-muted" />
+          <View className="h-3 w-20 rounded bg-muted" />
+        </View>
+        <View className="h-3 w-16 rounded bg-muted" />
+      </View>
+    );
+  } else if (errorState?.kind === 'not-found') {
+    requirementsContent = (
+      <View className="min-h-11 justify-center rounded-lg bg-secondary px-4">
+        <Text className="text-sm text-muted-foreground">{t('prReview.checks.notAvailable')}</Text>
+      </View>
+    );
+  } else if (errorState?.kind === 'permission') {
+    requirementsContent = (
+      <View className="min-h-11 justify-center rounded-lg bg-secondary px-4">
+        <Text className="text-sm text-muted-foreground">{t('prReview.checks.noAccess')}</Text>
+      </View>
+    );
+  } else if (errorState?.kind === 'reconnect') {
+    requirementsContent = <PrReviewReconnectNotice />;
+  } else if (errorState) {
+    requirementsContent = (
+      <View className="min-h-11 flex-row items-center gap-3 rounded-lg bg-secondary px-4">
+        <Text className="flex-1 text-sm text-muted-foreground">
+          {t('prReview.checks.couldNotLoad')}
+        </Text>
+        <Button
+          variant="outline"
+          size="sm"
+          onPress={() => {
+            void checks.refetch();
+          }}
+          loading={checks.isFetching}
+          accessibilityLabel={t('prReview.checks.retryChecks')}
+        >
+          <Text>{t('common.retry')}</Text>
+        </Button>
+      </View>
+    );
+  }
 
   return (
     <View className="gap-2">
       <Text variant="small" className="uppercase tracking-wide text-muted-foreground">
         {t('prReview.merge.requirements.title')}
       </Text>
-      <RequirementsCard derived={derived} />
+      {requirementsContent}
       <MergeQueueStatus queue={overview.mergeQueue} />
     </View>
   );
