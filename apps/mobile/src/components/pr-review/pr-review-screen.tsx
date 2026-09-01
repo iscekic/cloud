@@ -229,6 +229,12 @@ export function PrReviewScreen({ owner, repo, number }: PrReviewScreenProps) {
               <Button
                 size="sm"
                 onPress={openReviewSubmit}
+                // Disable until the PR DTO loads: without a head SHA the
+                // review-submit screen has nothing to submit against, so
+                // tapping it on an unopenable PR just lands on a retryable
+                // error sheet. The Overview body already renders its own
+                // per-kind unavailable state.
+                disabled={!pr.data}
                 accessibilityLabel={t('prReview.submit.title')}
                 className={cn('px-3')}
               >

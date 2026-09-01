@@ -258,6 +258,74 @@ describe('PrReviewScreen Submit review reachability (P1-F-46b)', () => {
   });
 });
 
+describe('PrReviewScreen Submit review availability (unavailable-PR)', () => {
+  beforeEach(() => {
+    prQueryResult = {
+      data: undefined,
+      isLoading: true,
+      isError: false,
+      isFetching: false,
+    };
+  });
+
+  it('disables the Overview Submit review button while the PR DTO has not loaded', () => {
+    // eslint-disable-next-line new-cap
+    const element = PrReviewScreen({ owner: 'octocat', repo: 'hello', number: 7 });
+    const button = findElement({
+      node: element,
+      type: 'Button',
+      prop: 'accessibilityLabel',
+      value: 'Submit review',
+    });
+    if (!button) {
+      throw new Error('Submit review button not found on Overview tab');
+    }
+    expect((button.props as { disabled?: boolean }).disabled).toBe(true);
+  });
+
+  it('disables the Overview Submit review button when the PR query errored', () => {
+    prQueryResult = {
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      isFetching: false,
+    };
+    // eslint-disable-next-line new-cap
+    const element = PrReviewScreen({ owner: 'octocat', repo: 'hello', number: 7 });
+    const button = findElement({
+      node: element,
+      type: 'Button',
+      prop: 'accessibilityLabel',
+      value: 'Submit review',
+    });
+    if (!button) {
+      throw new Error('Submit review button not found on Overview tab');
+    }
+    expect((button.props as { disabled?: boolean }).disabled).toBe(true);
+  });
+
+  it('enables the Overview Submit review button once the PR DTO is loaded', () => {
+    prQueryResult = {
+      data: { title: 'Fix the thing', headSha: 'abc1234' },
+      isLoading: false,
+      isError: false,
+      isFetching: false,
+    };
+    // eslint-disable-next-line new-cap
+    const element = PrReviewScreen({ owner: 'octocat', repo: 'hello', number: 7 });
+    const button = findElement({
+      node: element,
+      type: 'Button',
+      prop: 'accessibilityLabel',
+      value: 'Submit review',
+    });
+    if (!button) {
+      throw new Error('Submit review button not found on Overview tab');
+    }
+    expect((button.props as { disabled?: boolean }).disabled).toBe(false);
+  });
+});
+
 describe('PrReviewScreen share action', () => {
   beforeEach(() => {
     prQueryResult = {
