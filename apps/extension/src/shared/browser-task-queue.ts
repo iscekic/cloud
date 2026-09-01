@@ -26,6 +26,11 @@ export interface BrowserTaskQueueItem {
   readonly provider: string;
   readonly goal: string;
   readonly invocationId: string;
+  /**
+   * Owning CLI session id carried from the authenticated submit. Optional so a
+   * relay that predates the field still parses; the panel omits it when absent.
+   */
+  readonly sessionId?: string;
   readonly status: BrowserTaskStatus;
   readonly terminalStatus: BrowserTaskTerminalStatus | null;
   readonly summary: string | null;

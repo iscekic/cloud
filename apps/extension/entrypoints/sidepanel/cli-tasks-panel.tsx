@@ -55,7 +55,15 @@ export const CliTasksPanel = ({
                   <p className="type-body truncate text-foreground" title={task.goal}>
                     {task.goal}
                   </p>
-                  <p className="type-label mt-0.5 truncate text-foreground-muted">
+                  <p
+                    className="type-label mt-0.5 truncate text-foreground-muted"
+                    title={
+                      task.sessionId === undefined
+                        ? undefined
+                        : `${task.sessionId} · ${task.provider} · ${status}`
+                    }
+                  >
+                    {task.sessionId === undefined ? null : `${task.sessionId} · `}
                     {task.provider} · <span className="capitalize">{status}</span>
                   </p>
                 </div>

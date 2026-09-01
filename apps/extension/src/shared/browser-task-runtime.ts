@@ -20,6 +20,7 @@ const browserTaskEventDataSchema = z.object({
   goal: z.string().min(1),
   invocationId: z.uuid(),
   provider: z.string().min(1),
+  sessionId: z.string().min(1).optional(),
   taskId: z.string().min(1),
 });
 
@@ -211,6 +212,7 @@ export const createBrowserTaskRuntime = ({
       summary: null,
       taskId: data.taskId,
       terminalStatus: null,
+      ...(data.sessionId === undefined ? {} : { sessionId: data.sessionId }),
     };
 
     const { queue, added } = enqueueBrowserTask(store.get(browserTaskQueueAtom), item);

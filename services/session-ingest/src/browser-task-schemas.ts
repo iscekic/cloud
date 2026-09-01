@@ -21,6 +21,14 @@ export const browserTaskProgressStatusSchema = z.enum(['running', 'progress']);
 
 export const browserProfileIdSchema = z.string().min(1).max(128);
 
+/**
+ * Identifier of the CLI session that owns a submitted browser task (the
+ * Kilo `ses_…` id). Two CLI processes submit as the same authenticated user,
+ * so the session id — not the user — is what distinguishes their tasks in the
+ * panel.
+ */
+export const browserTaskSessionIdSchema = z.string().min(1).max(128);
+
 export const browserTaskSchema = z.object({
   taskId: z.string().min(1),
   ownerKiloUserId: z.string().min(1),
@@ -60,12 +68,15 @@ export type EnqueueBrowserTaskInput = z.infer<typeof enqueueBrowserTaskInputSche
 /**
  * CLI submit payload. `owner` is deliberately absent: the route always takes
  * the owner from `user_id` and ignores any owner field a model might send.
+ * `sessionId` is the owning CLI session; it is carried to the extension panel
+ * so the panel can attribute each task to the session that submitted it.
  */
 export const submitBrowserTaskSchema = z.object({
   browserProfileId: browserProfileIdSchema,
   provider: z.string().min(1).max(64),
   goal: z.string().min(1),
   invocationId: z.string().uuid(),
+  sessionId: browserTaskSessionIdSchema.optional(),
 });
 
 export type SubmitBrowserTaskPayload = z.infer<typeof submitBrowserTaskSchema>;

@@ -958,6 +958,7 @@ api.post('/browser-task', zodJsonValidator(submitBrowserTaskSchema), async c => 
       provider: task.provider,
       goal: task.goal,
       invocationId: task.invocationId,
+      ...(body.sessionId !== undefined ? { sessionId: body.sessionId } : {}),
     });
   }
 

@@ -2085,6 +2085,7 @@ export class UserConnectionDO extends DurableObject<Env> {
       goal: string;
       invocationId: string;
       boundTabId?: number;
+      sessionId?: string;
     }
   ): Promise<{ delivered: number }> {
     this.ensureState();
@@ -2098,6 +2099,7 @@ export class UserConnectionDO extends DurableObject<Env> {
         goal: task.goal,
         invocationId: task.invocationId,
         ...(task.boundTabId !== undefined ? { boundTabId: task.boundTabId } : {}),
+        ...(task.sessionId !== undefined ? { sessionId: task.sessionId } : {}),
       },
     };
 
