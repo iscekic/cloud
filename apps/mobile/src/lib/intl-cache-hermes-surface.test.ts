@@ -16,6 +16,8 @@ describe('Hermes Intl surface', () => {
     vi.resetModules();
   });
 
+  // Building every formatter for 87 languages through the FormatJS polyfills
+  // takes longer than the default 5 s timeout, especially beside the full suite.
   it('formats every supported language and pluralizes for i18next', async () => {
     stubHermesIntl();
     const { SUPPORTED_LANGUAGES } = await import('@/i18n/languages');
@@ -46,5 +48,5 @@ describe('Hermes Intl surface', () => {
     const few = i18n.t('prReview.hunkRows.fileLoadedCount', { count: 2, displayCount: '2' });
     const many = i18n.t('prReview.hunkRows.fileLoadedCount', { count: 5, displayCount: '5' });
     expect(few).not.toBe(many);
-  });
+  }, 15_000);
 });
