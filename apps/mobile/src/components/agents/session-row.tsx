@@ -20,6 +20,7 @@ import {
   composeStoredSessionSpokenMeta,
   composeStoredSessionVisibleMeta,
   formatMeta,
+  formatSessionTitle,
   formatSessionTotalCost,
   storedSessionEyebrowLabel,
 } from './session-list-helpers';
@@ -103,8 +104,7 @@ export function StoredSessionRow({
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
   const { showActionSheetWithOptions } = useActionSheet();
-  const title =
-    session.title && session.title.length > 0 ? session.title : t('agents.sessionRow.untitled');
+  const title = formatSessionTitle(session.title, t('agents.sessionRow.untitled'));
   const [renameVisible, setRenameVisible] = useState(false);
   const agentLabel = storedSessionEyebrowLabel(session);
   const timestamp = getAgentSessionTimestamp(session, sortBy);

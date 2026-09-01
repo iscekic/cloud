@@ -234,6 +234,7 @@ type RenderedStoredRow = { props: { live: boolean; metaWhileLive: boolean; sessi
 type SectionListProps = {
   extraData: { liveSessionIds: ReadonlySet<string> };
   renderItem: (input: { item: StoredSession }) => RenderedStoredRow;
+  contentContainerStyle: { paddingBottom: number };
 };
 
 function sectionListProps(renderer: TestRenderer.ReactTestRenderer): SectionListProps {
@@ -338,5 +339,10 @@ describe('AgentSessionListContent live dot', () => {
     expect(element.props.metaWhileLive).toBe(true);
 
     expect(sectionListProps(renderer).extraData.liveSessionIds).toEqual(new Set(['s1']));
+  });
+
+  it('clears the overlay tab bar with the shared +16 spacer', async () => {
+    const renderer = await renderContent();
+    expect(sectionListProps(renderer).contentContainerStyle).toEqual({ paddingBottom: 16 });
   });
 });

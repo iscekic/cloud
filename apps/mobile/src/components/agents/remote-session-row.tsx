@@ -26,6 +26,7 @@ import {
   canExitSessionFromList,
   composeActiveSessionVisibleMeta,
   composeSessionProvenanceSubtitle,
+  formatSessionTitle,
   formatSessionTotalCost,
   remoteMeta,
   remoteSessionEyebrowLabel,
@@ -65,7 +66,7 @@ export function RemoteSessionRow({
   const trpc = useTRPC();
   const connection = useUserWebConnection();
   const exitingRef = useRef(false);
-  const title = session.title.length > 0 ? session.title : t('agents.sessionRow.untitled');
+  const title = formatSessionTitle(session.title, t('agents.sessionRow.untitled'));
   const [renameVisible, setRenameVisible] = useState(false);
   const canManage = interactive;
   const agentLabel = remoteSessionEyebrowLabel(session);

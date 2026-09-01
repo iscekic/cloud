@@ -323,6 +323,25 @@ export function canExitSessionFromList(session: { connectionId: string }): boole
 }
 
 /**
+ * Backend placeholder stamped at cloud-agent session creation
+ * (`New session - <ISO timestamp>` / `Child session - <ISO timestamp>`).
+ * Keep in sync with `services/session-ingest/src/ingest/default-session-title.ts`.
+ */
+const DEFAULT_SESSION_TITLE_PATTERN =
+  /^(New session - |Child session - )\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+
+/**
+ * Visible session title. Empty, missing, and backend ISO placeholders
+ * collapse to `untitled` so list rows never render a raw timestamp.
+ */
+export function formatSessionTitle(title: string | null | undefined, untitled: string): string {
+  if (title == null || title.length === 0 || DEFAULT_SESSION_TITLE_PATTERN.test(title)) {
+    return untitled;
+  }
+  return title;
+}
+
+/**
  * Compose the provenance subtitle for a session row.
  *
  *   - both branch and PR number → `"branch · #N"`

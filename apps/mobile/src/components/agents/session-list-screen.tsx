@@ -204,7 +204,7 @@ export function AgentSessionListScreen() {
     body = (
       // The tab bar is an overlay, so the skeleton stack scrolls to clear it
       // (a non-scrollable View's padding cannot lift rows above the overlay).
-      <ScrollView className="pt-[18px]" contentContainerStyle={{ paddingBottom: tabBarHeight }}>
+      <ScrollView className="pt-[18px]" contentContainerStyle={{ paddingBottom: tabBarHeight + 16 }}>
         {Array.from({ length: SKELETON_ROW_COUNT }, (_, i) => (
           <View key={i} className="py-1.5">
             <Skeleton className="mx-[22px] h-[76px] rounded-none" />
@@ -248,19 +248,19 @@ export function AgentSessionListScreen() {
   } else if (!hasLiveRows) {
     body = (
       <EmptyState
-        placement="top"
         icon={Bot}
         title={t('home.noLiveSessions')}
         description={t('agents.sessionList.noSessionsYetDescription')}
         action={
           <Button
-            variant="outline"
+            variant="default"
+            size="lg"
             onPress={() => {
               router.push(getNewAgentSessionPath(organizationId) as Href);
             }}
           >
-            <Plus size={16} color={colors.foreground} />
-            <Text>{t('home.newCodingTask')}</Text>
+            <Plus size={18} color={colors.primaryForeground} />
+            <Text className="shrink text-center font-semibold">{t('home.newCodingTask')}</Text>
           </Button>
         }
       />

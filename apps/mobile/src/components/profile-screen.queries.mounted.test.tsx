@@ -31,6 +31,7 @@ const getProfileAgentScopeMock = vi.hoisted(() => vi.fn());
 
 vi.mock('react-native', () => ({
   Alert: { alert: vi.fn() },
+  ScrollView: 'ScrollView',
   View: 'View',
   InteractionManager: {
     runAfterInteractions: vi.fn(captureInteraction),
@@ -145,7 +146,7 @@ vi.mock('@/components/language-picker-sheet', () => ({
 }));
 vi.mock('@/components/query-error', () => ({ QueryError: 'QueryError' }));
 vi.mock('@/components/screen-header', () => ({ ScreenHeader: () => null }));
-vi.mock('@/components/tab-screen', () => ({ TabScreenScrollView: 'ScrollView' }));
+vi.mock('@/components/tab-screen', () => ({ useTabBarBottomPadding: () => 100 }));
 vi.mock('@/components/ui/button', () => ({ Button: 'Button' }));
 vi.mock('@/components/ui/configure-row', () => ({ ConfigureRow: 'ConfigureRow' }));
 vi.mock('@/components/ui/form-field', () => ({ FormField: 'FormField' }));
@@ -343,6 +344,20 @@ describe('ProfileScreen deferred queries', () => {
 
     expect(nodeCount(renderer.root, 'Skeleton')).toBe(0);
     expect(nodeCountWithChildren(renderer.root, 'Text', 'Linked accounts')).toBe(0);
+
+    unmount();
+  });
+
+  it('insets the screen above the overlay tab bar so content never bleeds through the blur', async () => {
+    const { renderer, unmount } = await mountProfile();
+
+    const insetRoots = renderer.root.findAll(
+      node =>
+        typeof node.type === 'string' &&
+        node.type === 'View' &&
+        (node.props.style as { paddingBottom?: number } | undefined)?.paddingBottom === 100
+    );
+    expect(insetRoots.length).toBe(1);
 
     unmount();
   });

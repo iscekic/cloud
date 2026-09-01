@@ -591,7 +591,7 @@ describe('AgentSessionListScreen live tab', () => {
     const skeletonScroll = renderer.root.find(
       node => typeof node.type === 'string' && (node.type as string) === 'ScrollView'
     );
-    expect(skeletonScroll.props.contentContainerStyle).toEqual({ paddingBottom: 0 });
+    expect(skeletonScroll.props.contentContainerStyle).toEqual({ paddingBottom: 16 });
     expect(skeletonScroll.props.className).toBe('pt-[18px]');
   });
 
@@ -601,16 +601,18 @@ describe('AgentSessionListScreen live tab', () => {
       node => typeof node.type === 'string' && (node.type as string) === 'EmptyState'
     );
     expect(emptyState.props.title).toBe('home.noLiveSessions');
-    expect(emptyState.props.placement).toBe('top');
+    expect(emptyState.props.placement).toBeUndefined();
     expect(emptyState.props.description).toBe('agents.sessionList.noSessionsYetDescription');
     expect(findTypeCount(renderer, 'EmptyState')).toBe(1);
     expect(findTypeCount(renderer, 'FlatList')).toBe(0);
 
     const createAction = emptyState.props.action as {
       type: string;
-      props: { onPress: () => void };
+      props: { onPress: () => void; variant: string; size: string };
     };
     expect(createAction.type).toBe('Button');
+    expect(createAction.props.variant).toBe('default');
+    expect(createAction.props.size).toBe('lg');
     createAction.props.onPress();
     expect(routerPushSpy).toHaveBeenCalledWith('/(app)/agent-chat/new');
   });

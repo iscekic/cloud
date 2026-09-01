@@ -15,14 +15,14 @@ import {
   SlidersHorizontal,
   Trash2,
 } from '@/components/ui/icons';
-import { Alert, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { ActionTile } from '@/components/profile-action-tile';
 import { CreditsCard } from '@/components/profile-credits-card';
 import { QueryError } from '@/components/query-error';
 import { ScreenHeader } from '@/components/screen-header';
-import { TabScreenScrollView } from '@/components/tab-screen';
+import { useTabBarBottomPadding } from '@/components/tab-screen';
 import { Button } from '@/components/ui/button';
 import { ConfigureRow } from '@/components/ui/configure-row';
 import { FormField } from '@/components/ui/form-field';
@@ -73,6 +73,7 @@ export function ProfileScreen() {
   const router = useRouter();
   const trpc = useTRPC();
   const colors = useThemeColors();
+  const tabBarBottomInset = useTabBarBottomPadding();
   const { organizationId, isLoaded: organizationContextLoaded } = useOrganization();
   const isAuthenticated = token != null;
   const afterInteractions = useAfterInteractions();
@@ -145,9 +146,13 @@ export function ProfileScreen() {
   };
 
   return (
-    <View className="flex-1 bg-background">
+    // The tab bar is an absolutely-positioned translucent overlay. Insetting the
+    // root above it (instead of a trailing spacer inside the scroll content)
+    // keeps every section — including the APP row's tinted icon tile — from
+    // bleeding through the blur at the initial scroll position.
+    <View className="flex-1 bg-background" style={{ paddingBottom: tabBarBottomInset }}>
       <ScreenHeader title={t('profile.title')} size="large" showBackButton={false} />
-      <TabScreenScrollView
+      <ScrollView
         className="flex-1"
         contentContainerClassName="px-6 pt-4"
         showsVerticalScrollIndicator={false}
@@ -358,7 +363,7 @@ export function ProfileScreen() {
             v{Application.nativeApplicationVersion} ({Application.nativeBuildVersion})
           </Text>
         </View>
-      </TabScreenScrollView>
+      </ScrollView>
     </View>
   );
 }

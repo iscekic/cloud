@@ -1,17 +1,9 @@
 /* eslint-disable max-lines -- Session-list content and its error/empty surfaces are kept together. */
 import { useFocusEffect, useScrollToTop } from 'expo-router';
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  ActivityIndicator,
-  Platform,
-  RefreshControl,
-  SectionList,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { ActivityIndicator, RefreshControl, SectionList, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BodyEmpty } from '@/components/agents/session-list-body-empty';
 import { selectSessionListBodyModel } from '@/components/agents/session-list-body-model';
@@ -21,6 +13,7 @@ import { shouldResetScrollOnCommittedQuery } from '@/components/agents/session-l
 import { SessionListSectionHeader } from '@/components/agents/session-list-section-header';
 import { StoredSessionRow } from '@/components/agents/session-row';
 import { QueryError } from '@/components/query-error';
+import { useTabBarBottomPadding } from '@/components/tab-screen';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Text } from '@/components/ui/text';
@@ -30,7 +23,6 @@ import { type StoredSession } from '@/lib/hooks/use-agent-sessions';
 import { useSessionMutations } from '@/lib/hooks/use-session-mutations';
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { getRevisionSnapshot } from '@/lib/session-attention';
-import { getEffectiveTabBarHeight } from '@/lib/tab-bar-layout';
 
 export const FAB_SIZE = 56;
 export const FAB_MARGIN = 16;
@@ -97,23 +89,16 @@ export function AgentSessionListContent({
 
   const colors = useThemeColors();
   const { t } = useTranslation();
-  const { bottom } = useSafeAreaInsets();
-  const { fontScale } = useWindowDimensions();
   const { deleteSession, renameSession } = useSessionMutations();
   const [refreshing, setRefreshing] = useState(false);
+  const tabBarPadding = useTabBarBottomPadding();
 
   // The tab bar is an absolutely-positioned overlay, so scrollable content
   // must clear it or the last rows are stuck underneath it. The history list
-  // owns no FAB, so tab-bar-only clearance is the only inset it needs.
+  // owns no FAB, so tab-bar-only clearance (height + 16) is the only inset.
   const tabBarOnlyClearanceStyle = useMemo(
-    () => ({
-      paddingBottom: getEffectiveTabBarHeight({
-        bottomInset: bottom,
-        platform: Platform.OS,
-        fontScale,
-      }),
-    }),
-    [bottom, fontScale]
+    () => ({ paddingBottom: tabBarPadding }),
+    [tabBarPadding]
   );
 
   // Pure body decision — see `session-list-body-model.ts`.

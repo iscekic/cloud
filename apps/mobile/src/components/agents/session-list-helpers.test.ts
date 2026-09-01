@@ -13,6 +13,7 @@ import {
   composeSessionProvenanceSubtitle,
   expandPlatformFilter,
   formatMeta,
+  formatSessionTitle,
   remoteAgentLabel,
   remoteMeta,
   remoteSessionEyebrowLabel,
@@ -387,6 +388,26 @@ describe('selectRemoteRowSpokenMeta', () => {
     expect(
       selectRemoteRowSpokenMeta({ needsInput: false, costSpoken: null, timeSpoken: null })
     ).toBeNull();
+  });
+});
+
+describe('formatSessionTitle', () => {
+  const untitled = 'Untitled session';
+
+  it('returns untitled when the title is missing or empty', () => {
+    expect(formatSessionTitle(null, untitled)).toBe(untitled);
+    expect(formatSessionTitle(undefined, untitled)).toBe(untitled);
+    expect(formatSessionTitle('', untitled)).toBe(untitled);
+  });
+
+  it('returns untitled for a backend ISO placeholder', () => {
+    expect(formatSessionTitle('New session - 2026-09-01T04:29:19.881Z', untitled)).toBe(untitled);
+    expect(formatSessionTitle('Child session - 2026-09-01T04:29:19.881Z', untitled)).toBe(untitled);
+  });
+
+  it('keeps a user or agent title unchanged', () => {
+    expect(formatSessionTitle('Fix the login bug', untitled)).toBe('Fix the login bug');
+    expect(formatSessionTitle('New session', untitled)).toBe('New session');
   });
 });
 
