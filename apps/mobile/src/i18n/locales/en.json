@@ -334,6 +334,7 @@
         "notMet": "Not met",
         "unavailable": "Merge requirements unavailable",
         "noProtectionRules": "No branch protection rules",
+        "noRequiredChecksOrApprovals": "No required checks or approvals",
         "queueTitle": "Merge queue",
         "inQueue": "{{position}} in queue",
         "positionUnknown": "Position unknown",

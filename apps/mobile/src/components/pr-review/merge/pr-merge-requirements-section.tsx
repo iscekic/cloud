@@ -161,6 +161,15 @@ function RequirementsCard({ derived }: Readonly<{ derived: MergeRequirementsResu
       </View>
     );
   }
+  if (derived.reviewRequired === null && derived.checks.length === 0) {
+    return (
+      <View className="rounded-lg bg-secondary p-4">
+        <Text className="text-sm text-muted-foreground">
+          {t('prReview.merge.requirements.noRequiredChecksOrApprovals')}
+        </Text>
+      </View>
+    );
+  }
   return (
     <View className="overflow-hidden rounded-lg bg-secondary">
       {derived.reviewRequired !== null ? (
