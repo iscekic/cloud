@@ -1,4 +1,5 @@
 import { type inferRouterOutputs, type MobileRouter } from '@kilocode/trpc/mobile';
+import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';
 
@@ -61,15 +62,19 @@ function BlockTitle({ children }: Readonly<{ children: string }>) {
   );
 }
 
-function AuthorRow({ author }: Readonly<{ author: ReviewAuthor | null }>) {
+function AuthorRow({
+  author,
+  trailing,
+}: Readonly<{ author: ReviewAuthor | null; trailing?: ReactNode }>) {
   const { t } = useTranslation();
   if (!author) {
     return (
       <View className="min-w-0 flex-row items-center gap-2">
-        <View className="size-6 rounded-full bg-muted" />
+        <View className="size-6 shrink-0 rounded-full bg-muted" />
         <Text variant="muted" className="min-w-0 flex-1 text-sm" numberOfLines={1}>
           {t('prReview.context.unknownAuthor')}
         </Text>
+        {trailing}
       </View>
     );
   }
@@ -78,17 +83,18 @@ function AuthorRow({ author }: Readonly<{ author: ReviewAuthor | null }>) {
       {author.avatarUrl ? (
         <Image
           source={{ uri: author.avatarUrl }}
-          className="size-6 rounded-full"
+          className="size-6 shrink-0 rounded-full"
           transition={0}
           cachePolicy="memory"
           accessibilityIgnoresInvertColors
         />
       ) : (
-        <View className="size-6 rounded-full bg-muted" />
+        <View className="size-6 shrink-0 rounded-full bg-muted" />
       )}
       <Text className="min-w-0 flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
         {author.login}
       </Text>
+      {trailing}
     </View>
   );
 }
@@ -122,26 +128,26 @@ function ReviewerRow({ decision }: Readonly<{ decision: DerivedReviewDecision }>
   }
   const submission = decision.decision;
   return (
-    <View className="flex-row items-center justify-between gap-3">
-      <View className="min-w-0 flex-1">
-        <AuthorRow author={{ login: decision.login, avatarUrl: decision.avatarUrl }} />
-      </View>
-      <View className="max-w-[60%] shrink-0 items-end gap-0.5">
-        <Text className="text-right text-sm text-foreground">
-          {t(DECISION_LABEL_KEY[submission.kind])}
-        </Text>
-        {submission.kind !== 'awaiting' && submission.submittedAt !== null ? (
-          <>
-            <Text className="text-right text-sm text-foreground">
-              {formatContextDate(submission.submittedAt)}
-            </Text>
-            <Text variant="muted" className="text-right text-xs">
-              {timeAgo(parseTimestamp(submission.submittedAt))}
-            </Text>
-          </>
-        ) : null}
-      </View>
-    </View>
+    <AuthorRow
+      author={{ login: decision.login, avatarUrl: decision.avatarUrl }}
+      trailing={
+        <View className="shrink-0 items-end gap-0.5">
+          <Text className="text-right text-sm text-foreground">
+            {t(DECISION_LABEL_KEY[submission.kind])}
+          </Text>
+          {submission.kind !== 'awaiting' && submission.submittedAt !== null ? (
+            <>
+              <Text className="text-right text-sm text-foreground">
+                {formatContextDate(submission.submittedAt)}
+              </Text>
+              <Text variant="muted" className="text-right text-xs">
+                {timeAgo(parseTimestamp(submission.submittedAt))}
+              </Text>
+            </>
+          ) : null}
+        </View>
+      }
+    />
   );
 }
 

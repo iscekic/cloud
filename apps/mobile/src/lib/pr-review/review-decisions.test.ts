@@ -4,6 +4,7 @@ import { deriveReviewDecisions } from './review-decisions';
 
 const alice = { login: 'alice', avatarUrl: 'https://avatars.example/alice' };
 const bob = { login: 'bob', avatarUrl: 'https://avatars.example/bob' };
+const dave = { login: 'dave', avatarUrl: 'https://avatars.example/dave' };
 
 describe('deriveReviewDecisions', () => {
   it('attaches each reviewer their latest submitted decision by submittedAt', () => {
@@ -41,6 +42,26 @@ describe('deriveReviewDecisions', () => {
         kind: 'user',
         login: 'bob',
         avatarUrl: 'https://avatars.example/bob',
+        decision: { kind: 'dismissed', submittedAt: '2026-01-02T00:00:00Z' },
+      },
+    ]);
+  });
+
+  it('keeps a re-requested dismissed reviewer dismissed, never awaiting', () => {
+    const result = deriveReviewDecisions(
+      [
+        { author: dave, state: 'APPROVED', submittedAt: '2026-01-01T00:00:00Z' },
+        { author: dave, state: 'DISMISSED', submittedAt: '2026-01-02T00:00:00Z' },
+      ],
+      [dave],
+      []
+    );
+
+    expect(result).toEqual([
+      {
+        kind: 'user',
+        login: 'dave',
+        avatarUrl: 'https://avatars.example/dave',
         decision: { kind: 'dismissed', submittedAt: '2026-01-02T00:00:00Z' },
       },
     ]);

@@ -105,6 +105,17 @@ function textNodes(
   );
 }
 
+function textNode(
+  renderer: TestRenderer.ReactTestRenderer,
+  value: string
+): TestRenderer.ReactTestInstance {
+  const node = textNodes(renderer, value)[0];
+  if (node === undefined) {
+    throw new Error(`Expected a rendered text node: ${value}`);
+  }
+  return node;
+}
+
 function hasText(renderer: TestRenderer.ReactTestRenderer, value: string): boolean {
   return textNodes(renderer, value).length > 0;
 }
@@ -192,17 +203,19 @@ describe('PrReviewContextSection', () => {
   it('keeps the reviewer decision column on-screen when the login wants remaining width', () => {
     const renderer = render(makeOverview());
 
-    const approved = textNodes(renderer, 'prReview.context.approved')[0];
-    expect(approved).toBeDefined();
+    const approved = textNode(renderer, 'prReview.context.approved');
     const statusClass = parentClassName(approved);
-    expect(statusClass).toContain('max-w-[60%]');
+    // Same flat-row pattern as the team row: shrink-0 decision, flex-1 login.
+    // A nested flex-1 wrapper plus max-w-[60%] pushed the decision off-screen.
+    expect(statusClass).toContain('items-end');
     expect(statusClass).toContain('shrink-0');
+    expect(statusClass).not.toContain('max-w-[');
 
-    const row = approved.parent?.parent;
-    expect(row).toBeDefined();
-    const authorWrap = row?.children[0] as TestRenderer.ReactTestInstance;
-    expect(authorWrap.props.className).toContain('min-w-0');
-    expect(authorWrap.props.className).toContain('flex-1');
+    const login = textNode(renderer, 'bob');
+    expect(login.props.className).toContain('min-w-0');
+    expect(login.props.className).toContain('flex-1');
+    expect(login.props.numberOfLines).toBe(1);
+    expect(login.parent).toBe(approved.parent?.parent);
 
     renderer.unmount();
   });
@@ -210,8 +223,7 @@ describe('PrReviewContextSection', () => {
   it('omits a time next to an awaiting reviewer', () => {
     const renderer = render(makeOverview());
 
-    const awaiting = textNodes(renderer, 'prReview.context.awaiting')[0];
-    expect(awaiting).toBeDefined();
+    const awaiting = textNode(renderer, 'prReview.context.awaiting');
     const statusCol = awaiting.parent;
     expect(statusCol).not.toBeNull();
     const labels = statusCol
@@ -237,6 +249,33 @@ describe('PrReviewContextSection', () => {
 
     expect(hasText(renderer, 'dave')).toBe(true);
     expect(hasText(renderer, 'prReview.context.dismissed')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.approved')).toBe(false);
+    expect(hasText(renderer, '2026-01-05T00:00:00.000Z')).toBe(true);
+
+    renderer.unmount();
+  });
+
+  it('renders a re-requested dismissed reviewer as dismissed, never awaiting', () => {
+    const overview = makeOverview();
+    overview.reviews = [
+      {
+        author: { login: 'dave', avatarUrl: 'https://avatars.example/dave' },
+        state: 'APPROVED',
+        submittedAt: '2026-01-04T00:00:00Z',
+      },
+      {
+        author: { login: 'dave', avatarUrl: 'https://avatars.example/dave' },
+        state: 'DISMISSED',
+        submittedAt: '2026-01-05T00:00:00Z',
+      },
+    ];
+    overview.requestedReviewers = [{ login: 'dave', avatarUrl: 'https://avatars.example/dave' }];
+    overview.requestedTeams = [];
+    const renderer = render(overview);
+
+    expect(hasText(renderer, 'dave')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.dismissed')).toBe(true);
+    expect(hasText(renderer, 'prReview.context.awaiting')).toBe(false);
     expect(hasText(renderer, 'prReview.context.approved')).toBe(false);
     expect(hasText(renderer, '2026-01-05T00:00:00.000Z')).toBe(true);
 
@@ -270,14 +309,15 @@ describe('PrReviewContextSection', () => {
     overview.requestedTeams = [];
     const renderer = render(overview);
 
-    const loginNode = textNodes(renderer, login)[0];
-    expect(loginNode).toBeDefined();
+    const loginNode = textNode(renderer, login);
     expect(loginNode.props.numberOfLines).toBe(1);
     expect(loginNode.props.className).toContain('min-w-0');
     expect(loginNode.props.className).toContain('flex-1');
-    expect(parentClassName(textNodes(renderer, 'prReview.context.approved')[0])).toContain(
-      'shrink-0'
-    );
+    const statusClass = parentClassName(textNode(renderer, 'prReview.context.approved'));
+    expect(statusClass).toContain('items-end');
+    expect(statusClass).toContain('shrink-0');
+    expect(statusClass).not.toContain('max-w-[');
+    expect(loginNode.parent).toBe(textNode(renderer, 'prReview.context.approved').parent?.parent);
 
     renderer.unmount();
   });

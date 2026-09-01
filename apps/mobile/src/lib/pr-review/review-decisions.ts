@@ -7,12 +7,7 @@ export type ReviewAuthor = {
   avatarUrl: string | null;
 };
 
-export type ReviewState =
-  | 'APPROVED'
-  | 'CHANGES_REQUESTED'
-  | 'COMMENTED'
-  | 'DISMISSED'
-  | 'PENDING';
+export type ReviewState = 'APPROVED' | 'CHANGES_REQUESTED' | 'COMMENTED' | 'DISMISSED' | 'PENDING';
 
 export type Review = {
   author: ReviewAuthor | null;
@@ -28,12 +23,7 @@ export type RequestedTeam = {
 // The decision kinds the context section renders as text. GitHub's PENDING
 // state (a review started but not yet submitted) is not a decision, so it is
 // normalized to `awaiting` instead of getting its own kind.
-export type DecisionKind =
-  | 'approved'
-  | 'changesRequested'
-  | 'commented'
-  | 'dismissed'
-  | 'awaiting';
+export type DecisionKind = 'approved' | 'changesRequested' | 'commented' | 'dismissed' | 'awaiting';
 
 export type ReviewDecision =
   | { kind: 'approved'; submittedAt: string | null }
@@ -101,38 +91,51 @@ export function deriveReviewDecisions(
 
   const requestedLogins = new Set(requestedReviewers.map(reviewer => reviewer.login));
 
-  // A reviewer who submitted and is no longer requested still counts: keep
-  // their latest submitted review. Skip PENDING nodes (a review started but
-  // never submitted) and skip reviewers who are still requested — their
-  // outstanding request wins over any earlier decision.
+  // Keep the latest terminal (non-PENDING) review per author, regardless of
+  // whether they are still requested. A dismissed review is a terminal
+  // decision, so it must not be wiped by an outstanding request.
   const latestByLogin = new Map<string, { author: ReviewAuthor; review: Review }>();
   for (const review of reviews) {
     const author = review.author;
-    if (author === null || review.state === 'PENDING' || requestedLogins.has(author.login)) {
-      continue;
-    }
-    const current = latestByLogin.get(author.login);
-    if (current === undefined || isMoreRecent(review, current.review)) {
-      latestByLogin.set(author.login, { author, review });
+    if (author !== null && review.state !== 'PENDING') {
+      const current = latestByLogin.get(author.login);
+      if (current === undefined || isMoreRecent(review, current.review)) {
+        latestByLogin.set(author.login, { author, review });
+      }
     }
   }
 
+  // A reviewer who submitted and is no longer requested still counts: keep
+  // their latest submitted review. A reviewer who is still requested counts
+  // only when that latest review is DISMISSED — an outstanding request
+  // otherwise supersedes an earlier APPROVED / CHANGES_REQUESTED / COMMENTED
+  // decision, which re-reads as awaiting.
+  const dismissedLogins = new Set<string>();
   for (const { author, review } of latestByLogin.values()) {
-    submitted.push({
-      kind: 'user',
-      login: author.login,
-      avatarUrl: author.avatarUrl,
-      decision: decisionFor(review),
-    });
+    const stillRequested = requestedLogins.has(author.login);
+    const requestOutranks = stillRequested && review.state !== 'DISMISSED';
+    if (!requestOutranks) {
+      if (stillRequested) {
+        dismissedLogins.add(author.login);
+      }
+      submitted.push({
+        kind: 'user',
+        login: author.login,
+        avatarUrl: author.avatarUrl,
+        decision: decisionFor(review),
+      });
+    }
   }
 
   for (const reviewer of requestedReviewers) {
-    awaiting.push({
-      kind: 'user',
-      login: reviewer.login,
-      avatarUrl: reviewer.avatarUrl,
-      decision: { kind: 'awaiting' },
-    });
+    if (!dismissedLogins.has(reviewer.login)) {
+      awaiting.push({
+        kind: 'user',
+        login: reviewer.login,
+        avatarUrl: reviewer.avatarUrl,
+        decision: { kind: 'awaiting' },
+      });
+    }
   }
 
   for (const team of requestedTeams) {
