@@ -69,7 +69,7 @@ function AuthorRow({
   const { t } = useTranslation();
   if (!author) {
     return (
-      <View className="min-w-0 flex-row items-center gap-2">
+      <View className="min-w-0 flex-row items-start gap-2">
         <View className="size-6 shrink-0 rounded-full bg-muted" />
         <Text variant="muted" className="min-w-0 flex-1 text-sm" numberOfLines={1}>
           {t('prReview.context.unknownAuthor')}
@@ -79,7 +79,7 @@ function AuthorRow({
     );
   }
   return (
-    <View className="min-w-0 flex-row items-center gap-2">
+    <View className="min-w-0 flex-row items-start gap-2">
       {author.avatarUrl ? (
         <Image
           source={{ uri: author.avatarUrl }}

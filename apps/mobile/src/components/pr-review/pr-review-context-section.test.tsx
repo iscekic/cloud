@@ -220,6 +220,20 @@ describe('PrReviewContextSection', () => {
     renderer.unmount();
   });
 
+  it('top-aligns the reviewer login with the decision label', () => {
+    const renderer = render(makeOverview());
+
+    // The reviewer row carries a three-line trailing (decision + exact time +
+    // relative time). Top-aligning the identity with the first line keeps the
+    // login visually attached to the decision instead of floating mid-column.
+    const login = textNode(renderer, 'bob');
+    const rowClass = parentClassName(login);
+    expect(rowClass).toContain('items-start');
+    expect(rowClass).not.toContain('items-center');
+
+    renderer.unmount();
+  });
+
   it('omits a time next to an awaiting reviewer', () => {
     const renderer = render(makeOverview());
 
