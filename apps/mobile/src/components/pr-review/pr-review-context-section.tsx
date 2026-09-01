@@ -42,9 +42,13 @@ const ISSUE_STATE_LABEL_KEY = {
 } satisfies Record<LinkedIssue['state'], string>;
 
 function formatContextDate(iso: string): string {
+  // Hermes rejects dateStyle/timeStyle mixed with timeZoneName.
   return formatDate(parseTimestamp(iso), i18n.language, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
     timeZoneName: 'short',
   });
 }

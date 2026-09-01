@@ -5,6 +5,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type * as ReactI18next from 'react-i18next';
 
+import { formatDate } from '@/lib/format';
+
 import { PrReviewContextSection } from './pr-review-context-section';
 
 vi.mock('react-native', () => ({
@@ -28,7 +30,7 @@ vi.mock('@/components/ui/image', () => ({ Image: 'Image' }));
 vi.mock('@/components/ui/text', () => ({ Text: 'Text' }));
 
 vi.mock('@/lib/format', () => ({
-  formatDate: (date: Date) => date.toISOString(),
+  formatDate: vi.fn((date: Date) => date.toISOString()),
 }));
 
 vi.mock('@/lib/utils', () => ({
@@ -154,6 +156,23 @@ describe('PrReviewContextSection', () => {
     // renders its exact submission time.
     expect(hasText(renderer, '2026-01-03T00:00:00.000Z')).toBe(true);
 
+    renderer.unmount();
+  });
+
+  it('formats context dates without mixing dateStyle and timeZoneName', () => {
+    const renderer = render(makeOverview());
+    const calls = vi.mocked(formatDate).mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    for (const call of calls) {
+      expect(call[2]).toEqual({
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short',
+      });
+    }
     renderer.unmount();
   });
 });

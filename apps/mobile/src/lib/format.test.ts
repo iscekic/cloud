@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   firstGrapheme,
   formatCalendarDate,
+  formatDate,
   formatFileSize,
   formatList,
   formatMoney,
@@ -42,5 +43,18 @@ describe('localized format helpers', () => {
 
   it('formats a calendar date without a time-zone shift', () => {
     expect(formatCalendarDate('2026-08-03', 'en-US')).toBe('8/3/2026');
+  });
+
+  it('formats a timestamp with timeZoneName and field components', () => {
+    expect(
+      formatDate(new Date('2026-01-03T00:00:00Z'), 'en', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short',
+      })
+    ).toMatch(/2026/);
   });
 });
