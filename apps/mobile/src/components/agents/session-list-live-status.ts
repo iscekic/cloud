@@ -8,8 +8,9 @@
  * unit-testable in plain Node.
  *
  * Classification rules (priority order):
- *  1. Not connected → connection-lost (when reconnecting gave up), else
- *     reconnecting (when we were connected before), else connecting.
+ *  1. Live rows are shown and not connected → connection-lost (when
+ *     reconnecting gave up), else reconnecting (when we were connected
+ *     before), else connecting.
  *  2. Live rows are shown and an update is in flight → updating.
  *  3. Live rows are shown and a refresh failed → refresh-failed.
  *  4. Otherwise → ready.
@@ -36,9 +37,10 @@ export function selectLiveListStatus(input: {
 }): LiveListStatus {
   const { isConnected, reconnectExhausted, wasUp, hasLiveRows, updating, refreshFailed } = input;
 
-  // Connection problems always win: the live list cannot announce anything
-  // meaningful while it is offline.
-  if (!isConnected) {
+  // Connection problems surface only while live rows are on screen: with no
+  // rows, the body below already renders the terminal empty/error state, and a
+  // progress hint directly above it would contradict it.
+  if (!isConnected && hasLiveRows) {
     if (reconnectExhausted) {
       return { kind: 'connection-lost' };
     }
