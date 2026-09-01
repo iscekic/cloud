@@ -39,28 +39,30 @@ function mountScrollView(props: Record<string, unknown> = {}): TestRenderer.Reac
 }
 
 describe('TabScreenScrollView', () => {
-  it('insets the scroll viewport above the floating tab bar', () => {
+  it('adds a trailing tab-bar clearance spacer after the content', () => {
     const renderer = mountScrollView({ className: 'flex-1' });
 
-    const views = findByType(renderer.root, 'View');
     const scrollViews = findByType(renderer.root, 'ScrollView');
+    const views = findByType(renderer.root, 'View');
 
-    expect(views).toHaveLength(1);
     expect(scrollViews).toHaveLength(1);
+    // One spacer View; no wrapper View hard-clips the viewport.
+    expect(views).toHaveLength(1);
 
-    const wrapper = views[0];
     const scrollView = scrollViews[0];
-    if (!wrapper || !scrollView) {
-      throw new Error('expected wrapper and scroll view');
+    const spacer = views[0];
+    if (!scrollView || !spacer) {
+      throw new Error('expected scroll view and spacer');
     }
 
     // getEffectiveTabBarHeight(84) + 16 breathing room.
-    expect(wrapper.props.style).toEqual({ paddingBottom: 100 });
-    // The ScrollView sits inside the inset wrapper so rows never render under the bar.
-    expect(scrollView.parent?.type).toBe('View');
+    expect(spacer.props.style).toEqual({ height: 100 });
+    expect(spacer.props.pointerEvents).toBe('none');
+    // The spacer is the trailing child of the full-height ScrollView.
+    expect(scrollView.children).toEqual(['content', spacer]);
   });
 
-  it('forwards scroll props and children without a trailing spacer', () => {
+  it('forwards scroll props and keeps the content ahead of the spacer', () => {
     const renderer = mountScrollView({
       className: 'flex-1',
       contentContainerClassName: 'px-6 pt-4',
@@ -73,6 +75,6 @@ describe('TabScreenScrollView', () => {
 
     expect(scrollView.props.className).toBe('flex-1');
     expect(scrollView.props.contentContainerClassName).toBe('px-6 pt-4');
-    expect(scrollView.children).toEqual(['content']);
+    expect(scrollView.children[0]).toBe('content');
   });
 });

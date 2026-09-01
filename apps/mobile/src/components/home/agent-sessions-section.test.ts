@@ -38,11 +38,17 @@ vi.mock('@/components/agents/use-agent-session-navigator', () => ({
   useAgentSessionNavigator: () => vi.fn(),
 }));
 
+const agentSessionsState = vi.hoisted(() => ({
+  activeSessions: [] as ActiveSession[],
+  storedSessions: [] as StoredSession[],
+  activeSessionIds: new Set<string>(),
+}));
+
 vi.mock('@/lib/hooks/use-agent-sessions', () => ({
   useAgentSessions: () => ({
-    activeSessions: [],
-    storedSessions: [],
-    activeSessionIds: new Set(),
+    activeSessions: agentSessionsState.activeSessions,
+    storedSessions: agentSessionsState.storedSessions,
+    activeSessionIds: agentSessionsState.activeSessionIds,
     activeIsError: false,
   }),
 }));
@@ -139,10 +145,41 @@ describe('Home See-all navigation', () => {
   beforeEach(() => {
     navigateSpy.mockClear();
     dismissToSpy.mockClear();
+    agentSessionsState.activeSessions = [];
+    agentSessionsState.storedSessions = [];
+    agentSessionsState.activeSessionIds = new Set();
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
   });
 
+  it('hides the See-all action while LIVE NOW is empty', async () => {
+    const rendererRef: { current: TestRenderer.ReactTestRenderer | undefined } = {
+      current: undefined,
+    };
+    await act(async () => {
+      await Promise.resolve();
+      rendererRef.current = TestRenderer.create(
+        createElement(AgentSessionsSection, { organizationId: 'org-1' })
+      );
+    });
+    const renderer = rendererRef.current;
+    if (!renderer) {
+      throw new Error('renderer was not created');
+    }
+
+    const header = renderer.root.find(
+      node => typeof node.type === 'string' && (node.type as string) === 'SectionHeader'
+    );
+    expect(header.props.actionLabel).toBeUndefined();
+    expect(header.props.onActionPress).toBeUndefined();
+
+    renderer.unmount();
+  });
+
   it('switches to the Agents index and dismisses the history subpage', async () => {
+    const active = makeActive();
+    agentSessionsState.activeSessions = [active];
+    agentSessionsState.activeSessionIds = new Set([active.id]);
+
     const rendererRef: { current: TestRenderer.ReactTestRenderer | undefined } = {
       current: undefined,
     };

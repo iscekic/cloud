@@ -246,12 +246,12 @@ export function AgentSessionListScreen() {
         description={t('agents.sessionList.noSessionsYetDescription')}
         action={
           <Button
-            variant="outline"
+            variant="default"
             onPress={() => {
               router.push(getNewAgentSessionPath(organizationId) as Href);
             }}
           >
-            <Plus size={16} color={colors.foreground} />
+            <Plus size={16} color={colors.primaryForeground} />
             <Text>{t('home.newCodingTask')}</Text>
           </Button>
         }

@@ -16,16 +16,19 @@ export function useTabBarBottomPadding() {
   return getEffectiveTabBarHeight({ bottomInset: bottom, platform: Platform.OS, fontScale }) + 16;
 }
 
-export function TabScreenScrollView({ children, className, ...props }: ScrollViewProps) {
+export function TabScreenScrollView({ children, ...props }: ScrollViewProps) {
   const paddingBottom = useTabBarBottomPadding();
-  // Inset the scroll viewport above the floating tab bar so no row ever renders
-  // behind it. A content-end spacer only clears the last row once scrolled to
-  // the bottom; mid-list rows still sit behind the bar at the resting offset.
+  // Clear the floating tab bar with a trailing spacer rather than insetting the
+  // viewport. Insetting hard-clips a mid-list row at the resting offset, which
+  // reads as a broken cut; a spacer keeps the full viewport so rows render
+  // through the blurred bar and the last row scrolls clear. Avoid
+  // contentContainerStyle here — setting that style prop makes NativeWind drop
+  // the caller's contentContainerClassName (padding/gap), collapsing section
+  // spacing.
   return (
-    <View className={className} style={{ paddingBottom }}>
-      <ScrollView {...props} className="flex-1">
-        {children}
-      </ScrollView>
-    </View>
+    <ScrollView {...props}>
+      {children}
+      <View style={{ height: paddingBottom }} pointerEvents="none" />
+    </ScrollView>
   );
 }
