@@ -334,6 +334,7 @@
         "notMet": "မပြည့်မီပါ",
         "unavailable": "ပေါင်းစည်းရန် လိုအပ်ချက်များ မရနိုင်ပါ",
         "noProtectionRules": "branch ကာကွယ်ရေး စည်းမျဉ်းများ မရှိပါ",
+        "noRequiredChecksOrApprovals": "လိုအပ်သော စစ်ဆေးမှုများ သို့မဟုတ် အတည်ပြုချက်များ မရှိပါ",
         "queueTitle": "ပေါင်းစည်းရန် တန်းစီ",
         "inQueue": "တန်းစီတွင် {{position}}",
         "positionUnknown": "နေရာ မသိရပါ",
@@ -651,6 +652,8 @@
       "mergedBy": "ပေါင်းစည်းသူ",
       "linkedIssues": "ဆက်စပ်ပြဿနာများ",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ဖွင့်ထားသည်",
+      "issueClosed": "ပိတ်ထား",
       "unknownAuthor": "အမည်မသိ ရေးသားသူ"
     }
   },

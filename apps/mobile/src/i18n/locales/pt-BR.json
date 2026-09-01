@@ -2899,6 +2899,7 @@
         "notMet": "Não cumprido",
         "unavailable": "Requisitos de merge indisponíveis",
         "noProtectionRules": "Sem regras de proteção de branch",
+        "noRequiredChecksOrApprovals": "Sem verificações nem aprovações obrigatórias",
         "queueTitle": "Fila de merge",
         "inQueue": "{{position}} na fila",
         "positionUnknown": "Posição desconhecida",
@@ -3048,6 +3049,8 @@
       "mergedBy": "Mesclado por",
       "linkedIssues": "Issues vinculadas",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Aberto",
+      "issueClosed": "Fechado",
       "unknownAuthor": "Autor desconhecido"
     }
   },

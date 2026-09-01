@@ -334,6 +334,7 @@
         "notMet": "പാലിക്കപ്പെട്ടിട്ടില്ല",
         "unavailable": "മെർജ് ആവശ്യകതകൾ ലഭ്യമല്ല",
         "noProtectionRules": "ബ്രാഞ്ച് സംരക്ഷണ നിയമങ്ങളൊന്നുമില്ല",
+        "noRequiredChecksOrApprovals": "ആവശ്യമായ പരിശോധനകളോ അംഗീകാരങ്ങളോ ഇല്ല",
         "queueTitle": "മെർജ് ക്യൂ",
         "inQueue": "ക്യൂവിൽ {{position}}",
         "positionUnknown": "സ്ഥാനം അജ്ഞാതം",
@@ -651,6 +652,8 @@
       "mergedBy": "മെർജ് ചെയ്തത്",
       "linkedIssues": "ലിങ്ക് ചെയ്ത പ്രശ്നങ്ങൾ",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "തുറന്നത്",
+      "issueClosed": "അടച്ചു",
       "unknownAuthor": "അജ്ഞാത രചയിതാവ്"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "Ei täytetty",
         "unavailable": "Yhdistämisen vaatimukset eivät ole käytettävissä",
         "noProtectionRules": "Ei haaran suojaussääntöjä",
+        "noRequiredChecksOrApprovals": "Ei vaadittuja tarkistuksia eikä hyväksyntöjä",
         "queueTitle": "Yhdistämisjono",
         "inQueue": "{{position}} jonossa",
         "positionUnknown": "Sijainti tuntematon",
@@ -651,6 +652,8 @@
       "mergedBy": "Yhdistänyt",
       "linkedIssues": "Linkitetyt ongelmat",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Avoin",
+      "issueClosed": "Suljettu",
       "unknownAuthor": "Tuntematon tekijä"
     }
   },

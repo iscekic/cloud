@@ -340,6 +340,7 @@
         "notMet": "Mhux milħuqa",
         "unavailable": "Ir-rekwiżiti tal-unifikazzjoni mhumiex disponibbli",
         "noProtectionRules": "M’hemmx regoli ta’ protezzjoni tal-fergħa",
+        "noRequiredChecksOrApprovals": "M’hemmx kontrolli jew approvazzjonijiet meħtieġa",
         "queueTitle": "Kju tal-unifikazzjoni",
         "inQueue": "{{position}} fil-kju",
         "positionUnknown": "Pożizzjoni mhux magħrufa",
@@ -672,6 +673,8 @@
       "mergedBy": "Magħqud minn",
       "linkedIssues": "Kwistjonijiet marbuta",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Miftuħ",
+      "issueClosed": "Magħluq",
       "unknownAuthor": "Awtur mhux magħruf"
     }
   },

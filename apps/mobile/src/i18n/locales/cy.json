@@ -342,6 +342,7 @@
         "notMet": "Heb ei fodloni",
         "unavailable": "Gofynion cyfuno ddim ar gael",
         "noProtectionRules": "Dim rheolau diogelu cangen",
+        "noRequiredChecksOrApprovals": "Dim gwiriadau na chymeradwyaethau gofynnol",
         "queueTitle": "Ciw cyfuno",
         "inQueue": "{{position}} yn y ciw",
         "positionUnknown": "Safle anhysbys",
@@ -679,6 +680,8 @@
       "mergedBy": "Cyfunwyd gan",
       "linkedIssues": "Problemau cysylltiedig",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Ar agor",
+      "issueClosed": "Ar gau",
       "unknownAuthor": "Awdur anhysbys"
     }
   },

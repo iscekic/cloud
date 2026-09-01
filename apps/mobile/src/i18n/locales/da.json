@@ -334,6 +334,7 @@
         "notMet": "Ikke opfyldt",
         "unavailable": "Krav til sammenlægning er ikke tilgængelige",
         "noProtectionRules": "Ingen regler for grenbeskyttelse",
+        "noRequiredChecksOrApprovals": "Ingen påkrævede kontroller eller godkendelser",
         "queueTitle": "Sammenlægningskø",
         "inQueue": "{{position}} i køen",
         "positionUnknown": "Position ukendt",
@@ -651,6 +652,8 @@
       "mergedBy": "Sammenlagt af",
       "linkedIssues": "Tilknyttede problemer",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Åben",
+      "issueClosed": "Lukket",
       "unknownAuthor": "Ukendt forfatter"
     }
   },

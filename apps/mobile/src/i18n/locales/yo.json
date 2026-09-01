@@ -334,6 +334,7 @@
         "notMet": "Kò tíì dé",
         "unavailable": "Àwọn ibeere àkópọ̀ kò sí",
         "noProtectionRules": "Kò sí àwọn òfin ààbò ẹ̀ka",
+        "noRequiredChecksOrApprovals": "Kò sí àyẹ̀wò tàbí ìfọwọ́sí tí a nílò",
         "queueTitle": "Ìlà àkópọ̀",
         "inQueue": "{{position}} nínú ìlà",
         "positionUnknown": "Ipò àìmọ̀",
@@ -651,6 +652,8 @@
       "mergedBy": "Ti kópọ̀ nípasẹ̀",
       "linkedIssues": "Àwọn ọ̀ràn tó so mọ́",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Ṣí",
+      "issueClosed": "Tí a pa",
       "unknownAuthor": "Onkọwe aimọ"
     }
   },

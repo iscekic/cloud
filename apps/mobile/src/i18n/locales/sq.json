@@ -334,6 +334,7 @@
         "notMet": "Nuk plotësohet",
         "unavailable": "Kërkesat e bashkimit të padisponueshme",
         "noProtectionRules": "Ska rregulla mbrojtjeje për degën",
+        "noRequiredChecksOrApprovals": "Ska kontrolle ose miratime të kërkuara",
         "queueTitle": "Rradha e bashkimit",
         "inQueue": "{{position}} në radhë",
         "positionUnknown": "Pozicion i panjohur",
@@ -651,6 +652,8 @@
       "mergedBy": "Bashkuar nga",
       "linkedIssues": "Çështje të lidhura",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "E hapur",
+      "issueClosed": "E mbyllur",
       "unknownAuthor": "Autor i panjohur"
     }
   },

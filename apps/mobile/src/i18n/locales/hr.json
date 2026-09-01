@@ -336,6 +336,7 @@
         "notMet": "Nije ispunjeno",
         "unavailable": "Zahtjevi spajanja nedostupni",
         "noProtectionRules": "Nema pravila zaštite grane",
+        "noRequiredChecksOrApprovals": "Nema obaveznih provjera ni odobrenja",
         "queueTitle": "Red spajanja",
         "inQueue": "{{position}} u redu",
         "positionUnknown": "Pozicija nepoznata",
@@ -658,6 +659,8 @@
       "mergedBy": "Spojio",
       "linkedIssues": "Povezani problemi",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Otvoreno",
+      "issueClosed": "Zatvoreno",
       "unknownAuthor": "Nepoznati autor"
     }
   },

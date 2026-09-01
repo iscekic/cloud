@@ -334,6 +334,7 @@
         "notMet": "Hin guunfamne",
         "unavailable": "Ulaagaan ka dabarsii hin argamu",
         "noProtectionRules": "Seerota eegumsa damee hin jiru",
+        "noRequiredChecksOrApprovals": "Qorannoo ykn raggaasifamoota barbaachisaa hin jiru",
         "queueTitle": "Tarree ka dabarsii",
         "inQueue": "{{position}} tarree keessa",
         "positionUnknown": "Iddoo hin beekamne",
@@ -651,6 +652,8 @@
       "mergedBy": "Kan dabarsame",
       "linkedIssues": "Dhimma walitti hidhaman",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Banaa",
+      "issueClosed": "Cufame",
       "unknownAuthor": "Barreessaan hin beekamne"
     }
   },

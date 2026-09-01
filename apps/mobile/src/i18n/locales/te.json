@@ -334,6 +334,7 @@
         "notMet": "తీర్చబడలేదు",
         "unavailable": "మెర్జ్ అవసరాలు అందుబాటులో లేవు",
         "noProtectionRules": "బ్రాంచ్ రక్షణ నియమాలు లేవు",
+        "noRequiredChecksOrApprovals": "అవసరమైన చెక్లు లేదా ఆమోదాలు లేవు",
         "queueTitle": "మెర్జ్ క్యూ",
         "inQueue": "క్యూలో {{position}}",
         "positionUnknown": "స్థానం తెలియదు",
@@ -651,6 +652,8 @@
       "mergedBy": "ఇలా మెర్జ్ చేసిన వారు",
       "linkedIssues": "లింక్ చేసిన సమస్యలు",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "తెరిచి ఉంది",
+      "issueClosed": "మూసివేయబడింది",
       "unknownAuthor": "తెలియని రచయిత"
     }
   },

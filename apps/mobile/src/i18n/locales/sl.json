@@ -338,6 +338,7 @@
         "notMet": "Ni izpolnjeno",
         "unavailable": "Zahteve za združitev niso na voljo",
         "noProtectionRules": "Ni pravil za zaščito veje",
+        "noRequiredChecksOrApprovals": "Ni obveznih preverjanj ali odobritev",
         "queueTitle": "Čakalna vrsta za združitev",
         "inQueue": "{{position}} v čakalni vrsti",
         "positionUnknown": "Neznan položaj",
@@ -665,6 +666,8 @@
       "mergedBy": "Združil",
       "linkedIssues": "Povezane težave",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Odprto",
+      "issueClosed": "Zaprto",
       "unknownAuthor": "Neznan avtor"
     }
   },

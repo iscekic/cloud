@@ -334,6 +334,7 @@
         "notMet": "பூர்த்தி செய்யப்படவில்லை",
         "unavailable": "இணைப்புத் தேவைகள் கிடைக்கவில்லை",
         "noProtectionRules": "கிளை பாதுகாப்பு விதிகள் இல்லை",
+        "noRequiredChecksOrApprovals": "தேவையான சோதனைகள் அல்லது ஒப்புதல்கள் இல்லை",
         "queueTitle": "இணைப்பு வரிசை",
         "inQueue": "வரிசையில் {{position}}",
         "positionUnknown": "நிலை தெரியவில்லை",
@@ -651,6 +652,8 @@
       "mergedBy": "இணைத்தவர்",
       "linkedIssues": "இணைக்கப்பட்ட சிக்கல்கள்",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "திறந்த",
+      "issueClosed": "மூடப்பட்டது",
       "unknownAuthor": "தெரியாத ஆசிரியர்"
     }
   },

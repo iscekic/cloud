@@ -338,6 +338,7 @@
         "notMet": "Neįvykdyta",
         "unavailable": "Sujungimo reikalavimai nepasiekiami",
         "noProtectionRules": "Nėra šakos apsaugos taisyklių",
+        "noRequiredChecksOrApprovals": "Nėra privalomų patikrinimų ar patvirtinimų",
         "queueTitle": "Sujungimo eilė",
         "inQueue": "{{position}} eilėje",
         "positionUnknown": "Pozicija nežinoma",
@@ -665,6 +666,8 @@
       "mergedBy": "Sujungė",
       "linkedIssues": "Susijusios problemos",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Atidaryta",
+      "issueClosed": "Uždaryta",
       "unknownAuthor": "Nežinomas autorius"
     }
   },

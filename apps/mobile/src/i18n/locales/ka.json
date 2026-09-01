@@ -334,6 +334,7 @@
         "notMet": "არ დაკმაყოფილდა",
         "unavailable": "შერწყმის მოთხოვნები მიუწვდომელია",
         "noProtectionRules": "ტოტის დაცვის წესები არ არსებობს",
+        "noRequiredChecksOrApprovals": "სავალდებულო შემოწმებები ან დამტკიცებები არ არის",
         "queueTitle": "შერწყმის რიგი",
         "inQueue": "{{position}} რიგში",
         "positionUnknown": "პოზიცია უცნობია",
@@ -651,6 +652,8 @@
       "mergedBy": "შეერწყა",
       "linkedIssues": "დაკავშირებული პრობლემები",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ღია",
+      "issueClosed": "დახურულია",
       "unknownAuthor": "უცნობი ავტორი"
     }
   },

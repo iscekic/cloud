@@ -334,6 +334,7 @@
         "notMet": "Ezutebeghị",
         "unavailable": "Ihe dị mkpa ijikọ adịghị",
         "noProtectionRules": "Enweghị iwu nchebe alaka",
+        "noRequiredChecksOrApprovals": "Enweghị nyocha ma ọ bụ nnabata achọrọ",
         "queueTitle": "Ahịrị ijikọ",
         "inQueue": "{{position}} n’ahịrị",
         "positionUnknown": "Ọnọdụ amaghị",
@@ -651,6 +652,8 @@
       "mergedBy": "Jikọtara site na",
       "linkedIssues": "Okwu ndị ejikọtara",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Mepere emepe",
+      "issueClosed": "Emechiri",
       "unknownAuthor": "Onye edemede amaghị"
     }
   },

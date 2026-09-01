@@ -334,6 +334,7 @@
         "notMet": "មិនបានបំពេញ",
         "unavailable": "តម្រូវការបញ្ចូលគ្នាមិនអាចប្រើបាន",
         "noProtectionRules": "គ្មានច្បាប់ការពារសាខា",
+        "noRequiredChecksOrApprovals": "គ្មានការត្រួតពិនិត្យ ឬការយល់ព្រមជាកាតព្វកិច្ច",
         "queueTitle": "ជួរបញ្ចូលគ្នា",
         "inQueue": "{{position}} ក្នុងជួរ",
         "positionUnknown": "ទីតាំងមិនស្គាល់",
@@ -651,6 +652,8 @@
       "mergedBy": "បញ្ចូលគ្នាដោយ",
       "linkedIssues": "បញ្ហាដែលបានភ្ជាប់",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "បើក",
+      "issueClosed": "បានបិទ",
       "unknownAuthor": "អ្នកនិពន្ធមិនស្គាល់"
     }
   },

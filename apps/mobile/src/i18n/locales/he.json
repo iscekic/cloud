@@ -2899,6 +2899,7 @@
         "notMet": "לא מולא",
         "unavailable": "דרישות המיזוג אינן זמינות",
         "noProtectionRules": "אין כללי הגנה על ענף",
+        "noRequiredChecksOrApprovals": "אין בדיקות או אישורים נדרשים",
         "queueTitle": "תור מיזוג",
         "inQueue": "{{position}} בתור",
         "positionUnknown": "מיקום לא ידוע",
@@ -3048,6 +3049,8 @@
       "mergedBy": "מוזג על ידי",
       "linkedIssues": "בעיות מקושרות",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "פתוח",
+      "issueClosed": "סגור",
       "unknownAuthor": "מחבר לא ידוע"
     }
   },

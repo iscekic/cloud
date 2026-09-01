@@ -2916,6 +2916,7 @@
         "notMet": "Не виконано",
         "unavailable": "Вимоги до злиття недоступні",
         "noProtectionRules": "Немає правил захисту гілки",
+        "noRequiredChecksOrApprovals": "Немає обов’язкових перевірок або схвалень",
         "queueTitle": "Черга злиття",
         "inQueue": "{{position}} у черзі",
         "positionUnknown": "Невідома позиція",
@@ -3068,6 +3069,8 @@
       "mergedBy": "Злив",
       "linkedIssues": "Пов’язані проблеми",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Відкрито",
+      "issueClosed": "Закрито",
       "unknownAuthor": "Невідомий автор"
     }
   },

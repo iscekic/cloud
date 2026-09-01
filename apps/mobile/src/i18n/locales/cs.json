@@ -338,6 +338,7 @@
         "notMet": "Nesplněno",
         "unavailable": "Požadavky na sloučení nedostupné",
         "noProtectionRules": "Žádná pravidla ochrany větve",
+        "noRequiredChecksOrApprovals": "Žádné povinné kontroly ani schválení",
         "queueTitle": "Fronta sloučení",
         "inQueue": "{{position}} ve frontě",
         "positionUnknown": "Neznámá pozice",
@@ -665,6 +666,8 @@
       "mergedBy": "Sloučil",
       "linkedIssues": "Propojené problémy",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Otevřeno",
+      "issueClosed": "Uzavřeno",
       "unknownAuthor": "Neznámý autor"
     }
   },

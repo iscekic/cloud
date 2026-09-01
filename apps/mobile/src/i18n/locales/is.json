@@ -334,6 +334,7 @@
         "notMet": "Ekki uppfyllt",
         "unavailable": "Kröfur um samruna ekki tiltækar",
         "noProtectionRules": "Engar reglur um greinavörn",
+        "noRequiredChecksOrApprovals": "Engar áskildar athuganir eða samþykktir",
         "queueTitle": "Samrunaröð",
         "inQueue": "{{position}} í röð",
         "positionUnknown": "Óþekkt staða",
@@ -651,6 +652,8 @@
       "mergedBy": "Sameinað af",
       "linkedIssues": "Tengd vandamál",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Opið",
+      "issueClosed": "Lokað",
       "unknownAuthor": "Óþekktur höfundur"
     }
   },

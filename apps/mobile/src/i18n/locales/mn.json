@@ -334,6 +334,7 @@
         "notMet": "Хангаагүй",
         "unavailable": "Нэгтгэх шаардлагууд боломжгүй",
         "noProtectionRules": "Салбар хамгаалах дүрэм байхгүй",
+        "noRequiredChecksOrApprovals": "Шаардлагатай шалгалт эсвэл баталгаажуулалт байхгүй",
         "queueTitle": "Нэгтгэх дараалал",
         "inQueue": "{{position}} дараалалд",
         "positionUnknown": "Байрлал тодорхойгүй",
@@ -651,6 +652,8 @@
       "mergedBy": "Нэгтгэсэн",
       "linkedIssues": "Холбоотой асуудлууд",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Нээлттэй",
+      "issueClosed": "Хаалттай",
       "unknownAuthor": "Тодорхойгүй зохиолч"
     }
   },

@@ -2882,6 +2882,7 @@
         "notMet": "未满足",
         "unavailable": "合并要求不可用",
         "noProtectionRules": "无分支保护规则",
+        "noRequiredChecksOrApprovals": "没有必需的检查或批准",
         "queueTitle": "合并队列",
         "inQueue": "队列中第 {{position}} 位",
         "positionUnknown": "位置未知",
@@ -3028,6 +3029,8 @@
       "mergedBy": "合并者",
       "linkedIssues": "关联议题",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "打开",
+      "issueClosed": "已关闭",
       "unknownAuthor": "未知作者"
     }
   },

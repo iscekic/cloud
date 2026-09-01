@@ -170,7 +170,7 @@
   "ig": ["commit", "open"],
   "is": ["open", "open pull request"],
   "it": ["block", "closed", "high", "low", "medium", "open", "open pull request"],
-  "ja": ["analysis failed", "copied", "merged", "open", "open pull request", "queued", "reactions"],
+  "ja": ["analysis failed", "closed", "copied", "merged", "open", "open pull request", "queued", "reactions"],
   "ka": ["files", "open", "open pull request", "reactions", "tokens"],
   "kk": ["open", "open pull request"],
   "km": ["github connection expired", "review"],

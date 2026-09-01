@@ -334,6 +334,7 @@
         "notMet": "Ei ole täidetud",
         "unavailable": "Ühendamise nõuded pole saadaval",
         "noProtectionRules": "Haru kaitse reegleid pole",
+        "noRequiredChecksOrApprovals": "Nõutavad kontrollid ega kinnitused puuduvad",
         "queueTitle": "Ühendamise järjekord",
         "inQueue": "{{position}} järjekorras",
         "positionUnknown": "Asukoht teadmata",
@@ -651,6 +652,8 @@
       "mergedBy": "Ühendanud",
       "linkedIssues": "Seotud probleemid",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Avatud",
+      "issueClosed": "Suletud",
       "unknownAuthor": "Tundmatu autor"
     }
   },

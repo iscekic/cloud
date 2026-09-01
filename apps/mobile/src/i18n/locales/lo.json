@@ -334,6 +334,7 @@
         "notMet": "ບໍ່ບັນລຸ",
         "unavailable": "ຂໍ້ກຳນົດການລວມບໍ່ສາມາດໃຊ້ໄດ້",
         "noProtectionRules": "ບໍ່ມີກົດລະບຽບປົກປ້ອງສາຂາ",
+        "noRequiredChecksOrApprovals": "ບໍ່ມີການກວດສອບ ຫຼື ການອະນຸມັດທີ່ຈຳເປັນ",
         "queueTitle": "ຄິວການລວມ",
         "inQueue": "{{position}} ໃນຄິວ",
         "positionUnknown": "ຕຳແໜ່ງບໍ່ຮູ້",
@@ -651,6 +652,8 @@
       "mergedBy": "ລວມໂດຍ",
       "linkedIssues": "ບັນຫາທີ່ເຊື່ອມໂຍງ",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ເປີດ",
+      "issueClosed": "ປິດ",
       "unknownAuthor": "ຜູ້ຂຽນບໍ່ຮູ້ຈັກ"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "አልተሟላም",
         "unavailable": "የውህደት መስፈርቶች አይገኙም",
         "noProtectionRules": "የቅርንጫፍ ጥበቃ ሕጎች የሉም",
+        "noRequiredChecksOrApprovals": "አስፈላጊ ቼኮች ወይም ማጽደቂያዎች የሉም",
         "queueTitle": "የውህደት ወረፋ",
         "inQueue": "{{position}} በወረፋ ውስጥ",
         "positionUnknown": "ቦታ ያልታወቀ",
@@ -651,6 +652,8 @@
       "mergedBy": "የተዋሃደው በ",
       "linkedIssues": "የተገናኙ ጉዳዮች",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ክፍት",
+      "issueClosed": "ተዘግቷል",
       "unknownAuthor": "ያልታወቀ ደራሲ"
     }
   },

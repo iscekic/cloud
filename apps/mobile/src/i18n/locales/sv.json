@@ -334,6 +334,7 @@
         "notMet": "Inte uppfyllt",
         "unavailable": "Kraven för sammanslagning är inte tillgängliga",
         "noProtectionRules": "Inga regler för grenskydd",
+        "noRequiredChecksOrApprovals": "Inga obligatoriska kontroller eller godkännanden",
         "queueTitle": "Sammanslagningskö",
         "inQueue": "{{position}} i kön",
         "positionUnknown": "Okänd position",
@@ -651,6 +652,8 @@
       "mergedBy": "Sammanslagen av",
       "linkedIssues": "Länkade ärenden",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Öppen",
+      "issueClosed": "Stängd",
       "unknownAuthor": "Okänd författare"
     }
   },

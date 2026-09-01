@@ -2899,6 +2899,7 @@
         "notMet": "Non rempli",
         "unavailable": "Conditions de fusion indisponibles",
         "noProtectionRules": "Aucune règle de protection de branche",
+        "noRequiredChecksOrApprovals": "Aucune vérification ni approbation requise",
         "queueTitle": "File de fusion",
         "inQueue": "{{position}} dans la file",
         "positionUnknown": "Position inconnue",
@@ -3048,6 +3049,8 @@
       "mergedBy": "Fusionnée par",
       "linkedIssues": "Tickets liés",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Ouverte",
+      "issueClosed": "Fermée",
       "unknownAuthor": "Auteur inconnu"
     }
   },

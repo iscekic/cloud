@@ -2882,6 +2882,7 @@
         "notMet": "Karşılanmadı",
         "unavailable": "Birleştirme gereksinimleri kullanılamıyor",
         "noProtectionRules": "Dal koruması kuralı yok",
+        "noRequiredChecksOrApprovals": "Gerekli kontrol veya onay yok",
         "queueTitle": "Birleştirme kuyruğu",
         "inQueue": "Kuyrukta {{position}}. sırada",
         "positionUnknown": "Konum bilinmiyor",
@@ -3028,6 +3029,8 @@
       "mergedBy": "Birleştiren",
       "linkedIssues": "Bağlantılı sorunlar",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Açık",
+      "issueClosed": "Kapalı",
       "unknownAuthor": "Bilinmeyen yazar"
     }
   },

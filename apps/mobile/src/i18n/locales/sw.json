@@ -334,6 +334,7 @@
         "notMet": "Haijatimizwa",
         "unavailable": "Mahitaji ya kuunganisha hayapatikani",
         "noProtectionRules": "Hakuna sheria za ulinzi wa tawi",
+        "noRequiredChecksOrApprovals": "Hakuna ukaguzi au idhini inayohitajika",
         "queueTitle": "Foleni ya kuunganisha",
         "inQueue": "{{position}} kwenye foleni",
         "positionUnknown": "Nafasi haijulikani",
@@ -651,6 +652,8 @@
       "mergedBy": "Imeunganishwa na",
       "linkedIssues": "Masuala yaliyounganishwa",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Wazi",
+      "issueClosed": "Imefungwa",
       "unknownAuthor": "Mwandishi asiyejulikana"
     }
   },

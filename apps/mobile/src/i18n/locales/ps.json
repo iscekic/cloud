@@ -334,6 +334,7 @@
         "notMet": "نه دی پوره شوی",
         "unavailable": "د یوځای کولو اړتیاوې شتون نلري",
         "noProtectionRules": "د څانګې د ساتنې قواعد نشته",
+        "noRequiredChecksOrApprovals": "اړین چیکونه یا تاییدونه نشته",
         "queueTitle": "د یوځای کولو کتار",
         "inQueue": "{{position}} په کتار کې",
         "positionUnknown": "موقف نامعلوم",
@@ -651,6 +652,8 @@
       "mergedBy": "یوځای کړی دی",
       "linkedIssues": "تړلې ستونزې",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "خلاص",
+      "issueClosed": "تړل شوی",
       "unknownAuthor": "نامعلوم لیکوال"
     }
   },

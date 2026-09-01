@@ -334,6 +334,7 @@
         "notMet": "Tsy voatontosa",
         "unavailable": "Tsy hita ny fepetra fampitambarana",
         "noProtectionRules": "Tsy misy fitsipika fiarovana sampana",
+        "noRequiredChecksOrApprovals": "Tsy misy fanamarinana na fankatoavana ilaina",
         "queueTitle": "Filaharana fampitambarana",
         "inQueue": "{{position}} ao amin’ny filaharana",
         "positionUnknown": "Toerana tsy fantatra",
@@ -651,6 +652,8 @@
       "mergedBy": "Nampitambatra",
       "linkedIssues": "Olana mifandray",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Misokatra",
+      "issueClosed": "Mihidy",
       "unknownAuthor": "Mpanoratra tsy fantatra"
     }
   },

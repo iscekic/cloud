@@ -334,6 +334,7 @@
         "notMet": "ਪੂਰਾ ਨਹੀਂ ਹੋਇਆ",
         "unavailable": "ਮਰਜ ਲੋੜਾਂ ਉਪਲਬਧ ਨਹੀਂ",
         "noProtectionRules": "ਸ਼ਾਖਾ ਸੁਰੱਖਿਆ ਨਿਯਮ ਨਹੀਂ",
+        "noRequiredChecksOrApprovals": "ਕੋਈ ਲੋੜੀਂਦਾ ਚੈੱਕ ਜਾਂ ਪ੍ਰਵਾਨਗੀ ਨਹੀਂ",
         "queueTitle": "ਮਰਜ ਕਤਾਰ",
         "inQueue": "ਕਤਾਰ ਵਿੱਚ {{position}}",
         "positionUnknown": "ਸਥਿਤੀ ਅਣਜਾਣ",
@@ -651,6 +652,8 @@
       "mergedBy": "ਦੁਆਰਾ ਮਰਜ ਕੀਤਾ ਗਿਆ",
       "linkedIssues": "ਲਿੰਕ ਕੀਤੇ ਮੁੱਦੇ",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ਖੁੱਲ੍ਹੀ",
+      "issueClosed": "ਬੰਦ",
       "unknownAuthor": "ਅਣਜਾਣ ਲੇਖਕ"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "Hindi naabot",
         "unavailable": "Hindi available ang merge requirements",
         "noProtectionRules": "Walang branch protection rules",
+        "noRequiredChecksOrApprovals": "Walang kinakailangang check o pag-apruba",
         "queueTitle": "Merge queue",
         "inQueue": "{{position}} sa queue",
         "positionUnknown": "Hindi alam ang posisyon",
@@ -651,6 +652,8 @@
       "mergedBy": "Ni-merge ni",
       "linkedIssues": "Mga naka-link na issue",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Bukas",
+      "issueClosed": "Sarado",
       "unknownAuthor": "Hindi kilalang author"
     }
   },

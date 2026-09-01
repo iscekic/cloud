@@ -2899,6 +2899,7 @@
         "notMet": "Non soddisfatto",
         "unavailable": "Requisiti di unione non disponibili",
         "noProtectionRules": "Nessuna regola di protezione del ramo",
+        "noRequiredChecksOrApprovals": "Nessun controllo o approvazione obbligatoria",
         "queueTitle": "Coda di unione",
         "inQueue": "{{position}} in coda",
         "positionUnknown": "Posizione sconosciuta",
@@ -3048,6 +3049,8 @@
       "mergedBy": "Unita da",
       "linkedIssues": "Problemi collegati",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Aperta",
+      "issueClosed": "Chiusa",
       "unknownAuthor": "Autore sconosciuto"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "Не е изпълнено",
         "unavailable": "Изискванията за сливане са недостъпни",
         "noProtectionRules": "Няма правила за защита на клона",
+        "noRequiredChecksOrApprovals": "Няма задължителни проверки или одобрения",
         "queueTitle": "Опашка за сливане",
         "inQueue": "{{position}} в опашката",
         "positionUnknown": "Позицията е неизвестна",
@@ -651,6 +652,8 @@
       "mergedBy": "Слято от",
       "linkedIssues": "Свързани проблеми",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Отворен",
+      "issueClosed": "Затворено",
       "unknownAuthor": "Неизвестен автор"
     }
   },

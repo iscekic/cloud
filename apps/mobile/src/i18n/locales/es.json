@@ -2899,6 +2899,7 @@
         "notMet": "No cumplido",
         "unavailable": "Requisitos de fusión no disponibles",
         "noProtectionRules": "Sin reglas de protección de rama",
+        "noRequiredChecksOrApprovals": "Sin verificaciones ni aprobaciones obligatorias",
         "queueTitle": "Cola de fusión",
         "inQueue": "{{position}} en la cola",
         "positionUnknown": "Posición desconocida",
@@ -3048,6 +3049,8 @@
       "mergedBy": "Fusionada por",
       "linkedIssues": "Problemas vinculados",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Abierta",
+      "issueClosed": "Cerrada",
       "unknownAuthor": "Autor desconocido"
     }
   },

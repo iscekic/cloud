@@ -334,6 +334,7 @@
         "notMet": "Lama buuxin",
         "unavailable": "Shuruudaha isku-darka lama heli karo",
         "noProtectionRules": "Ma jiraan xeerar ilaalin laan",
+        "noRequiredChecksOrApprovals": "Ma jiraan baaris ama ansixin loo baahan yahay",
         "queueTitle": "Safka isku-darka",
         "inQueue": "{{position}} safka",
         "positionUnknown": "Boos la aqoon",
@@ -651,6 +652,8 @@
       "mergedBy": "Isku daray",
       "linkedIssues": "Arrimo isku xiran",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Furan",
+      "issueClosed": "Waa xiran",
       "unknownAuthor": "Qoraa aan la aqoon"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "Nie nagekom nie",
         "unavailable": "Samevoegvereistes onbeskikbaar",
         "noProtectionRules": "Geen takbeskermingsreëls nie",
+        "noRequiredChecksOrApprovals": "Geen vereiste kontroles of goedkeurings nie",
         "queueTitle": "Samevoegtou",
         "inQueue": "{{position}} in die tou",
         "positionUnknown": "Posisie onbekend",
@@ -651,6 +652,8 @@
       "mergedBy": "Saamgevoeg deur",
       "linkedIssues": "Gekoppelde kwessies",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Oop",
+      "issueClosed": "Gesluit",
       "unknownAuthor": "Onbekende outeur"
     }
   },

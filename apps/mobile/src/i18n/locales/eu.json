@@ -334,6 +334,7 @@
         "notMet": "Ez da bete",
         "unavailable": "Bateratze-eskakizunak ez daude erabilgarri",
         "noProtectionRules": "Ez dago adarra babesteko araurik",
+        "noRequiredChecksOrApprovals": "Ez dago beharrezko egiaztapenik edo onarpenik",
         "queueTitle": "Bateratze-ilara",
         "inQueue": "{{position}} ilaran",
         "positionUnknown": "Posizio ezezaguna",
@@ -651,6 +652,8 @@
       "mergedBy": "Bateratu duena",
       "linkedIssues": "Lotutako arazoak",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Irekita",
+      "issueClosed": "Itxita",
       "unknownAuthor": "Egile ezezaguna"
     }
   },

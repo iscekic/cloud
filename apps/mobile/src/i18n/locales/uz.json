@@ -334,6 +334,7 @@
         "notMet": "Bajarilmadi",
         "unavailable": "Birlashtirish talablari mavjud emas",
         "noProtectionRules": "Tarmoqni himoya qilish qoidalari yo‘q",
+        "noRequiredChecksOrApprovals": "Majburiy tekshiruvlar yoki tasdiqlashlar yo‘q",
         "queueTitle": "Birlashtirish navbati",
         "inQueue": "{{position}} navbatda",
         "positionUnknown": "Joylashuv noma’lum",
@@ -651,6 +652,8 @@
       "mergedBy": "Birlashtirgan",
       "linkedIssues": "Bog‘langan muammolar",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Ochiq",
+      "issueClosed": "Yopilgan",
       "unknownAuthor": "Noma'lum muallif"
     }
   },

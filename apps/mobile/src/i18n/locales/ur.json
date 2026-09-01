@@ -334,6 +334,7 @@
         "notMet": "پورا نہیں ہوا",
         "unavailable": "انضمام کے تقاضے دستیاب نہیں",
         "noProtectionRules": "برانچ کے تحفظ کے قواعد نہیں",
+        "noRequiredChecksOrApprovals": "کوئی مطلوبہ جانچ یا منظوری نہیں",
         "queueTitle": "انضمام کی قطار",
         "inQueue": "قطار میں {{position}}",
         "positionUnknown": "مقام نامعلوم",
@@ -651,6 +652,8 @@
       "mergedBy": "انضمام شدہ بذریعہ",
       "linkedIssues": "منسلک مسائل",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "کھلا",
+      "issueClosed": "بند",
       "unknownAuthor": "نامعلوم مصنف"
     }
   },

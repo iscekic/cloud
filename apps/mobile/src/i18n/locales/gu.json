@@ -334,6 +334,7 @@
         "notMet": "પૂર્ણ નથી",
         "unavailable": "મર્જ આવશ્યકતાઓ અનુપલબ્ધ",
         "noProtectionRules": "શાખા સુરક્ષા નિયમો નથી",
+        "noRequiredChecksOrApprovals": "કોઈ આવશ્યક તપાસ કે મંજૂરી નથી",
         "queueTitle": "મર્જ કતાર",
         "inQueue": "કતારમાં {{position}}",
         "positionUnknown": "સ્થિતિ અજાણી",
@@ -651,6 +652,8 @@
       "mergedBy": "દ્વારા મર્જ કરેલ",
       "linkedIssues": "લિંક કરેલી સમસ્યાઓ",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ખુલ્લું",
+      "issueClosed": "બંધ",
       "unknownAuthor": "અજાણ્યો લેખક"
     }
   },

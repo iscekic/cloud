@@ -334,6 +334,7 @@
         "notMet": "Не е исполнето",
         "unavailable": "Барањата за спојување се недостапни",
         "noProtectionRules": "Нема правила за заштита на гранка",
+        "noRequiredChecksOrApprovals": "Нема задолжителни проверки или одобрувања",
         "queueTitle": "Ред за спојување",
         "inQueue": "{{position}} во редот",
         "positionUnknown": "Непозната позиција",
@@ -651,6 +652,8 @@
       "mergedBy": "Споено од",
       "linkedIssues": "Поврзани проблеми",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Отворено",
+      "issueClosed": "Затворено",
       "unknownAuthor": "Непознат автор"
     }
   },

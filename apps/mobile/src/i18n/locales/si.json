@@ -334,6 +334,7 @@
         "notMet": "සම්පූර්ණ වී නැත",
         "unavailable": "ඒකාබද්ධ කිරීමේ අවශ්‍යතා ලබාගත නොහැක",
         "noProtectionRules": "ශාඛා ආරක්ෂණ නීති නැත",
+        "noRequiredChecksOrApprovals": "අවශ්ය පරීක්ෂා හෝ අනුමත කිරීම් නැත",
         "queueTitle": "ඒකාබද්ධ කිරීමේ පෝලිම",
         "inQueue": "පෝලිමේ {{position}}",
         "positionUnknown": "ස්ථානය නොදනී",
@@ -651,6 +652,8 @@
       "mergedBy": "විසින් ඒකාබද්ධ කර ඇත",
       "linkedIssues": "සම්බන්ධිත ගැටළු",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "විවෘත",
+      "issueClosed": "වසා ඇත",
       "unknownAuthor": "නොදන්නා කතෘ"
     }
   },

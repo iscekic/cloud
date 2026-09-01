@@ -334,6 +334,7 @@
         "notMet": "Tidak dipenuhi",
         "unavailable": "Keperluan penggabungan tidak tersedia",
         "noProtectionRules": "Tiada peraturan perlindungan cabang",
+        "noRequiredChecksOrApprovals": "Tiada semakan atau kelulusan yang diperlukan",
         "queueTitle": "Barisan penggabungan",
         "inQueue": "{{position}} dalam barisan",
         "positionUnknown": "Kedudukan tidak diketahui",
@@ -651,6 +652,8 @@
       "mergedBy": "Digabungkan oleh",
       "linkedIssues": "Isu berpaut",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Terbuka",
+      "issueClosed": "Ditutup",
       "unknownAuthor": "Pengarang tidak diketahui"
     }
   },

@@ -336,6 +336,7 @@
         "notMet": "No assolit",
         "unavailable": "Requisits de fusió no disponibles",
         "noProtectionRules": "Sense regles de protecció de la branca",
+        "noRequiredChecksOrApprovals": "Sense comprovacions ni aprovacions obligatòries",
         "queueTitle": "Cua de fusió",
         "inQueue": "{{position}} a la cua",
         "positionUnknown": "Posició desconeguda",
@@ -658,6 +659,8 @@
       "mergedBy": "Fusionada per",
       "linkedIssues": "Problemes vinculats",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Oberta",
+      "issueClosed": "Tancada",
       "unknownAuthor": "Autor desconegut"
     }
   },

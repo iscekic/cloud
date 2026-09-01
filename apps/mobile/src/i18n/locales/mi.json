@@ -334,6 +334,7 @@
         "notMet": "Kāore i tutuki",
         "unavailable": "Kāore i te wātea ngā whakaritenga hanumi",
         "noProtectionRules": "Kāore he ture ārai peka",
+        "noRequiredChecksOrApprovals": "Kāore he arowhai, he whakaaetanga rānei e hiahiatia ana",
         "queueTitle": "Rārangi hanumi",
         "inQueue": "{{position}} i te rārangi",
         "positionUnknown": "Tūnga kāore i mōhiotia",
@@ -651,6 +652,8 @@
       "mergedBy": "Nā te tangata i hanumi",
       "linkedIssues": "Ngā take hono",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Tuwhera",
+      "issueClosed": "Kua kati",
       "unknownAuthor": "Kaituhi kāore e mōhiotia"
     }
   },

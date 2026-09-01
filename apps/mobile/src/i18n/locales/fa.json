@@ -334,6 +334,7 @@
         "notMet": "برآورده نشده",
         "unavailable": "الزام‌های ادغام در دسترس نیستند",
         "noProtectionRules": "قانون محافظت شاخه وجود ندارد",
+        "noRequiredChecksOrApprovals": "بررسی یا تأیید الزامی وجود ندارد",
         "queueTitle": "صف ادغام",
         "inQueue": "{{position}} در صف",
         "positionUnknown": "جایگاه نامشخص",
@@ -651,6 +652,8 @@
       "mergedBy": "ادغام توسط",
       "linkedIssues": "مشکلات پیوندشده",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "باز",
+      "issueClosed": "بسته",
       "unknownAuthor": "نویسندهٔ ناشناس"
     }
   },

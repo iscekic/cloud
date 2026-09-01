@@ -2882,6 +2882,7 @@
         "notMet": "पूरा नहीं हुआ",
         "unavailable": "मर्ज आवश्यकताएँ अनुपलब्ध",
         "noProtectionRules": "कोई शाखा सुरक्षा नियम नहीं",
+        "noRequiredChecksOrApprovals": "कोई आवश्यक जाँच या स्वीकृति नहीं",
         "queueTitle": "मर्ज कतार",
         "inQueue": "कतार में {{position}}",
         "positionUnknown": "स्थिति अज्ञात",
@@ -3028,6 +3029,8 @@
       "mergedBy": "के द्वारा मर्ज किया गया",
       "linkedIssues": "लिंक किए गए मुद्दे",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "खुला",
+      "issueClosed": "बंद",
       "unknownAuthor": "अज्ञात लेखक"
     }
   },

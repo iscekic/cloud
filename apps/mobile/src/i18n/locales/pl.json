@@ -2916,6 +2916,7 @@
         "notMet": "Niespełnione",
         "unavailable": "Wymagania scalania niedostępne",
         "noProtectionRules": "Brak reguł ochrony gałęzi",
+        "noRequiredChecksOrApprovals": "Brak wymaganych kontroli lub zatwierdzeń",
         "queueTitle": "Kolejka scalania",
         "inQueue": "{{position}} w kolejce",
         "positionUnknown": "Nieznana pozycja",
@@ -3068,6 +3069,8 @@
       "mergedBy": "Scalone przez",
       "linkedIssues": "Powiązane zgłoszenia",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Otwarty",
+      "issueClosed": "Zamknięty",
       "unknownAuthor": "Nieznany autor"
     }
   },

@@ -2916,6 +2916,7 @@
         "notMet": "Не выполнено",
         "unavailable": "Требования к слиянию недоступны",
         "noProtectionRules": "Нет правил защиты ветки",
+        "noRequiredChecksOrApprovals": "Нет обязательных проверок или одобрений",
         "queueTitle": "Очередь слияния",
         "inQueue": "{{position}} в очереди",
         "positionUnknown": "Позиция неизвестна",
@@ -3068,6 +3069,8 @@
       "mergedBy": "Слито",
       "linkedIssues": "Связанные задачи",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Открыт",
+      "issueClosed": "Закрыт",
       "unknownAuthor": "Неизвестный автор"
     }
   },

@@ -2882,6 +2882,7 @@
         "notMet": "未達です",
         "unavailable": "マージ要件を利用できません",
         "noProtectionRules": "ブランチ保護ルールはありません",
+        "noRequiredChecksOrApprovals": "必須のチェックや承認はありません",
         "queueTitle": "マージキュー",
         "inQueue": "キュー内{{position}}番目",
         "positionUnknown": "位置不明",
@@ -3028,6 +3029,8 @@
       "mergedBy": "マージしたユーザー",
       "linkedIssues": "リンクされたIssue",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "オープン",
+      "issueClosed": "クローズ済み",
       "unknownAuthor": "不明な作成者"
     }
   },

@@ -2882,6 +2882,7 @@
         "notMet": "未滿足",
         "unavailable": "合併要求無法使用",
         "noProtectionRules": "沒有分支保護規則",
+        "noRequiredChecksOrApprovals": "沒有必要的檢查或核准",
         "queueTitle": "合併佇列",
         "inQueue": "佇列中第 {{position}} 位",
         "positionUnknown": "位置未知",
@@ -3028,6 +3029,8 @@
       "mergedBy": "合併者",
       "linkedIssues": "關聯的議題",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "開啟",
+      "issueClosed": "已關閉",
       "unknownAuthor": "未知作者"
     }
   },

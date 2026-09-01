@@ -334,6 +334,7 @@
         "notMet": "ପୂରଣ ହୋଇନାହିଁ",
         "unavailable": "ମର୍ଜ ଆବଶ୍ୟକତାଗୁଡ଼ିକ ଉପଲବ୍ଧ ନାହିଁ",
         "noProtectionRules": "ଶାଖା ସୁରକ୍ଷା ନିୟମ ନାହିଁ",
+        "noRequiredChecksOrApprovals": "କୌଣସି ଆବଶ୍ୟକ ଯାଞ୍ଚ କିମ୍ବା ଅନୁମୋଦନ ନାହିଁ",
         "queueTitle": "ମର୍ଜ ଧାଡ଼ି",
         "inQueue": "ଧାଡ଼ିରେ {{position}}",
         "positionUnknown": "ସ୍ଥିତି ଅଜଣା",
@@ -651,6 +652,8 @@
       "mergedBy": "ଦ୍ୱାରା ମର୍ଜ କରାଯାଇଛି",
       "linkedIssues": "ଲିଙ୍କ ହୋଇଥିବା ସମସ୍ୟା",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ଖୋଲା",
+      "issueClosed": "ବନ୍ଦ",
       "unknownAuthor": "ଅଜ୍ଞାତ ଲେଖକ"
     }
   },

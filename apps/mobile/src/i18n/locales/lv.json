@@ -336,6 +336,7 @@
         "notMet": "Nav izpildīts",
         "unavailable": "Sapludināšanas prasības nav pieejamas",
         "noProtectionRules": "Nav zaru aizsardzības noteikumu",
+        "noRequiredChecksOrApprovals": "Nav obligātu pārbaužu vai apstiprinājumu",
         "queueTitle": "Sapludināšanas rinda",
         "inQueue": "{{position}} rindā",
         "positionUnknown": "Nezināma pozīcija",
@@ -658,6 +659,8 @@
       "mergedBy": "Sapludināja",
       "linkedIssues": "Saistītās problēmas",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Atvērts",
+      "issueClosed": "Slēgts",
       "unknownAuthor": "Nezināms autors"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "Ba a cimma ba",
         "unavailable": "Bukatun hadawa ba su samuwa",
         "noProtectionRules": "Babu dokokin kare reshe",
+        "noRequiredChecksOrApprovals": "Babu dubawa ko amincewa da ake buƙata",
         "queueTitle": "Layin hadawa",
         "inQueue": "{{position}} a layi",
         "positionUnknown": "Matsayi ba a sani ba",
@@ -651,6 +652,8 @@
       "mergedBy": "An haɗa ta",
       "linkedIssues": "Batutuwan da ke da alaƙa",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Buɗe",
+      "issueClosed": "An rufe",
       "unknownAuthor": "Marubucin da ba a sani ba"
     }
   },

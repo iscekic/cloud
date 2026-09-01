@@ -334,6 +334,7 @@
         "notMet": "Yerinə yetirilməyib",
         "unavailable": "Birləşdirmə tələbləri əlçatan deyil",
         "noProtectionRules": "Budaq qoruma qaydaları yoxdur",
+        "noRequiredChecksOrApprovals": "Tələb olunan yoxlamalar və ya razılıqlar yoxdur",
         "queueTitle": "Birləşdirmə növbəsi",
         "inQueue": "{{position}} növbədə",
         "positionUnknown": "Mövqe naməlumdur",
@@ -651,6 +652,8 @@
       "mergedBy": "Birləşdirən",
       "linkedIssues": "Əlaqəli məsələlər",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Açıq",
+      "issueClosed": "Bağlıdır",
       "unknownAuthor": "Naməlum müəllif"
     }
   },

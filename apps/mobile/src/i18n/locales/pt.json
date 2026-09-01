@@ -336,6 +336,7 @@
         "notMet": "Não cumprido",
         "unavailable": "Requisitos de fusão indisponíveis",
         "noProtectionRules": "Sem regras de proteção de ramo",
+        "noRequiredChecksOrApprovals": "Sem verificações nem aprovações obrigatórias",
         "queueTitle": "Fila de fusão",
         "inQueue": "{{position}} na fila",
         "positionUnknown": "Posição desconhecida",
@@ -658,6 +659,8 @@
       "mergedBy": "Fundido por",
       "linkedIssues": "Problemas ligados",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Aberto",
+      "issueClosed": "Fechado",
       "unknownAuthor": "Autor desconhecido"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "ยังไม่บรรลุ",
         "unavailable": "ข้อกำหนดการผสานไม่พร้อมใช้งาน",
         "noProtectionRules": "ไม่มีกฎป้องกันสาขา",
+        "noRequiredChecksOrApprovals": "ไม่มีการตรวจสอบหรือการอนุมัติที่จำเป็น",
         "queueTitle": "คิวผสาน",
         "inQueue": "{{position}} ในคิว",
         "positionUnknown": "ไม่ทราบตำแหน่ง",
@@ -651,6 +652,8 @@
       "mergedBy": "ผสานโดย",
       "linkedIssues": "ปัญหาเชื่อมโยง",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "เปิด",
+      "issueClosed": "ปิดแล้ว",
       "unknownAuthor": "ผู้เขียนที่ไม่รู้จัก"
     }
   },

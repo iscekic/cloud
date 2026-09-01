@@ -334,6 +334,7 @@
         "notMet": "Nem teljesült",
         "unavailable": "Az összevonási követelmények nem érhetők el",
         "noProtectionRules": "Nincsenek ágvédelmi szabályok",
+        "noRequiredChecksOrApprovals": "Nincsenek kötelező ellenőrzések vagy jóváhagyások",
         "queueTitle": "Összevonási sor",
         "inQueue": "{{position}} a sorban",
         "positionUnknown": "Ismeretlen pozíció",
@@ -651,6 +652,8 @@
       "mergedBy": "Összevonva általa",
       "linkedIssues": "Kapcsolódó hibajegyek",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Nyitott",
+      "issueClosed": "Lezárva",
       "unknownAuthor": "Ismeretlen szerző"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "جێبەجێ نەکراوە",
         "unavailable": "پێویستییەکانی یەکخستن بەردەست نین",
         "noProtectionRules": "هیچ یاسایەکی پاراستنی لق نییە",
+        "noRequiredChecksOrApprovals": "هیچ پشکنین یان پەسەندکردنێکی پێویست نییە",
         "queueTitle": "ڕیزی یەکخستن",
         "inQueue": "{{position}} لە ڕیز",
         "positionUnknown": "شوێن نادیارە",
@@ -651,6 +652,8 @@
       "mergedBy": "یەکخستراوە لەلایەن",
       "linkedIssues": "پرسە پەیوەندیدارەکان",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "کراوە",
+      "issueClosed": "داخراو",
       "unknownAuthor": "نووسەری نەناسراو"
     }
   },

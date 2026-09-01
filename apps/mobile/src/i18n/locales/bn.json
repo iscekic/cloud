@@ -334,6 +334,7 @@
         "notMet": "পূরণ হয়নি",
         "unavailable": "মার্জের প্রয়োজনীয়তা অনুপলব্ধ",
         "noProtectionRules": "শাখা সুরক্ষার কোনো নিয়ম নেই",
+        "noRequiredChecksOrApprovals": "কোনো আবশ্যক চেক বা অনুমোদন নেই",
         "queueTitle": "মার্জ সারি",
         "inQueue": "সারিতে {{position}}",
         "positionUnknown": "অবস্থান অজানা",
@@ -651,6 +652,8 @@
       "mergedBy": "মার্জ করেছেন",
       "linkedIssues": "সংযুক্ত সমস্যা",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "খোলা",
+      "issueClosed": "বন্ধ",
       "unknownAuthor": "অজানা লেখক"
     }
   },

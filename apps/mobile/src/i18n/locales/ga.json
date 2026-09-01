@@ -340,6 +340,7 @@
         "notMet": "Níor comhlíonadh",
         "unavailable": "Níl riachtanais chumaisc ar fáil",
         "noProtectionRules": "Níl rialacha cosanta brainse ann",
+        "noRequiredChecksOrApprovals": "Níl seiceálacha ná formheasanna riachtanacha ann",
         "queueTitle": "Ciú cumaisc",
         "inQueue": "{{position}} sa chiú",
         "positionUnknown": "Suíomh anaithnid",
@@ -672,6 +673,8 @@
       "mergedBy": "Cumascaithe ag",
       "linkedIssues": "Saincheisteanna nasctha",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Oscailte",
+      "issueClosed": "Dúnta",
       "unknownAuthor": "Údar anaithnid"
     }
   },

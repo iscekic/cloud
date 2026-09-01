@@ -334,6 +334,7 @@
         "notMet": "Pa atenn",
         "unavailable": "Kondisyon pou fusion pa disponib",
         "noProtectionRules": "Pa gen règ pwoteksyon branch",
+        "noRequiredChecksOrApprovals": "Pa gen tchèk oswa apwobasyon obligatwa",
         "queueTitle": "File fusion",
         "inQueue": "{{position}} nan file",
         "positionUnknown": "Pozisyon enkoni",
@@ -651,6 +652,8 @@
       "mergedBy": "Fizyonnen pa",
       "linkedIssues": "Pwoblèm lye",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Louvri",
+      "issueClosed": "Fèmen",
       "unknownAuthor": "Otè enkoni"
     }
   },

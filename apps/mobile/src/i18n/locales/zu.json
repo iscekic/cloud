@@ -334,6 +334,7 @@
         "notMet": "Akufinyelelwanga",
         "unavailable": "Izidingo zokuhlanganisa azitholakali",
         "noProtectionRules": "Ayikho imithetho yokuvikela igatsha",
+        "noRequiredChecksOrApprovals": "Azikho izidingo zokuhlola noma zokugunyaza",
         "queueTitle": "Uluhlu lokuhlanganisa",
         "inQueue": "{{position}} kulayini",
         "positionUnknown": "Isikhundla asaziwa",
@@ -651,6 +652,8 @@
       "mergedBy": "Kuhlanganiswe ngu",
       "linkedIssues": "Izinkinga ezixhunyiwe",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Kuvuliwe",
+      "issueClosed": "Kuvaliwe",
       "unknownAuthor": "Umbhali ongaziwa"
     }
   },

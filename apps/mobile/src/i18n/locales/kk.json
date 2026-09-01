@@ -334,6 +334,7 @@
         "notMet": "Орындалмады",
         "unavailable": "Біріктіру талаптары қолжетімсіз",
         "noProtectionRules": "Тармақты қорғау ережелері жоқ",
+        "noRequiredChecksOrApprovals": "Міндетті тексерулер немесе мақұлдаулар жоқ",
         "queueTitle": "Біріктіру кезегі",
         "inQueue": "{{position}} кезекте",
         "positionUnknown": "Орны белгісіз",
@@ -651,6 +652,8 @@
       "mergedBy": "Біріктірген",
       "linkedIssues": "Байланысты мәселелер",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Ашық",
+      "issueClosed": "Жабық",
       "unknownAuthor": "Белгісіз автор"
     }
   },

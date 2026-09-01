@@ -2882,6 +2882,7 @@
         "notMet": "Niet voldaan",
         "unavailable": "Vereisten voor samenvoegen niet beschikbaar",
         "noProtectionRules": "Geen regels voor branchbeveiliging",
+        "noRequiredChecksOrApprovals": "Geen vereiste checks of goedkeuringen",
         "queueTitle": "Samenvoegwachtrij",
         "inQueue": "{{position}} in wachtrij",
         "positionUnknown": "Positie onbekend",
@@ -3028,6 +3029,8 @@
       "mergedBy": "Samengevoegd door",
       "linkedIssues": "Gekoppelde issues",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Open",
+      "issueClosed": "Gesloten",
       "unknownAuthor": "Onbekende auteur"
     }
   },

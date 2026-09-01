@@ -334,6 +334,7 @@
         "notMet": "Δεν πληρείται",
         "unavailable": "Οι απαιτήσεις συγχώνευσης δεν είναι διαθέσιμες",
         "noProtectionRules": "Δεν υπάρχουν κανόνες προστασίας κλάδου",
+        "noRequiredChecksOrApprovals": "Δεν απαιτούνται έλεγχοι ή εγκρίσεις",
         "queueTitle": "Ουρά συγχώνευσης",
         "inQueue": "{{position}} στην ουρά",
         "positionUnknown": "Άγνωστη θέση",
@@ -651,6 +652,8 @@
       "mergedBy": "Συγχωνεύτηκε από",
       "linkedIssues": "Συνδεδεμένα ζητήματα",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Ανοιχτό",
+      "issueClosed": "Κλειστό",
       "unknownAuthor": "Άγνωστος συγγραφέας"
     }
   },

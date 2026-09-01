@@ -334,6 +334,7 @@
         "notMet": "Չի բավարարվել",
         "unavailable": "Միաձուլման պահանջներն անհասանելի են",
         "noProtectionRules": "Ճյուղի պաշտպանության կանոններ չկան",
+        "noRequiredChecksOrApprovals": "Պարտադիր ստուգումներ կամ հաստատումներ չկան",
         "queueTitle": "Միաձուլման հերթ",
         "inQueue": "{{position}} հերթում",
         "positionUnknown": "Դիրքն անհայտ է",
@@ -651,6 +652,8 @@
       "mergedBy": "Միավորել է",
       "linkedIssues": "Կապված խնդիրներ",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Բաց",
+      "issueClosed": "Փակ",
       "unknownAuthor": "Անհայտ հեղինակ"
     }
   },

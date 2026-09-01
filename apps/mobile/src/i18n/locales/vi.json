@@ -2882,6 +2882,7 @@
         "notMet": "Chưa đáp ứng",
         "unavailable": "Không có yêu cầu gộp",
         "noProtectionRules": "Không có quy tắc bảo vệ nhánh",
+        "noRequiredChecksOrApprovals": "Không có kiểm tra hoặc phê duyệt bắt buộc",
         "queueTitle": "Hàng đợi gộp",
         "inQueue": "{{position}} trong hàng đợi",
         "positionUnknown": "Không rõ vị trí",
@@ -3028,6 +3029,8 @@
       "mergedBy": "Được gộp bởi",
       "linkedIssues": "Vấn đề liên kết",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Đang mở",
+      "issueClosed": "Đã đóng",
       "unknownAuthor": "Tác giả không xác định"
     }
   },

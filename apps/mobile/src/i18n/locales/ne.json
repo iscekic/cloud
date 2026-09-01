@@ -334,6 +334,7 @@
         "notMet": "पूरा भएको छैन",
         "unavailable": "मर्ज आवश्यकताहरू उपलब्ध छैनन्",
         "noProtectionRules": "शाखा सुरक्षा नियमहरू छैनन्",
+        "noRequiredChecksOrApprovals": "कुनै आवश्यक जाँच वा स्वीकृति छैन",
         "queueTitle": "मर्ज लाम",
         "inQueue": "लाममा {{position}}",
         "positionUnknown": "स्थान अज्ञात",
@@ -651,6 +652,8 @@
       "mergedBy": "ले मर्ज गरे",
       "linkedIssues": "लिंक गरिएका समस्याहरू",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "खुला",
+      "issueClosed": "बन्द",
       "unknownAuthor": "अज्ञात लेखक"
     }
   },

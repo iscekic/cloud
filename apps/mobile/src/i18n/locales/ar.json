@@ -2950,6 +2950,7 @@
         "notMet": "غير مستوفٍ",
         "unavailable": "متطلبات الدمج غير متاحة",
         "noProtectionRules": "لا توجد قواعد حماية للفرع",
+        "noRequiredChecksOrApprovals": "لا توجد فحوصات أو موافقات مطلوبة",
         "queueTitle": "قائمة انتظار الدمج",
         "inQueue": "{{position}} في قائمة الانتظار",
         "positionUnknown": "الموضع غير معروف",
@@ -3108,6 +3109,8 @@
       "mergedBy": "دمجه",
       "linkedIssues": "مشكلات مرتبطة",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "مفتوح",
+      "issueClosed": "مغلق",
       "unknownAuthor": "مؤلف غير معروف"
     }
   },

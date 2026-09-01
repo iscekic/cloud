@@ -336,6 +336,7 @@
         "notMet": "Neîndeplinit",
         "unavailable": "Cerințele de fuzionare sunt indisponibile",
         "noProtectionRules": "Nicio regulă de protecție a ramurii",
+        "noRequiredChecksOrApprovals": "Nicio verificare sau aprobare obligatorie",
         "queueTitle": "Coadă de fuzionare",
         "inQueue": "{{position}} în coadă",
         "positionUnknown": "Poziție necunoscută",
@@ -658,6 +659,8 @@
       "mergedBy": "Fuzionat de",
       "linkedIssues": "Probleme legate",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Deschis",
+      "issueClosed": "Închis",
       "unknownAuthor": "Autor necunoscut"
     }
   },

@@ -334,6 +334,7 @@
         "notMet": "ಪೂರೈಸಿಲ್ಲ",
         "unavailable": "ಮರ್ಜ್ ಅಗತ್ಯತೆಗಳು ಲಭ್ಯವಿಲ್ಲ",
         "noProtectionRules": "ಶಾಖಾ ರಕ್ಷಣೆ ನಿಯಮಗಳಿಲ್ಲ",
+        "noRequiredChecksOrApprovals": "ಯಾವುದೇ ಅಗತ್ಯ ಪರಿಶೀಲನೆಗಳು ಅಥವಾ ಅನುಮೋದನೆಗಳಿಲ್ಲ",
         "queueTitle": "ಮರ್ಜ್ ಸರತಿ",
         "inQueue": "ಸರತಿಯಲ್ಲಿ {{position}}",
         "positionUnknown": "ಸ್ಥಾನ ತಿಳಿದಿಲ್ಲ",
@@ -651,6 +652,8 @@
       "mergedBy": "ಇವರಿಂದ ಮರ್ಜ್ ಮಾಡಲಾಗಿದೆ",
       "linkedIssues": "ಲಿಂಕ್ ಮಾಡಿದ ಸಮಸ್ಯೆಗಳು",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "ತೆರೆದಿದೆ",
+      "issueClosed": "ಮುಚ್ಚಲಾಗಿದೆ",
       "unknownAuthor": "ಅಜ್ಞಾತ ಲೇಖಕ"
     }
   },

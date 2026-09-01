@@ -2882,6 +2882,7 @@
         "notMet": "Nicht erfüllt",
         "unavailable": "Merge-Anforderungen nicht verfügbar",
         "noProtectionRules": "Keine Branch-Schutzregeln",
+        "noRequiredChecksOrApprovals": "Keine erforderlichen Checks oder Freigaben",
         "queueTitle": "Merge-Warteschlange",
         "inQueue": "{{position}} in der Warteschlange",
         "positionUnknown": "Position unbekannt",
@@ -3028,6 +3029,8 @@
       "mergedBy": "Zusammengeführt von",
       "linkedIssues": "Verknüpfte Issues",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Offen",
+      "issueClosed": "Geschlossen",
       "unknownAuthor": "Unbekannter Autor"
     }
   },

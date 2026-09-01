@@ -338,6 +338,7 @@
         "notMet": "Nesplnené",
         "unavailable": "Požiadavky na zlúčenie nie sú dostupné",
         "noProtectionRules": "Žiadne pravidlá ochrany vetvy",
+        "noRequiredChecksOrApprovals": "Žiadne povinné kontroly ani schválenia",
         "queueTitle": "Front zlúčenia",
         "inQueue": "{{position}} vo fronte",
         "positionUnknown": "Neznáma pozícia",
@@ -665,6 +666,8 @@
       "mergedBy": "Zlúčené používateľom",
       "linkedIssues": "Prepojené problémy",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Otvorené",
+      "issueClosed": "Zatvorené",
       "unknownAuthor": "Neznámy autor"
     }
   },

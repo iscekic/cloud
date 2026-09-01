@@ -338,6 +338,7 @@
         "notMet": "Не выканана",
         "unavailable": "Патрабаванні да зліцця недаступныя",
         "noProtectionRules": "Няма правіл абароны галіны",
+        "noRequiredChecksOrApprovals": "Няма абавязковых праверак або пацвярджэнняў",
         "queueTitle": "Чарга зліцця",
         "inQueue": "{{position}} у чарзе",
         "positionUnknown": "Пазіцыя невядомая",
@@ -665,6 +666,8 @@
       "mergedBy": "Зліў",
       "linkedIssues": "Звязаныя пытанні",
       "linkedIssueA11y": "#{{number}} {{title}}",
+      "issueOpen": "Адкрыты",
+      "issueClosed": "Закрыты",
       "unknownAuthor": "Невядомы аўтар"
     }
   },
