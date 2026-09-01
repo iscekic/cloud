@@ -2464,7 +2464,8 @@
       "noMessages": "Subagent mesajı yoxdur",
       "noMessagesDescription": "Bu subagent sessiyası transkript yaratmadan başa çatdı.",
       "loading": "Subagent sessiyası yüklənir",
-      "loadingDescription": "Subagent mesajları gözlənilir…"
+      "loadingDescription": "Subagent mesajları gözlənilir…",
+      "refreshing": "Yenilənir…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

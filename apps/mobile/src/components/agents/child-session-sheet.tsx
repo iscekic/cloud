@@ -187,7 +187,7 @@ export function ChildSessionSheet({
         <View className="flex-row items-center gap-2 border-b border-border px-4 py-2">
           <ActivityIndicator size="small" color={colors.mutedForeground} />
           <Text className="text-xs text-muted-foreground">
-            {t('agentChat.childSessionSheet.loading')}
+            {t('agentChat.childSessionSheet.refreshing')}
           </Text>
         </View>
       ) : null}

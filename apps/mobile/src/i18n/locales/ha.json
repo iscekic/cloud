@@ -2464,7 +2464,8 @@
       "noMessages": "Babu saƙonnin subagent",
       "noMessagesDescription": "Wannan zaman subagent ya ƙare ba tare da samar da tarihin tattaunawa ba.",
       "loading": "Ana buɗe zaman subagent",
-      "loadingDescription": "Jiran saƙonnin subagent…"
+      "loadingDescription": "Jiran saƙonnin subagent…",
+      "refreshing": "Ana sabuntawa…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

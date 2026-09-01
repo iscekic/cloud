@@ -2496,7 +2496,8 @@
       "noMessages": "Няма паведамленняў падагента",
       "noMessagesDescription": "Гэты сеанс падагента завяршыўся без стварэння транскрыпта.",
       "loading": "Загрузка сеанса падагента",
-      "loadingDescription": "Чаканне паведамленняў падагента…"
+      "loadingDescription": "Чаканне паведамленняў падагента…",
+      "refreshing": "Абнаўленне…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

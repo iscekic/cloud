@@ -2010,7 +2010,8 @@
       "noMessages": "没有子代理消息",
       "noMessagesDescription": "此子代理会话已完成，但未生成记录。",
       "loading": "正在加载子代理会话",
-      "loadingDescription": "正在等待子代理消息…"
+      "loadingDescription": "正在等待子代理消息…",
+      "refreshing": "正在刷新…"
     },
     "messageBubble": {
       "failure": "{{title}}。",

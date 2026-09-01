@@ -2464,7 +2464,8 @@
       "noMessages": "કોઈ સબએજન્ટ સંદેશ નથી",
       "noMessagesDescription": "આ સબએજન્ટ સત્ર ટ્રાન્સક્રિપ્ટ ઉત્પન્ન કર્યા વિના પૂર્ણ થયું.",
       "loading": "સબએજન્ટ સત્ર લોડ થઈ રહ્યું છે",
-      "loadingDescription": "સબએજન્ટ સંદેશાઓની રાહ જોઈ રહ્યું છે…"
+      "loadingDescription": "સબએજન્ટ સંદેશાઓની રાહ જોઈ રહ્યું છે…",
+      "refreshing": "રિફ્રેશ થઈ રહ્યું છે…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

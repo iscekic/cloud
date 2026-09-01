@@ -2464,7 +2464,8 @@
       "noMessages": "ਕੋਈ ਸਬਏਜੰਟ ਸੁਨੇਹਾ ਨਹੀਂ",
       "noMessagesDescription": "ਇਹ ਸਬਏਜੰਟ ਸੈਸ਼ਨ ਟਰਾਂਸਕ੍ਰਿਪਟ ਬਣਾਏ ਬਿਨਾਂ ਪੂਰਾ ਹੋ ਗਿਆ।",
       "loading": "ਸਬਏਜੰਟ ਸੈਸ਼ਨ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ",
-      "loadingDescription": "ਸਬਏਜੰਟ ਸੁਨੇਹਿਆਂ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ…"
+      "loadingDescription": "ਸਬਏਜੰਟ ਸੁਨੇਹਿਆਂ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ…",
+      "refreshing": "ਰਿਫ੍ਰੈਸ਼ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
     },
     "messageBubble": {
       "failure": "{{title}}।",

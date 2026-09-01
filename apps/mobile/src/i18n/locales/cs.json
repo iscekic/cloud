@@ -2496,7 +2496,8 @@
       "noMessages": "Žádné zprávy subagenta",
       "noMessagesDescription": "Tato relace subagenta skončila bez vytvoření přepisu.",
       "loading": "Načítá se relace subagenta",
-      "loadingDescription": "Čeká se na zprávy subagenta…"
+      "loadingDescription": "Čeká se na zprávy subagenta…",
+      "refreshing": "Obnovování…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

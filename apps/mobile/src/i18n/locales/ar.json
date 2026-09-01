@@ -2046,7 +2046,8 @@
       "noMessages": "لا توجد رسائل وكيل فرعي",
       "noMessagesDescription": "اكتملت جلسة الوكيل الفرعي هذه دون إنشاء نص.",
       "loading": "جارٍ تحميل جلسة الوكيل الفرعي",
-      "loadingDescription": "في انتظار رسائل الوكيل الفرعي…"
+      "loadingDescription": "في انتظار رسائل الوكيل الفرعي…",
+      "refreshing": "جارٍ التحديث…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

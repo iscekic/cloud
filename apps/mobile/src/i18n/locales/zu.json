@@ -2464,7 +2464,8 @@
       "noMessages": "Azikho imilayezo ye-subagent",
       "noMessagesDescription": "Lesi seshini ye-subagent siqedile ngaphandle kokukhiqiza umbhalo.",
       "loading": "Ilayisha iseshini ye-subagent",
-      "loadingDescription": "Ilinde imilayezo ye-subagent…"
+      "loadingDescription": "Ilinde imilayezo ye-subagent…",
+      "refreshing": "Ivuselela…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

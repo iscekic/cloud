@@ -2464,7 +2464,8 @@
       "noMessages": "Alaseansi sõnumeid pole",
       "noMessagesDescription": "See alaseansi seanss lõppes ilma transkripti loomata.",
       "loading": "Alaseansi seansi laadimine",
-      "loadingDescription": "Ootan alaseansi sõnumeid…"
+      "loadingDescription": "Ootan alaseansi sõnumeid…",
+      "refreshing": "Värskendamine…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

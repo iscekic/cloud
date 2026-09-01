@@ -2464,7 +2464,8 @@
       "noMessages": "ບໍ່ມີຂໍ້ຄວາມຂອງຕົວແທນຍ່ອຍ",
       "noMessagesDescription": "ເຊດຊັນຕົວແທນຍ່ອຍນີ້ສຳເລັດໂດຍບໍ່ມີບັນທຶກການສົນທະນາ.",
       "loading": "ກຳລັງໂຫລດເຊດຊັນຕົວແທນຍ່ອຍ",
-      "loadingDescription": "ລໍຖ້າຂໍ້ຄວາມຂອງຕົວແທນຍ່ອຍ…"
+      "loadingDescription": "ລໍຖ້າຂໍ້ຄວາມຂອງຕົວແທນຍ່ອຍ…",
+      "refreshing": "ກຳລັງຣີເຟຣຊ…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

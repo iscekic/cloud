@@ -2464,7 +2464,8 @@
       "noMessages": "सबएजंट संदेश नाहीत",
       "noMessagesDescription": "या सबएजंट सत्राने ट्रान्सक्रिप्ट निर्माण न करता काम पूर्ण केले.",
       "loading": "सबएजंट सत्र लोड होत आहे",
-      "loadingDescription": "सबएजंट संदेशांची वाट पाहत आहे…"
+      "loadingDescription": "सबएजंट संदेशांची वाट पाहत आहे…",
+      "refreshing": "रिफ्रेश होत आहे…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

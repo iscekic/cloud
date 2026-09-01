@@ -2480,7 +2480,8 @@
       "noMessages": "Nema poruka podagenta",
       "noMessagesDescription": "Ova sesija podagenta završena je bez izrade transkripta.",
       "loading": "Učitavanje sesije podagenta",
-      "loadingDescription": "Čekanje na poruke podagenta…"
+      "loadingDescription": "Čekanje na poruke podagenta…",
+      "refreshing": "Osvježavanje…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

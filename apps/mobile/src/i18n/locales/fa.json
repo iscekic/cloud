@@ -2464,7 +2464,8 @@
       "noMessages": "پیامی از زیرعامل نیست",
       "noMessagesDescription": "این جلسه زیرعامل بدون تولید متن تکمیل شد.",
       "loading": "در حال بارگذاری جلسه زیرعامل",
-      "loadingDescription": "در انتظار پیام‌های زیرعامل…"
+      "loadingDescription": "در انتظار پیام‌های زیرعامل…",
+      "refreshing": "در حال بازخوانی…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

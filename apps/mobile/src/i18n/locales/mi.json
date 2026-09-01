@@ -2464,7 +2464,8 @@
       "noMessages": "Kāore he karere kaihoko-iti",
       "noMessagesDescription": "I oti tēnei wātū kaihoko-iti kāore i whakaputa he tuhinga kōrero.",
       "loading": "E uta ana i te wātū kaihoko-iti",
-      "loadingDescription": "E tatari ana ki ngā karere kaihoko-iti…"
+      "loadingDescription": "E tatari ana ki ngā karere kaihoko-iti…",
+      "refreshing": "E whakahou ana…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

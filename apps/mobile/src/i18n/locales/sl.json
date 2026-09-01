@@ -2496,7 +2496,8 @@
       "noMessages": "Ni sporočil podagenta",
       "noMessagesDescription": "Ta seja podagenta je bila končana brez ustvarjenega zapisa pogovora.",
       "loading": "Nalaganje seje podagenta",
-      "loadingDescription": "Čakanje na sporočila podagenta…"
+      "loadingDescription": "Čakanje na sporočila podagenta…",
+      "refreshing": "Osveževanje…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

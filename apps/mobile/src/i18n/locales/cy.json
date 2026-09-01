@@ -2528,7 +2528,8 @@
       "noMessages": "Dim negeseuon is-asiant",
       "noMessagesDescription": "Cwblhaodd y sesiwn is-asiant hwn heb gynhyrchu trawsgrifiad.",
       "loading": "Llwytho sesiwn is-asiant",
-      "loadingDescription": "Aros am negeseuon is-asiant…"
+      "loadingDescription": "Aros am negeseuon is-asiant…",
+      "refreshing": "Yn adnewyddu…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

@@ -2464,7 +2464,8 @@
       "noMessages": "ქვეაგენტის შეტყობინებები არ არის",
       "noMessagesDescription": "ეს ქვეაგენტის სესია დასრულდა ჩანაწერის წარმოქმნის გარეშე.",
       "loading": "ქვეაგენტის სესიის ჩატვირთვა",
-      "loadingDescription": "ქვეაგენტის შეტყობინებების მოლოდინი…"
+      "loadingDescription": "ქვეაგენტის შეტყობინებების მოლოდინი…",
+      "refreshing": "განახლება…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

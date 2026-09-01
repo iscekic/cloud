@@ -2464,7 +2464,8 @@
       "noMessages": "Walang subagent na mensahe",
       "noMessagesDescription": "Natapos ang subagent session na ito nang walang nalikhang transcript.",
       "loading": "Ni-load ang subagent session",
-      "loadingDescription": "Naghihintay ng subagent na mensahe…"
+      "loadingDescription": "Naghihintay ng subagent na mensahe…",
+      "refreshing": "Nire-refresh…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

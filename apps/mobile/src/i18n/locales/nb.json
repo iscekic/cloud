@@ -2464,7 +2464,8 @@
       "noMessages": "Ingen underagentmeldinger",
       "noMessagesDescription": "Denne underagentøkten ble fullført uten å produsere en utskrift.",
       "loading": "Laster underagentøkten",
-      "loadingDescription": "Venter på underagentmeldinger…"
+      "loadingDescription": "Venter på underagentmeldinger…",
+      "refreshing": "Oppdaterer…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

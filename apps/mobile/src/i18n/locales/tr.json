@@ -2010,7 +2010,8 @@
       "noMessages": "Alt ajan mesajı yok",
       "noMessagesDescription": "Bu alt ajan oturumu bir döküm üretmeden tamamlandı.",
       "loading": "Alt ajan oturumu yükleniyor",
-      "loadingDescription": "Alt ajan mesajları bekleniyor…"
+      "loadingDescription": "Alt ajan mesajları bekleniyor…",
+      "refreshing": "Yenileniyor…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

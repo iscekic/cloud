@@ -2464,7 +2464,8 @@
       "noMessages": "උපඒජන්ත පණිවිඩ නොමැත",
       "noMessagesDescription": "මෙම උපඒජන්ත සැසිය පිටපතක් නිපදවීමෙන් තොරව අවසන් විය.",
       "loading": "උපඒජන්ත සැසිය පූරණය වෙමින්",
-      "loadingDescription": "උපඒජන්ත පණිවිඩ එනතුරු බලා සිටී…"
+      "loadingDescription": "උපඒජන්ත පණිවිඩ එනතුරු බලා සිටී…",
+      "refreshing": "නැවුම් කරමින්…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

@@ -2464,7 +2464,8 @@
       "noMessages": "Нема пораки од субагент",
       "noMessagesDescription": "Оваа сесија на субагент заврши без да создаде транскрипт.",
       "loading": "Вчитување на сесијата на субагент",
-      "loadingDescription": "Чекање на пораки од субагент…"
+      "loadingDescription": "Чекање на пораки од субагент…",
+      "refreshing": "Освежување…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

@@ -2480,7 +2480,8 @@
       "noMessages": "No hi ha missatges de subagent",
       "noMessagesDescription": "Aquesta sessió de subagent s'ha completat sense generar cap transcripció.",
       "loading": "Carregant la sessió de subagent",
-      "loadingDescription": "Esperant missatges de subagent…"
+      "loadingDescription": "Esperant missatges de subagent…",
+      "refreshing": "Actualitzant…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

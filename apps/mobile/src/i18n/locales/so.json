@@ -2464,7 +2464,8 @@
       "noMessages": "Ma jiro fariin subagent ah",
       "noMessagesDescription": "Kalfadhigan subagent wuxuu dhammaaday isagoon soo saarin qoraal.",
       "loading": "Soo dejinaya kalfadhiga subagent",
-      "loadingDescription": "Sugitaanka fariimaha subagent…"
+      "loadingDescription": "Sugitaanka fariimaha subagent…",
+      "refreshing": "Cusboonaysiinaya…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

@@ -2464,7 +2464,8 @@
       "noMessages": "Non hai mensaxes de subaxente",
       "noMessagesDescription": "Esta sesión de subaxente rematou sen producir unha transcrición.",
       "loading": "Cargando a sesión de subaxente",
-      "loadingDescription": "Agardando por mensaxes de subaxente…"
+      "loadingDescription": "Agardando por mensaxes de subaxente…",
+      "refreshing": "Actualizando…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

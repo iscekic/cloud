@@ -2464,7 +2464,8 @@
       "noMessages": "کوئی ذیلی ایجنٹ پیغامات نہیں",
       "noMessagesDescription": "یہ ذیلی ایجنٹ سیشن ٹرانسکرپٹ بنائے بغیر مکمل ہو گیا۔",
       "loading": "ذیلی ایجنٹ سیشن لوڈ ہو رہا ہے",
-      "loadingDescription": "ذیلی ایجنٹ پیغامات کا انتظار…"
+      "loadingDescription": "ذیلی ایجنٹ پیغامات کا انتظار…",
+      "refreshing": "تازہ ہو رہا ہے…"
     },
     "messageBubble": {
       "failure": "{{title}}۔",

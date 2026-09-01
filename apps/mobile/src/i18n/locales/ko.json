@@ -2010,7 +2010,8 @@
       "noMessages": "하위 에이전트 메시지 없음",
       "noMessagesDescription": "이 하위 에이전트 세션은 기록을 생성하지 않고 완료되었습니다.",
       "loading": "하위 에이전트 세션 로드 중",
-      "loadingDescription": "하위 에이전트 메시지 대기 중…"
+      "loadingDescription": "하위 에이전트 메시지 대기 중…",
+      "refreshing": "새로 고치는 중…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

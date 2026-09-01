@@ -1935,7 +1935,8 @@
       "noMessages": "Aucun message du sous-agent",
       "noMessagesDescription": "Cette session de sous-agent s'est terminée sans produire de transcription.",
       "loading": "Chargement de la session du sous-agent",
-      "loadingDescription": "En attente des messages du sous-agent…"
+      "loadingDescription": "En attente des messages du sous-agent…",
+      "refreshing": "Actualisation…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

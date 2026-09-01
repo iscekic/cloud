@@ -2010,7 +2010,8 @@
       "noMessages": "Geen subagentberichten",
       "noMessagesDescription": "Deze subagentsessie is voltooid zonder transcript.",
       "loading": "Subagentsessie laden",
-      "loadingDescription": "Wachten op subagentberichten…"
+      "loadingDescription": "Wachten op subagentberichten…",
+      "refreshing": "Verversen…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

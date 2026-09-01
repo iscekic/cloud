@@ -2464,7 +2464,8 @@
       "noMessages": "የንዑስ-ወኪል መልእክቶች የሉም",
       "noMessagesDescription": "ይህ የንዑስ-ወኪል ክፍለ-ጊዜ የውይይት ቅጅ ሳያወጣ ተጠናቋል።",
       "loading": "የንዑስ-ወኪል ክፍለ-ጊዜን በመጫን ላይ",
-      "loadingDescription": "የንዑስ-ወኪል መልእክቶችን በመጠበቅ ላይ…"
+      "loadingDescription": "የንዑስ-ወኪል መልእክቶችን በመጠበቅ ላይ…",
+      "refreshing": "በማደስ ላይ…"
     },
     "messageBubble": {
       "failure": "{{title}}።",

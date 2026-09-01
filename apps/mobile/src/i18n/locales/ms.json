@@ -2464,7 +2464,8 @@
       "noMessages": "Tiada mesej subejen",
       "noMessagesDescription": "Sesi subejen ini selesai tanpa menghasilkan transkrip.",
       "loading": "Memuatkan sesi subejen",
-      "loadingDescription": "Menunggu mesej subejen…"
+      "loadingDescription": "Menunggu mesej subejen…",
+      "refreshing": "Menyegarkan…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

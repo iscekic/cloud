@@ -2464,7 +2464,8 @@
       "noMessages": "Inga underagentmeddelanden",
       "noMessagesDescription": "Denna undersessionssession avslutades utan att producera en utskrift.",
       "loading": "Läser in undersessionssession",
-      "loadingDescription": "Väntar på underagentmeddelanden…"
+      "loadingDescription": "Väntar på underagentmeddelanden…",
+      "refreshing": "Uppdaterar…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

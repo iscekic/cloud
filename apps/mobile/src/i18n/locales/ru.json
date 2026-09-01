@@ -2028,7 +2028,8 @@
       "noMessages": "Нет сообщений субагента",
       "noMessagesDescription": "Этот сеанс субагента завершился без создания протокола.",
       "loading": "Загрузка сеанса субагента",
-      "loadingDescription": "Ожидание сообщений субагента…"
+      "loadingDescription": "Ожидание сообщений субагента…",
+      "refreshing": "Обновление…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

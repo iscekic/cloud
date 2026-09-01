@@ -2494,7 +2494,8 @@
       "noMessages": "No subagent messages",
       "noMessagesDescription": "This subagent session completed without producing a transcript.",
       "loading": "Loading subagent session",
-      "loadingDescription": "Waiting for subagent messages…"
+      "loadingDescription": "Waiting for subagent messages…",
+      "refreshing": "Refreshing…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

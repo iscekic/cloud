@@ -2001,7 +2001,8 @@
       "noMessages": "Nessun messaggio del subagente",
       "noMessagesDescription": "Questa sessione del subagente è terminata senza produrre una trascrizione.",
       "loading": "Caricamento della sessione del subagente",
-      "loadingDescription": "In attesa dei messaggi del subagente…"
+      "loadingDescription": "In attesa dei messaggi del subagente…",
+      "refreshing": "Aggiornamento…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

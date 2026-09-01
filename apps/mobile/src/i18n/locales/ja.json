@@ -2010,7 +2010,8 @@
       "noMessages": "サブエージェントのメッセージがありません",
       "noMessagesDescription": "このサブエージェントセッションはトランスクリプトを生成せずに完了しました。",
       "loading": "サブエージェントセッションを読み込み中",
-      "loadingDescription": "サブエージェントのメッセージを待機中…"
+      "loadingDescription": "サブエージェントのメッセージを待機中…",
+      "refreshing": "更新中…"
     },
     "messageBubble": {
       "failure": "{{title}}。",

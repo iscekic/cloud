@@ -2028,7 +2028,8 @@
       "noMessages": "Brak wiadomości podagenta",
       "noMessagesDescription": "Ta sesja podagenta zakończyła się bez utworzenia transkryptu.",
       "loading": "Ładowanie sesji podagenta",
-      "loadingDescription": "Oczekiwanie na wiadomości podagenta…"
+      "loadingDescription": "Oczekiwanie na wiadomości podagenta…",
+      "refreshing": "Odświeżanie…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

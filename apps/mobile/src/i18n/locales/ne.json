@@ -2464,7 +2464,8 @@
       "noMessages": "कुनै सबएजेन्ट सन्देश छैन",
       "noMessagesDescription": "यो सबएजेन्ट सत्र ट्रान्सक्रिप्ट नउत्पादन गरी समाप्त भयो।",
       "loading": "सबएजेन्ट सत्र लोड हुँदै",
-      "loadingDescription": "सबएजेन्ट सन्देशहरूको पर्खाइमा…"
+      "loadingDescription": "सबएजेन्ट सन्देशहरूको पर्खाइमा…",
+      "refreshing": "रिफ्रेस हुँदै…"
     },
     "messageBubble": {
       "failure": "{{title}}।",

@@ -2464,7 +2464,8 @@
       "noMessages": "គ្មានសារភ្នាក់ងាររងទេ",
       "noMessagesDescription": "វគ្គភ្នាក់ងាររងនេះបានបញ្ចប់ដោយមិនបង្កើតប្រតិចារិក។",
       "loading": "កំពុងផ្ទុកវគ្គភ្នាក់ងាររង",
-      "loadingDescription": "កំពុងរង់ចាំសារភ្នាក់ងាររង…"
+      "loadingDescription": "កំពុងរង់ចាំសារភ្នាក់ងាររង…",
+      "refreshing": "កំពុងធ្វើឱ្យថ្មី…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

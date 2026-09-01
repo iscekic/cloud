@@ -2464,7 +2464,8 @@
       "noMessages": "Tsy misy hafatra subagent",
       "noMessagesDescription": "Vita ity session subagent ity nefa tsy namokatra transcript.",
       "loading": "Mamaky ny session subagent",
-      "loadingDescription": "Miandry hafatra subagent…"
+      "loadingDescription": "Miandry hafatra subagent…",
+      "refreshing": "Mamerenana…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

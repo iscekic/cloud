@@ -2464,7 +2464,8 @@
       "noMessages": "Ko si ifiranṣẹ subagent",
       "noMessagesDescription": "Igba-ijiroro subagent yii pari lai ṣe akojọ ifiranṣẹ.",
       "loading": "Nṣagbewọ igba-ijiroro subagent",
-      "loadingDescription": "Nduro fun ifiranṣẹ subagent…"
+      "loadingDescription": "Nduro fun ifiranṣẹ subagent…",
+      "refreshing": "N ṣàtúnṣe…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

@@ -2496,7 +2496,8 @@
       "noMessages": "Nėra subagento žinučių",
       "noMessagesDescription": "Ši subagento sesija baigėsi be transkripto.",
       "loading": "Įkeliama subagento sesija",
-      "loadingDescription": "Laukiama subagento žinučių…"
+      "loadingDescription": "Laukiama subagento žinučių…",
+      "refreshing": "Atnaujinama…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

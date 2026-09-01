@@ -2464,7 +2464,8 @@
       "noMessages": "subagent စာများ မရှိပါ",
       "noMessagesDescription": "ဤ subagent session သည် transcript မထုတ်ဘဲ ပြီးဆုံးသွားသည်။",
       "loading": "subagent session ဖွင့်နေသည်",
-      "loadingDescription": "subagent စာများ စောင့်နေသည်…"
+      "loadingDescription": "subagent စာများ စောင့်နေသည်…",
+      "refreshing": "မွမ်းမံနေသည်…"
     },
     "messageBubble": {
       "failure": "{{title}}။",

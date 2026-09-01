@@ -2464,7 +2464,8 @@
       "noMessages": "কোনো সাবএজেন্ট বার্তা নেই",
       "noMessagesDescription": "এই সাবএজেন্ট সেশন ট্রান্সক্রিপ্ট তৈরি না করেই সম্পন্ন হয়েছে।",
       "loading": "সাবএজেন্ট সেশন লোড হচ্ছে",
-      "loadingDescription": "সাবএজেন্ট বার্তার জন্য অপেক্ষা করছে…"
+      "loadingDescription": "সাবএজেন্ট বার্তার জন্য অপেক্ষা করছে…",
+      "refreshing": "রিফ্রেশ হচ্ছে…"
     },
     "messageBubble": {
       "failure": "{{title}}।",

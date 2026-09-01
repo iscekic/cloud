@@ -2010,7 +2010,8 @@
       "noMessages": "Tidak ada pesan subagen",
       "noMessagesDescription": "Sesi subagen ini selesai tanpa menghasilkan transkrip.",
       "loading": "Memuat sesi subagen",
-      "loadingDescription": "Menunggu pesan subagen…"
+      "loadingDescription": "Menunggu pesan subagen…",
+      "refreshing": "Menyegarkan…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

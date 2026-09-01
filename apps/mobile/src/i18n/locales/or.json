@@ -2464,7 +2464,8 @@
       "noMessages": "କୌଣସି ସବଏଜେଣ୍ଟ ବାର୍ତ୍ତା ନାହିଁ",
       "noMessagesDescription": "ଏହି ସବଏଜେଣ୍ଟ ସେସନ୍ ଟ୍ରାନ୍ସକ୍ରିପ୍ଟ ଉତ୍ପାଦନ ନକରି ସମାପ୍ତ ହେଲା।",
       "loading": "ସବଏଜେଣ୍ଟ ସେସନ୍ ଲୋଡ୍ ହେଉଛି",
-      "loadingDescription": "ସବଏଜେଣ୍ଟ ବାର୍ତ୍ତା ଅପେକ୍ଷା କରୁଛି…"
+      "loadingDescription": "ସବଏଜେଣ୍ଟ ବାର୍ତ୍ତା ଅପେକ୍ଷା କରୁଛି…",
+      "refreshing": "ରିଫ୍ରେସ୍ ହେଉଛି…"
     },
     "messageBubble": {
       "failure": "{{title}}।",

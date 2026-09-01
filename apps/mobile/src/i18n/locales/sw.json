@@ -2464,7 +2464,8 @@
       "noMessages": "Hakuna ujumbe wa subagent",
       "noMessagesDescription": "Kikao hiki cha subagent kilikamilika bila kutoa nakala.",
       "loading": "Kupakia kikao cha subagent",
-      "loadingDescription": "Kusubiri ujumbe wa subagent..."
+      "loadingDescription": "Kusubiri ujumbe wa subagent...",
+      "refreshing": "Inaonyesha upya…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

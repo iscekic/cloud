@@ -2464,7 +2464,8 @@
       "noMessages": "Enweghị ozi onye nnọchite",
       "noMessagesDescription": "Nnọkọ onye nnọchite a gwụchara n'enweghị ihe edepụtara.",
       "loading": "Na-ebutu nnọkọ onye nnọchite",
-      "loadingDescription": "Na-eche ozi onye nnọchite…"
+      "loadingDescription": "Na-eche ozi onye nnọchite…",
+      "refreshing": "Na-emelite…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

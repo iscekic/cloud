@@ -2464,7 +2464,8 @@
       "noMessages": "ไม่มีข้อความซับเอเจนต์",
       "noMessagesDescription": "เซสชันซับเอเจนต์นี้เสร็จสิ้นโดยไม่มีการสร้างบันทึกการสนทนา",
       "loading": "กำลังโหลดเซสชันซับเอเจนต์",
-      "loadingDescription": "กำลังรอข้อความซับเอเจนต์…"
+      "loadingDescription": "กำลังรอข้อความซับเอเจนต์…",
+      "refreshing": "กำลังรีเฟรช…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

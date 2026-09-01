@@ -2512,7 +2512,8 @@
       "noMessages": "L-ebda messaġġ tas-subaġent",
       "noMessagesDescription": "Din is-sessjoni tas-subaġent lestiet mingħajr ma pproduċiet transcript.",
       "loading": "Qed titgħabba s-sessjoni tas-subaġent",
-      "loadingDescription": "Qed nistennew messaġġi tas-subaġent…"
+      "loadingDescription": "Qed nistennew messaġġi tas-subaġent…",
+      "refreshing": "Qed taġġorna…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

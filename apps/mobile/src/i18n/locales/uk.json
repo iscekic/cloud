@@ -2028,7 +2028,8 @@
       "noMessages": "Немає повідомлень субагента",
       "noMessagesDescription": "Цей сеанс субагента завершився без створення транскрипту.",
       "loading": "Завантаження сеансу субагента",
-      "loadingDescription": "Очікування повідомлень субагента…"
+      "loadingDescription": "Очікування повідомлень субагента…",
+      "refreshing": "Оновлення…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

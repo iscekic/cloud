@@ -2464,7 +2464,8 @@
       "noMessages": "Ingen subagent-beskeder",
       "noMessagesDescription": "Denne subagent-session blev afsluttet uden at producere en udskrift.",
       "loading": "Indlæser subagent-session",
-      "loadingDescription": "Venter på subagent-beskeder…"
+      "loadingDescription": "Venter på subagent-beskeder…",
+      "refreshing": "Opdaterer…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

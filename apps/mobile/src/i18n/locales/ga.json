@@ -2512,7 +2512,8 @@
       "noMessages": "Níl aon teachtaireachtaí foghníomhaire",
       "noMessagesDescription": "Chríochnaigh an seisiún foghníomhaire seo gan tras-scríbhinn a tháirgeadh.",
       "loading": "Ag lódáil seisiún foghníomhaire",
-      "loadingDescription": "Ag fanacht ar theachtaireachtaí foghníomhaire…"
+      "loadingDescription": "Ag fanacht ar theachtaireachtaí foghníomhaire…",
+      "refreshing": "Ag athnuachan…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

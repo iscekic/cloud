@@ -2464,7 +2464,8 @@
       "noMessages": "Engin skilaboð frá undirumboði",
       "noMessagesDescription": "Þessi undirumboðslota lauk án þess að framleiða afrit.",
       "loading": "Hleð inn undirumboðslotu",
-      "loadingDescription": "Bíða eftir skilaboðum frá undirumboði…"
+      "loadingDescription": "Bíða eftir skilaboðum frá undirumboði…",
+      "refreshing": "Endurnýjar…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

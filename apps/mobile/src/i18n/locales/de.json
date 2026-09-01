@@ -2010,7 +2010,8 @@
       "noMessages": "Keine Subagent-Nachrichten",
       "noMessagesDescription": "Diese Subagent-Sitzung wurde abgeschlossen, ohne ein Protokoll zu erzeugen.",
       "loading": "Subagent-Sitzung wird geladen",
-      "loadingDescription": "Warte auf Subagent-Nachrichten…"
+      "loadingDescription": "Warte auf Subagent-Nachrichten…",
+      "refreshing": "Wird aktualisiert…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

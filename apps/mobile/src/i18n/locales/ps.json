@@ -2464,7 +2464,8 @@
       "noMessages": "د فرعي اجنټ هیڅ پیغام نشته",
       "noMessagesDescription": "دې فرعي اجنټ غونډې د خبرو اترو پرته بشپړه شوه.",
       "loading": "د فرعي اجنټ غونډه پورته کېږي",
-      "loadingDescription": "د فرعي اجنټ د پیغامونو انتظار…"
+      "loadingDescription": "د فرعي اجنټ د پیغامونو انتظار…",
+      "refreshing": "تازه کول…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

@@ -2480,7 +2480,8 @@
       "noMessages": "Nav apakšaģenta ziņojumu",
       "noMessagesDescription": "Šī apakšaģenta sesija beidzās, neradot transkriptu.",
       "loading": "Ielādē apakšaģenta sesiju",
-      "loadingDescription": "Gaida apakšaģenta ziņojumus…"
+      "loadingDescription": "Gaida apakšaģenta ziņojumus…",
+      "refreshing": "Atjaunina…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

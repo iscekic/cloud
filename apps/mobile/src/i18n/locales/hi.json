@@ -1983,7 +1983,8 @@
       "noMessages": "कोई सबएजेंट संदेश नहीं",
       "noMessagesDescription": "यह सबएजेंट सत्र बिना ट्रांसक्रिप्ट बनाए पूरा हो गया।",
       "loading": "सबएजेंट सत्र लोड हो रहा है",
-      "loadingDescription": "सबएजेंट संदेशों की प्रतीक्षा हो रही है…"
+      "loadingDescription": "सबएजेंट संदेशों की प्रतीक्षा हो रही है…",
+      "refreshing": "रिफ़्रेश हो रहा है…"
     },
     "messageBubble": {
       "failure": "{{title}}।",

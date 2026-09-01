@@ -2464,7 +2464,8 @@
       "noMessages": "Ergaan subagent hin jiru",
       "noMessagesDescription": "Shumarra subagent kuni deebii adda tokko malee xumurameera.",
       "loading": "Shumarra subagent baay'achaa jira",
-      "loadingDescription": "Ergaa subagent eegaa jira…"
+      "loadingDescription": "Ergaa subagent eegaa jira…",
+      "refreshing": "Haaromsuufaa jira…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

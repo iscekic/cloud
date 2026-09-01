@@ -2464,7 +2464,8 @@
       "noMessages": "Nincs alügynök üzenet",
       "noMessagesDescription": "Ez az alügynök munkamenet átirat nélkül fejeződött be.",
       "loading": "Alügynök munkamenet betöltése",
-      "loadingDescription": "Várakozás az alügynök üzenetekre…"
+      "loadingDescription": "Várakozás az alügynök üzenetekre…",
+      "refreshing": "Frissítés…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

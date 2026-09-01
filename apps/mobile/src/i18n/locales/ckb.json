@@ -2464,7 +2464,8 @@
       "noMessages": "هیچ نامەیەکی ساب‌ئەجێنت نییە",
       "noMessagesDescription": "ئەم دانیشتنەی ساب‌ئەجێنت بەبێ بەرهەمهێنانی تۆمارەکە تەواو بوو.",
       "loading": "بارکردنی دانیشتنی ساب‌ئەجێنت",
-      "loadingDescription": "چاوەڕوانی نامەکانی ساب‌ئەجێنت…"
+      "loadingDescription": "چاوەڕوانی نامەکانی ساب‌ئەجێنت…",
+      "refreshing": "نوێکردنەوە…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

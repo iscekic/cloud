@@ -2480,7 +2480,8 @@
       "noMessages": "Niciun mesaj de subagent",
       "noMessagesDescription": "Această sesiune de subagent s-a încheiat fără a produce o transcriere.",
       "loading": "Se încarcă sesiunea de subagent",
-      "loadingDescription": "Se așteaptă mesaje de subagent…"
+      "loadingDescription": "Se așteaptă mesaje de subagent…",
+      "refreshing": "Se actualizează…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

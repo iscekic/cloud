@@ -2010,7 +2010,8 @@
       "noMessages": "Không có tin nhắn tác nhân phụ",
       "noMessagesDescription": "Phiên tác nhân phụ này đã hoàn tất mà không tạo ra bản ghi.",
       "loading": "Đang tải phiên tác nhân phụ",
-      "loadingDescription": "Đang chờ tin nhắn tác nhân phụ…"
+      "loadingDescription": "Đang chờ tin nhắn tác nhân phụ…",
+      "refreshing": "Đang làm mới…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

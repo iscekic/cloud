@@ -2464,7 +2464,8 @@
       "noMessages": "Няма съобщения от субагента",
       "noMessagesDescription": "Тази сесия на субагент завърши без да създаде стенограма.",
       "loading": "Зареждане на сесията на субагента",
-      "loadingDescription": "В очакване на съобщения от субагента…"
+      "loadingDescription": "В очакване на съобщения от субагента…",
+      "refreshing": "Опресняване…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

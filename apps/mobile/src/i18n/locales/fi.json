@@ -2464,7 +2464,8 @@
       "noMessages": "Ei alagentin viestejä",
       "noMessagesDescription": "Tämä alagentin istunto valmistui tuottamatta transkriptiota.",
       "loading": "Ladataan alagentin istuntoa",
-      "loadingDescription": "Odotetaan alagentin viestejä…"
+      "loadingDescription": "Odotetaan alagentin viestejä…",
+      "refreshing": "Päivitetään…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

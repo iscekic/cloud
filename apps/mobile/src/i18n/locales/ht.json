@@ -2464,7 +2464,8 @@
       "noMessages": "Pa gen mesaj subajant",
       "noMessagesDescription": "Sesyon subajant sa a fini san li pa pwodui transkripsyon.",
       "loading": "Ap chaje sesyon subajant",
-      "loadingDescription": "Ap tann mesaj subajant…"
+      "loadingDescription": "Ap tann mesaj subajant…",
+      "refreshing": "Ap rafrechi…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

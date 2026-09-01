@@ -2010,7 +2010,8 @@
       "noMessages": "沒有子代理訊息",
       "noMessagesDescription": "此子代理工作階段已完成，但未產生逐字稿。",
       "loading": "正在載入子代理工作階段",
-      "loadingDescription": "正在等待子代理訊息…"
+      "loadingDescription": "正在等待子代理訊息…",
+      "refreshing": "正在重新整理…"
     },
     "messageBubble": {
       "failure": "{{title}}。",

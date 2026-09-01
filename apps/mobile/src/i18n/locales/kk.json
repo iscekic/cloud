@@ -2464,7 +2464,8 @@
       "noMessages": "Субаргент хабарламалары жоқ",
       "noMessagesDescription": "Бұл субаргент сессиясы жазбасыз аяқталды.",
       "loading": "Субаргент сессиясы жүктелуде",
-      "loadingDescription": "Субаргент хабарламалары күтілуде…"
+      "loadingDescription": "Субаргент хабарламалары күтілуде…",
+      "refreshing": "Жаңартылуда…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

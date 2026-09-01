@@ -2464,7 +2464,8 @@
       "noMessages": "Nuk ka mesazhe nënagjenti",
       "noMessagesDescription": "Kjo seancë nënagjenti u përfundua pa prodhuar një transkript.",
       "loading": "Duke ngarkuar seancën e nënagjentit",
-      "loadingDescription": "Duke pritur për mesazhet e nënagjentit…"
+      "loadingDescription": "Duke pritur për mesazhet e nënagjentit…",
+      "refreshing": "Duke rifreskuar…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

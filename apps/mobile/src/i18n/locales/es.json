@@ -2019,7 +2019,8 @@
       "noMessages": "No hay mensajes del subagente",
       "noMessagesDescription": "Esta sesión del subagente terminó sin producir una transcripción.",
       "loading": "Cargando la sesión del subagente",
-      "loadingDescription": "Esperando los mensajes del subagente…"
+      "loadingDescription": "Esperando los mensajes del subagente…",
+      "refreshing": "Actualizando…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

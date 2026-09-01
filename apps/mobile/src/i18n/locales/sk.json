@@ -2496,7 +2496,8 @@
       "noMessages": "Žiadne správy subagenta",
       "noMessagesDescription": "Táto relácia subagenta bola dokončená bez vytvorenia prepisu.",
       "loading": "Načítavanie relácie subagenta",
-      "loadingDescription": "Čakanie na správy subagenta…"
+      "loadingDescription": "Čakanie na správy subagenta…",
+      "refreshing": "Obnovovanie…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

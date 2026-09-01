@@ -2464,7 +2464,8 @@
       "noMessages": "Дэд агентын мэдээлэл алга",
       "noMessagesDescription": "Энэ дэд агентын сессий бичлэг үүсгэхгүйгээр дууссан.",
       "loading": "Дэд агентын сессийг ачаалж байна",
-      "loadingDescription": "Дэд агентын мэдээллийг хүлээж байна…"
+      "loadingDescription": "Дэд агентын мэдээллийг хүлээж байна…",
+      "refreshing": "Шинэчилж байна…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

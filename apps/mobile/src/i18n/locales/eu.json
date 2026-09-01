@@ -2464,7 +2464,8 @@
       "noMessages": "Subagentearen mezurik ez",
       "noMessagesDescription": "Subagentearen saio hau transkripziorik sortu gabe amaitu da.",
       "loading": "Subagentearen saioa kargatzen",
-      "loadingDescription": "Subagentearen mezuak itxaroten…"
+      "loadingDescription": "Subagentearen mezuak itxaroten…",
+      "refreshing": "Eguneratzen…"
     },
     "messageBubble": {
       "failure": "{{title}}.",

@@ -2464,7 +2464,8 @@
       "noMessages": "Geen subagent-boodskappe nie",
       "noMessagesDescription": "Hierdie subsessie is voltooi sonder om 'n transkripsie te lewer.",
       "loading": "Laai subsessie",
-      "loadingDescription": "Wag vir subagent-boodskappe…"
+      "loadingDescription": "Wag vir subagent-boodskappe…",
+      "refreshing": "Verfris…"
     },
     "messageBubble": {
       "failure": "{{title}}.",
