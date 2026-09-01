@@ -70,16 +70,30 @@ export function AgentSessionListScreen() {
   const loading = isLoading || !orgLoaded;
   const hasLiveRows = activeSessions.length > 0;
   const hasDisplayedRows = displayedSessions.length > 0;
-  const updating = hasLiveRows && isFetching;
+  // The live query polls on its own interval (30s/10s), which must not surface
+  // as visible refresh progress. `updating` is scoped to a user-initiated
+  // refresh: `isRefreshing` is set when the user pulls, returns focus, or
+  // foregrounds the app, and cleared when that fetch settles.
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const updating = hasLiveRows && isRefreshing;
   const refreshFailed = hasLiveRows && isError && !isFetching;
 
-  const refetchRef = useRef(refetch);
-  useEffect(() => {
-    refetchRef.current = refetch;
+  const runRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    try {
+      await refetch();
+    } finally {
+      setIsRefreshing(false);
+    }
   }, [refetch]);
+
+  const runRefreshRef = useRef(runRefresh);
+  useEffect(() => {
+    runRefreshRef.current = runRefresh;
+  }, [runRefresh]);
   useFocusEffect(
     useCallback(() => {
-      void refetchRef.current();
+      void runRefreshRef.current();
     }, [])
   );
 
@@ -108,7 +122,7 @@ export function AgentSessionListScreen() {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'active' && navigation.isFocused()) {
-        void refetchRef.current();
+        void runRefreshRef.current();
         void queryClient.invalidateQueries({ queryKey: [['activeSessions']] });
       }
     });
@@ -150,8 +164,8 @@ export function AgentSessionListScreen() {
   );
 
   const handleRefresh = useCallback(() => {
-    void refetch();
-  }, [refetch]);
+    void runRefresh();
+  }, [runRefresh]);
 
   const renderItem = useCallback(
     ({ item }: { item: ActiveSession }) => (
@@ -309,7 +323,7 @@ export function AgentSessionListScreen() {
         updating={updating}
         refreshFailed={refreshFailed}
         onRetryRefresh={() => {
-          void refetch();
+          void runRefresh();
         }}
       />
       {body}

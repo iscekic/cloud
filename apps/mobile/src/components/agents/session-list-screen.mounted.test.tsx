@@ -255,6 +255,19 @@ function fireFocus(): void {
   }
 }
 
+function createDeferred<T>(): { promise: Promise<T>; resolve: (value: T) => void } {
+  const state: { resolve: ((value: T) => void) | undefined } = { resolve: undefined };
+  const promise = new Promise<T>(resolve => {
+    state.resolve = resolve;
+  });
+  return {
+    promise,
+    resolve: (value: T) => {
+      state.resolve?.(value);
+    },
+  };
+}
+
 describe('AgentSessionListScreen live tab', () => {
   beforeEach(() => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -667,10 +680,25 @@ describe('AgentSessionListScreen live tab', () => {
     expect(strip.props.refreshFailed).toBe(false);
   });
 
-  it('shows only the strip indicator on a pull', async () => {
+  it('does not surface the poll interval as visible refresh progress', async () => {
     sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
     sessionListState.isFetching = true;
     sessionListState.isSuccess = true;
+
+    const renderer = await renderScreen();
+
+    const strip = findStrip(renderer);
+    expect(strip.props.updating).toBe(false);
+    expect(strip.props.refreshFailed).toBe(false);
+  });
+
+  it('shows only the strip indicator on a pull and clears it when the fetch settles', async () => {
+    sessionListState.activeSessions = [{ id: 'a1', organizationId: null }];
+    sessionListState.isFetching = false;
+    sessionListState.isSuccess = true;
+
+    const deferred = createDeferred<boolean>();
+    refetchSpy.mockReturnValue(deferred.promise);
 
     const renderer = await renderScreen();
 
@@ -684,14 +712,23 @@ describe('AgentSessionListScreen live tab', () => {
     expect(refreshControl.type).toBe('RefreshControl');
     expect(refreshControl.props.refreshing).toBe(false);
 
-    const strip = findStrip(renderer);
-    expect(strip.props.updating).toBe(true);
-    expect(strip.props.refreshFailed).toBe(false);
+    // Before the pull, the strip reports nothing.
+    expect(findStrip(renderer).props.updating).toBe(false);
 
     act(() => {
       refreshControl.props.onRefresh();
     });
+
+    // Only the strip indicator shows while the pull is in flight.
+    expect(findStrip(renderer).props.updating).toBe(true);
+    expect(findStrip(renderer).props.refreshFailed).toBe(false);
     expect(refetchSpy).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      deferred.resolve(true);
+      await Promise.resolve();
+    });
+    expect(findStrip(renderer).props.updating).toBe(false);
   });
 
   it('refetches live sessions on route focus', async () => {
