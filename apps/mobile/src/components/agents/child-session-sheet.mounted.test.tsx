@@ -15,6 +15,8 @@ import { type SessionModelOption } from '@/lib/hooks/use-session-model-options';
 import { ChildSessionSheet } from './child-session-sheet';
 import { ChildSessionModelLabel } from './child-session-model-label';
 
+import '@/i18n';
+
 const reactNativeMock = vi.hoisted(() => ({
   Platform: { OS: 'ios' as string },
   useWindowDimensions: vi.fn(() => ({ width: 390, height: 844 })),
@@ -60,6 +62,9 @@ vi.mock('@/lib/hooks/use-theme-colors', () => ({
 }));
 vi.mock('./session-message-list', () => ({
   SessionMessageList: () => null,
+}));
+vi.mock('./message-bubble', () => ({
+  MessageBubble: () => null,
 }));
 vi.mock('./part-detail-sheet-host', () => ({
   PartDetailSheetHost: ({ children }: { children?: unknown }) => children,
@@ -221,6 +226,29 @@ describe('ChildSessionSheet mounted', () => {
       })
     );
 
+    expect(renderer.root.findAllByType(ChildSessionModelLabel)).toHaveLength(0);
+  });
+
+  it('shows the empty state when messages have no visible content', async () => {
+    const emptyUser: StoredMessage = {
+      info: {
+        id: 'm-user',
+        sessionID: 'child-1',
+        role: 'user',
+        time: { created: 1 },
+        agent: 'build',
+        model: { providerID: 'kilo', modelID: 'model' },
+      },
+      parts: [],
+    };
+    const renderer = await renderSheet(
+      buildProps({
+        getChildMessages: () => [emptyUser],
+        hydrationState: readyState,
+      })
+    );
+
+    expect(renderer.root.findAll(node => (node.type as string) === 'EmptyState')).toHaveLength(1);
     expect(renderer.root.findAllByType(ChildSessionModelLabel)).toHaveLength(0);
   });
 

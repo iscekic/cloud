@@ -27,12 +27,15 @@ export const FIXTURE_MODE = 'code';
 
 export const ROOT_USER_MESSAGE_ID = 'msgRootUser00000001';
 export const ROOT_ASSISTANT_MESSAGE_ID = 'msgRootAssistant001';
+export const ROOT_USER_TEXT_PART_ID = 'prtRootUserText0001';
 export const ROOT_READ_PART_ID = 'prtRootRead00000001';
 export const ROOT_TASK_PART_ID = 'prtRootTask00000001';
 export const ROOT_FILE_PART_ID = 'prtRootFile00000001';
 
 export const CHILD_USER_MESSAGE_ID = 'msgChildUser0000001';
 export const CHILD_ASSISTANT_MESSAGE_ID = 'msgChildAssistant01';
+export const CHILD_USER_TEXT_PART_ID = 'prtChildUserText001';
+export const CHILD_ASSISTANT_TEXT_PART_ID = 'prtChildAsstText001';
 export const CHILD_BASH_PART_ID = 'prtChildBash0000001';
 
 export const UNSUPPORTED_USER_MESSAGE_ID = 'msgUnsupported00001';
@@ -106,10 +109,10 @@ export function fixtureSessionIds(): string[] {
 /** Part IDs that must appear in the materialized history for a fixture session. */
 export function expectedPartIdsFor(sessionId: string): string[] {
   if (sessionId === ROOT_SESSION_ID) {
-    return [ROOT_READ_PART_ID, ROOT_TASK_PART_ID, ROOT_FILE_PART_ID];
+    return [ROOT_USER_TEXT_PART_ID, ROOT_READ_PART_ID, ROOT_TASK_PART_ID, ROOT_FILE_PART_ID];
   }
   if (sessionId === CHILD_SESSION_ID) {
-    return [CHILD_BASH_PART_ID];
+    return [CHILD_USER_TEXT_PART_ID, CHILD_ASSISTANT_TEXT_PART_ID, CHILD_BASH_PART_ID];
   }
   if (sessionId === UNSUPPORTED_SESSION_ID || sessionId === EMPTY_SESSION_ID) {
     return [];
@@ -218,6 +221,24 @@ export function buildToolPartItem(params: {
   };
 }
 
+export function buildTextPartItem(params: {
+  partId: string;
+  sessionId: string;
+  messageId: string;
+  text: string;
+}): SessionIngestItem {
+  return {
+    type: 'part',
+    data: {
+      id: params.partId,
+      sessionID: params.sessionId,
+      messageID: params.messageId,
+      type: 'text',
+      text: params.text,
+    },
+  };
+}
+
 export function buildFilePartItem(params: {
   partId: string;
   sessionId: string;
@@ -251,6 +272,12 @@ export function buildRootIngestItems(): SessionIngestItem[] {
       messageId: ROOT_USER_MESSAGE_ID,
       sessionId: ROOT_SESSION_ID,
       createdAt: ROOT_USER_CREATED,
+    }),
+    buildTextPartItem({
+      partId: ROOT_USER_TEXT_PART_ID,
+      sessionId: ROOT_SESSION_ID,
+      messageId: ROOT_USER_MESSAGE_ID,
+      text: 'Run the mobile sheet fixtures.',
     }),
     buildAssistantMessageItem({
       messageId: ROOT_ASSISTANT_MESSAGE_ID,
@@ -315,6 +342,12 @@ export function buildChildIngestItems(): SessionIngestItem[] {
       sessionId: CHILD_SESSION_ID,
       createdAt: CHILD_USER_CREATED,
     }),
+    buildTextPartItem({
+      partId: CHILD_USER_TEXT_PART_ID,
+      sessionId: CHILD_SESSION_ID,
+      messageId: CHILD_USER_MESSAGE_ID,
+      text: 'Inspect the child fixture.',
+    }),
     buildAssistantMessageItem({
       messageId: CHILD_ASSISTANT_MESSAGE_ID,
       sessionId: CHILD_SESSION_ID,
@@ -323,6 +356,12 @@ export function buildChildIngestItems(): SessionIngestItem[] {
       completedAt: CHILD_ASSISTANT_COMPLETED,
       cost: CHILD_ASSISTANT_COST,
       tokens: CHILD_ASSISTANT_TOKENS,
+    }),
+    buildTextPartItem({
+      partId: CHILD_ASSISTANT_TEXT_PART_ID,
+      sessionId: CHILD_SESSION_ID,
+      messageId: CHILD_ASSISTANT_MESSAGE_ID,
+      text: 'Ran the child fixture command.',
     }),
     buildToolPartItem({
       partId: CHILD_BASH_PART_ID,

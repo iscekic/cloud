@@ -92,6 +92,28 @@ export type HeaderPillContent = {
 };
 
 /**
+ * Integer rounding of a tiny usage (e.g. 1375 tokens / 1M window) becomes 0%.
+ * Keep a fractional percent when it will round to at least 0.1% in the pill;
+ * otherwise return undefined so the pill can show the token count instead.
+ */
+export function getDisplayUsagePercentage(info: SessionContextInfo): number | undefined {
+  if (info.percentage === undefined) {
+    return undefined;
+  }
+  if (info.percentage > 0 || info.contextTokens <= 0) {
+    return info.percentage;
+  }
+  if (info.contextWindow === undefined || info.contextWindow <= 0) {
+    return info.percentage;
+  }
+  const precise = (info.contextTokens / info.contextWindow) * 100;
+  if (precise < 0.05) {
+    return undefined;
+  }
+  return precise;
+}
+
+/**
  * Single selector for the session-detail header pill. Always returns content
  * so the pill can reserve a fixed height before context usage resolves.
  */
@@ -105,10 +127,11 @@ export function getHeaderPillContent({
   hasMessages: boolean;
 }): HeaderPillContent {
   if (info) {
-    const tone = getContextTone(info.percentage);
+    const displayPercentage = getDisplayUsagePercentage(info);
+    const tone = getContextTone(displayPercentage ?? info.percentage);
     const primary =
-      info.percentage !== undefined
-        ? formatPercent(info.percentage, i18n.language)
+      displayPercentage !== undefined
+        ? formatPercent(displayPercentage, i18n.language)
         : formatCompactTokens(info.contextTokens);
     const secondary = formatSessionTotalCost(totalCostMicrodollars);
     return {
@@ -116,7 +139,7 @@ export function getHeaderPillContent({
       secondary,
       hasCost: secondary !== null,
       tone,
-      arcFraction: getArcFraction(info.percentage),
+      arcFraction: getArcFraction(displayPercentage ?? info.percentage),
       interactive: true,
     };
   }

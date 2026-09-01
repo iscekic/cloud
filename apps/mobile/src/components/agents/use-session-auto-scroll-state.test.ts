@@ -6,6 +6,7 @@ import {
   shouldFollowSessionContentSize,
   shouldRetrySessionAutoScroll,
   shouldScheduleSessionAutoScroll,
+  shouldShowScrollToBottom,
 } from '@/components/agents/use-session-auto-scroll-state';
 
 describe('isSessionListAtBottom', () => {
@@ -113,6 +114,20 @@ describe('getInitialSessionListAutoScrollVisibility', () => {
     const reset = getInitialSessionListAutoScrollVisibility();
     expect(reset.isAtBottom).toBe(true);
     expect(reset.shouldAutoScroll).toBe(true);
+  });
+});
+
+describe('shouldShowScrollToBottom', () => {
+  it('stays hidden until the user has dragged, even when not at the bottom', () => {
+    expect(shouldShowScrollToBottom({ isAtBottom: false, hasUserDragged: false })).toBe(false);
+  });
+
+  it('stays hidden while the user is at the bottom after a drag', () => {
+    expect(shouldShowScrollToBottom({ isAtBottom: true, hasUserDragged: true })).toBe(false);
+  });
+
+  it('shows after the user has dragged away from the bottom', () => {
+    expect(shouldShowScrollToBottom({ isAtBottom: false, hasUserDragged: true })).toBe(true);
   });
 });
 

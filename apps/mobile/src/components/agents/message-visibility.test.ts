@@ -166,7 +166,7 @@ describe('messageRendersContent', () => {
     expect(messageRendersContent(assistantMessage([retry, textPart()]))).toBe(true);
   });
 
-  it('returns true for a user message with zero parts', () => {
+  it('returns false for a user message with zero parts', () => {
     const user: StoredMessage = {
       info: {
         id: 'm1',
@@ -177,6 +177,21 @@ describe('messageRendersContent', () => {
         model: { providerID: 'openrouter', modelID: 'model' },
       },
       parts: [],
+    };
+    expect(messageRendersContent(user)).toBe(false);
+  });
+
+  it('returns true for a user message with visible text', () => {
+    const user: StoredMessage = {
+      info: {
+        id: 'm1',
+        sessionID: 's1',
+        role: 'user',
+        time: { created: 1 },
+        agent: 'build',
+        model: { providerID: 'openrouter', modelID: 'model' },
+      },
+      parts: [textPart()],
     };
     expect(messageRendersContent(user)).toBe(true);
   });

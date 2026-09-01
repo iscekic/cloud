@@ -161,6 +161,22 @@ describe('getHeaderPillContent', () => {
     });
   });
 
+  it('does not show 0% when tokens exist but integer rounding collapsed usage', () => {
+    const result = pill({
+      info: info({
+        contextTokens: 1375,
+        contextWindow: 1_000_000,
+        percentage: 0,
+      }),
+      totalCostMicrodollars: 10_000,
+      hasMessages: true,
+    });
+    expect(result.primary).toBe('0.1%');
+    expect(result.secondary).toBe('$0.01');
+    expect(result.arcFraction).toBeCloseTo(1375 / 1_000_000);
+    expect(result.primary).not.toBe('0%');
+  });
+
   it('omits secondary cost when cost is zero or null', () => {
     const base = {
       primary: '10%',

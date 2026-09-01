@@ -39,9 +39,10 @@ export function partRendersContent(part: Part): boolean {
 }
 
 /**
- * Whether the message renders anything in the transcript. A user message always
- * renders its bubble; an assistant message renders only what its parts render.
+ * Whether the message renders anything in the transcript. User and assistant
+ * rows both require a part that paints; an empty user message otherwise
+ * becomes a blank bubble (yellow blob or grey bar) with no label.
  */
 export function messageRendersContent(message: StoredMessage): boolean {
-  return message.info.role === 'user' || message.parts.some(partRendersContent);
+  return message.parts.some(partRendersContent);
 }

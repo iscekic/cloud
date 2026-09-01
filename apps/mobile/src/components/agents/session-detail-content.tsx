@@ -1587,6 +1587,7 @@ export function SessionDetailContent({
             manager.trimRetainedHistory();
           }}
           renderItem={renderItem}
+          contentBottomInset={isReadOnly && messages.length > 0 ? 16 : undefined}
         />
       </Animated.View>
     );

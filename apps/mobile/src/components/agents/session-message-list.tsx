@@ -21,6 +21,7 @@ import {
   getOlderMessagesArrivedAnnouncement,
   shouldAnnounceOlderMessagesArrival,
 } from '@/components/agents/older-messages-a11y';
+import { shouldShowScrollToBottom } from '@/components/agents/use-session-auto-scroll-state';
 
 const listStyle = { flex: 1 } satisfies ViewStyle;
 const listContentContainerStyle = { paddingVertical: 8 } satisfies ViewStyle;
@@ -84,6 +85,7 @@ export function SessionMessageList<T>({
   // exact behavior we want for the agent session transcript.
   const {
     isAtBottom,
+    hasUserDragged,
     listRef,
     scrollToLatestAnimated,
     handleContentSizeChange,
@@ -261,12 +263,11 @@ export function SessionMessageList<T>({
         keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="handled"
       />
-      {/* Floating "scroll to bottom" affordance. Rendered only when the
-          user has scrolled past the 100px bottom threshold; the fade
-          animations match the chat-composer convention. `pointerEvents`
-          is set on the wrapper so empty space around the button keeps
-          scrolling the list, while the Pressable itself catches taps. */}
-      {!isAtBottom ? (
+      {/* Floating "scroll to bottom" affordance. Hidden until the user
+          drags away from the bottom; layout scroll events must not paint
+          an empty chip over the last row. `pointerEvents` is set on the
+          wrapper so empty space around the button keeps scrolling. */}
+      {shouldShowScrollToBottom({ isAtBottom, hasUserDragged }) ? (
         <Animated.View
           entering={FadeIn.duration(200)}
           exiting={FadeOut.duration(150)}

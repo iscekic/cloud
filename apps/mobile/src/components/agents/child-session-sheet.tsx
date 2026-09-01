@@ -21,14 +21,12 @@ import {
 import { useThemeColors } from '@/lib/hooks/use-theme-colors';
 import { type SessionModelOption } from '@/lib/hooks/use-session-model-options';
 
-import {
-  ChildSessionMessage,
-  type OpenChildSession,
-  type RenderPartFn,
-} from './child-session-section';
+import { type OpenChildSession, type RenderPartFn } from './child-session-section';
 import { getChildSessionModelLabel } from './child-session-model';
 import { ChildSessionModelLabel } from './child-session-model-label';
+import { MessageBubble } from './message-bubble';
 import { MessageErrorBoundary } from './message-error-boundary';
+import { messageRendersContent } from './message-visibility';
 import { PartDetailSheetHost } from './part-detail-sheet-host';
 import { getChildSessionSheetState } from './child-session-sheet-state';
 import { SessionMessageList } from './session-message-list';
@@ -71,7 +69,6 @@ export function ChildSessionSheet({
   olderMessagesError,
   olderMessagesOmittedItemCount,
   onLoadOlderMessages,
-  renderPart,
   onOpenChildSession,
   onRetry,
   onClose,
@@ -79,7 +76,8 @@ export function ChildSessionSheet({
   modelOptions,
 }: Readonly<ChildSessionSheetProps>) {
   const messages = getChildMessages(sessionId);
-  const state = getChildSessionSheetState(hydrationState, messages.length, sessionError);
+  const visibleMessages = messages.filter(message => messageRendersContent(message));
+  const state = getChildSessionSheetState(hydrationState, visibleMessages.length, sessionError);
   const modelLabel = getChildSessionModelLabel(messages, modelOptions ?? []);
   const colors = useThemeColors();
   const { t } = useTranslation();
@@ -105,7 +103,7 @@ export function ChildSessionSheet({
     content = (
       <SessionMessageList
         sessionId={sessionId}
-        items={messages}
+        items={visibleMessages}
         keyExtractor={message => message.info.id}
         hasOlderMessages={hasOlderMessages}
         isLoadingOlderMessages={isLoadingOlderMessages}
@@ -114,16 +112,12 @@ export function ChildSessionSheet({
         onLoadOlderMessages={onLoadOlderMessages}
         renderItem={({ item }) => (
           <MessageErrorBoundary>
-            <View className="px-4 py-1">
-              <ChildSessionMessage
-                message={item}
-                depth={0}
-                getChildMessages={getChildMessages}
-                renderPart={renderPart}
-                onOpenChildSession={onOpenChildSession}
-                modelOptions={modelOptions}
-              />
-            </View>
+            <MessageBubble
+              message={item}
+              getChildMessages={getChildMessages}
+              onOpenChildSession={onOpenChildSession}
+              modelOptions={modelOptions}
+            />
           </MessageErrorBoundary>
         )}
         ListFooterComponent={<WorkingIndicator messages={messages} isStreaming={isStreaming} />}

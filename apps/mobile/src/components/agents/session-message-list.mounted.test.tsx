@@ -32,6 +32,7 @@ vi.mock('@/lib/hooks/use-theme-colors', () => ({
 vi.mock('@/components/agents/use-session-list-auto-scroll', () => ({
   useSessionListAutoScroll: () => ({
     isAtBottom: true,
+    hasUserDragged: false,
     listRef: { current: null },
     scrollToLatestAnimated: vi.fn(),
     handleContentSizeChange: vi.fn(),

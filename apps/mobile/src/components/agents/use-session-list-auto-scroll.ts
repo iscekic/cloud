@@ -39,6 +39,7 @@ export function useSessionListAutoScroll<ItemT>({
   const [isAtBottom, setIsAtBottom] = useState<boolean>(
     getInitialSessionListAutoScrollVisibility().isAtBottom
   );
+  const [hasUserDragged, setHasUserDragged] = useState(false);
   const isAutoScrollingRef = useRef(false);
   // Tracks whether the user is currently dragging or the list is still in a
   // momentum fling. While this is true we must not programmatically scroll —
@@ -130,6 +131,7 @@ export function useSessionListAutoScroll<ItemT>({
     const initial = getInitialSessionListAutoScrollVisibility();
     shouldAutoScrollRef.current = initial.shouldAutoScroll;
     lastContentHeightRef.current = 0;
+    setHasUserDragged(false);
     setIsAtBottom(prev => (prev === initial.isAtBottom ? prev : initial.isAtBottom));
   }, [resetKey]);
 
@@ -179,6 +181,7 @@ export function useSessionListAutoScroll<ItemT>({
   const handleScrollBeginDrag = useCallback(() => {
     isUserScrollingRef.current = true;
     isAutoScrollingRef.current = false;
+    setHasUserDragged(true);
     clearAutoScrollResetTimeout();
     clearAutoScrollRetryTimeout();
     clearUserScrollingTimeout();
@@ -262,6 +265,7 @@ export function useSessionListAutoScroll<ItemT>({
 
   return {
     isAtBottom,
+    hasUserDragged,
     listRef,
     scrollToLatestAnimated,
     handleContentSizeChange,

@@ -17,7 +17,15 @@ function message(id: string) {
       agent: 'test',
       model: { providerID: 'test', modelID: 'test' },
     },
-    parts: [],
+    parts: [
+      {
+        id: `${id}:text`,
+        sessionID: 'ses_12345678901234567890123456',
+        messageID: id,
+        type: 'text' as const,
+        text: 'prompt',
+      },
+    ],
   };
 }
 

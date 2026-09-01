@@ -29,6 +29,9 @@ import {
   ROOT_SESSION_TITLE,
   ROOT_TASK_PART_ID,
   ROOT_USER_MESSAGE_ID,
+  ROOT_USER_TEXT_PART_ID,
+  CHILD_USER_TEXT_PART_ID,
+  CHILD_ASSISTANT_TEXT_PART_ID,
   UNSUPPORTED_SESSION_ID,
   UNSUPPORTED_SESSION_TITLE,
   UNSUPPORTED_USER_MESSAGE_ID,
@@ -84,7 +87,7 @@ void test('cleanup scope is exactly the four fixture session IDs', () => {
 
 void test('root fixture items match the session-ingest schemas', () => {
   const items = buildRootIngestItems();
-  assert.equal(items.length, 7);
+  assert.equal(items.length, 8);
 
   const session = parseSessionData(singleItemOfType(items, 'session').data);
   assert.equal(session.id, ROOT_SESSION_ID);
@@ -127,7 +130,15 @@ void test('root fixture items match the session-ingest schemas', () => {
   });
 
   const parts = itemsOfType(items, 'part').map(item => parsePartData(item.data));
-  assert.equal(parts.length, 3);
+  assert.equal(parts.length, 4);
+
+  const rootUserText = parts.find(part => part.id === ROOT_USER_TEXT_PART_ID);
+  assert.ok(rootUserText);
+  assert.equal(rootUserText.type, 'text');
+  if (rootUserText.type === 'text') {
+    assert.equal(rootUserText.messageID, ROOT_USER_MESSAGE_ID);
+    assert.equal(rootUserText.text, 'Run the mobile sheet fixtures.');
+  }
 
   const readPart = parts.find(part => part.id === ROOT_READ_PART_ID);
   assert.ok(readPart);
@@ -172,7 +183,7 @@ void test('root fixture items match the session-ingest schemas', () => {
 
 void test('child fixture items match the session-ingest schemas', () => {
   const items = buildChildIngestItems();
-  assert.equal(items.length, 4);
+  assert.equal(items.length, 6);
 
   const session = parseSessionData(singleItemOfType(items, 'session').data);
   assert.equal(session.id, CHILD_SESSION_ID);
@@ -212,8 +223,23 @@ void test('child fixture items match the session-ingest schemas', () => {
   assert.ok(assistantMessage.tokens.reasoning > 0);
 
   const parts = itemsOfType(items, 'part').map(item => parsePartData(item.data));
-  assert.equal(parts.length, 1);
-  const bashPart = parts[0];
+  assert.equal(parts.length, 3);
+  const childUserText = parts.find(part => part.id === CHILD_USER_TEXT_PART_ID);
+  assert.ok(childUserText);
+  assert.equal(childUserText.type, 'text');
+  if (childUserText.type === 'text') {
+    assert.equal(childUserText.messageID, CHILD_USER_MESSAGE_ID);
+    assert.equal(childUserText.text, 'Inspect the child fixture.');
+  }
+  const childAssistantText = parts.find(part => part.id === CHILD_ASSISTANT_TEXT_PART_ID);
+  assert.ok(childAssistantText);
+  assert.equal(childAssistantText.type, 'text');
+  if (childAssistantText.type === 'text') {
+    assert.equal(childAssistantText.messageID, CHILD_ASSISTANT_MESSAGE_ID);
+    assert.equal(childAssistantText.text, 'Ran the child fixture command.');
+  }
+  const bashPart = parts.find(part => part.id === CHILD_BASH_PART_ID);
+  assert.ok(bashPart);
   assert.equal(bashPart.id, CHILD_BASH_PART_ID);
   assert.equal(bashPart.type, 'tool');
   if (bashPart.type === 'tool') {
@@ -225,11 +251,16 @@ void test('child fixture items match the session-ingest schemas', () => {
   }
 
   assert.deepEqual(expectedPartIdsFor(ROOT_SESSION_ID), [
+    ROOT_USER_TEXT_PART_ID,
     ROOT_READ_PART_ID,
     ROOT_TASK_PART_ID,
     ROOT_FILE_PART_ID,
   ]);
-  assert.deepEqual(expectedPartIdsFor(CHILD_SESSION_ID), [CHILD_BASH_PART_ID]);
+  assert.deepEqual(expectedPartIdsFor(CHILD_SESSION_ID), [
+    CHILD_USER_TEXT_PART_ID,
+    CHILD_ASSISTANT_TEXT_PART_ID,
+    CHILD_BASH_PART_ID,
+  ]);
   assert.throws(() => expectedPartIdsFor('ses_unknown'), /Unknown fixture session id/);
 });
 

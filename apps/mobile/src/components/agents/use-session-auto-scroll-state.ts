@@ -30,6 +30,22 @@ export function getInitialSessionListAutoScrollVisibility() {
 }
 
 /**
+ * The scroll-to-bottom chip must stay hidden until the user has dragged the
+ * list. Layout and estimated-size scroll events can report a false
+ * not-at-bottom on a short transcript and would otherwise paint an empty
+ * floating control over the last row.
+ */
+export function shouldShowScrollToBottom({
+  isAtBottom,
+  hasUserDragged,
+}: {
+  isAtBottom: boolean;
+  hasUserDragged: boolean;
+}): boolean {
+  return hasUserDragged && !isAtBottom;
+}
+
+/**
  * Decide whether a programmatic scroll-to-latest should be scheduled.
  *
  * Mirrors the four guards inside `useSessionAutoScroll`'s `scheduleScrollToLatestMessage`:

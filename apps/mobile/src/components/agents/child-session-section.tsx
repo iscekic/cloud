@@ -146,7 +146,7 @@ export function ChildSessionMessage({
   }
 
   return (
-    <View className="gap-1 rounded-md bg-secondary p-2">
+    <View className="gap-1">
       {message.parts.map(p => {
         if (isToolPart(p) && p.tool === 'task') {
           const nestedSessionId = getTaskToolSessionId(p);
