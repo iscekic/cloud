@@ -1,7 +1,14 @@
-import { useAtomValue } from 'jotai';
-import { Square } from 'lucide-react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { Square, X } from 'lucide-react';
 import type { JSX } from 'react';
-import { browserTaskQueueAtom } from '@/src/shared/browser-task-queue';
+import {
+  browserTaskQueueAtom,
+  isBrowserTaskTerminal,
+  removeBrowserTask,
+} from '@/src/shared/browser-task-queue';
+
+const taskActionButtonClass =
+  'type-label flex h-7 shrink-0 items-center gap-1.5 rounded-md border border-border bg-surface-overlay px-2 text-foreground-on-secondary transition hover:bg-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring ring-offset-2 ring-offset-surface-background';
 
 export const CliTasksPanel = ({
   onStop,
@@ -11,6 +18,8 @@ export const CliTasksPanel = ({
   owner: string;
 }): JSX.Element => {
   const tasks = useAtomValue(browserTaskQueueAtom);
+  const setTasks = useSetAtom(browserTaskQueueAtom);
+  const activeCount = tasks.filter(task => !isBrowserTaskTerminal(task)).length;
 
   return (
     <section aria-label="CLI tasks" className="shrink-0 border-b border-border bg-surface-raised">
@@ -22,7 +31,7 @@ export const CliTasksPanel = ({
           </p>
         </div>
         <span className="type-eyebrow rounded-full bg-surface-selected px-2 py-1 text-foreground-muted">
-          {tasks.length} queued
+          {activeCount} active
         </span>
       </div>
 
@@ -34,6 +43,7 @@ export const CliTasksPanel = ({
         <ul className="agent-conversation-scrollbar max-h-40 overflow-y-auto border-t border-border">
           {tasks.map(task => {
             const status = task.terminalStatus ?? task.status;
+            const isTerminal = task.terminalStatus !== null;
             const canStop = task.status === 'running' || task.status === 'progress';
 
             return (
@@ -51,7 +61,7 @@ export const CliTasksPanel = ({
                 </div>
                 {canStop ? (
                   <button
-                    className="type-label flex h-7 shrink-0 items-center gap-1.5 rounded-md border border-border bg-surface-overlay px-2 text-foreground-on-secondary transition hover:bg-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring ring-offset-2 ring-offset-surface-background"
+                    className={taskActionButtonClass}
                     onClick={() => {
                       onStop(task.taskId);
                     }}
@@ -59,6 +69,18 @@ export const CliTasksPanel = ({
                   >
                     <Square aria-hidden="true" className="size-3" />
                     Stop
+                  </button>
+                ) : null}
+                {isTerminal ? (
+                  <button
+                    className={taskActionButtonClass}
+                    onClick={() => {
+                      setTasks(queue => removeBrowserTask(queue, task.taskId));
+                    }}
+                    type="button"
+                  >
+                    <X aria-hidden="true" className="size-3" />
+                    Dismiss
                   </button>
                 ) : null}
               </li>

@@ -65,3 +65,16 @@ export const updateBrowserTask = (
   patch: Partial<BrowserTaskQueueItem>
 ): readonly BrowserTaskQueueItem[] =>
   queue.map(item => (item.taskId === taskId ? { ...item, ...patch } : item));
+
+/** True once a task has settled into a terminal state. */
+export const isBrowserTaskTerminal = (task: BrowserTaskQueueItem): boolean =>
+  task.terminalStatus !== null;
+
+/** Immutably remove one queued task by id. Unknown ids return the queue unchanged. */
+export const removeBrowserTask = (
+  queue: readonly BrowserTaskQueueItem[],
+  taskId: string
+): readonly BrowserTaskQueueItem[] => {
+  const next = queue.filter(item => item.taskId !== taskId);
+  return next.length === queue.length ? queue : next;
+};
