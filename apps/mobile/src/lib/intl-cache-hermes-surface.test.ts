@@ -16,7 +16,10 @@ describe('Hermes Intl surface', () => {
     vi.resetModules();
   });
 
-  it('formats every supported language and pluralizes for i18next', async () => {
+  // One loop over 87 languages loads every FormatJS locale data file and
+  // constructs each formatter; that is ~2 s alone and exceeds the default
+  // 5 s timeout once the full suite runs in parallel.
+  it('formats every supported language and pluralizes for i18next', { timeout: 30_000 }, async () => {
     stubHermesIntl();
     const { SUPPORTED_LANGUAGES } = await import('@/i18n/languages');
     const { prewarmIntl, collator, dateTimeFormat } = await import('./intl-cache');
