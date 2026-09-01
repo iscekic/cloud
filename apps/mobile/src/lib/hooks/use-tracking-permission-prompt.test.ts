@@ -27,13 +27,13 @@ vi.mock('react-native', () => ({
 const { captureException } = vi.hoisted(() => ({ captureException: vi.fn() }));
 vi.mock('@sentry/react-native', () => ({ captureException }));
 
-const { secureStoreGetItemAsync, secureStoreSetItemAsync } = vi.hoisted(() => ({
-  secureStoreGetItemAsync: vi.fn<() => Promise<string | null>>(),
-  secureStoreSetItemAsync: vi.fn<() => Promise<void>>(),
+const { secureStoreGetItem, secureStoreSetItem } = vi.hoisted(() => ({
+  secureStoreGetItem: vi.fn<() => string | null>(),
+  secureStoreSetItem: vi.fn<() => void>(),
 }));
 vi.mock('expo-secure-store', () => ({
-  getItemAsync: secureStoreGetItemAsync,
-  setItemAsync: secureStoreSetItemAsync,
+  getItem: secureStoreGetItem,
+  setItem: secureStoreSetItem,
 }));
 
 import { useTrackingPermissionPrompt } from './use-tracking-permission-prompt';
@@ -54,6 +54,14 @@ function mountHarness(enabled: boolean): TestRenderer.ReactTestRenderer {
   });
   // act() is synchronous; renderer is assigned inside the callback.
   return renderer as unknown as TestRenderer.ReactTestRenderer;
+}
+
+// Flush pending microtasks inside act() so async effects settle.
+async function flush(action?: () => void): Promise<void> {
+  await act(async () => {
+    action?.();
+    await Promise.resolve();
+  });
 }
 
 // Helper to produce a controllable promise without uninitialized variables.
@@ -82,17 +90,32 @@ function getAlertButtons(): [AlertButton, AlertButton] {
   return buttons as [AlertButton, AlertButton];
 }
 
+// The tap-triggered failure alerts render the given title and one Retry action.
+function getFailureAlertButton(title: string): AlertButton {
+  expect(alertMock).toHaveBeenCalledTimes(2);
+  const call = alertMock.mock.calls[1] as unknown[];
+  expect(call[0]).toBe(title);
+  const buttons = call[2] as AlertButton[];
+  expect(buttons).toHaveLength(1);
+  const button = buttons[0];
+  if (!button) {
+    throw new Error('Expected a Retry button');
+  }
+  expect(button.text).toBe('Retry');
+  return button;
+}
+
 describe('useTrackingPermissionPrompt', () => {
   beforeEach(() => {
     getTrackingPermissionsAsync.mockReset();
     requestTrackingPermissionsAsync.mockReset();
     alertMock.mockReset();
     captureException.mockReset();
-    secureStoreGetItemAsync.mockReset();
-    secureStoreSetItemAsync.mockReset();
+    secureStoreGetItem.mockReset();
+    secureStoreSetItem.mockReset();
     // Default: no persisted dismissal, so the status/gating tests below
     // exercise the prompt path unchanged.
-    secureStoreGetItemAsync.mockResolvedValue(null);
+    secureStoreGetItem.mockReturnValue(null);
   });
 
   afterEach(() => {
@@ -102,10 +125,7 @@ describe('useTrackingPermissionPrompt', () => {
   // Gate false: no pre-prompt.
   it('does nothing when enabled is false', async () => {
     const renderer = mountHarness(false);
-    // Flush any microtasks so async effects can settle.
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
     expect(getTrackingPermissionsAsync).not.toHaveBeenCalled();
     expect(alertMock).not.toHaveBeenCalled();
     renderer.unmount();
@@ -119,9 +139,7 @@ describe('useTrackingPermissionPrompt', () => {
     getTrackingPermissionsAsync.mockResolvedValue({ status });
 
     const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
 
     expect(getTrackingPermissionsAsync).toHaveBeenCalledOnce();
     expect(alertMock).not.toHaveBeenCalled();
@@ -131,15 +149,11 @@ describe('useTrackingPermissionPrompt', () => {
 
   // Happy: Continue is tapped and the system dialog appears.
   it('shows the pre-prompt alert when status is undetermined and calls requestTrackingPermissionsAsync on Continue', async () => {
-    getTrackingPermissionsAsync.mockResolvedValue({
-      status: 'undetermined',
-    });
+    getTrackingPermissionsAsync.mockResolvedValue({ status: 'undetermined' });
     requestTrackingPermissionsAsync.mockResolvedValue({ status: 'granted' });
 
     const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
 
     expect(getTrackingPermissionsAsync).toHaveBeenCalledOnce();
 
@@ -150,10 +164,7 @@ describe('useTrackingPermissionPrompt', () => {
     expect(requestTrackingPermissionsAsync).not.toHaveBeenCalled();
 
     // Tap Continue.
-    await act(async () => {
-      continueButton.onPress?.();
-      await Promise.resolve();
-    });
+    await flush(continueButton.onPress);
 
     expect(requestTrackingPermissionsAsync).toHaveBeenCalledOnce();
     renderer.unmount();
@@ -161,115 +172,117 @@ describe('useTrackingPermissionPrompt', () => {
 
   // Not now: persists the dismissal and makes no tracking system request.
   it('persists the dismissal and does not request tracking permission when Not now is tapped', async () => {
-    getTrackingPermissionsAsync.mockResolvedValue({
-      status: 'undetermined',
-    });
+    getTrackingPermissionsAsync.mockResolvedValue({ status: 'undetermined' });
 
     const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
 
-    const buttons = getAlertButtons();
-    const notNowButton = buttons[0];
+    const [notNowButton] = getAlertButtons();
     expect(notNowButton.text).toBe('Not now');
 
     // Tap Not now.
-    await act(async () => {
-      notNowButton.onPress?.();
-      await Promise.resolve();
-    });
+    await flush(notNowButton.onPress);
 
-    expect(secureStoreSetItemAsync).toHaveBeenCalledWith(TRACKING_PERMISSION_DISMISSED_KEY, 'true');
+    expect(secureStoreSetItem).toHaveBeenCalledWith(TRACKING_PERMISSION_DISMISSED_KEY, 'true');
     expect(requestTrackingPermissionsAsync).not.toHaveBeenCalled();
     renderer.unmount();
   });
 
-  // Dismissed flag set: no pre-prompt and no status check on this install.
-  it('shows no alert when the dismissal flag is already persisted', async () => {
-    secureStoreGetItemAsync.mockResolvedValue('true');
-
-    const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
+  // Launch cycle: a fresh install shows one prompt, Not now persists it, and
+  // a remount (the next launch) shows no second prompt.
+  it('shows one total alert across a dismissal and a remount', async () => {
+    getTrackingPermissionsAsync.mockResolvedValue({ status: 'undetermined' });
+    let dismissed = false;
+    secureStoreGetItem.mockImplementation(() => (dismissed ? 'true' : null));
+    secureStoreSetItem.mockImplementation(() => {
+      dismissed = true;
     });
 
-    expect(secureStoreGetItemAsync).toHaveBeenCalledWith(TRACKING_PERMISSION_DISMISSED_KEY);
+    const first = mountHarness(true);
+    await flush();
+
+    const [notNowButton] = getAlertButtons();
+    await flush(notNowButton.onPress);
+    expect(secureStoreSetItem).toHaveBeenCalledOnce();
+    first.unmount();
+
+    const second = mountHarness(true);
+    await flush();
+
+    expect(secureStoreGetItem).toHaveBeenCalledTimes(2);
+    expect(alertMock).toHaveBeenCalledOnce();
+    second.unmount();
+  });
+
+  // Dismissed flag set: no pre-prompt and no status check on this install.
+  it('shows no alert when the dismissal flag is already persisted', async () => {
+    secureStoreGetItem.mockReturnValue('true');
+
+    const renderer = mountHarness(true);
+    await flush();
+
+    expect(secureStoreGetItem).toHaveBeenCalledWith(TRACKING_PERMISSION_DISMISSED_KEY);
     expect(getTrackingPermissionsAsync).not.toHaveBeenCalled();
     expect(alertMock).not.toHaveBeenCalled();
     renderer.unmount();
   });
 
-  // Dismissal read failure: reported to Sentry, then the prompt still shows
-  // so a transient read failure cannot suppress a fresh install's one prompt.
-  it('falls through to the prompt and reports to Sentry when the dismissal read fails', async () => {
+  // Dismissal read failure: reported to Sentry and the prompt is suppressed,
+  // so a later launch retries once storage recovers.
+  it('reports to Sentry and suppresses the prompt when the dismissal read fails', async () => {
     const readError = new Error('SecureStore read failed');
-    secureStoreGetItemAsync.mockRejectedValue(readError);
-    getTrackingPermissionsAsync.mockResolvedValue({ status: 'undetermined' });
+    secureStoreGetItem.mockImplementation(() => {
+      throw readError;
+    });
 
     const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
 
     expect(captureException).toHaveBeenCalledWith(readError, {
       tags: { 'error.subsystem': 'tracking_permission', 'error.operation': 'read_dismissal' },
     });
-    expect(alertMock).toHaveBeenCalledOnce();
+    expect(getTrackingPermissionsAsync).not.toHaveBeenCalled();
+    expect(alertMock).not.toHaveBeenCalled();
     renderer.unmount();
   });
 
-  // Dismissal write failure: reported to Sentry, never rethrown.
-  it('reports to Sentry and does not rethrow when persisting the dismissal fails', async () => {
-    getTrackingPermissionsAsync.mockResolvedValue({
-      status: 'undetermined',
-    });
+  // Dismissal write failure: shows the generic failure text with a Retry CTA
+  // that repeats the write.
+  it('shows couldNotSaveSetting with a Retry action when persisting the dismissal fails', async () => {
+    getTrackingPermissionsAsync.mockResolvedValue({ status: 'undetermined' });
     const writeError = new Error('SecureStore write failed');
-    secureStoreSetItemAsync.mockRejectedValue(writeError);
+    secureStoreSetItem.mockImplementation(() => {
+      throw writeError;
+    });
 
     const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
 
-    const buttons = getAlertButtons();
-    const notNowButton = buttons[0];
-
-    await act(async () => {
-      notNowButton.onPress?.();
-      await Promise.resolve();
-    });
+    const [notNowButton] = getAlertButtons();
+    await flush(notNowButton.onPress);
 
     expect(captureException).toHaveBeenCalledWith(writeError, {
       tags: { 'error.subsystem': 'tracking_permission', 'error.operation': 'persist_dismissal' },
     });
+
+    const retryButton = getFailureAlertButton('Could not save setting');
+    await flush(retryButton.onPress);
+
+    expect(secureStoreSetItem).toHaveBeenCalledTimes(2);
     renderer.unmount();
   });
 
-  // Request failure: Sentry receives error; no rethrow or retry.
-  it('reports errors to Sentry and does not rethrow when requestTrackingPermissionsAsync fails', async () => {
-    getTrackingPermissionsAsync.mockResolvedValue({
-      status: 'undetermined',
-    });
+  // Request failure: shows a native retry alert whose action repeats the request.
+  it('shows a retry alert when requestTrackingPermissionsAsync fails', async () => {
+    getTrackingPermissionsAsync.mockResolvedValue({ status: 'undetermined' });
     const requestError = new Error('ATT request failed');
     requestTrackingPermissionsAsync.mockRejectedValue(requestError);
 
     const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
 
-    const buttons = getAlertButtons();
-    const continueButton = buttons[1] as AlertButton | undefined;
-    if (!continueButton?.onPress) {
-      throw new Error('Expected Continue button with onPress handler');
-    }
-
-    // Must not throw.
-    await act(async () => {
-      continueButton.onPress?.();
-      await Promise.resolve();
-    });
+    const [, continueButton] = getAlertButtons();
+    await flush(continueButton.onPress);
 
     expect(captureException).toHaveBeenCalledWith(requestError, {
       tags: {
@@ -277,6 +290,11 @@ describe('useTrackingPermissionPrompt', () => {
         'error.operation': 'request_permission',
       },
     });
+
+    const retryButton = getFailureAlertButton('Something went wrong');
+    await flush(retryButton.onPress);
+
+    expect(requestTrackingPermissionsAsync).toHaveBeenCalledTimes(2);
     renderer.unmount();
   });
 
@@ -286,9 +304,7 @@ describe('useTrackingPermissionPrompt', () => {
     getTrackingPermissionsAsync.mockRejectedValue(checkError);
 
     const renderer = mountHarness(true);
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
 
     expect(getTrackingPermissionsAsync).toHaveBeenCalledOnce();
     expect(alertMock).not.toHaveBeenCalled();
@@ -304,11 +320,7 @@ describe('useTrackingPermissionPrompt', () => {
     getTrackingPermissionsAsync.mockReturnValue(statusPromise);
 
     const renderer = mountHarness(true);
-
-    // Let the effect start but the promise is pending.
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
     expect(getTrackingPermissionsAsync).toHaveBeenCalledOnce();
 
     // Disable before the status resolves.
@@ -317,9 +329,8 @@ describe('useTrackingPermissionPrompt', () => {
     });
 
     // Now resolve the status — it arrives after disable.
-    await act(async () => {
+    await flush(() => {
       resolveStatus({ status: 'undetermined' });
-      await Promise.resolve();
     });
 
     expect(alertMock).not.toHaveBeenCalled();
@@ -332,21 +343,16 @@ describe('useTrackingPermissionPrompt', () => {
     getTrackingPermissionsAsync.mockReturnValue(statusPromise);
 
     const renderer = mountHarness(true);
-
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await flush();
     expect(getTrackingPermissionsAsync).toHaveBeenCalledOnce();
 
-    // Unmount before the status resolves.  act() must flush so the
-    // effect cleanup runs before we resolve the pending promise.
+    // Unmount before the status resolves so the cleanup flips `cancelled`.
     act(() => {
       renderer.unmount();
     });
 
-    await act(async () => {
+    await flush(() => {
       resolveStatus({ status: 'undetermined' });
-      await Promise.resolve();
     });
 
     expect(alertMock).not.toHaveBeenCalled();

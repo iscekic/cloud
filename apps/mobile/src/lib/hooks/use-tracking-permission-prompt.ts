@@ -18,29 +18,63 @@ export function useTrackingPermissionPrompt(enabled: boolean): void {
     if (!enabled || Platform.OS !== 'ios') {
       // No-op cleanup so every branch returns the same type.
     } else {
-      const checkAndPrompt = async () => {
-        // The "Not now" dismissal is one-way and per-install: once persisted,
-        // a later launch must never ask again.
+      // The "Not now" dismissal is one-way and per-install: once persisted,
+      // a later launch must never ask again. The write is synchronous so it
+      // completes before the callback returns and cannot be lost when the app
+      // terminates right after the tap.
+      const persistDismissal = (): void => {
         try {
-          const dismissed = await SecureStore.getItemAsync(TRACKING_PERMISSION_DISMISSED_KEY);
-          if (cancelled) {
-            return;
-          }
-          if (dismissed === 'true') {
-            return;
-          }
+          SecureStore.setItem(TRACKING_PERMISSION_DISMISSED_KEY, 'true');
         } catch (error) {
-          if (cancelled) {
-            return;
+          Sentry.captureException(error, {
+            tags: {
+              'error.subsystem': 'tracking_permission',
+              'error.operation': 'persist_dismissal',
+            },
+          });
+          Alert.alert(i18n.t('common.couldNotSaveSetting'), undefined, [
+            { text: i18n.t('common.retry'), onPress: persistDismissal },
+          ]);
+        }
+      };
+
+      const requestPermission = (): void => {
+        void (async () => {
+          try {
+            await requestTrackingPermissionsAsync();
+          } catch (error) {
+            Sentry.captureException(error, {
+              tags: {
+                'error.subsystem': 'tracking_permission',
+                'error.operation': 'request_permission',
+              },
+            });
+            Alert.alert(i18n.t('common.somethingWentWrong'), undefined, [
+              { text: i18n.t('common.retry'), onPress: requestPermission },
+            ]);
           }
+        })();
+      };
+
+      const checkAndPrompt = async () => {
+        let dismissed: string | null = null;
+        try {
+          dismissed = SecureStore.getItem(TRACKING_PERMISSION_DISMISSED_KEY);
+        } catch (error) {
           Sentry.captureException(error, {
             tags: {
               'error.subsystem': 'tracking_permission',
               'error.operation': 'read_dismissal',
             },
           });
-          // Fall through: a transient read failure must not suppress the
-          // prompt on a fresh install where it has never been dismissed.
+          // A failed read cannot reliably persist a fresh dismissal, so
+          // suppress the prompt and let a later launch retry once storage
+          // recovers.
+          return;
+        }
+
+        if (dismissed === 'true') {
+          return;
         }
 
         let currentStatus: PermissionStatus | undefined = undefined;
@@ -76,37 +110,11 @@ export function useTrackingPermissionPrompt(enabled: boolean): void {
             {
               text: i18n.t('common.notNow'),
               style: 'cancel',
-              onPress: () => {
-                void (async () => {
-                  try {
-                    await SecureStore.setItemAsync(TRACKING_PERMISSION_DISMISSED_KEY, 'true');
-                  } catch (error) {
-                    Sentry.captureException(error, {
-                      tags: {
-                        'error.subsystem': 'tracking_permission',
-                        'error.operation': 'persist_dismissal',
-                      },
-                    });
-                  }
-                })();
-              },
+              onPress: persistDismissal,
             },
             {
               text: i18n.t('consent.continue'),
-              onPress: () => {
-                void (async () => {
-                  try {
-                    await requestTrackingPermissionsAsync();
-                  } catch (error) {
-                    Sentry.captureException(error, {
-                      tags: {
-                        'error.subsystem': 'tracking_permission',
-                        'error.operation': 'request_permission',
-                      },
-                    });
-                  }
-                })();
-              },
+              onPress: requestPermission,
             },
           ]
         );
