@@ -1302,16 +1302,23 @@ export function createSecurityAgentHandlers<TExtra = {}>(deps: SecurityAgentDeps
         return [];
       }
 
-      // Auto-fetch repositories from GitHub if not cached
+      // Fetch empty caches and backfill old caches that predate the fork flag.
       let repos = requireNumericPlatformRepositories(integration.repositories) ?? [];
-      if (repos.length === 0 && integration.platform_installation_id) {
-        const appType = integration.github_app_type || 'standard';
-        const fetchedRepos = await fetchGitHubRepositories(
-          integration.platform_installation_id,
-          appType
-        );
-        await updateRepositoriesForIntegration(integration.id, fetchedRepos);
-        repos = fetchedRepos;
+      if (
+        integration.platform_installation_id &&
+        (repos.length === 0 || repos.some(repo => repo.fork === undefined))
+      ) {
+        try {
+          const appType = integration.github_app_type || 'standard';
+          const fetchedRepos = await fetchGitHubRepositories(
+            integration.platform_installation_id,
+            appType
+          );
+          await updateRepositoriesForIntegration(integration.id, fetchedRepos);
+          repos = fetchedRepos;
+        } catch (error) {
+          if (repos.length === 0) throw error;
+        }
       }
 
       const repositoryDetails = repos.map(repo => ({

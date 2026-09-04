@@ -63,6 +63,14 @@ const missingIntegrationResponse = (message: string): GitHubRepositoriesResult =
   errorMessage: message,
 });
 
+/**
+ * Rows cached before the fork flag shipped keep `fork` unset, which leaves the
+ * pickers' Hide-forks feature unreachable. Detect them so the cached-path
+ * callers can backfill the flag with one re-sync.
+ */
+const cachedRepositoriesLackForkData = (repositories: PlatformRepository[]): boolean =>
+  repositories.some(repo => repo.fork === undefined);
+
 export async function getGitHubTokenForOrganization(
   organizationId: string
 ): Promise<string | undefined> {
@@ -176,6 +184,25 @@ export async function fetchGitHubRepositoriesForOrganization(
         syncedAt: new Date().toISOString(),
       };
     }
+    // A cache that predates the fork flag is backfilled with one silent
+    // re-sync so Hide-forks works in every picker. Best-effort: if the
+    // re-sync fails, the cached rows are still served.
+    if (cachedRepositoriesLackForkData(cachedRepositories)) {
+      try {
+        const repositories = await fetchGitHubRepositories(
+          integration.platform_installation_id,
+          integration.github_app_type || 'standard'
+        );
+        await updateRepositoriesForIntegration(integration.id, repositories);
+        return {
+          integrationInstalled: true,
+          repositories: mapRepositories(repositories),
+          syncedAt: new Date().toISOString(),
+        };
+      } catch (_error) {
+        // Fall through to the cached rows.
+      }
+    }
     return {
       integrationInstalled: true,
       repositories: mapRepositories(cachedRepositories),
@@ -222,6 +249,24 @@ async function fetchRepositoriesForIntegrations(
             repositories: mapRepositories(repositories, integration),
             syncedAt: new Date().toISOString(),
           };
+        }
+        // A cache that predates the fork flag is backfilled with one silent
+        // re-sync so Hide-forks works in every picker. Best-effort: if the
+        // re-sync fails, the cached rows are still served.
+        if (cachedRepositoriesLackForkData(cachedRepositories)) {
+          try {
+            const repositories = await fetchGitHubRepositories(
+              integration.platform_installation_id,
+              integration.github_app_type || 'standard'
+            );
+            await updateRepositoriesForIntegration(integration.id, repositories);
+            return {
+              repositories: mapRepositories(repositories, integration),
+              syncedAt: new Date().toISOString(),
+            };
+          } catch (_error) {
+            // Fall through to the cached rows.
+          }
         }
         return {
           repositories: mapRepositories(cachedRepositories, integration),
@@ -285,6 +330,27 @@ export async function fetchGitHubRepositoriesForUser(
         repositories: mapRepositories(repositories),
         syncedAt: new Date().toISOString(),
       };
+    }
+
+    // A cache that predates the fork flag is backfilled with one silent
+    // re-sync so Hide-forks works in every picker. Best-effort: if the
+    // re-sync fails, the cached rows are still served.
+    if (cachedRepositoriesLackForkData(cachedRepositories)) {
+      try {
+        const appType = integration.github_app_type || 'standard';
+        const repositories = await fetchGitHubRepositories(
+          integration.platform_installation_id,
+          appType
+        );
+        await updateRepositoriesForIntegration(integration.id, repositories);
+        return {
+          integrationInstalled: true,
+          repositories: mapRepositories(repositories),
+          syncedAt: new Date().toISOString(),
+        };
+      } catch (_error) {
+        // Fall through to the cached rows.
+      }
     }
 
     // Return cached repos

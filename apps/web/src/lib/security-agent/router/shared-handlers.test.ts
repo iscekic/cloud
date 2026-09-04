@@ -5,6 +5,8 @@ import type * as manualSyncClientModule from '../services/manual-sync-client';
 import type * as manualDismissClientModule from '../services/manual-dismiss-client';
 import type * as manualAnalysisClientModule from '../services/manual-analysis-client';
 import type * as manualRemediationClientModule from '../services/manual-remediation-client';
+import type * as platformIntegrationsModule from '@/lib/integrations/db/platform-integrations';
+import type * as githubAdapterModule from '@/lib/integrations/platforms/github/adapter';
 import { randomUUID } from 'crypto';
 import { eq, sql } from 'drizzle-orm';
 import { db } from '@/lib/drizzle';
@@ -14,7 +16,7 @@ import {
   security_audit_log,
   type OperationLedgerRow,
 } from '@kilocode/db/schema';
-import { SecurityAuditLogAction } from '@kilocode/db/schema-types';
+import { SecurityAuditLogAction, type PlatformRepository } from '@kilocode/db/schema-types';
 import type { SecurityFindingWithRemediation } from '../db/security-remediation';
 
 const commandId = 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee';
@@ -78,6 +80,12 @@ const mockSettleOperation = jest.fn<(...args: unknown[]) => Promise<unknown>>();
 const mockGetSecurityAgentCommandStatus = jest.fn<(...args: unknown[]) => Promise<unknown>>();
 const mockGetSecurityAgentCommandStatuses = jest.fn<(...args: unknown[]) => Promise<unknown>>();
 const mockGetReauthorizeUrl = jest.fn<(installationId: string) => string>();
+const mockUpdateRepositoriesForIntegration = jest.fn() as jest.MockedFunction<
+  typeof platformIntegrationsModule.updateRepositoriesForIntegration
+>;
+const mockFetchGitHubRepositories = jest.fn() as jest.MockedFunction<
+  typeof githubAdapterModule.fetchGitHubRepositories
+>;
 
 jest.mock('../services/manual-sync-client', () => ({
   submitManualSecuritySync: mockSubmitManualSecuritySync,
@@ -161,10 +169,10 @@ jest.mock('../services/auto-dismiss-service', () => ({
   countEligibleForAutoDismiss: jest.fn(),
 }));
 jest.mock('@/lib/integrations/db/platform-integrations', () => ({
-  updateRepositoriesForIntegration: jest.fn(),
+  updateRepositoriesForIntegration: mockUpdateRepositoriesForIntegration,
 }));
 jest.mock('@/lib/integrations/platforms/github/adapter', () => ({
-  fetchGitHubRepositories: jest.fn(),
+  fetchGitHubRepositories: mockFetchGitHubRepositories,
 }));
 
 let createSecurityAgentHandlers: typeof createSecurityAgentHandlersType;
@@ -188,7 +196,11 @@ beforeEach(() => {
   );
 });
 
-function createHandlers() {
+function createHandlers(
+  repositories: PlatformRepository[] = [
+    { id: 1, full_name: 'kilo/repo', name: 'repo', private: true, fork: false },
+  ]
+) {
   return createSecurityAgentHandlers({
     resolveOwner: () => ({
       type: 'org',
@@ -203,7 +215,7 @@ function createHandlers() {
         id: 'integration-123',
         integration_status: 'active',
         platform_installation_id: 'installation-123',
-        repositories: [{ id: 1, full_name: 'kilo/repo', name: 'repo', private: true }],
+        repositories,
       }) as never,
     trackingExtras: () => ({}),
   });
@@ -365,6 +377,7 @@ describe('getRepositories', () => {
         fullName: 'kilo/repo',
         name: 'repo',
         private: true,
+        fork: false,
         dependabotAlerts: 'disabled',
       },
     ]);
@@ -378,9 +391,45 @@ describe('getRepositories', () => {
           fullName: 'kilo/repo',
           name: 'repo',
           private: true,
+          fork: false,
         },
       ]
     );
+  });
+
+  it('refreshes a non-empty cache that predates the fork flag', async () => {
+    const freshRepositories = [
+      { id: 1, full_name: 'kilo/repo', name: 'repo', private: true, fork: false },
+    ];
+    mockFetchGitHubRepositories.mockResolvedValueOnce(freshRepositories);
+
+    await expect(
+      createHandlers([
+        { id: 1, full_name: 'kilo/repo', name: 'repo', private: true },
+      ]).getRepositories({ ctx: context, input: {} })
+    ).resolves.toEqual([
+      expect.objectContaining({ id: 1, fork: false, dependabotAlerts: 'unknown' }),
+    ]);
+
+    expect(mockFetchGitHubRepositories).toHaveBeenCalledWith('installation-123', 'standard');
+    expect(mockUpdateRepositoriesForIntegration).toHaveBeenCalledWith(
+      'integration-123',
+      freshRepositories
+    );
+  });
+
+  it('keeps stale cached repositories when the fork refresh fails', async () => {
+    mockFetchGitHubRepositories.mockRejectedValueOnce(new Error('GitHub unavailable'));
+
+    await expect(
+      createHandlers([
+        { id: 1, full_name: 'kilo/repo', name: 'repo', private: true },
+      ]).getRepositories({ ctx: context, input: {} })
+    ).resolves.toEqual([
+      expect.objectContaining({ id: 1, fork: undefined, dependabotAlerts: 'unknown' }),
+    ]);
+
+    expect(mockUpdateRepositoriesForIntegration).not.toHaveBeenCalled();
   });
 
   it('keeps repository selection available when the availability check fails', async () => {

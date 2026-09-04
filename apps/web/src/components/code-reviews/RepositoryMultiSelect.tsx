@@ -33,6 +33,11 @@ export type RepositoryMultiSelectProps<TId extends RepositoryId = number> = {
   selectedIds: TId[];
   onSelectionChange: (selectedIds: TId[]) => void;
   renderRepositoryAccessory?: (repository: Repository<TId>) => React.ReactNode;
+  /**
+   * Whether the platform's caches can carry a fork flag (GitHub, GitLab).
+   * Defaults to true; Bitbucket caches never do, so it opts out.
+   */
+  supportsForks?: boolean;
 };
 
 export function RepositoryMultiSelect<TId extends RepositoryId = number>({
@@ -40,6 +45,7 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
   selectedIds,
   onSelectionChange,
   renderRepositoryAccessory,
+  supportsForks = true,
 }: RepositoryMultiSelectProps<TId>) {
   const [searchQuery, setSearchQuery] = useState('');
   const [hideForks, setHideForks] = useState(false);
@@ -76,10 +82,14 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
     return withoutForks.filter(repo => repo.full_name.toLowerCase().includes(query));
   }, [repositories, hideForks, searchQuery]);
 
-  // The toggle is hidden when there is no fork data at all (e.g. Bitbucket),
-  // but stays visible while the stored preference is on so it can be switched
-  // off again.
-  const showHideForksToggle = hideForks || hasKnownForks(repositories);
+  // The toggle is hidden only for platforms whose caches never carry a fork
+  // flag (e.g. Bitbucket), unless the stored preference is on so it can be
+  // switched off again. On fork-capable platforms it also shows when the cache
+  // predates the fork flag (no row has one) — hiding it there would leave the
+  // feature unreachable until the next repository re-sync.
+  const hasUnknownForkData =
+    supportsForks && repositories.length > 0 && repositories.some(repo => repo.fork === undefined);
+  const showHideForksToggle = hideForks || hasKnownForks(repositories) || hasUnknownForkData;
 
   const handleToggle = (repoId: TId) => {
     const newSelection = selectedIds.includes(repoId)
