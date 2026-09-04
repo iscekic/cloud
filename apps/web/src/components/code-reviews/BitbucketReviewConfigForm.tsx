@@ -460,7 +460,6 @@ export function BitbucketReviewConfigForm({ organizationId }: BitbucketReviewCon
                     setValidationError(null);
                     setDraft(current => ({ ...current, selectedRepositoryIds }));
                   }}
-                  supportsForks={false}
                 />
               ) : (
                 <Alert>

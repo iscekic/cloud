@@ -175,18 +175,9 @@ describe('RepositoryMultiSelect hide-forks toggle visibility', () => {
     expect(container.textContent).toContain('Hide forks');
   });
 
-  it('shows the toggle when the cache predates the fork flag on a fork-capable platform', () => {
+  it('hides the toggle when the cache predates the fork flag', () => {
     const { container } = renderPicker({
       repositories: [repo({ id: 1 }), repo({ id: 2 })],
-    });
-    expect(hideForksSwitch(container)).not.toBeNull();
-    expect(container.textContent).toContain('Hide forks');
-  });
-
-  it('hides the toggle on a platform whose caches never carry fork data', () => {
-    const { container } = renderPicker({
-      repositories: [repo({ id: 1 }), repo({ id: 2 })],
-      supportsForks: false,
     });
     expect(hideForksSwitch(container)).toBeNull();
     expect(container.textContent).not.toContain('Hide forks');
@@ -210,7 +201,6 @@ describe('RepositoryMultiSelect hide-forks toggle visibility', () => {
     storage.set(HIDE_FORKS_STORAGE_KEY, 'true');
     const { container } = renderPicker({
       repositories: [repo({ id: 1 })],
-      supportsForks: false,
     });
     await act(async () => Promise.resolve());
     expect(hideForksSwitch(container)).not.toBeNull();
@@ -300,12 +290,12 @@ describe('RepositoryMultiSelect hide-forks behavior', () => {
   });
 
   it('keeps unknown-fork rows visible while hide-forks is on (stale cache is not a fork)', async () => {
+    storage.set(HIDE_FORKS_STORAGE_KEY, 'true');
     const { container, onSelectionChange } = renderPicker({
       repositories: [repo({ id: 1 }), repo({ id: 2 })],
       selectedIds: [1, 2],
     });
-
-    await clickHideForks(container);
+    await act(async () => Promise.resolve());
 
     expect(container.textContent).toContain('org/repo-1');
     expect(container.textContent).toContain('org/repo-2');
