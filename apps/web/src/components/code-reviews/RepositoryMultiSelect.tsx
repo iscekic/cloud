@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -16,6 +16,11 @@ import {
   readHideForksPreference,
   writeHideForksPreference,
 } from '@/lib/repositories/hide-forks';
+
+const subscribeToHideForksPreference = (onStoreChange: () => void) => {
+  window.addEventListener('storage', onStoreChange);
+  return () => window.removeEventListener('storage', onStoreChange);
+};
 
 export type RepositoryId = string | number;
 
@@ -48,18 +53,15 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
   supportsForks = true,
 }: RepositoryMultiSelectProps<TId>) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [hideForks, setHideForks] = useState(false);
-
-  // Init false (SSR-safe) and read the stored preference on the client after
-  // mount to avoid a hydration mismatch; the preference is shared by every
-  // picker rendered through this component.
-  useEffect(() => {
-    setHideForks(readHideForksPreference(safeLocalStorage));
-  }, []);
+  const hideForks = useSyncExternalStore(
+    subscribeToHideForksPreference,
+    () => readHideForksPreference(safeLocalStorage),
+    () => false
+  );
 
   const handleHideForksChange = (value: boolean) => {
-    setHideForks(value);
     writeHideForksPreference(safeLocalStorage, value);
+    window.dispatchEvent(new Event('storage'));
   };
 
   // While hide-forks is on, the selection must never contain fork ids, even

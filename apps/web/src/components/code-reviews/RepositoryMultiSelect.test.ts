@@ -197,6 +197,7 @@ describe('RepositoryMultiSelect hide-forks toggle visibility', () => {
   it('hides the toggle for an empty repository list', () => {
     const { container } = renderPicker({ repositories: [] });
     expect(hideForksSwitch(container)).toBeNull();
+    expect(container.textContent).toContain('No repositories available');
   });
 
   it('keeps the toggle visible while the stored preference is on, even without fork data', async () => {
@@ -212,6 +213,18 @@ describe('RepositoryMultiSelect hide-forks toggle visibility', () => {
 });
 
 describe('RepositoryMultiSelect hide-forks behavior', () => {
+  it('does not render persisted hidden forks on the initial client render', () => {
+    storage.set(HIDE_FORKS_STORAGE_KEY, 'true');
+    const renderRepositoryAccessory = jest.fn(() => null);
+
+    renderPicker({
+      repositories: [repo({ id: 1, fork: false }), repo({ id: 2, fork: true })],
+      renderRepositoryAccessory,
+    });
+
+    expect(renderRepositoryAccessory).not.toHaveBeenCalledWith(expect.objectContaining({ id: 2 }));
+  });
+
   it('drops known forks from the list and the selection when toggled on', async () => {
     const { container, onSelectionChange } = renderPicker({
       repositories: [repo({ id: 1, fork: false }), repo({ id: 2, fork: true })],
