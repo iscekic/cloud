@@ -211,10 +211,9 @@ test('Agents list shows populated active and history sessions', async () => {
 });
 
 test('Agents Copy link loading rows keep the loaded row bounds', async () => {
-  const ingestDisconnect = Promise.withResolvers<void>();
   const sessionListResponse = Promise.withResolvers<void>();
   const { cleanup, getSidePanel } = await setupAgentsTest({
-    ingestDisconnectGate: ingestDisconnect.promise,
+    ingestSilent: true,
     sessionListResponseGate: sessionListResponse.promise,
   });
   try {
@@ -238,7 +237,6 @@ test('Agents Copy link loading rows keep the loaded row bounds', async () => {
     expect(loadedBounds).toStrictEqual(loadingBounds);
 
     const copyButton = sidePanel.getByRole('button', { name: 'Copy link for "Fix login bug"' });
-    ingestDisconnect.resolve();
     await expect(sidePanel.getByText('Offline')).toBeVisible({ timeout: 15_000 });
     await expect(copyButton).toBeVisible();
     await expect(activeSection.locator('.animate-pulse')).toHaveCount(0);
@@ -260,11 +258,14 @@ test('Agents Copy link writes personal active and history URLs without layout sh
     const historyCopy = sidePanel.getByRole('button', {
       name: 'Copy link for "Refactor auth module"',
     });
+    const rowSelector = String.raw`:scope > div.space-y-0\.5 > div`;
+    const activeSection = sidePanel.getByText('Active', { exact: true }).locator('../..');
+    const historySection = sidePanel.getByText('History', { exact: true }).locator('../..');
     const surfaces = [
-      activeCopy.locator('..'),
-      historyCopy.locator('..'),
-      sidePanel.getByText('Active', { exact: true }).locator('../..'),
-      sidePanel.getByText('History', { exact: true }).locator('../..'),
+      activeSection.locator(rowSelector).first(),
+      historySection.locator(rowSelector).first(),
+      activeSection,
+      historySection,
     ];
     const initialBounds = await getBounds(surfaces);
     expect(initialBounds).not.toContain(null);

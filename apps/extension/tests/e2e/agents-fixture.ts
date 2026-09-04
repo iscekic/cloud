@@ -106,7 +106,6 @@ export interface AgentsFixtureOptions {
   getSessionFailuresBeforeSuccess?: number;
   historyListFailuresBeforeSuccess?: number;
   historySessions?: HistorySessionSeed[];
-  ingestDisconnectGate?: Promise<void>;
   /** Connected CLI instances returned by `activeSessions.listInstances`. */
   instances?: ConnectedInstanceSeed[];
   /** Keep the mocked ingest relay silent — the connection never reports
@@ -705,7 +704,6 @@ export const mockAgentsApi = async (
     if (options.ingestSilent !== true) {
       ws.send(JSON.stringify({ data: {}, event: 'connected', type: 'system' }));
     }
-    void options.ingestDisconnectGate?.then(() => ws.close());
     ws.onMessage(message => {
       const parsed = parseJsonMessage(message);
       ingestClientMessages.push(parsed);
