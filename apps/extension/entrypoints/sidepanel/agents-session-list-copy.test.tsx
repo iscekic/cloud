@@ -160,4 +160,12 @@ describe('session link copy feedback', () => {
     });
     expect(getByText(copyError)).toBeTruthy();
   });
+
+  it('reserves scroll space below the final row for copy feedback', () => {
+    const { container } = render(
+      <AgentsSessionList onNewSession={vi.fn()} onOpenSession={vi.fn()} />
+    );
+
+    expect(container.firstElementChild?.classList.contains('pb-24')).toBe(true);
+  });
 });

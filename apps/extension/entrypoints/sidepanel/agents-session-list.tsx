@@ -764,7 +764,7 @@ export const AgentsSessionList = ({
   };
 
   return (
-    <div className="agent-conversation-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto">
+    <div className="agent-conversation-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto pb-24">
       {/* New session CTA */}
       <div className="shrink-0 px-4 pt-3">
         <button
