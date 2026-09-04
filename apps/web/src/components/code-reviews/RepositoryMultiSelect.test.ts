@@ -219,6 +219,41 @@ describe('RepositoryMultiSelect hide-forks toggle visibility', () => {
 });
 
 describe('RepositoryMultiSelect hide-forks behavior', () => {
+  it.each([1, 2])(
+    'selects every non-fork repository during search with repository %i selected',
+    async selectedId => {
+      storage.set(HIDE_FORKS_STORAGE_KEY, 'true');
+      const { container, onSelectionChange } = renderPicker({
+        repositories: [
+          repo({ id: 1, fork: false }),
+          repo({ id: 2, fork: false }),
+          repo({ id: 3, fork: true }),
+        ],
+        selectedIds: [selectedId],
+      });
+      const input = container.querySelector('input[type="text"]') as HTMLInputElement;
+
+      await act(async () => {
+        input.value = 'repo-1';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        await Promise.resolve();
+      });
+
+      const selectAll = [...container.querySelectorAll('button')].find(
+        button => button.textContent === 'Select All'
+      );
+      if (!selectAll) throw new Error('Select All button missing');
+      expect(selectAll.hasAttribute('disabled')).toBe(false);
+
+      await act(async () => {
+        selectAll.dispatchEvent(new Event('click', { bubbles: true }));
+        await Promise.resolve();
+      });
+
+      expect(onSelectionChange).toHaveBeenLastCalledWith([1, 2]);
+    }
+  );
+
   it('keeps the selection count independent from search', async () => {
     const { container } = renderPicker({
       repositories: [repo({ id: 1, fork: false }), repo({ id: 2, fork: false })],

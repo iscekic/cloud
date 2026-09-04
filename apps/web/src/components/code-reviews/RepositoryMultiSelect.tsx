@@ -106,8 +106,7 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
   };
 
   const handleSelectAll = () => {
-    // Replace with exactly the visible ids — what you see is what you get.
-    onSelectionChange(visibleRepositories.map(repo => repo.id));
+    onSelectionChange(selectableRepositories.map(repo => repo.id));
   };
 
   const handleDeselectAll = () => {
@@ -115,8 +114,8 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
   };
 
   const isAllSelected =
-    visibleRepositories.length > 0 &&
-    visibleRepositories.every(repo => selectedIds.includes(repo.id));
+    selectableRepositories.length > 0 &&
+    selectableRepositories.every(repo => selectedIds.includes(repo.id));
   const isNoneSelected = selectedIds.length === 0;
   const selectedRepositoryCount = selectableRepositories.filter(repo =>
     selectedIds.includes(repo.id)
