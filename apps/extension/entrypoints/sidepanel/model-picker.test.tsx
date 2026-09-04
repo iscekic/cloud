@@ -120,4 +120,48 @@ describe('model picker stored-model display', () => {
 
     expect(queryByRole('dialog', { name: 'Select model' })).toBeNull();
   });
+
+  it('keeps the search field pinned while the model list scrolls', () => {
+    const modelOptions = Array.from({ length: 20 }, (_, index) =>
+      gatewayModel(`provider/model-${index}`, `Model ${index}`)
+    );
+    const { getByLabelText, getByRole } = renderModelPicker({
+      model: 'missing/model',
+      modelOptions,
+    });
+
+    fireEvent.click(getByLabelText('Model'));
+
+    const dialog = getByRole('dialog', { name: 'Select model' });
+    const search = getByLabelText('Search models');
+    const header = dialog.firstElementChild;
+    if (!(search instanceof HTMLInputElement)) {
+      throw new TypeError('Search models must be an input');
+    }
+
+    fireEvent.change(search, { target: { value: 'model' } });
+    fireEvent.scroll(dialog);
+
+    expect({
+      dialogScrollable: dialog.classList.contains('overflow-y-auto'),
+      headerPinned: ['sticky', 'top-0', 'h-14'].every(
+        className => header?.classList.contains(className) === true
+      ),
+      searchPinned: ['sticky', 'top-14', 'z-10', 'shrink-0', 'bg-surface-background'].every(
+        className => search.parentElement?.classList.contains(className) === true
+      ),
+    }).toStrictEqual({ dialogScrollable: true, headerPinned: true, searchPinned: true });
+    expect({ activeElement: document.activeElement, value: search.value }).toStrictEqual({
+      activeElement: search,
+      value: 'model',
+    });
+
+    fireEvent.change(search, { target: { value: 'no such model' } });
+
+    expect({
+      activeElement: document.activeElement,
+      clearSearchVisible: getByRole('button', { name: 'Clear search' }) !== null,
+      value: search.value,
+    }).toStrictEqual({ activeElement: search, clearSearchVisible: true, value: 'no such model' });
+  });
 });

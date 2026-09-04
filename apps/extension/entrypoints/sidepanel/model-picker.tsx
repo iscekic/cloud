@@ -119,7 +119,7 @@ export const ModelPicker = ({
             </button>
           </div>
 
-          <div className="border-b border-border px-3 py-3">
+          <div className="sticky top-14 z-10 shrink-0 border-b border-border bg-surface-background px-3 py-3">
             <input
               aria-label="Search models"
               className="h-9 w-full rounded-md border border-border-strong bg-input-bg px-3 type-label text-foreground outline-none transition placeholder:text-foreground-subtle focus-visible:ring-2 focus-visible:ring-brand-primary-ring ring-offset-2 ring-offset-surface-background"
