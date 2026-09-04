@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   activeSessionsQueryKey,
+  buildSessionUrl,
   historyEmptyMessage,
   mapActiveSessionRow,
   mapHistorySessionRow,
@@ -8,6 +9,32 @@ import {
   sessionSearchQueryKey,
   sessionStatusBadge,
 } from './agents-session-list';
+
+describe('buildSessionUrl()', () => {
+  it('builds a personal session URL', () => {
+    expect(buildSessionUrl('ses-personal', null)).toBe(
+      'https://app.kilo.ai/cloud/chat?sessionId=ses-personal'
+    );
+  });
+
+  it('builds an organization session URL', () => {
+    expect(buildSessionUrl('ses-org', 'org-123')).toBe(
+      'https://app.kilo.ai/organizations/org-123/cloud/chat?sessionId=ses-org'
+    );
+  });
+
+  it('encodes the organization path segment', () => {
+    expect(buildSessionUrl('ses-path', 'org/with space?')).toBe(
+      'https://app.kilo.ai/organizations/org%2Fwith%20space%3F/cloud/chat?sessionId=ses-path'
+    );
+  });
+
+  it('encodes the session query value', () => {
+    expect(buildSessionUrl('ses/with space?&=', null)).toBe(
+      'https://app.kilo.ai/cloud/chat?sessionId=ses%2Fwith+space%3F%26%3D'
+    );
+  });
+});
 
 // ---- sessionStatusBadge ----
 

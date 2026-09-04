@@ -1,5 +1,6 @@
 /* eslint-disable import/no-nodejs-modules, jest/no-conditional-in-test, max-lines */
 import { expect, test } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { rm } from 'node:fs/promises';
 import {
   launchExtensionContext,
@@ -55,6 +56,59 @@ const setupAgentsTest = async (mockOptions?: AgentsFixtureOptions) => {
   };
 };
 
+interface ClipboardMockState {
+  fail: boolean;
+  resolve: (() => void) | undefined;
+  writes: string[];
+}
+
+const mockClipboardWriteText = async (page: Page, fail = false): Promise<void> => {
+  await page.evaluate(initialFail => {
+    const state = globalThis as typeof globalThis & { __copyTest?: ClipboardMockState };
+    state.__copyTest = { fail: initialFail, resolve: undefined, writes: [] };
+    Object.defineProperty(navigator.clipboard, 'writeText', {
+      configurable: true,
+      value: (value: string) => {
+        state.__copyTest!.writes.push(value);
+        if (state.__copyTest!.fail) {
+          return Promise.reject(new DOMException('Clipboard access denied', 'NotAllowedError'));
+        }
+        const pending = Promise.withResolvers<void>();
+        state.__copyTest!.resolve = pending.resolve;
+        return pending.promise;
+      },
+    });
+  }, fail);
+};
+
+const readClipboardWrites = (page: Page): Promise<string[]> =>
+  page.evaluate(
+    () =>
+      (globalThis as typeof globalThis & { __copyTest?: ClipboardMockState }).__copyTest?.writes ??
+      []
+  );
+
+const resolveClipboardWrite = async (page: Page): Promise<void> => {
+  await page.evaluate(() => {
+    (globalThis as typeof globalThis & { __copyTest?: ClipboardMockState }).__copyTest?.resolve?.();
+  });
+};
+
+const allowClipboardWrites = async (page: Page): Promise<void> => {
+  await page.evaluate(() => {
+    const state = (globalThis as typeof globalThis & { __copyTest?: ClipboardMockState })
+      .__copyTest;
+    if (state !== undefined) {
+      state.fail = false;
+    }
+  });
+};
+
+const getBounds = async (locators: Locator[]) => {
+  const bounds = await Promise.all(locators.map(locator => locator.boundingBox()));
+  return bounds;
+};
+
 // ---------------------------------------------------------------------------
 // 1. Mode switch is visible, Agents persists through reload, Browser usable
 // ---------------------------------------------------------------------------
@@ -107,7 +161,7 @@ test('Agents mode persists active state through side panel reload', async () => 
 // 2. List: empty, populated, and retryable error
 // ---------------------------------------------------------------------------
 
-test('Agents list shows empty state when no sessions exist', async () => {
+test('Agents list shows empty state with no Copy link actions when no sessions exist', async () => {
   const { cleanup, getSidePanel } = await setupAgentsTest({
     activeSessions: [],
     historySessions: [],
@@ -122,6 +176,7 @@ test('Agents list shows empty state when no sessions exist', async () => {
     ).toBeVisible();
     // With zero sessions and no query there is nothing to search.
     await expect(sidePanel.getByLabel('Search sessions')).toBeHidden();
+    await expect(sidePanel.getByRole('button', { name: /Copy link/ })).toHaveCount(0);
   } finally {
     await cleanup();
   }
@@ -150,6 +205,118 @@ test('Agents list shows populated active and history sessions', async () => {
     await expect(
       sidePanel.getByRole('button', { name: /Untitled session \d+d ago/ })
     ).toBeVisible();
+  } finally {
+    await cleanup();
+  }
+});
+
+test('Agents Copy link writes personal active and history URLs without layout shift', async () => {
+  const { cleanup, getSidePanel } = await setupAgentsTest();
+  try {
+    const sidePanel = await getSidePanel();
+    await navigateToAgentsMode(sidePanel);
+    await mockClipboardWriteText(sidePanel);
+
+    const activeCopy = sidePanel.getByRole('button', { name: 'Copy link for "Fix login bug"' });
+    const historyCopy = sidePanel.getByRole('button', {
+      name: 'Copy link for "Refactor auth module"',
+    });
+    const surfaces = [
+      activeCopy.locator('..'),
+      historyCopy.locator('..'),
+      sidePanel.getByText('Active', { exact: true }).locator('../..'),
+      sidePanel.getByText('History', { exact: true }).locator('../..'),
+    ];
+    const initialBounds = await getBounds(surfaces);
+    expect(initialBounds).not.toContain(null);
+
+    await activeCopy.click();
+    await expect(sidePanel.getByText('Fix login bug')).toBeVisible();
+    await expect(sidePanel.getByText('Refactor auth module')).toBeVisible();
+    expect(await readClipboardWrites(sidePanel)).toStrictEqual([
+      'https://app.kilo.ai/cloud/chat?sessionId=ses_cloudsession00000000001',
+    ]);
+    expect(await getBounds(surfaces)).toStrictEqual(initialBounds);
+
+    await resolveClipboardWrite(sidePanel);
+    const successToast = sidePanel.getByRole('status');
+    await expect(successToast).toHaveText('Link copied');
+    expect(await getBounds(surfaces)).toStrictEqual(initialBounds);
+    const firstToast = await successToast.elementHandle();
+    expect(firstToast).not.toBeNull();
+
+    await sidePanel.waitForTimeout(1500);
+
+    await historyCopy.click();
+    expect(await readClipboardWrites(sidePanel)).toStrictEqual([
+      'https://app.kilo.ai/cloud/chat?sessionId=ses_cloudsession00000000001',
+      'https://app.kilo.ai/cloud/chat?sessionId=ses_historysession10000000001',
+    ]);
+    expect(await getBounds(surfaces)).toStrictEqual(initialBounds);
+
+    await resolveClipboardWrite(sidePanel);
+    await expect(successToast).toHaveText('Link copied');
+    expect(await successToast.evaluate((toast, previous) => toast !== previous, firstToast)).toBe(
+      true
+    );
+    expect(await getBounds(surfaces)).toStrictEqual(initialBounds);
+    await sidePanel.waitForTimeout(700);
+    await expect(successToast).toBeVisible();
+    await expect(successToast).toBeHidden({ timeout: 10_000 });
+  } finally {
+    await cleanup();
+  }
+});
+
+test('Agents Copy link reports blocked clipboard access and retries the organization URL', async () => {
+  const { cleanup, getSidePanel } = await setupAgentsTest({
+    activeSessions: [DEFAULT_CLOUD_SESSION],
+    historySessions: [
+      {
+        sessionId: DEFAULT_CLOUD_SESSION.kiloSessionId,
+        title: DEFAULT_CLOUD_SESSION.title,
+        updatedAt: new Date(Date.now() - 600_000).toISOString(),
+      },
+      DEFAULT_HISTORY_SESSION_1,
+    ],
+    ingestSilent: true,
+  });
+  try {
+    const sidePanel = await getSidePanel();
+    await navigateToAgentsMode(sidePanel);
+    await sidePanel.getByLabel('Settings').click();
+    await sidePanel.getByLabel('Credit account').selectOption({ label: 'Test Org' });
+    await sidePanel.getByLabel('Close settings').click();
+    await expect(sidePanel.getByText('Fix login bug')).toBeVisible();
+    await mockClipboardWriteText(sidePanel, true);
+
+    const copyButton = sidePanel.getByRole('button', { name: 'Copy link for "Fix login bug"' });
+    const surfaces = [
+      copyButton.locator('..'),
+      sidePanel.getByText('Active', { exact: true }).locator('../..'),
+      sidePanel.getByText('History', { exact: true }).locator('../..'),
+    ];
+    const initialBounds = await getBounds(surfaces);
+    expect(initialBounds).not.toContain(null);
+
+    await copyButton.click();
+    const statusToast = sidePanel.getByRole('status');
+    await expect(statusToast).toHaveText(
+      'Could not copy link. Allow clipboard access, then try again.'
+    );
+    await expect(copyButton).toBeEnabled();
+    expect(await getBounds(surfaces)).toStrictEqual(initialBounds);
+
+    await allowClipboardWrites(sidePanel);
+    await copyButton.click();
+    await resolveClipboardWrite(sidePanel);
+    await expect(statusToast).toHaveText('Link copied');
+    expect(await readClipboardWrites(sidePanel)).toStrictEqual([
+      'https://app.kilo.ai/organizations/11111111-1111-4111-8111-111111111111/cloud/chat?sessionId=ses_cloudsession00000000001',
+      'https://app.kilo.ai/organizations/11111111-1111-4111-8111-111111111111/cloud/chat?sessionId=ses_cloudsession00000000001',
+    ]);
+    expect(await getBounds(surfaces)).toStrictEqual(initialBounds);
+    await expect(statusToast).toBeHidden({ timeout: 10_000 });
   } finally {
     await cleanup();
   }

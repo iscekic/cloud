@@ -7,12 +7,14 @@ import {
   AlertTriangle,
   Bot,
   Cloud,
+  Copy,
   History,
   Plus,
   Search,
   TerminalSquare,
   WifiOff,
 } from 'lucide-react';
+import { getKiloApiBaseUrl } from '@/src/shared/auth';
 import { displayRepoName, relativeTime } from './agents-format';
 import { useExtensionAgents } from './agents-provider';
 
@@ -176,14 +178,30 @@ export const historyEmptyMessage = ({
     : 'No sessions yet. Start your first session above.';
 };
 
+export const buildSessionUrl = (sessionId: string, organizationId: string | null): string => {
+  const url = new URL(
+    organizationId === null
+      ? '/cloud/chat'
+      : `/organizations/${encodeURIComponent(organizationId)}/cloud/chat`,
+    getKiloApiBaseUrl()
+  );
+  url.searchParams.set('sessionId', sessionId);
+  return url.toString();
+};
+
+const copyButtonClass =
+  'flex size-8 shrink-0 items-center justify-center rounded-md border border-border bg-surface-overlay text-foreground-on-secondary transition hover:border-brand-primary/50 hover:bg-brand-primary/10 hover:text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-background';
+
 // ---------------------------------------------------------------------------
 // Active sessions section
 // ---------------------------------------------------------------------------
 
 const ActiveSessionsSection = ({
+  onCopySession,
   onOpenSession,
   organizationId,
 }: {
+  onCopySession: (kiloSessionId: string) => Promise<void>;
   onOpenSession: (kiloSessionId: string) => void;
   organizationId: string | null;
 }): JSX.Element => {
@@ -330,42 +348,52 @@ const ActiveSessionsSection = ({
             ]
               .filter(Boolean)
               .join(' · ');
+            const title = session.title ?? 'Untitled session';
             return (
-              <button
-                className="w-full rounded-md px-2 py-1.5 text-left type-body transition hover:bg-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring"
-                key={session.id}
-                onClick={() => {
-                  onOpenSession(session.id);
-                }}
-                type="button"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex min-w-0 items-center gap-1.5">
-                    <PlatformIcon
-                      aria-label={platformLabel}
-                      className="size-3.5 shrink-0 text-foreground-muted"
-                      role="img"
-                    >
-                      <title>{platformLabel}</title>
-                    </PlatformIcon>
-                    <span className="truncate text-foreground">
-                      {session.title ?? 'Untitled session'}
+              <div className="flex items-center gap-1" key={session.id}>
+                <button
+                  className="min-w-0 flex-1 rounded-md px-2 py-1.5 text-left type-body transition hover:bg-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring"
+                  onClick={() => {
+                    onOpenSession(session.id);
+                  }}
+                  type="button"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="flex min-w-0 items-center gap-1.5">
+                      <PlatformIcon
+                        aria-label={platformLabel}
+                        className="size-3.5 shrink-0 text-foreground-muted"
+                        role="img"
+                      >
+                        <title>{platformLabel}</title>
+                      </PlatformIcon>
+                      <span className="truncate text-foreground">{title}</span>
                     </span>
-                  </span>
-                  {badge ? (
-                    <span
-                      className={`shrink-0 rounded-full px-1.5 py-0.5 type-label ${badge.className}`}
-                    >
-                      {badge.label}
-                    </span>
-                  ) : null}
-                </div>
-                {repoLine === '' ? null : (
-                  <p className="mt-0.5 truncate pl-5 type-label text-foreground-muted">
-                    {repoLine}
-                  </p>
-                )}
-              </button>
+                    {badge ? (
+                      <span
+                        className={`shrink-0 rounded-full px-1.5 py-0.5 type-label ${badge.className}`}
+                      >
+                        {badge.label}
+                      </span>
+                    ) : null}
+                  </div>
+                  {repoLine === '' ? null : (
+                    <p className="mt-0.5 truncate pl-5 type-label text-foreground-muted">
+                      {repoLine}
+                    </p>
+                  )}
+                </button>
+                <button
+                  aria-label={`Copy link for "${title}"`}
+                  className={copyButtonClass}
+                  onClick={() => {
+                    void onCopySession(session.id);
+                  }}
+                  type="button"
+                >
+                  <Copy aria-hidden="true" className="size-3.5" />
+                </button>
+              </div>
             );
           })}
         </div>
@@ -379,9 +407,11 @@ const ActiveSessionsSection = ({
 // ---------------------------------------------------------------------------
 
 const HistorySessionsSection = ({
+  onCopySession,
   onOpenSession,
   organizationId,
 }: {
+  onCopySession: (kiloSessionId: string) => Promise<void>;
   onOpenSession: (kiloSessionId: string) => void;
   organizationId: string | null;
 }): JSX.Element => {
@@ -568,27 +598,41 @@ const HistorySessionsSection = ({
       {/* Row list */}
       {!hasError && !isLoading && rows.length > 0 ? (
         <div className="space-y-0.5">
-          {rows.map(session => (
-            <button
-              className={`w-full rounded-md text-left type-body transition hover:bg-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring ${rowTextColumnClass}`}
-              key={session.id}
-              onClick={() => {
-                onOpenSession(session.id);
-              }}
-              type="button"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span
-                  className={`truncate ${session.title === null ? 'text-foreground-muted' : 'text-foreground'}`}
+          {rows.map(session => {
+            const title = session.title ?? 'Untitled session';
+            return (
+              <div className="flex items-center gap-1" key={session.id}>
+                <button
+                  className={`min-w-0 flex-1 rounded-md text-left type-body transition hover:bg-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring ${rowTextColumnClass}`}
+                  onClick={() => {
+                    onOpenSession(session.id);
+                  }}
+                  type="button"
                 >
-                  {session.title ?? 'Untitled session'}
-                </span>
-                <span className="shrink-0 type-label text-foreground-muted">
-                  {relativeTime(session.updatedAt)}
-                </span>
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className={`truncate ${session.title === null ? 'text-foreground-muted' : 'text-foreground'}`}
+                    >
+                      {title}
+                    </span>
+                    <span className="shrink-0 type-label text-foreground-muted">
+                      {relativeTime(session.updatedAt)}
+                    </span>
+                  </div>
+                </button>
+                <button
+                  aria-label={`Copy link for "${title}"`}
+                  className={copyButtonClass}
+                  onClick={() => {
+                    void onCopySession(session.id);
+                  }}
+                  type="button"
+                >
+                  <Copy aria-hidden="true" className="size-3.5" />
+                </button>
               </div>
-            </button>
-          ))}
+            );
+          })}
         </div>
       ) : null}
 
@@ -622,6 +666,32 @@ export const AgentsSessionList = ({
   onOpenSession: (kiloSessionId: string) => void;
 }): JSX.Element => {
   const { organizationId } = useExtensionAgents();
+  const [copyToast, setCopyToast] = useState<{ message: string; nonce: number } | null>(null);
+
+  useEffect(() => {
+    if (copyToast === null) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      setCopyToast(null);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [copyToast]);
+
+  const showCopyToast = (message: string): void => {
+    setCopyToast(current => ({ message, nonce: (current?.nonce ?? 0) + 1 }));
+  };
+
+  const copySessionLink = async (sessionId: string): Promise<void> => {
+    try {
+      await navigator.clipboard.writeText(buildSessionUrl(sessionId, organizationId));
+      showCopyToast('Link copied');
+    } catch {
+      showCopyToast('Could not copy link. Allow clipboard access, then try again.');
+    }
+  };
 
   return (
     <div className="agent-conversation-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto">
@@ -637,8 +707,26 @@ export const AgentsSessionList = ({
         </button>
       </div>
 
-      <ActiveSessionsSection onOpenSession={onOpenSession} organizationId={organizationId} />
-      <HistorySessionsSection onOpenSession={onOpenSession} organizationId={organizationId} />
+      <ActiveSessionsSection
+        onCopySession={copySessionLink}
+        onOpenSession={onOpenSession}
+        organizationId={organizationId}
+      />
+      <HistorySessionsSection
+        onCopySession={copySessionLink}
+        onOpenSession={onOpenSession}
+        organizationId={organizationId}
+      />
+      {copyToast === null ? null : (
+        <div
+          aria-live="polite"
+          className="fixed inset-x-4 bottom-4 z-50 rounded-md border border-border bg-surface-overlay px-3 py-2 type-label text-foreground-on-secondary shadow-lg"
+          key={copyToast.nonce}
+          role="status"
+        >
+          {copyToast.message}
+        </div>
+      )}
     </div>
   );
 };
