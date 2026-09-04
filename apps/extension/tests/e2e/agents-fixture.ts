@@ -106,6 +106,7 @@ export interface AgentsFixtureOptions {
   getSessionFailuresBeforeSuccess?: number;
   historyListFailuresBeforeSuccess?: number;
   historySessions?: HistorySessionSeed[];
+  ingestDisconnectGate?: Promise<void>;
   /** Connected CLI instances returned by `activeSessions.listInstances`. */
   instances?: ConnectedInstanceSeed[];
   /** Keep the mocked ingest relay silent — the connection never reports
@@ -119,6 +120,7 @@ export interface AgentsFixtureOptions {
   /** Fail `prepareSession` with 500 this many times, then succeed. */
   prepareSessionFailuresBeforeSuccess?: number;
   prepareSessionStatusCode?: number;
+  sessionListResponseGate?: Promise<void>;
 }
 
 export interface AgentsFixtureResult {
@@ -597,6 +599,10 @@ export const mockAgentsApi = async (
         return;
       }
 
+      if (procList.some(proc => proc === 'activeSessions.list' || proc === 'cliSessionsV2.list')) {
+        await options.sessionListResponseGate;
+      }
+
       // Single-procedure: handle mutations with skipBatch that need special status codes.
       if (!isBatch) {
         const proc = procList[0]!;
@@ -699,6 +705,7 @@ export const mockAgentsApi = async (
     if (options.ingestSilent !== true) {
       ws.send(JSON.stringify({ data: {}, event: 'connected', type: 'system' }));
     }
+    void options.ingestDisconnectGate?.then(() => ws.close());
     ws.onMessage(message => {
       const parsed = parseJsonMessage(message);
       ingestClientMessages.push(parsed);

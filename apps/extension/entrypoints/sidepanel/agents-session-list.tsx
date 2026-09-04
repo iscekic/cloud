@@ -270,7 +270,31 @@ const ActiveSessionsSection = ({
         <div className="flex items-center gap-2">
           <Bot className="size-4 text-foreground-muted" />
           <span className="type-label text-foreground-muted">Active</span>
-          <span className="h-4 w-12 animate-pulse rounded bg-surface-selected" />
+        </div>
+        <div className="space-y-0.5">
+          {[1, 2].map(idx => (
+            <div aria-hidden="true" className="flex items-center gap-1" key={idx}>
+              <div className="min-w-0 flex-1 rounded-md px-2 py-1.5 type-body">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="flex min-w-0 flex-1 items-center gap-1.5">
+                    <span className="size-3.5 shrink-0 animate-pulse rounded bg-surface-selected" />
+                    <span className="flex-1 animate-pulse truncate rounded bg-surface-selected text-transparent">
+                      Loading session
+                    </span>
+                  </span>
+                  <span className="shrink-0 animate-pulse rounded-full bg-surface-selected px-1.5 py-0.5 type-label text-transparent">
+                    Running
+                  </span>
+                </div>
+                <p className="mt-0.5 truncate pl-5 type-label text-transparent">
+                  <span className="animate-pulse rounded bg-surface-selected">
+                    Loading repository
+                  </span>
+                </p>
+              </div>
+              <span className="size-8 shrink-0 animate-pulse rounded-md bg-surface-selected" />
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -312,7 +336,7 @@ const ActiveSessionsSection = ({
         <Bot className="size-4 text-foreground-muted" />
         <span className="type-label text-foreground-muted">Active</span>
         {showOffline ? (
-          <span className="flex items-center gap-1 rounded-full bg-surface-selected px-1.5 py-0.5 type-label text-foreground-muted">
+          <span className="flex items-center gap-1 rounded-full bg-surface-selected px-1.5 type-label text-foreground-muted">
             <WifiOff className="size-3" />
             Offline
           </span>
@@ -580,9 +604,20 @@ const HistorySessionsSection = ({
       {isLoading ? (
         <div className="space-y-0.5">
           {[1, 2, 3].map(idx => (
-            <div className={`flex items-center gap-2 ${rowTextColumnClass}`} key={idx}>
-              <span className="h-3 flex-1 animate-pulse rounded bg-surface-selected" />
-              <span className="h-3 w-10 animate-pulse rounded bg-surface-selected" />
+            <div aria-hidden="true" className="flex items-center gap-1" key={idx}>
+              <div
+                className={`min-w-0 flex-1 rounded-md text-left type-body ${rowTextColumnClass}`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="flex-1 animate-pulse truncate rounded bg-surface-selected text-transparent">
+                    Loading session
+                  </span>
+                  <span className="shrink-0 animate-pulse rounded bg-surface-selected type-label text-transparent">
+                    1h ago
+                  </span>
+                </div>
+              </div>
+              <span className="size-8 shrink-0 animate-pulse rounded-md bg-surface-selected" />
             </div>
           ))}
         </div>
@@ -596,7 +631,7 @@ const HistorySessionsSection = ({
       ) : null}
 
       {/* Row list */}
-      {!hasError && !isLoading && rows.length > 0 ? (
+      {!isLoading && rows.length > 0 ? (
         <div className="space-y-0.5">
           {rows.map(session => {
             const title = session.title ?? 'Untitled session';

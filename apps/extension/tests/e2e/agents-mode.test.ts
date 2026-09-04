@@ -210,6 +210,45 @@ test('Agents list shows populated active and history sessions', async () => {
   }
 });
 
+test('Agents Copy link loading rows keep the loaded row bounds', async () => {
+  const ingestDisconnect = Promise.withResolvers<void>();
+  const sessionListResponse = Promise.withResolvers<void>();
+  const { cleanup, getSidePanel } = await setupAgentsTest({
+    ingestDisconnectGate: ingestDisconnect.promise,
+    sessionListResponseGate: sessionListResponse.promise,
+  });
+  try {
+    const sidePanel = await getSidePanel();
+    await navigateToAgentsMode(sidePanel);
+
+    const rowSelector = String.raw`:scope > div.space-y-0\.5 > div`;
+    const activeSection = sidePanel.getByText('Active', { exact: true }).locator('../..');
+    const historySection = sidePanel.getByText('History', { exact: true }).locator('../..');
+    const activeRows = activeSection.locator(rowSelector);
+    const historyRows = historySection.locator(rowSelector);
+    await expect(activeRows.first()).toBeVisible();
+    await expect(historyRows.first()).toBeVisible();
+    const loadingBounds = await getBounds([activeRows.first(), historyRows.first()]);
+    expect(loadingBounds).not.toContain(null);
+
+    sessionListResponse.resolve();
+    await expect(sidePanel.getByText('Fix login bug')).toBeVisible();
+    await expect(sidePanel.getByText('Refactor auth module')).toBeVisible();
+    const loadedBounds = await getBounds([activeRows.first(), historyRows.first()]);
+    expect(loadedBounds).toStrictEqual(loadingBounds);
+
+    const copyButton = sidePanel.getByRole('button', { name: 'Copy link for "Fix login bug"' });
+    ingestDisconnect.resolve();
+    await expect(sidePanel.getByText('Offline')).toBeVisible({ timeout: 15_000 });
+    await expect(copyButton).toBeVisible();
+    await expect(activeSection.locator('.animate-pulse')).toHaveCount(0);
+    await expect(historySection.locator('.animate-pulse')).toHaveCount(0);
+    expect(await getBounds([activeRows.first(), historyRows.first()])).toStrictEqual(loadedBounds);
+  } finally {
+    await cleanup();
+  }
+});
+
 test('Agents Copy link writes personal active and history URLs without layout shift', async () => {
   const { cleanup, getSidePanel } = await setupAgentsTest();
   try {
@@ -230,7 +269,9 @@ test('Agents Copy link writes personal active and history URLs without layout sh
     const initialBounds = await getBounds(surfaces);
     expect(initialBounds).not.toContain(null);
 
-    await activeCopy.click();
+    await activeCopy.focus();
+    await expect(activeCopy).toBeFocused();
+    await activeCopy.press('Enter');
     await expect(sidePanel.getByText('Fix login bug')).toBeVisible();
     await expect(sidePanel.getByText('Refactor auth module')).toBeVisible();
     expect(await readClipboardWrites(sidePanel)).toStrictEqual([
@@ -241,6 +282,7 @@ test('Agents Copy link writes personal active and history URLs without layout sh
     await resolveClipboardWrite(sidePanel);
     const successToast = sidePanel.getByRole('status');
     await expect(successToast).toHaveText('Link copied');
+    await expect(successToast.getByRole('button')).toHaveCount(0);
     expect(await getBounds(surfaces)).toStrictEqual(initialBounds);
     const firstToast = await successToast.elementHandle();
     expect(firstToast).not.toBeNull();
