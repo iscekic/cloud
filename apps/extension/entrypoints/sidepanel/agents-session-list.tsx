@@ -9,6 +9,7 @@ import {
   Cloud,
   Copy,
   History,
+  Loader2,
   Plus,
   Search,
   TerminalSquare,
@@ -190,7 +191,47 @@ export const buildSessionUrl = (sessionId: string, organizationId: string | null
 };
 
 const copyButtonClass =
-  'flex size-8 shrink-0 items-center justify-center rounded-md border border-border bg-surface-overlay text-foreground-on-secondary transition hover:border-brand-primary/50 hover:bg-brand-primary/10 hover:text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-background';
+  'flex size-8 shrink-0 items-center justify-center rounded-md border border-border bg-surface-overlay text-foreground-on-secondary transition hover:border-brand-primary/50 hover:bg-brand-primary/10 hover:text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-background disabled:cursor-wait disabled:opacity-70';
+
+const CopySessionButton = ({
+  onCopySession,
+  sessionId,
+  title,
+}: {
+  onCopySession: (kiloSessionId: string) => Promise<void>;
+  sessionId: string;
+  title: string;
+}): JSX.Element => {
+  const [isCopying, setIsCopying] = useState(false);
+
+  const copySession = async (): Promise<void> => {
+    setIsCopying(true);
+    try {
+      await onCopySession(sessionId);
+    } finally {
+      setIsCopying(false);
+    }
+  };
+
+  return (
+    <button
+      aria-busy={isCopying}
+      aria-label={`${isCopying ? 'Copying' : 'Copy'} link for "${title}"`}
+      className={copyButtonClass}
+      disabled={isCopying}
+      onClick={() => {
+        void copySession();
+      }}
+      type="button"
+    >
+      {isCopying ? (
+        <Loader2 aria-hidden="true" className="size-3.5 animate-spin" />
+      ) : (
+        <Copy aria-hidden="true" className="size-3.5" />
+      )}
+    </button>
+  );
+};
 
 // ---------------------------------------------------------------------------
 // Active sessions section
@@ -407,16 +448,11 @@ const ActiveSessionsSection = ({
                     </p>
                   )}
                 </button>
-                <button
-                  aria-label={`Copy link for "${title}"`}
-                  className={copyButtonClass}
-                  onClick={() => {
-                    void onCopySession(session.id);
-                  }}
-                  type="button"
-                >
-                  <Copy aria-hidden="true" className="size-3.5" />
-                </button>
+                <CopySessionButton
+                  onCopySession={onCopySession}
+                  sessionId={session.id}
+                  title={title}
+                />
               </div>
             );
           })}
@@ -655,16 +691,11 @@ const HistorySessionsSection = ({
                     </span>
                   </div>
                 </button>
-                <button
-                  aria-label={`Copy link for "${title}"`}
-                  className={copyButtonClass}
-                  onClick={() => {
-                    void onCopySession(session.id);
-                  }}
-                  type="button"
-                >
-                  <Copy aria-hidden="true" className="size-3.5" />
-                </button>
+                <CopySessionButton
+                  onCopySession={onCopySession}
+                  sessionId={session.id}
+                  title={title}
+                />
               </div>
             );
           })}
