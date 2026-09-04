@@ -1,4 +1,4 @@
-import { test as setup } from '@chromatic-com/playwright';
+import { test as setup } from '@playwright/test';
 import { randomUUID } from 'crypto';
 
 /**
@@ -8,6 +8,11 @@ import { randomUUID } from 'crypto';
  *
  * Uses a unique email per test run to avoid duplicate key constraint violations
  * when the database isn't cleaned between runs.
+ *
+ * Imports plain @playwright/test: the chromatic test extension wraps every
+ * test in a CDP Fetch interception (resource archiving for visual snapshots),
+ * which breaks the credentials sign-in POST's session cookie. The setup
+ * project captures no visual snapshots, so it does not need the wrapper.
  */
 setup('authenticate', async ({ page }) => {
   // Generate a unique email for each test run to avoid duplicate key errors
@@ -17,10 +22,14 @@ setup('authenticate', async ({ page }) => {
   // Navigate to sign in page with fakeUser query param to trigger auto-submit
   await page.goto(`/users/sign_in?fakeUser=${encodeURIComponent(testEmail)}`);
 
-  // Wait for navigation to complete - user will end up on survey, profile, or their org
+  // Wait for navigation to complete - user will end up on survey, profile, or their org.
+  // A new fake user first lands on /account-verification: the session is valid
+  // at that point, and the screen itself only blocks the onboarding pages, so
+  // the saved storage state works for the pages under test.
   await page.waitForURL(
     url =>
       url.pathname === '/customer-source-survey' ||
+      url.pathname === '/account-verification' ||
       url.pathname === '/profile' ||
       url.pathname.startsWith('/organizations/'),
     {

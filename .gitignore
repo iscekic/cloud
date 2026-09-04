@@ -49,6 +49,7 @@ dev-debug-request-logs/*
 test-results/
 playwright-report/
 playwright/.auth/
+apps/web/playwright/.auth/
 
 # debug logs
 npm-debug.log*
