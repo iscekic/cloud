@@ -1085,37 +1085,32 @@ export function ReviewConfigForm({
                     )}
                   </div>
 
-                  {isLoadingRepositories ? (
-                    <div className="rounded-md border border-gray-600 bg-gray-800/50 p-3">
-                      <p className="text-sm text-gray-400">Loading repositories...</p>
-                    </div>
-                  ) : repositoriesError ? (
-                    <div className="rounded-md border border-red-500/50 bg-red-500/10 p-3">
-                      <p className="text-sm text-red-200">
-                        Failed to load repositories. Please try refreshing the page.
-                      </p>
-                    </div>
-                  ) : !repositoriesData?.integrationInstalled ? (
-                    <div className="rounded-md border border-yellow-500/50 bg-yellow-500/10 p-3">
-                      <p className="text-sm text-yellow-200">
-                        {repositoriesData?.errorMessage ||
-                          `${platformLabel} integration is not connected. Please connect ${platformLabel} in the Integrations page to configure repository selection.`}
-                      </p>
-                    </div>
-                  ) : selectableRepositories.length === 0 ? (
-                    <div className="rounded-md border border-yellow-500/50 bg-yellow-500/10 p-3">
-                      <p className="text-sm text-yellow-200">
-                        No repositories found. Please ensure the {platformLabel}{' '}
-                        {isGitLab ? 'integration' : 'App'} has access to your repositories.
-                      </p>
-                    </div>
-                  ) : (
-                    <RepositoryMultiSelect
-                      repositories={selectableRepositories}
-                      selectedIds={selectedRepositoryIds}
-                      onSelectionChange={setSelectedRepositoryIds}
-                    />
-                  )}
+                  <div className="min-h-96">
+                    {isLoadingRepositories ? (
+                      <div className="rounded-md border border-gray-600 bg-gray-800/50 p-3">
+                        <p className="text-sm text-gray-400">Loading repositories...</p>
+                      </div>
+                    ) : repositoriesError ? (
+                      <div className="rounded-md border border-red-500/50 bg-red-500/10 p-3">
+                        <p className="text-sm text-red-200">
+                          Failed to load repositories. Please try refreshing the page.
+                        </p>
+                      </div>
+                    ) : !repositoriesData?.integrationInstalled ? (
+                      <div className="rounded-md border border-yellow-500/50 bg-yellow-500/10 p-3">
+                        <p className="text-sm text-yellow-200">
+                          {repositoriesData?.errorMessage ||
+                            `${platformLabel} integration is not connected. Please connect ${platformLabel} in the Integrations page to configure repository selection.`}
+                        </p>
+                      </div>
+                    ) : (
+                      <RepositoryMultiSelect
+                        repositories={selectableRepositories}
+                        selectedIds={selectedRepositoryIds}
+                        onSelectionChange={setSelectedRepositoryIds}
+                      />
+                    )}
+                  </div>
                 </div>
               )}
 

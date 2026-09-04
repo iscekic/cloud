@@ -254,6 +254,16 @@ test.describe('hide-forks repository picker', () => {
       await capture(page, `07-layout-stable-${pageLabel}`);
     });
   }
+  test('empty repository list uses the shared fixed picker', async ({ page }) => {
+    await stubTrpcProcedures(page, {
+      'personalReviewAgent.getReviewConfig': CODE_REVIEW_CONFIG,
+      'personalReviewAgent.listGitHubRepositories': repositoriesPayload([]),
+    });
+    await openPickerPage(page, '/code-reviews');
+    await expect(page.getByText('No repositories available', { exact: true })).toBeVisible();
+    await expect(page.getByText('No repositories found', { exact: false })).toHaveCount(0);
+    await expect(listBox(page)).toBeVisible();
+  });
   test('all-forks list offers Show forks from the empty state', async ({ page }) => {
     await stubTrpcProcedures(page, {
       'personalReviewAgent.getReviewConfig': CODE_REVIEW_CONFIG,

@@ -254,7 +254,7 @@ describe('RepositoryMultiSelect hide-forks behavior', () => {
     }
   );
 
-  it('keeps the selection count independent from search', async () => {
+  it('counts only repositories visible through search', async () => {
     const { container } = renderPicker({
       repositories: [repo({ id: 1, fork: false }), repo({ id: 2, fork: false })],
       selectedIds: [1, 2, 999],
@@ -268,7 +268,7 @@ describe('RepositoryMultiSelect hide-forks behavior', () => {
     });
 
     expect(container.textContent).not.toContain('org/repo-2');
-    expect(container.textContent).toContain('2 of 2 repositories selected');
+    expect(container.textContent).toContain('1 of 1 repositories selected');
   });
 
   it('does not render persisted hidden forks on the initial client render', () => {

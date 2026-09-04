@@ -117,7 +117,7 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
     selectableRepositories.length > 0 &&
     selectableRepositories.every(repo => selectedIds.includes(repo.id));
   const isNoneSelected = selectedIds.length === 0;
-  const selectedRepositoryCount = selectableRepositories.filter(repo =>
+  const selectedRepositoryCount = visibleRepositories.filter(repo =>
     selectedIds.includes(repo.id)
   ).length;
   const showAllForksHidden =
@@ -233,7 +233,7 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
       </div>
 
       <div className="text-muted-foreground text-xs">
-        {selectedRepositoryCount} of {selectableRepositories.length} repositories selected
+        {selectedRepositoryCount} of {visibleRepositories.length} repositories selected
       </div>
     </div>
   );
