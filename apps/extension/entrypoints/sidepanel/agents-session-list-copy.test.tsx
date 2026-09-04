@@ -1,7 +1,7 @@
 /* eslint-disable import/first, jest/no-hooks, jest/no-untyped-mock-factory, promise/avoid-new, vitest/prefer-import-in-mock -- focused component fixture */
 // @vitest-environment jsdom
 
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@tanstack/react-query', () => ({
@@ -75,6 +75,7 @@ import { AgentsSessionList } from './agents-session-list';
 describe('session link copy feedback', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.useRealTimers();
   });
 
   it('keeps only the selected copy button pending until clipboard access finishes', () => {
@@ -131,12 +132,13 @@ describe('session link copy feedback', () => {
   });
 
   it('restores the copy button after a retryable clipboard failure', async () => {
+    vi.useFakeTimers();
     Object.defineProperty(navigator, 'clipboard', {
       configurable: true,
       value: { writeText: vi.fn().mockRejectedValue(new Error('permission denied')) },
     });
 
-    const { findByText, getByRole } = render(
+    const { getByRole, getByText } = render(
       <AgentsSessionList onNewSession={vi.fn()} onOpenSession={vi.fn()} />
     );
     const copyButton = getByRole('button', {
@@ -145,10 +147,17 @@ describe('session link copy feedback', () => {
 
     fireEvent.click(copyButton);
 
-    await expect(
-      findByText('Could not copy link. Allow clipboard access, then try again.')
-    ).resolves.toBeTruthy();
+    await act(async () => {
+      await Promise.resolve();
+    });
+    const copyError = 'Could not copy link. Allow clipboard access, then try again.';
+    expect(getByText(copyError)).toBeTruthy();
     expect(copyButton.hasAttribute('disabled')).toBe(false);
     expect(copyButton.getAttribute('aria-busy')).toBe('false');
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(2000);
+    });
+    expect(getByText(copyError)).toBeTruthy();
   });
 });

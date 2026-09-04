@@ -732,10 +732,14 @@ export const AgentsSessionList = ({
   onOpenSession: (kiloSessionId: string) => void;
 }): JSX.Element => {
   const { organizationId } = useExtensionAgents();
-  const [copyToast, setCopyToast] = useState<{ message: string; nonce: number } | null>(null);
+  const [copyToast, setCopyToast] = useState<{
+    autoDismiss: boolean;
+    message: string;
+    nonce: number;
+  } | null>(null);
 
   useEffect(() => {
-    if (copyToast === null) {
+    if (copyToast === null || !copyToast.autoDismiss) {
       return;
     }
     const timer = setTimeout(() => {
@@ -746,16 +750,16 @@ export const AgentsSessionList = ({
     };
   }, [copyToast]);
 
-  const showCopyToast = (message: string): void => {
-    setCopyToast(current => ({ message, nonce: (current?.nonce ?? 0) + 1 }));
+  const showCopyToast = (message: string, autoDismiss: boolean): void => {
+    setCopyToast(current => ({ autoDismiss, message, nonce: (current?.nonce ?? 0) + 1 }));
   };
 
   const copySessionLink = async (sessionId: string): Promise<void> => {
     try {
       await navigator.clipboard.writeText(buildSessionUrl(sessionId, organizationId));
-      showCopyToast('Link copied');
+      showCopyToast('Link copied', true);
     } catch {
-      showCopyToast('Could not copy link. Allow clipboard access, then try again.');
+      showCopyToast('Could not copy link. Allow clipboard access, then try again.', false);
     }
   };
 
