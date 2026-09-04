@@ -17,7 +17,7 @@ import { applyPortOffset, portOffset } from './services';
 
 const PORTS = { postgres: 5532, redis: 6479, 'redis-http': 8179, grafana: 4100 };
 
-test('publishes the offset ports to Compose under a per-worktree project', () => {
+void test('publishes the offset ports to Compose under a per-worktree project', () => {
   const env = buildComposeEnv(
     composeProjectName('/Users/dev/.worktrees/Checkout 9f1c', 532),
     PORTS
@@ -30,7 +30,7 @@ test('publishes the offset ports to Compose under a per-worktree project', () =>
   assert.equal(env.KILO_GRAFANA_PORT, '4100');
 });
 
-test('rewrites local endpoints in .env.local and adds a missing key', () => {
+void test('rewrites local endpoints in .env.local and adds a missing key', () => {
   const before = [
     'NEXTAUTH_SECRET=keep-me',
     'POSTGRES_URL=postgres://postgres:postgres@localhost:5432/postgres',
@@ -48,7 +48,7 @@ test('rewrites local endpoints in .env.local and adds a missing key', () => {
   assert.match(content, /^UPSTASH_REDIS_REST_URL=http:\/\/localhost:8179$/m);
 });
 
-test('keeps a value that names another host', () => {
+void test('keeps a value that names another host', () => {
   // No credentials in the fixture: a connection string with them trips secret scanning.
   const before = 'POSTGRES_URL=postgres://db.example.com:5432/prod\n';
 
@@ -59,14 +59,14 @@ test('keeps a value that names another host', () => {
   assert.match(content, /^POSTGRES_URL=postgres:\/\/db\.example\.com:5432\/prod$/m);
 });
 
-test('separates two worktrees whose basenames normalize to the same slug', () => {
+void test('separates two worktrees whose basenames normalize to the same slug', () => {
   assert.notEqual(
     composeProjectName('/Users/dev/.worktrees/Checkout 9f1c', 500),
     composeProjectName('/Users/dev/.worktrees/checkout-9f1c', 600)
   );
 });
 
-test('publishes this worktree database to the Jest env file', () => {
+void test('publishes this worktree database to the Jest env file', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'infra-env-'));
   fs.mkdirSync(path.join(root, 'dev'));
   fs.mkdirSync(path.join(root, 'apps', 'web'), { recursive: true });
@@ -96,7 +96,27 @@ test('publishes this worktree database to the Jest env file', () => {
   }
 });
 
-test('leaves a value that already names the target host and port', () => {
+void test('creates .env.local when an offset worktree has no copied environment', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'infra-env-'));
+  fs.mkdirSync(path.join(root, 'dev'));
+  fs.mkdirSync(path.join(root, 'apps', 'web'), { recursive: true });
+  const original = portOffset;
+
+  try {
+    applyPortOffset(700);
+    syncInfraEnv(root);
+
+    assert.match(
+      fs.readFileSync(path.join(root, '.env.local'), 'utf-8'),
+      /^POSTGRES_URL=postgres:\/\/postgres:postgres@localhost:6132\/postgres$/m
+    );
+  } finally {
+    applyPortOffset(original);
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+void test('leaves a value that already names the target host and port', () => {
   const before = 'POSTGRES_URL=postgresql://postgres:postgres@localhost:5532/postgres\n';
 
   const { content, changed, kept } = applyAppEnv(before, buildAppEnv(PORTS));
@@ -106,7 +126,7 @@ test('leaves a value that already names the target host and port', () => {
   assert.equal(content.split('\n')[0], before.trim());
 });
 
-test('currentComposeProject names the project compose really uses', () => {
+void test('currentComposeProject names the project compose really uses', () => {
   // At offset 0 no dev/.env is written, so compose falls back to the basename
   // of its project directory. `composeProjectName(root, 0)` names a project no
   // container ever carries — comparing against it makes a checkout's own

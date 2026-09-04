@@ -156,10 +156,10 @@ function infraPorts(offset: number): Record<string, number> {
 
 function syncAppEnv(repoRoot: string, ports: Record<string, number>): string[] {
   const envLocalPath = path.join(repoRoot, '.env.local');
-  if (!fs.existsSync(envLocalPath)) return [];
+  const exists = fs.existsSync(envLocalPath);
 
   const { content, changed, kept } = applyAppEnv(
-    fs.readFileSync(envLocalPath, 'utf-8'),
+    exists ? fs.readFileSync(envLocalPath, 'utf-8') : '',
     buildAppEnv(ports)
   );
   const report: string[] = [];

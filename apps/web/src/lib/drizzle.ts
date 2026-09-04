@@ -135,8 +135,9 @@ if (process.env.NODE_ENV !== 'test') {
  * exported so it can be unit-tested without a database, like `selectReplicaUrl`
  * above and `classifyReplicaRow` in replication-health.ts.
  *
- * A dead *primary* pool means the process cannot serve traffic, so it exits and
- * lets the platform replace the instance.
+ * A dead production *primary* pool means the process cannot serve traffic, so
+ * it exits and lets the platform replace the instance. Local development keeps
+ * the process alive so requests fail per-request and recover with the database.
  *
  * A dead *replica* pool does not, so it only logs. The replica is a read-path
  * optimisation and `selectReplicaUrl` already treats a missing replica as "use
@@ -154,8 +155,7 @@ export function shouldExitOnPoolError(
   poolKind: 'primary' | 'replica',
   nodeEnv = process.env.NODE_ENV
 ): boolean {
-  if (nodeEnv === 'test') return false;
-  return poolKind === 'primary';
+  return nodeEnv === 'production' && poolKind === 'primary';
 }
 
 pool.on('error', (err: Error) => {

@@ -51,6 +51,10 @@ describe('drizzle', () => {
       expect(shouldExitOnPoolError('primary', 'test')).toBe(false);
       expect(shouldExitOnPoolError('replica', 'test')).toBe(false);
     });
+
+    it('does not exit when the local database stops in development', () => {
+      expect(shouldExitOnPoolError('primary', 'development')).toBe(false);
+    });
   });
 
   describe('replica selection', () => {

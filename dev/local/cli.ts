@@ -995,6 +995,20 @@ async function cmdUp(args: string[], repoRoot: string): Promise<string | undefin
   // --- Write manifest for agents ---
   writeManifest(repoRoot, sessionName, wranglerRegistryPath, startedServices);
 
+  const missing = await missingRunningServices(
+    readManifest(repoRoot),
+    sessionName,
+    startedServices,
+    {
+      repoRoot,
+      waitMs: 30_000,
+      pollMs: 500,
+    }
+  );
+  if (missing.length > 0) {
+    throw new Error(`Services did not become ready within 30s: ${missing.join(', ')}`);
+  }
+
   console.log(
     `${GREEN}Started ${startedServices.length} services in session ${sessionName}${RESET}`
   );
