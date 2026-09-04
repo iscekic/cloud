@@ -161,6 +161,27 @@ describe('session link copy feedback', () => {
     expect(getByText(copyError)).toBeTruthy();
   });
 
+  it('explains the alternative when clipboard access is unavailable', async () => {
+    const onOpenSession = vi.fn();
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: undefined,
+    });
+
+    const { findByText, getByRole, getByText } = render(
+      <AgentsSessionList onNewSession={vi.fn()} onOpenSession={onOpenSession} />
+    );
+
+    fireEvent.click(getByRole('button', { name: 'Copy link for "Fix login bug"' }));
+
+    await expect(
+      findByText('Clipboard access is unavailable. Open the session to copy its link.')
+    ).resolves.toBeTruthy();
+
+    fireEvent.click(getByText('Fix login bug'));
+    expect(onOpenSession).toHaveBeenCalledWith('session-1');
+  });
+
   it('reserves scroll space below the final row for copy feedback', () => {
     const { container } = render(
       <AgentsSessionList onNewSession={vi.fn()} onOpenSession={vi.fn()} />

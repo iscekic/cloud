@@ -755,6 +755,10 @@ export const AgentsSessionList = ({
   };
 
   const copySessionLink = async (sessionId: string): Promise<void> => {
+    if (navigator.clipboard === undefined) {
+      showCopyToast('Clipboard access is unavailable. Open the session to copy its link.', false);
+      return;
+    }
     try {
       await navigator.clipboard.writeText(buildSessionUrl(sessionId, organizationId));
       showCopyToast('Link copied', true);
