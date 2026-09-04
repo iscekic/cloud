@@ -126,6 +126,29 @@ export const REVIEW_STYLES = REVIEW_STYLE_VALUES.map(value => ({
   ...REVIEW_STYLE_COPY[value],
 }));
 
+export function ReviewConfigLoading() {
+  return (
+    <Card>
+      <CardHeader className="mb-4">
+        <CardTitle className="flex items-center gap-2">
+          <Settings className="h-5 w-5" />
+          Review Configuration
+        </CardTitle>
+        <CardDescription role="status" aria-live="polite">
+          Loading Code Reviewer settings...
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="animate-pulse space-y-4 motion-reduce:animate-none">
+          <div className="bg-muted h-20 rounded" />
+          <div className="bg-muted h-32 rounded" />
+          <div className="bg-muted h-20 rounded" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function ReviewConfigForm({
   organizationId,
   platform = 'github',
@@ -754,23 +777,7 @@ export function ReviewConfigForm({
   };
 
   if (isLoading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
-            Review Configuration
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="animate-pulse space-y-4">
-            <div className="bg-muted h-20 rounded" />
-            <div className="bg-muted h-32 rounded" />
-            <div className="bg-muted h-20 rounded" />
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return <ReviewConfigLoading />;
   }
 
   return (
