@@ -273,7 +273,9 @@ describe('RepositoryMultiSelect hide-forks behavior', () => {
 
   it('does not render persisted hidden forks on the initial client render', () => {
     storage.set(HIDE_FORKS_STORAGE_KEY, 'true');
-    const renderRepositoryAccessory = jest.fn(() => null);
+    const renderRepositoryAccessory = jest.fn<NonNullable<Props['renderRepositoryAccessory']>>(
+      () => null
+    );
 
     renderPicker({
       repositories: [repo({ id: 1, fork: false }), repo({ id: 2, fork: true })],

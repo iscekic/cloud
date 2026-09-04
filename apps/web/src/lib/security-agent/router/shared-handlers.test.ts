@@ -399,7 +399,14 @@ describe('getRepositories', () => {
 
   it('refreshes a non-empty cache that predates the fork flag', async () => {
     const freshRepositories = [
-      { id: 1, full_name: 'kilo/repo', name: 'repo', private: true, fork: false },
+      {
+        id: 1,
+        full_name: 'kilo/repo',
+        name: 'repo',
+        private: true,
+        fork: false,
+        created_at: '2026-01-01T00:00:00.000Z',
+      },
     ];
     mockFetchGitHubRepositories.mockResolvedValueOnce(freshRepositories);
 
