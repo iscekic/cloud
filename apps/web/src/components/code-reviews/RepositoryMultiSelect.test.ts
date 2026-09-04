@@ -14,7 +14,12 @@ jest.mock('@/components/ui/button', () => ({
     createElement('button', props, children),
 }));
 jest.mock('@/components/ui/input', () => ({
-  Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => createElement('input', props),
+  Input: ({ onChange, ...props }: React.InputHTMLAttributes<HTMLInputElement>) =>
+    createElement('input', {
+      ...props,
+      onInput: (event: React.FormEvent<HTMLInputElement>) =>
+        onChange?.(event as React.ChangeEvent<HTMLInputElement>),
+    }),
 }));
 jest.mock('@/components/ui/label', () => ({
   Label: ({ children, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) =>
@@ -198,6 +203,7 @@ describe('RepositoryMultiSelect hide-forks toggle visibility', () => {
     const { container } = renderPicker({ repositories: [] });
     expect(hideForksSwitch(container)).toBeNull();
     expect(container.textContent).toContain('No repositories available');
+    expect(container.textContent).toContain('0 of 0 repositories selected');
   });
 
   it('keeps the toggle visible while the stored preference is on, even without fork data', async () => {
@@ -213,6 +219,23 @@ describe('RepositoryMultiSelect hide-forks toggle visibility', () => {
 });
 
 describe('RepositoryMultiSelect hide-forks behavior', () => {
+  it('keeps the selection count independent from search', async () => {
+    const { container } = renderPicker({
+      repositories: [repo({ id: 1, fork: false }), repo({ id: 2, fork: false })],
+      selectedIds: [1, 2, 999],
+    });
+    const input = container.querySelector('input[type="text"]') as HTMLInputElement;
+
+    await act(async () => {
+      input.value = 'repo-1';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      await Promise.resolve();
+    });
+
+    expect(container.textContent).not.toContain('org/repo-2');
+    expect(container.textContent).toContain('2 of 2 repositories selected');
+  });
+
   it('does not render persisted hidden forks on the initial client render', () => {
     storage.set(HIDE_FORKS_STORAGE_KEY, 'true');
     const renderRepositoryAccessory = jest.fn(() => null);
@@ -235,6 +258,7 @@ describe('RepositoryMultiSelect hide-forks behavior', () => {
 
     expect(container.textContent).toContain('org/repo-1');
     expect(container.textContent).not.toContain('org/repo-2');
+    expect(container.textContent).toContain('1 of 1 repositories selected');
     expect(onSelectionChange).toHaveBeenCalledWith([1]);
   });
 

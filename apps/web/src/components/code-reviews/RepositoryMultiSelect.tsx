@@ -67,7 +67,7 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
   // While hide-forks is on, the selection must never contain fork ids, even
   // when the parent hydrates a saved selection after this picker mounted.
   // Prune whenever the preference, the selection, or the repo list changes so
-  // "X of Y" and the saved config stay in sync with the visible list.
+  // "X of Y" and the saved config stay in sync with the fork-filtered list.
   // Un-hiding never re-adds forks.
   useEffect(() => {
     if (!hideForks) return;
@@ -75,14 +75,18 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
     if (pruned.length !== selectedIds.length) onSelectionChange(pruned);
   }, [hideForks, repositories, selectedIds, onSelectionChange]);
 
+  const selectableRepositories = useMemo(
+    () => filterForks(repositories, hideForks),
+    [repositories, hideForks]
+  );
+
   // Hide forks first, then the search filter narrows the remaining repos.
   const visibleRepositories = useMemo(() => {
-    const withoutForks = filterForks(repositories, hideForks);
-    if (!searchQuery.trim()) return withoutForks;
+    if (!searchQuery.trim()) return selectableRepositories;
 
     const query = searchQuery.toLowerCase();
-    return withoutForks.filter(repo => repo.full_name.toLowerCase().includes(query));
-  }, [repositories, hideForks, searchQuery]);
+    return selectableRepositories.filter(repo => repo.full_name.toLowerCase().includes(query));
+  }, [selectableRepositories, searchQuery]);
 
   // The toggle is hidden only for platforms whose caches never carry a fork
   // flag (e.g. Bitbucket), unless the stored preference is on so it can be
@@ -114,6 +118,9 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
     visibleRepositories.length > 0 &&
     visibleRepositories.every(repo => selectedIds.includes(repo.id));
   const isNoneSelected = selectedIds.length === 0;
+  const selectedRepositoryCount = selectableRepositories.filter(repo =>
+    selectedIds.includes(repo.id)
+  ).length;
   const showAllForksHidden =
     hideForks && repositories.length > 0 && visibleRepositories.length === 0;
 
@@ -227,7 +234,7 @@ export function RepositoryMultiSelect<TId extends RepositoryId = number>({
       </div>
 
       <div className="text-muted-foreground text-xs">
-        {selectedIds.length} of {visibleRepositories.length} repositories selected
+        {selectedRepositoryCount} of {selectableRepositories.length} repositories selected
       </div>
     </div>
   );
