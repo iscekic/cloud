@@ -29,6 +29,7 @@ type GitHubRepositoriesResult = {
     name: string;
     fullName: string;
     private: boolean;
+    fork?: boolean;
     platformIntegrationId?: string;
     platformAccountLogin?: string;
   }[];
@@ -45,6 +46,7 @@ const mapRepositories = (
     name: repo.name,
     fullName: repo.full_name,
     private: repo.private,
+    fork: repo.fork,
     ...(integration
       ? {
           platformIntegrationId: integration.id,

@@ -25,6 +25,7 @@ export type SecurityRepository = {
   fullName: string;
   name: string;
   private: boolean;
+  fork?: boolean;
   dependabotAlerts: DependabotAlertsAvailability;
 };
 
@@ -160,11 +161,14 @@ export function buildSecurityConfigSavePayload(
   };
 }
 
-export function toRepositoryOptions(repositories: SecurityRepository[]): Repository[] {
+export function toRepositoryOptions(
+  repositories: SecurityRepository[]
+): (Repository & { fork?: boolean })[] {
   return repositories.map(repository => ({
     id: repository.id,
     name: repository.name,
     full_name: repository.fullName,
     private: repository.private,
+    fork: repository.fork,
   }));
 }

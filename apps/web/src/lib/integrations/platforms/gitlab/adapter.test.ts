@@ -410,6 +410,7 @@ describe('fetchGitLabProjects', () => {
         name: 'active-project',
         full_name: 'group/active-project',
         private: true,
+        fork: false,
       },
     ]);
     expect(mockFetch).toHaveBeenCalledTimes(2);
@@ -423,6 +424,39 @@ describe('fetchGitLabProjects', () => {
       'https://gitlab.com/api/v4/projects?membership=true&per_page=100&page=2&archived=false',
       expect.anything()
     );
+  });
+
+  it('maps a forked project to fork: true', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => [
+        {
+          id: 321,
+          name: 'forked-project',
+          path_with_namespace: 'group/forked-project',
+          visibility: 'private',
+          default_branch: 'main',
+          web_url: 'https://gitlab.com/group/forked-project',
+          archived: false,
+          forked_from_project: { id: 123 },
+        },
+      ],
+      headers: {
+        get: () => null,
+      },
+    });
+
+    const result = await fetchGitLabProjects('test-token');
+
+    expect(result).toEqual([
+      {
+        id: 321,
+        name: 'forked-project',
+        full_name: 'group/forked-project',
+        private: true,
+        fork: true,
+      },
+    ]);
   });
 });
 

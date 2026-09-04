@@ -284,6 +284,7 @@ export type GitLabProject = {
   archived: boolean;
   marked_for_deletion_on?: string | null;
   marked_for_deletion_at?: string | null;
+  forked_from_project?: { id: number } | null;
 };
 
 function isActiveGitLabProject(project: GitLabProject): boolean {
@@ -471,6 +472,7 @@ export async function fetchGitLabProjects(
         name: project.name,
         full_name: project.path_with_namespace,
         private: project.visibility === 'private',
+        fork: project.forked_from_project != null,
       }))
     );
 

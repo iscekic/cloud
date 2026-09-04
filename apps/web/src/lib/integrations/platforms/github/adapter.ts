@@ -170,6 +170,7 @@ type GitHubRepository = {
   name: string;
   full_name: string;
   private: boolean;
+  fork: boolean;
   created_at: string;
 };
 
@@ -209,6 +210,7 @@ export async function fetchGitHubRepositories(
           name: repo.name,
           full_name: repo.full_name,
           private: repo.private,
+          fork: repo.fork,
           created_at: repo.created_at ?? new Date().toISOString(),
         }))
     );

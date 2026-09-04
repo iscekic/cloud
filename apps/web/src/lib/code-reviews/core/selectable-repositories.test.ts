@@ -16,6 +16,30 @@ describe('buildSelectableRepositories', () => {
     const result = buildSelectableRepositories(fetched, manual);
     expect(result.map(repo => repo.full_name)).toEqual(['org/a', 'org/b']);
   });
+
+  it('keeps fork: true on a fetched fork', () => {
+    const result = buildSelectableRepositories(
+      [{ id: 3, name: 'fork', fullName: 'org/fork', private: false, fork: true }],
+      []
+    );
+    expect(result.map(repo => repo.fork)).toEqual([true]);
+  });
+
+  it('keeps fork: false on a fetched non-fork', () => {
+    const result = buildSelectableRepositories(
+      [{ id: 4, name: 'plain', fullName: 'org/plain', private: true, fork: false }],
+      []
+    );
+    expect(result.map(repo => repo.fork)).toEqual([false]);
+  });
+
+  it('yields undefined fork for fork-less legacy manual entries', () => {
+    const result = buildSelectableRepositories(
+      [],
+      [{ id: 5, name: 'legacy', full_name: 'org/legacy', private: true }]
+    );
+    expect(result.map(repo => repo.fork)).toEqual([undefined]);
+  });
 });
 
 describe('buildAllowedRepositoryFullNames', () => {

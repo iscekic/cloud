@@ -1319,6 +1319,7 @@ export function createSecurityAgentHandlers<TExtra = {}>(deps: SecurityAgentDeps
         fullName: repo.full_name,
         name: repo.name,
         private: repo.private,
+        fork: repo.fork,
       }));
       const installationId = integration.platform_installation_id;
       if (!installationId || !hasSecurityReviewPermissions(integration)) {

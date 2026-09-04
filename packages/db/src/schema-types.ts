@@ -1265,6 +1265,8 @@ export type PlatformRepository<TId extends number | string = number> = {
   full_name: string;
   private: boolean;
   default_branch?: string;
+  // Old cached rows lack the key; `undefined` means not-a-fork until the next sync.
+  fork?: boolean;
 };
 
 export const REVIEW_MEMORY_PLATFORMS = ['github'] as const;
