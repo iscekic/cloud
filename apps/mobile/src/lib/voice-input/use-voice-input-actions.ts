@@ -1,5 +1,5 @@
 import { AccessibilityInfo, Alert, Linking, Platform } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { toast } from 'sonner-native';
 
 import { i18n } from '@/i18n';

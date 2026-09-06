@@ -2046,7 +2046,10 @@
     "returnSendsMessage": "A tecla Enter envia a mensagem",
     "returnSendsMessageSubtitle": "Quando essa opção está desativada, a tecla Enter insere uma quebra de linha nos campos de mensagem dos agentes.",
     "biometricUnlock": "Desbloqueio por biometria",
-    "biometricUnlockSubtitle": "Exigir o desbloqueio ao abrir o app e após cinco minutos em segundo plano."
+    "biometricUnlockSubtitle": "Exigir o desbloqueio ao abrir o app e após cinco minutos em segundo plano.",
+    "hapticFeedback": "Feedback háptico",
+    "hapticFull": "Completo",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "addCredits": {
     "cta": "Adicionar créditos",

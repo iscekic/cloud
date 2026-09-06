@@ -240,7 +240,10 @@
     "returnSendsMessage": "Phím xuống dòng gửi tin nhắn",
     "returnSendsMessageSubtitle": "Khi tắt, phím xuống dòng sẽ chèn dòng mới vào ô nhập tin nhắn gửi cho tác nhân.",
     "biometricUnlock": "Mở khóa bằng sinh trắc học",
-    "biometricUnlockSubtitle": "Yêu cầu mở khóa khi khởi chạy ứng dụng và sau khi ứng dụng ở chế độ nền trong năm phút."
+    "biometricUnlockSubtitle": "Yêu cầu mở khóa khi khởi chạy ứng dụng và sau khi ứng dụng ở chế độ nền trong năm phút.",
+    "hapticFeedback": "Phản hồi xúc giác",
+    "hapticFull": "Đầy đủ",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "Hoạt động trực tiếp",

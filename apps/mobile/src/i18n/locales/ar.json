@@ -240,7 +240,10 @@
     "returnSendsMessage": "مفتاح الإدخال يرسل الرسالة",
     "returnSendsMessageSubtitle": "عند تعطيل هذا الخيار، يُدرج مفتاح الإدخال سطرًا جديدًا في حقول رسائل الوكلاء.",
     "biometricUnlock": "فتح القفل بالقياسات الحيوية",
-    "biometricUnlockSubtitle": "يلزم فتح القفل عند تشغيل التطبيق وبعد بقائه في الخلفية لمدة خمس دقائق."
+    "biometricUnlockSubtitle": "يلزم فتح القفل عند تشغيل التطبيق وبعد بقائه في الخلفية لمدة خمس دقائق.",
+    "hapticFeedback": "التغذية الراجعة اللمسية",
+    "hapticFull": "كامل",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "الأنشطة المباشرة",

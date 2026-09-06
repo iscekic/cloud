@@ -11,7 +11,7 @@
 // makes pills non-pressable and hides the add icon entirely; a
 // zero-pill read-only row renders null.
 
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { SmilePlus } from '@/components/ui/icons';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

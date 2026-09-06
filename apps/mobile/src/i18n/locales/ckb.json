@@ -240,7 +240,10 @@
     "returnSendsMessage": "دوگمەی گەڕانەوە پەیام دەنێرێت",
     "returnSendsMessageSubtitle": "کاتێک ئەم بژاردەیە ناچالاکە، دوگمەی گەڕانەوە دێڕێکی نوێ لە خانەکانی نووسینی پەیام بۆ ئەجێنت تێدەخات.",
     "biometricUnlock": "کردنەوەی قوفڵ بە بایۆمەتریک",
-    "biometricUnlockSubtitle": "لە کاتی دەستپێکردنی ئەپەکە و دوای پێنج خولەک مانەوەی لە پاشبنەمادا، کردنەوەی قوفڵ پێویستە."
+    "biometricUnlockSubtitle": "لە کاتی دەستپێکردنی ئەپەکە و دوای پێنج خولەک مانەوەی لە پاشبنەمادا، کردنەوەی قوفڵ پێویستە.",
+    "hapticFeedback": "هاپتیک فیدباک",
+    "hapticFull": "پڕ",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "داواکاری ڕاکێشان بەردەست نییە",

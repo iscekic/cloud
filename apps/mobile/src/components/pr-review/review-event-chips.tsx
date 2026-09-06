@@ -1,7 +1,7 @@
 // Horizontal event chips for the review-submit sheet. A vertical PillGroup
 // is too tall for the half-detent, so these render as a wrapping row.
 
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';
 

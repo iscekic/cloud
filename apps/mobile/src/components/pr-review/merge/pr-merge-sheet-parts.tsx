@@ -5,7 +5,7 @@
 import { type ReactNode, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Switch, TextInput, View } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 
 import {
   PrFormSheetFooter,

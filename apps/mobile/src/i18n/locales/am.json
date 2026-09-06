@@ -240,7 +240,10 @@
     "returnSendsMessage": "የመመለሻ ቁልፍ መልእክት ይልካል",
     "returnSendsMessageSubtitle": "ሲጠፋ፣ የመመለሻ ቁልፍ በወኪል መልእክት ማስገቢያዎች ውስጥ አዲስ መስመር ያስገባል።",
     "biometricUnlock": "በባዮሜትሪክስ መክፈት",
-    "biometricUnlockSubtitle": "መተግበሪያው ሲጀመር እና ከበስተጀርባ ለአምስት ደቂቃዎች ከቆየ በኋላ መክፈት ያስፈልጋል።"
+    "biometricUnlockSubtitle": "መተግበሪያው ሲጀመር እና ከበስተጀርባ ለአምስት ደቂቃዎች ከቆየ በኋላ መክፈት ያስፈልጋል።",
+    "hapticFeedback": "ሃፕቲክ ግብረ መልስ",
+    "hapticFull": "ሙሉ",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "የማዋሃድ ጥያቄው አይገኝም",

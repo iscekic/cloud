@@ -1,6 +1,6 @@
 import { type StoredMessage } from '@kilocode/cloud-agent-sdk';
 import * as Clipboard from 'expo-clipboard';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useCallback } from 'react';
 import { ActionSheetIOS, Platform } from 'react-native';
 import { toast } from 'sonner-native';

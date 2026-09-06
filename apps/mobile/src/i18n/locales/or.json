@@ -240,7 +240,10 @@
     "returnSendsMessage": "ରିଟର୍ନ କି ବାର୍ତ୍ତା ପଠାଏ",
     "returnSendsMessageSubtitle": "ଏହା ବନ୍ଦ ଥିଲେ ରିଟର୍ନ କି ଏଜେଣ୍ଟର ବାର୍ତ୍ତା ଲେଖିବା ସ୍ଥାନରେ ନୂଆ ଧାଡ଼ି ଯୋଡ଼େ।",
     "biometricUnlock": "ବାୟୋମେଟ୍ରିକ୍ସ ସହିତ ଅନଲକ୍ କରନ୍ତୁ",
-    "biometricUnlockSubtitle": "ଆପ୍ ଆରମ୍ଭ ହେବାବେଳେ ଏବଂ ପୃଷ୍ଠଭୂମିରେ ପାଞ୍ଚ ମିନିଟ୍ ରହିବା ପରେ ଅନଲକ୍ କରିବା ଆବଶ୍ୟକ।"
+    "biometricUnlockSubtitle": "ଆପ୍ ଆରମ୍ଭ ହେବାବେଳେ ଏବଂ ପୃଷ୍ଠଭୂମିରେ ପାଞ୍ଚ ମିନିଟ୍ ରହିବା ପରେ ଅନଲକ୍ କରିବା ଆବଶ୍ୟକ।",
+    "hapticFeedback": "ସ୍ପର୍ଶ ପ୍ରତିସ୍ପନ୍ଦନ",
+    "hapticFull": "ପୂର୍ଣ୍ଣ",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "ପୁଲ୍ ରିକ୍ୱେଷ୍ଟ ଉପଲବ୍ଧ ନାହିଁ",

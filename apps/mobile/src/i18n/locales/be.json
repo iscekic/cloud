@@ -240,7 +240,10 @@
     "returnSendsMessage": "Клавіша ўводу адпраўляе паведамленне",
     "returnSendsMessageSubtitle": "Калі налада выключаная, клавіша ўводу ўстаўляе новы радок у палі ўводу паведамленняў агентам.",
     "biometricUnlock": "Біяметрычная разблакіроўка",
-    "biometricUnlockSubtitle": "Разблакіроўка патрабуецца пры запуску праграмы і пасля пяці хвілін у фонавым рэжыме."
+    "biometricUnlockSubtitle": "Разблакіроўка патрабуецца пры запуску праграмы і пасля пяці хвілін у фонавым рэжыме.",
+    "hapticFeedback": "Тактыльны водгук",
+    "hapticFull": "Поўны",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Запыт на зліццё недаступны",

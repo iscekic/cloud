@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { type KiloSessionId } from '@kilocode/cloud-agent-sdk';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 
 import { type AgentMode, normalizeAgentMode } from '@/components/agents/mode-normalize';
 import { useStackSafeReplace } from '@/lib/navigation/stack-safe-replace';

@@ -1,6 +1,6 @@
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { type KiloChatClient } from '@kilocode/kilo-chat';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useRouter } from 'expo-router';
 import { useCallback } from 'react';
 import { Alert } from 'react-native';

@@ -13,7 +13,7 @@
 // `toast.error` in `onError`. The form stays open until the user
 // dismisses (cancel) or the mutation succeeds (auto-dismiss).
 
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Alert, Keyboard, ScrollView, type TextInput, useWindowDimensions } from 'react-native';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

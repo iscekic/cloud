@@ -240,7 +240,10 @@
     "returnSendsMessage": "ਰਿਟਰਨ ਕੁੰਜੀ ਸੁਨੇਹਾ ਭੇਜਦੀ ਹੈ",
     "returnSendsMessageSubtitle": "ਇਹ ਸੈਟਿੰਗ ਬੰਦ ਹੋਣ 'ਤੇ, ਰਿਟਰਨ ਕੁੰਜੀ ਏਜੰਟ ਨੂੰ ਸੁਨੇਹਾ ਲਿਖਣ ਵਾਲੇ ਖਾਨੇ ਵਿੱਚ ਨਵੀਂ ਲਾਈਨ ਪਾਉਂਦੀ ਹੈ।",
     "biometricUnlock": "ਬਾਇਓਮੈਟ੍ਰਿਕਸ ਨਾਲ ਅਨਲੌਕ ਕਰੋ",
-    "biometricUnlockSubtitle": "ਐਪ ਚਾਲੂ ਕਰਨ ਵੇਲੇ ਅਤੇ ਪਿਛੋਕੜ ਵਿੱਚ ਪੰਜ ਮਿੰਟ ਰਹਿਣ ਤੋਂ ਬਾਅਦ ਅਨਲੌਕ ਕਰੋ।"
+    "biometricUnlockSubtitle": "ਐਪ ਚਾਲੂ ਕਰਨ ਵੇਲੇ ਅਤੇ ਪਿਛੋਕੜ ਵਿੱਚ ਪੰਜ ਮਿੰਟ ਰਹਿਣ ਤੋਂ ਬਾਅਦ ਅਨਲੌਕ ਕਰੋ।",
+    "hapticFeedback": "ਹੈਪਟਿਕ ਫੀਡਬੈਕ",
+    "hapticFull": "ਪੂਰਾ",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "ਪੁੱਲ ਰਿਕਵੈਸਟ ਉਪਲਬਧ ਨਹੀਂ",

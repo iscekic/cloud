@@ -1,5 +1,5 @@
 import { type Href, useRouter } from 'expo-router';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Linking, Platform, Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useQueryClient } from '@tanstack/react-query';

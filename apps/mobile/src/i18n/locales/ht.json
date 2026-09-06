@@ -240,7 +240,10 @@
     "returnSendsMessage": "Bouton retou a voye mesaj",
     "returnSendsMessageSubtitle": "Lè opsyon sa a dezaktive, bouton retou a ajoute yon nouvo liy nan chan mesaj ajan yo.",
     "biometricUnlock": "Debloke ak byometri",
-    "biometricUnlockSubtitle": "Debloke aplikasyon an lè li kòmanse ak apre li pase senk minit an aryèplan."
+    "biometricUnlockSubtitle": "Debloke aplikasyon an lè li kòmanse ak apre li pase senk minit an aryèplan.",
+    "hapticFeedback": "Retou haptik",
+    "hapticFull": "Konplè",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Demann fizyon an pa disponib",

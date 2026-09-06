@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
 import { useBotStatus, useEventServiceClient } from '@kilocode/kilo-chat-hooks';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { getCalendars } from 'expo-localization';
 import { type Href, useRouter } from 'expo-router';
 import { Plus, Settings2 } from '@/components/ui/icons';

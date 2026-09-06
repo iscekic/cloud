@@ -240,7 +240,10 @@
     "returnSendsMessage": "Sartu teklak mezua bidaltzen du",
     "returnSendsMessageSubtitle": "Desgaituta dagoenean, Sartu teklak lerro-jauzia txertatzen du agenteen mezu-eremuetan.",
     "biometricUnlock": "Desblokeatu biometriarekin",
-    "biometricUnlockSubtitle": "Desblokeatu aplikazioa abiaraztean eta atzeko planoan bost minutu igaro ondoren."
+    "biometricUnlockSubtitle": "Desblokeatu aplikazioa abiaraztean eta atzeko planoan bost minutu igaro ondoren.",
+    "hapticFeedback": "Feedback haptikoa",
+    "hapticFull": "Osoa",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Bateratze-eskaera ez dago eskuragarri",

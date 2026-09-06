@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Check } from '@/components/ui/icons';
 import { type ReactNode } from 'react';
 import { Pressable, View } from 'react-native';

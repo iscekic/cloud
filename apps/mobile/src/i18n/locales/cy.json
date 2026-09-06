@@ -240,7 +240,10 @@
     "returnSendsMessage": "Mae'r fysell Dychwelyd yn anfon neges",
     "returnSendsMessageSubtitle": "Pan fydd yr opsiwn hwn wedi'i ddiffodd, mae'r fysell Dychwelyd yn mewnosod llinell newydd ym mlychau negeseuon yr asiantau.",
     "biometricUnlock": "Datgloi â biometreg",
-    "biometricUnlockSubtitle": "Rhaid datgloi wrth gychwyn yr ap ac ar ôl pum munud yn y cefndir."
+    "biometricUnlockSubtitle": "Rhaid datgloi wrth gychwyn yr ap ac ar ôl pum munud yn y cefndir.",
+    "hapticFeedback": "Adborth haptig",
+    "hapticFull": "Llawn",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Cais tynnu ddim ar gael",

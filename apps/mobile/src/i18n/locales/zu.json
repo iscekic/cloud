@@ -240,7 +240,10 @@
     "returnSendsMessage": "Inkinobho yokubuyela ithumela umlayezo",
     "returnSendsMessageSubtitle": "Uma lokhu kuvaliwe, inkinobho yokubuyela ifaka umugqa omusha ezindaweni zokubhalela abenzeli.",
     "biometricUnlock": "Vula ngebhayomethrikhi",
-    "biometricUnlockSubtitle": "Vula uhlelo lokusebenza lapho luqala nangemva kokuba selunemizuzu emihlanu lusebenza ngemuva."
+    "biometricUnlockSubtitle": "Vula uhlelo lokusebenza lapho luqala nangemva kokuba selunemizuzu emihlanu lusebenza ngemuva.",
+    "hapticFeedback": "Impendulo yokuthinta",
+    "hapticFull": "Ngokugcwele",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Isicelo sokuhlanganisa asitholakali",

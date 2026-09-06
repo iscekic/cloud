@@ -240,7 +240,10 @@
     "returnSendsMessage": "रिटर्न कळ संदेश पाठवते",
     "returnSendsMessageSubtitle": "हा पर्याय बंद असताना रिटर्न कळ दाबल्यास एजंटच्या संदेशपेटीत नवीन ओळ घातली जाते.",
     "biometricUnlock": "बायोमेट्रिक्स वापरून अनलॉक करा",
-    "biometricUnlockSubtitle": "अ‍ॅप सुरू करताना आणि पाच मिनिटे पार्श्वभूमीत राहिल्यानंतर अनलॉक करणे आवश्यक आहे."
+    "biometricUnlockSubtitle": "अ‍ॅप सुरू करताना आणि पाच मिनिटे पार्श्वभूमीत राहिल्यानंतर अनलॉक करणे आवश्यक आहे.",
+    "hapticFeedback": "हॅप्टिक अभिप्राय",
+    "hapticFull": "पूर्ण",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "पुल रिक्वेस्ट अनुपलब्ध",

@@ -240,7 +240,10 @@
     "returnSendsMessage": "Returtasten sender beskeden",
     "returnSendsMessageSubtitle": "Når dette er slået fra, indsætter returtasten et linjeskift i agenternes beskedfelter.",
     "biometricUnlock": "Lås op med biometri",
-    "biometricUnlockSubtitle": "Lås op ved opstart, og når appen har været i baggrunden i fem minutter."
+    "biometricUnlockSubtitle": "Lås op ved opstart, og når appen har været i baggrunden i fem minutter.",
+    "hapticFeedback": "Haptisk feedback",
+    "hapticFull": "Fuld",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Pull request ikke tilgængelig",

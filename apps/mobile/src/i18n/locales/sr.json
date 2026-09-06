@@ -240,7 +240,10 @@
     "returnSendsMessage": "Taster za novi red šalje poruku",
     "returnSendsMessageSubtitle": "Kada je ova opcija isključena, taster za novi red umeće novi red u polje za poruku agentu.",
     "biometricUnlock": "Otključavanje biometrijom",
-    "biometricUnlockSubtitle": "Otključavanje je obavezno pri pokretanju aplikacije i nakon pet minuta u pozadini."
+    "biometricUnlockSubtitle": "Otključavanje je obavezno pri pokretanju aplikacije i nakon pet minuta u pozadini.",
+    "hapticFeedback": "Haptička povratna informacija",
+    "hapticFull": "Puno",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Zahtev za spajanje nije dostupan",

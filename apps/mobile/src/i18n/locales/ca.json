@@ -240,7 +240,10 @@
     "returnSendsMessage": "La tecla de retorn envia el missatge",
     "returnSendsMessageSubtitle": "Quan està desactivat, la tecla de retorn insereix un salt de línia als camps de missatge dels agents.",
     "biometricUnlock": "Desbloqueja amb biometria",
-    "biometricUnlockSubtitle": "Cal desbloquejar l'aplicació en iniciar-la i després de cinc minuts en segon pla."
+    "biometricUnlockSubtitle": "Cal desbloquejar l'aplicació en iniciar-la i després de cinc minuts en segon pla.",
+    "hapticFeedback": "Retroalimentació hàptica",
+    "hapticFull": "Completa",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Sol·licitud d'integració no disponible",

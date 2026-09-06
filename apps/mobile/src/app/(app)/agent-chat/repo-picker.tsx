@@ -1,5 +1,5 @@
 import { useFocusEffect, useRouter } from 'expo-router';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Check, Info, Lock, Search, SearchX, Unlock } from '@/components/ui/icons';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { FlatList, Pressable, TextInput, View } from 'react-native';

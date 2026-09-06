@@ -8,7 +8,7 @@
 // stays for the rest of the sheet session. Toasts paint behind formSheets
 // on iOS, so the mutation hook toasts onError AND the sheet shows inline.
 
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { type Href, useRouter } from 'expo-router';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

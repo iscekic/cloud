@@ -240,7 +240,10 @@
     "returnSendsMessage": "Færsluhnappur sendir skilaboð",
     "returnSendsMessageSubtitle": "Þegar slökkt er á þessu setur færsluhnappurinn inn línuskil í ritlum fulltrúa.",
     "biometricUnlock": "Aflæsing með lífkennum",
-    "biometricUnlockSubtitle": "Krefjast aflæsingar við ræsingu og eftir fimm mínútur í bakgrunni."
+    "biometricUnlockSubtitle": "Krefjast aflæsingar við ræsingu og eftir fimm mínútur í bakgrunni.",
+    "hapticFeedback": "Haptísk svörun",
+    "hapticFull": "Full",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Sameiningarbeiðni ekki tiltæk",

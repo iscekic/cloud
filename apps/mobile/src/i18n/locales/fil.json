@@ -240,7 +240,10 @@
     "returnSendsMessage": "Nagpapadala ng mensahe ang teklang Return",
     "returnSendsMessageSubtitle": "Kapag naka-off, naglalagay ang Return ng bagong linya sa mga sulatan ng mensahe para sa ahente.",
     "biometricUnlock": "I-unlock gamit ang biometriko",
-    "biometricUnlockSubtitle": "I-unlock ang app sa pagbukas at matapos ang limang minuto sa background."
+    "biometricUnlockSubtitle": "I-unlock ang app sa pagbukas at matapos ang limang minuto sa background.",
+    "hapticFeedback": "Haptic feedback",
+    "hapticFull": "Kumpleto",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Hindi mabuksan ang pull request",

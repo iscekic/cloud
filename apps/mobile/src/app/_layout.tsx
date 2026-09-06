@@ -71,6 +71,7 @@ import {
   preloadThemePreference,
   useThemePreference,
 } from '@/lib/hooks/use-theme-preference';
+import { preloadHapticPreference } from '@/lib/hooks/use-haptic-preference';
 import { i18n } from '@/i18n';
 import { syncRtl } from '@/i18n/rtl';
 import { type LanguageReturnTarget, readLanguageReturnTarget } from '@/i18n/return-target';
@@ -161,6 +162,7 @@ checkInitialNotification();
 captureLaunchDeepLink();
 prefetchCurrentUser();
 preloadThemePreference();
+preloadHapticPreference();
 preloadLanguagePreference();
 preloadStartupFonts();
 

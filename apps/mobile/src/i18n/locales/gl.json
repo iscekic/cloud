@@ -240,7 +240,10 @@
     "returnSendsMessage": "A tecla Intro envía a mensaxe",
     "returnSendsMessageSubtitle": "Cando está desactivado, Intro insire un salto de liña nos campos de mensaxe dos axentes.",
     "biometricUnlock": "Desbloquear con biometría",
-    "biometricUnlockSubtitle": "Solicitar o desbloqueo ao abrir a aplicación e despois de cinco minutos en segundo plano."
+    "biometricUnlockSubtitle": "Solicitar o desbloqueo ao abrir a aplicación e despois de cinco minutos en segundo plano.",
+    "hapticFeedback": "Retroalimentación háptica",
+    "hapticFull": "Completa",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Solicitude de integración non dispoñible",

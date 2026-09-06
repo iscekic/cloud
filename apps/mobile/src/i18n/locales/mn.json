@@ -240,7 +240,10 @@
     "returnSendsMessage": "Мөр шилжүүлэх товч мессеж илгээнэ",
     "returnSendsMessageSubtitle": "Унтраалттай үед мөр шилжүүлэх товч агентын мессеж оруулах талбарт шинэ мөр оруулна.",
     "biometricUnlock": "Биометрээр түгжээ тайлах",
-    "biometricUnlockSubtitle": "Аппыг эхлүүлэхэд болон арын горимд таван минут байсны дараа түгжээг тайлах шаардлагатай."
+    "biometricUnlockSubtitle": "Аппыг эхлүүлэхэд болон арын горимд таван минут байсны дараа түгжээг тайлах шаардлагатай.",
+    "hapticFeedback": "Тактилын хариу урвал",
+    "hapticFull": "Бүтэн",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Нэгтгэх хүсэлтийг нээх боломжгүй",

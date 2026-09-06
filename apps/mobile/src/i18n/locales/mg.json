@@ -240,7 +240,10 @@
     "returnSendsMessage": "Mandefa hafatra ny bokotra fampidirana",
     "returnSendsMessageSubtitle": "Raha tsy mandeha ity safidy ity, dia mampiditra andalana vaovao ao amin'ny faritra fanoratana hafatra ho an'ny mpanampy ny bokotra fampidirana.",
     "biometricUnlock": "Vahao amin'ny biometrika ny hidy",
-    "biometricUnlockSubtitle": "Ilaina ny mamaha ny hidy rehefa manomboka ny rindranasa sy rehefa tsy naseho nandritra ny dimy minitra."
+    "biometricUnlockSubtitle": "Ilaina ny mamaha ny hidy rehefa manomboka ny rindranasa sy rehefa tsy naseho nandritra ny dimy minitra.",
+    "hapticFeedback": "Hainteny haptika",
+    "hapticFull": "Feno",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Tsy azo sokafana ny fangatahana fampiraisana",

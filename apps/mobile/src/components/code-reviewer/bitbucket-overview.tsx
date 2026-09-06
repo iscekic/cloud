@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { type Href, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Switch, View } from 'react-native';

@@ -240,7 +240,10 @@
     "returnSendsMessage": "Eingabetaste sendet Nachricht",
     "returnSendsMessageSubtitle": "Ist diese Option deaktiviert, fügt die Eingabetaste im Eingabefeld für Agenten einen Zeilenumbruch ein.",
     "biometricUnlock": "Mit Biometrie entsperren",
-    "biometricUnlockSubtitle": "Beim Start und nach fünf Minuten im Hintergrund ist das Entsperren erforderlich."
+    "biometricUnlockSubtitle": "Beim Start und nach fünf Minuten im Hintergrund ist das Entsperren erforderlich.",
+    "hapticFeedback": "Haptisches Feedback",
+    "hapticFull": "Voll",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "Live-Aktivitäten",

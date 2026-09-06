@@ -1,7 +1,7 @@
 import { type RefObject, useCallback, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { generateMessageId } from '@kilocode/cloud-agent-sdk/message-id';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { toast } from 'sonner-native';
 
 import { i18n } from '@/i18n';

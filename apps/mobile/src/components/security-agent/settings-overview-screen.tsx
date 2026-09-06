@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useRouter } from 'expo-router';
 import { Bell, Clock, Cpu, FolderGit2, Zap } from '@/components/ui/icons';
 import { useEffect, useRef } from 'react';

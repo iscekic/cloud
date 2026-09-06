@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useEditMessage, useRedeliverMessage } from '@kilocode/kilo-chat-hooks';
 import {
   buildMessageEditContent,

@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { type Href, useLocalSearchParams, useRouter } from 'expo-router';
 import { Check, Server } from '@/components/ui/icons';
 import { Pressable, View } from 'react-native';

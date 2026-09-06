@@ -1,5 +1,5 @@
 /* eslint-disable max-lines -- The selector and picker row share model disclosure behavior. */
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { type Href, type ImperativeRouter, useRouter } from 'expo-router';
 import { BookOpenCheck, Brain, Check, ChevronDown, Star } from '@/components/ui/icons';
 import { createContext, type ReactNode, useContext, useMemo } from 'react';

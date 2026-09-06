@@ -240,7 +240,10 @@
     "returnSendsMessage": "Kekunci baris baharu menghantar mesej",
     "returnSendsMessageSubtitle": "Apabila tetapan ini dinyahdayakan, kekunci baris baharu menyisipkan baris baharu dalam ruang mesej ejen.",
     "biometricUnlock": "Buka kunci dengan biometrik",
-    "biometricUnlockSubtitle": "Buka kunci apabila apl dilancarkan dan selepas lima minit di latar belakang."
+    "biometricUnlockSubtitle": "Buka kunci apabila apl dilancarkan dan selepas lima minit di latar belakang.",
+    "hapticFeedback": "Maklum balas haptik",
+    "hapticFull": "Penuh",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Permintaan tarik tidak tersedia",

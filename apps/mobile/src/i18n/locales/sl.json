@@ -240,7 +240,10 @@
     "returnSendsMessage": "Tipka Enter pošlje sporočilo",
     "returnSendsMessageSubtitle": "Ko je možnost izklopljena, tipka Enter vstavi novo vrstico v polja za vnos sporočil agentom.",
     "biometricUnlock": "Odklepanje z biometrijo",
-    "biometricUnlockSubtitle": "Odklepanje je obvezno ob zagonu aplikacije in po petih minutah v ozadju."
+    "biometricUnlockSubtitle": "Odklepanje je obvezno ob zagonu aplikacije in po petih minutah v ozadju.",
+    "hapticFeedback": "Haptični odziv",
+    "hapticFull": "Polna",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Zahtevek za združitev ni na voljo",

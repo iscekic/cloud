@@ -1,5 +1,5 @@
 import { useActionSheet } from '@expo/react-native-action-sheet';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { type Href, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, View } from 'react-native';

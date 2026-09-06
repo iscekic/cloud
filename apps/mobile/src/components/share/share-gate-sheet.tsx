@@ -1,6 +1,6 @@
 /* eslint-disable max-lines -- Share gate owns commit, destination admission, and CLI-spawn orchestration in one formSheet body. */
 import { useQuery } from '@tanstack/react-query';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useRouter } from 'expo-router';
 import { GitPullRequest, Plus, X } from '@/components/ui/icons';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';

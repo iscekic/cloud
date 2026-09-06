@@ -240,7 +240,10 @@
     "returnSendsMessage": "מקש אנטר שולח הודעה",
     "returnSendsMessageSubtitle": "כשהאפשרות כבויה, מקש אנטר מוסיף שורה חדשה בשדות ההודעה של הסוכנים.",
     "biometricUnlock": "ביטול נעילה באמצעות זיהוי ביומטרי",
-    "biometricUnlockSubtitle": "נדרש לבטל את הנעילה בעת הפעלת האפליקציה ולאחר חמש דקות ברקע."
+    "biometricUnlockSubtitle": "נדרש לבטל את הנעילה בעת הפעלת האפליקציה ולאחר חמש דקות ברקע.",
+    "hapticFeedback": "משוב הפטי",
+    "hapticFull": "מלא",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "פעילויות בזמן אמת",

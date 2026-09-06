@@ -240,7 +240,10 @@
     "returnSendsMessage": "Seolann an eochair aisfhillte teachtaireacht",
     "returnSendsMessageSubtitle": "Nuair atá sé seo as, cuireann an eochair aisfhillte líne nua isteach i mboscaí teachtaireachta na ngníomhairí.",
     "biometricUnlock": "Díghlasáil le bithmhéadracht",
-    "biometricUnlockSubtitle": "Ní mór an aip a dhíghlasáil nuair a sheoltar í agus tar éis di cúig nóiméad a chaitheamh sa chúlra."
+    "biometricUnlockSubtitle": "Ní mór an aip a dhíghlasáil nuair a sheoltar í agus tar éis di cúig nóiméad a chaitheamh sa chúlra.",
+    "hapticFeedback": "Aiseolas haptach",
+    "hapticFull": "Iomlán",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Iarratas tarraingthe gan fáil",

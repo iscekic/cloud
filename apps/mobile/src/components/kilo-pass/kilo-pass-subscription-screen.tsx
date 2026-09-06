@@ -1,5 +1,5 @@
 /* eslint-disable max-lines -- The Kilo Pass screen composes the presentation gate, loading, error, unavailable, and native-IAP surfaces; each is a small rendered surface that mirrors the shared header/scroll pattern. */
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

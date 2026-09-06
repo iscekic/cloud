@@ -240,7 +240,10 @@
     "returnSendsMessage": "Įvesties klavišas siunčia žinutę",
     "returnSendsMessageSubtitle": "Išjungus šią parinktį, įvesties klavišas agentų žinučių įvesties laukuose įterpia naują eilutę.",
     "biometricUnlock": "Atrakinti naudojant biometrinius duomenis",
-    "biometricUnlockSubtitle": "Paleidus programėlę ir jai penkias minutes išbuvus fone, reikia ją atrakinti."
+    "biometricUnlockSubtitle": "Paleidus programėlę ir jai penkias minutes išbuvus fone, reikia ją atrakinti.",
+    "hapticFeedback": "Haptinis atsiliepimas",
+    "hapticFull": "Visiškas",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Pakeitimų užklausa nepasiekiama",

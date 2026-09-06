@@ -240,7 +240,10 @@
     "returnSendsMessage": "Return-toets stuur boodskap",
     "returnSendsMessageSubtitle": "Wanneer dit af is, voeg die Return-toets 'n nuwe reël in agente se boodskapinvoer in.",
     "biometricUnlock": "Ontsluit met biometrie",
-    "biometricUnlockSubtitle": "Ontsluit wanneer die toep begin en nadat dit vyf minute in die agtergrond was."
+    "biometricUnlockSubtitle": "Ontsluit wanneer die toep begin en nadat dit vyf minute in die agtergrond was.",
+    "hapticFeedback": "Haptiese terugvoer",
+    "hapticFull": "Vol",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Trekversoek onbeskikbaar",

@@ -3,7 +3,7 @@
  * Appium E2E; this app has no @testing-library/react-native dependency, so it
  * is not expressed as a unit test.
  */
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { type SlashCommandInfo, type StandaloneSuggestion } from '@kilocode/cloud-agent-sdk';
 import { CLOUD_AGENT_PROMPT_MAX_LENGTH } from '@kilocode/cloud-agent-sdk/limits';

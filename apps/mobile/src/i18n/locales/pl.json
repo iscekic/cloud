@@ -240,7 +240,10 @@
     "returnSendsMessage": "Klawisz Enter wysyła wiadomość",
     "returnSendsMessageSubtitle": "Gdy ta opcja jest wyłączona, klawisz Enter wstawia nowy wiersz w polach wiadomości agentów.",
     "biometricUnlock": "Odblokowywanie biometryczne",
-    "biometricUnlockSubtitle": "Odblokowanie jest wymagane przy uruchomieniu aplikacji oraz po pięciu minutach w tle."
+    "biometricUnlockSubtitle": "Odblokowanie jest wymagane przy uruchomieniu aplikacji oraz po pięciu minutach w tle.",
+    "hapticFeedback": "Sprzężenie zwrotne haptyczne",
+    "hapticFull": "Pełne",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "Aktywności na żywo",

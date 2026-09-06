@@ -23,6 +23,8 @@ export const FEEDBACK_LAST_ASKED_AT_KEY = 'feedback-last-asked-at';
 export const PR_REVIEW_RECENTS_KEY = 'pr-review-recents';
 export const PR_REVIEW_VIEWED_KEY = 'pr-review-viewed';
 export const THEME_PREFERENCE_KEY = 'theme-preference';
+/** Device-level haptic feedback strength for the app-wide gate. */
+export const HAPTIC_STRENGTH_KEY = 'haptic-strength';
 export const LANGUAGE_PREFERENCE_KEY = 'language-preference';
 /** One-shot screen to reopen after an RTL language reload. */
 export const LANGUAGE_RETURN_TARGET_KEY = 'language-return-target';

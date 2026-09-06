@@ -1,6 +1,6 @@
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useQueryClient } from '@tanstack/react-query';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { buildActiveSessionsTrayInput } from '@/lib/active-sessions-live';

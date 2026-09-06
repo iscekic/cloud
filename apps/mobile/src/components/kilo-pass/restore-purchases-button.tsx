@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner-native';

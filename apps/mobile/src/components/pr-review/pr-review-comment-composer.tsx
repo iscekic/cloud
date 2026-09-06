@@ -6,7 +6,7 @@
 // the sheet renders an inline error box.
 
 import * as Crypto from 'expo-crypto';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Keyboard, ScrollView, type TextInput, View } from 'react-native';

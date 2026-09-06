@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { type Href, Tabs, usePathname, useRouter, useSegments } from 'expo-router';
 import { Bot, House, MessageCircle, MessageSquare, UserRound } from '@/components/ui/icons';
 import { useEffect } from 'react';

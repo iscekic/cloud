@@ -238,6 +238,11 @@ vi.mock('@/lib/hooks/use-theme-preference', () => ({
   setThemePreference: vi.fn(),
   useThemePreference: () => ({ preference: 'system' }),
 }));
+vi.mock('@/lib/hooks/use-haptic-preference', () => ({
+  preloadHapticPreference: vi.fn(),
+  setHapticPreference: vi.fn(),
+  useHapticPreference: () => ({ preference: 'full', hasLoaded: true }),
+}));
 vi.mock('@/lib/hooks/use-trusted-hosts', () => ({
   useTrustedHosts: () => ({ trustedHosts: [], hasLoaded: true }),
 }));

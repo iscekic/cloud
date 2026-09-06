@@ -9,7 +9,7 @@ import { useAtomValue, useSetAtom, useStore } from 'jotai';
 import { MessageSquare } from '@/components/ui/icons';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useKeepAwake } from 'expo-keep-awake';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { KeyboardAvoidingView, Platform, type Text as RNText, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

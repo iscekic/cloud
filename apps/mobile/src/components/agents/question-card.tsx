@@ -9,7 +9,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';

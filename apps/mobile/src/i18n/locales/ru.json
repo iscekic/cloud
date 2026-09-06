@@ -240,7 +240,10 @@
     "returnSendsMessage": "Отправлять сообщение клавишей ввода",
     "returnSendsMessageSubtitle": "Если отключено, клавиша ввода добавляет перенос строки в поле ввода сообщения агенту.",
     "biometricUnlock": "Разблокировка по биометрии",
-    "biometricUnlockSubtitle": "Разблокировка требуется при запуске приложения и после пяти минут в фоновом режиме."
+    "biometricUnlockSubtitle": "Разблокировка требуется при запуске приложения и после пяти минут в фоновом режиме.",
+    "hapticFeedback": "Тактильная отдача",
+    "hapticFull": "Полная",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "Эфир активности",

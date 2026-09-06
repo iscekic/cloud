@@ -240,7 +240,10 @@
     "returnSendsMessage": "Furtuun galchii ergaa ergiti",
     "returnSendsMessageSubtitle": "Yoo cufame, furtuun galchii iddoo ergaa ergamaa barreessuu keessatti sarara haaraa galchiti.",
     "biometricUnlock": "Baayoometirikisiin qulfii bani",
-    "biometricUnlockSubtitle": "Appilikeeshinichi yeroo jalqabamu fi duubbee keessatti daqiiqaa shan erga turee booda qulfii bani."
+    "biometricUnlockSubtitle": "Appilikeeshinichi yeroo jalqabamu fi duubbee keessatti daqiiqaa shan erga turee booda qulfii bani.",
+    "hapticFeedback": "Deebii haptikii",
+    "hapticFull": "Guutuu",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Gaaffiin walitti makuu hin argamu",

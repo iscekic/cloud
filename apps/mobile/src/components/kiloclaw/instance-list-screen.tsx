@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Plus } from '@/components/ui/icons';
 import { RefreshControl, View } from 'react-native';
 import { useTranslation } from 'react-i18next';

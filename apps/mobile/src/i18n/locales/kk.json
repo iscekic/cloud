@@ -240,7 +240,10 @@
     "returnSendsMessage": "Enter пернесімен хабарлама жіберу",
     "returnSendsMessageSubtitle": "Бұл баптау өшірулі болса, Enter пернесі агентке хабарлама жазу өрісінде жаңа жолға ауыстырады.",
     "biometricUnlock": "Биометрия арқылы құлыпты ашу",
-    "biometricUnlockSubtitle": "Қолданбаны ашқанда және ол фондық режимде бес минут болғаннан кейін құлыпты ашу қажет."
+    "biometricUnlockSubtitle": "Қолданбаны ашқанда және ол фондық режимде бес минут болғаннан кейін құлыпты ашу қажет.",
+    "hapticFeedback": "Тактильді кері байланыс",
+    "hapticFull": "Толық",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Біріктіру сұрауы қолжетімсіз",

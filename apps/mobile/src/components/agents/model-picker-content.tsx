@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { AlertCircle, Info, Search, SearchX } from '@/components/ui/icons';
 import { useCallback, useMemo, useRef, useState } from 'react';

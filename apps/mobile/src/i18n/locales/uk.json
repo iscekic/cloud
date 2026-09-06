@@ -240,7 +240,10 @@
     "returnSendsMessage": "Клавіша вводу надсилає повідомлення",
     "returnSendsMessageSubtitle": "Якщо вимкнено, клавіша вводу вставляє новий рядок у полях введення повідомлень агентам.",
     "biometricUnlock": "Біометричне розблокування",
-    "biometricUnlockSubtitle": "Запитувати біометричне розблокування під час запуску та після п'яти хвилин у фоновому режимі."
+    "biometricUnlockSubtitle": "Запитувати біометричне розблокування під час запуску та після п'яти хвилин у фоновому режимі.",
+    "hapticFeedback": "Тактильний відгук",
+    "hapticFull": "Повний",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "Дії наживо",

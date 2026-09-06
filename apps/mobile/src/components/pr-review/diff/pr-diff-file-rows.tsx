@@ -1,6 +1,6 @@
 // File-level row components for the PR diff FlashList.
 
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { ChevronDown, Eye, EyeOff, File, Link2 } from '@/components/ui/icons';
 import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';

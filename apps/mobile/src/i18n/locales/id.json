@@ -240,7 +240,10 @@
     "returnSendsMessage": "Tombol Enter mengirim pesan",
     "returnSendsMessageSubtitle": "Saat nonaktif, Enter menyisipkan baris baru di kolom pesan agen.",
     "biometricUnlock": "Buka kunci dengan biometrik",
-    "biometricUnlockSubtitle": "Minta autentikasi biometrik saat aplikasi dibuka dan setelah lima menit di latar belakang."
+    "biometricUnlockSubtitle": "Minta autentikasi biometrik saat aplikasi dibuka dan setelah lima menit di latar belakang.",
+    "hapticFeedback": "Umpan haptik",
+    "hapticFull": "Penuh",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "Aktivitas langsung",

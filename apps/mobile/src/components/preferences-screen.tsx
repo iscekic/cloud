@@ -36,6 +36,11 @@ import {
   type ThemePreference,
   useThemePreference,
 } from '@/lib/hooks/use-theme-preference';
+import {
+  type HapticStrength,
+  setHapticPreference,
+  useHapticPreference,
+} from '@/lib/hooks/use-haptic-preference';
 
 type PreferenceRowProps = Readonly<{
   icon: LucideIcon;
@@ -91,6 +96,7 @@ export function PreferencesScreen() {
   const unlock = useAppUnlock();
   const { setEnabled: handleUnlockChange } = unlock;
   const { preference: themePreference } = useThemePreference();
+  const { preference: hapticPreference } = useHapticPreference();
   const {
     defaultExpanded,
     hasLoaded: reasoningLoaded,
@@ -185,6 +191,29 @@ export function PreferencesScreen() {
             ]}
             value={themePreference}
             onChange={setThemePreference}
+          />
+        </View>
+
+        {/* Haptic feedback. The 'light' radio shares its visible label with the
+            Appearance 'light' radio, so it carries a disambiguated
+            accessibilityLabel for screen readers. */}
+        <View className="mt-3 gap-3">
+          <Text variant="small" className="uppercase tracking-wide text-muted-foreground">
+            {t('preferences.hapticFeedback')}
+          </Text>
+          <SegmentedControl<HapticStrength>
+            accessibilityLabel={t('preferences.hapticFeedback')}
+            options={[
+              { value: 'off', label: t('common.off') },
+              {
+                value: 'light',
+                label: t('preferences.appearanceLight'),
+                accessibilityLabel: t('preferences.hapticLight'),
+              },
+              { value: 'full', label: t('preferences.hapticFull') },
+            ]}
+            value={hapticPreference}
+            onChange={setHapticPreference}
           />
         </View>
 

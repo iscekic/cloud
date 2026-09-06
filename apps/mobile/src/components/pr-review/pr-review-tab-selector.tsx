@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';
 

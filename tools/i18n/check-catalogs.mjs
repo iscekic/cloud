@@ -102,9 +102,11 @@ const ENGLISH_IDENTICAL_ALLOWLIST = new Set([
   'agentChat.prBadge.label',
   'share.reviewPrSubtitle',
   // Format-only strings with no translatable words: a placeholder-only screen
-  // title and a placeholder-plus-UTC time-range label.
+  // title, a placeholder-plus-UTC time-range label, and a screen-reader label
+  // that only names two other keys with a comma between them.
   'prReview.screen.title',
   'securityAgent.auditReport.periodUtc',
+  'preferences.hapticLight',
 ]);
 
 /** The supported tags, read from the one source of truth. */

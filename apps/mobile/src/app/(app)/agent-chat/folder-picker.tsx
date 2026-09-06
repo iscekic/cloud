@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useRouter } from 'expo-router';
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { FlatList, Pressable, View, type ViewStyle } from 'react-native';

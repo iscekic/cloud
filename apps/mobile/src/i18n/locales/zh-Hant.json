@@ -240,7 +240,10 @@
     "returnSendsMessage": "按換行鍵傳送訊息",
     "returnSendsMessageSubtitle": "關閉後，在智慧代理的訊息輸入框中按換行鍵只會換行。",
     "biometricUnlock": "使用生物辨識解鎖",
-    "biometricUnlockSubtitle": "啟動應用程式時，以及在背景停留五分鐘後返回時，都需要解鎖。"
+    "biometricUnlockSubtitle": "啟動應用程式時，以及在背景停留五分鐘後返回時，都需要解鎖。",
+    "hapticFeedback": "觸覺回饋",
+    "hapticFull": "完整",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "即時動態",

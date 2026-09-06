@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Sparkles, X } from '@/components/ui/icons';
 import { type StandaloneSuggestion, type SuggestionAction } from '@kilocode/cloud-agent-sdk';
 

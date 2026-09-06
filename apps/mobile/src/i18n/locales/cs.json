@@ -240,7 +240,10 @@
     "returnSendsMessage": "Klávesa Enter odesílá zprávu",
     "returnSendsMessageSubtitle": "Při vypnutí této volby klávesa Enter vloží nový řádek do pole pro zprávu agentovi.",
     "biometricUnlock": "Biometrické odemykání",
-    "biometricUnlockSubtitle": "Vyžaduje odemknutí při spuštění aplikace a po pěti minutách na pozadí."
+    "biometricUnlockSubtitle": "Vyžaduje odemknutí při spuštění aplikace a po pěti minutách na pozadí.",
+    "hapticFeedback": "Hmatová odezva",
+    "hapticFull": "Plná",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "PR není dostupný",

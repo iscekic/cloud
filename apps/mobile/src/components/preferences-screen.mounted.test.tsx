@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- cohesive mounted suite for the preferences screen state contract */
 /* eslint-disable typescript-eslint/no-deprecated -- react-test-renderer is the DOM-free renderer used to mount React/RN trees under vitest (same pattern as image-viewer-modal.mounted.test.tsx) */
 import { type ElementType } from 'react';
 import { act, type ReactTestRenderer } from 'react-test-renderer';
@@ -21,6 +22,10 @@ const storage = vi.hoisted(() => ({
   value: null as string | null,
   getItemAsync: vi.fn(),
   setItemAsync: vi.fn(),
+}));
+const haptic = vi.hoisted(() => ({
+  preference: 'full' as 'off' | 'light' | 'full',
+  setHapticPreference: vi.fn(),
 }));
 vi.mock('expo-local-authentication', () => native);
 vi.mock('expo-secure-store', () => storage);
@@ -100,6 +105,10 @@ vi.mock('@/lib/hooks/use-theme-preference', () => ({
   setThemePreference: vi.fn(),
   useThemePreference: () => ({ preference: 'system' }),
 }));
+vi.mock('@/lib/hooks/use-haptic-preference', () => ({
+  setHapticPreference: haptic.setHapticPreference,
+  useHapticPreference: () => ({ preference: haptic.preference, hasLoaded: true }),
+}));
 vi.mock('@/lib/hooks/use-return-sends-message-preference', () => ({
   useReturnSendsMessagePreference: () => ({
     returnSendsMessage: false,
@@ -135,6 +144,7 @@ async function mountPreferences(raw: string | null = null): Promise<ReactTestRen
 beforeEach(() => {
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   vi.resetAllMocks();
+  haptic.preference = 'full';
   storage.setItemAsync.mockImplementation(async (_key: string, value: string) => {
     await Promise.resolve();
     storage.value = value;
@@ -213,6 +223,82 @@ describe('PreferencesScreen Return-sends switch', () => {
     expect(
       texts.some(t => t.props.children === 'When off, Return inserts a newline in agent composers.')
     ).toBe(true);
+  });
+});
+
+describe('PreferencesScreen haptic feedback', () => {
+  function hapticControl(renderer: ReactTestRenderer) {
+    const controls = renderer.root.findAll(
+      node =>
+        typeof node.type === 'string' &&
+        (node.type as string) === 'SegmentedControl' &&
+        node.props.accessibilityLabel === 'Haptic feedback'
+    );
+    expect(controls).toHaveLength(1);
+    const control = controls[0];
+    if (!control) {
+      throw new Error('haptic control not found');
+    }
+    return control;
+  }
+
+  it('renders Off/Light/Full with the stored value and writes through on change', async () => {
+    const renderer = await mountPreferences();
+
+    const control = hapticControl(renderer);
+    expect(control.props.options).toEqual([
+      { value: 'off', label: 'Off' },
+      { value: 'light', label: 'Light', accessibilityLabel: 'Haptic feedback, Light' },
+      { value: 'full', label: 'Full' },
+    ]);
+    expect(control.props.value).toBe('full');
+
+    act(() => {
+      (control.props.onChange as (next: 'off' | 'light' | 'full') => void)('off');
+    });
+    expect(haptic.setHapticPreference).toHaveBeenCalledWith('off');
+  });
+
+  it("renders value 'light' and the section header when the stored preference is light", async () => {
+    haptic.preference = 'light';
+    const renderer = await mountPreferences();
+
+    expect(hapticControl(renderer).props.value).toBe('light');
+
+    const texts = renderer.root.findAll(
+      node =>
+        typeof node.type === 'string' &&
+        (node.type as string) === 'Text' &&
+        typeof node.props.children === 'string'
+    );
+    expect(texts.some(t => t.props.children === 'Haptic feedback')).toBe(true);
+  });
+
+  it('renders the Appearance section above the Haptic feedback section', async () => {
+    const renderer = await mountPreferences();
+
+    const serialized = JSON.stringify(renderer.toJSON());
+    expect(serialized).toContain('"Appearance"');
+    expect(serialized.indexOf('"Appearance"')).toBeLessThan(
+      serialized.indexOf('"Haptic feedback"')
+    );
+  });
+
+  it('leaves the theme radio labels bare, disambiguated by the haptic override', async () => {
+    const renderer = await mountPreferences();
+
+    const controls = renderer.root.findAll(
+      node =>
+        typeof node.type === 'string' &&
+        (node.type as string) === 'SegmentedControl' &&
+        node.props.accessibilityLabel === 'Appearance'
+    );
+    expect(controls).toHaveLength(1);
+    expect(controls[0]?.props.options).toEqual([
+      { value: 'system', label: 'System' },
+      { value: 'light', label: 'Light' },
+      { value: 'dark', label: 'Dark' },
+    ]);
   });
 });
 

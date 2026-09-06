@@ -240,7 +240,10 @@
     "returnSendsMessage": "Maɓallin sabon layi yana aika saƙo",
     "returnSendsMessageSubtitle": "Idan an kashe wannan, maɓallin sabon layi yana saka sabon layi a wuraren rubuta saƙo ga wakilai.",
     "biometricUnlock": "Buɗe kulle da bayanan halittar jiki",
-    "biometricUnlockSubtitle": "Ana buƙatar buɗe kulle lokacin fara manhajar da bayan ta yi minti biyar a baya."
+    "biometricUnlockSubtitle": "Ana buƙatar buɗe kulle lokacin fara manhajar da bayan ta yi minti biyar a baya.",
+    "hapticFeedback": "Martani na haptik",
+    "hapticFull": "Cikakke",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Buƙatar haɗawa ba ta samuwa",

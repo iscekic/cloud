@@ -1,6 +1,6 @@
 /* eslint-disable max-lines -- the screen keeps every existing detail section plus the read-only transcript slot */
 
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

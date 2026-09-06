@@ -1,5 +1,5 @@
 import { fromMicrodollars } from '@kilocode/app-shared/utils';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { type Href, useRouter } from 'expo-router';
 import { Bell, FileText, Pencil, Receipt, Users } from '@/components/ui/icons';
 import { DirectionalChevronRight } from '@/components/ui/directional-icons';

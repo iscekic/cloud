@@ -240,7 +240,10 @@
     "returnSendsMessage": "Bọ́tìnì ìpadàbọ̀ ń fi ìfiránṣẹ́ ránṣẹ́",
     "returnSendsMessageSubtitle": "Tí èyí bá wà ní pípa, bọ́tìnì ìpadàbọ̀ máa ń fi ìlà tuntun sí ààyè ìkọ̀wé sí aṣojú.",
     "biometricUnlock": "Ṣí títìpa pẹ̀lú ìdánimọ̀ àbùdá ara",
-    "biometricUnlockSubtitle": "Ṣí títìpa nígbà tí o bá ṣí ohun èlò àti lẹ́yìn ìṣẹ́jú márùn-ún tí kò sí níwájú iboju."
+    "biometricUnlockSubtitle": "Ṣí títìpa nígbà tí o bá ṣí ohun èlò àti lẹ́yìn ìṣẹ́jú márùn-ún tí kò sí níwájú iboju.",
+    "hapticFeedback": "Ìdáhùn haptiki",
+    "hapticFull": "Kíkún",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Ìbéèrè ìṣọ̀kan kò sí",

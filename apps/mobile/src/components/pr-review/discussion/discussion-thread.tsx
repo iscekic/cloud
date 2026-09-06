@@ -28,7 +28,7 @@
 //     the mutation hooks own the cache update + rollback, so the
 //     thread just routes the events and lets the cache flow.
 
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Check, CheckCheck, ChevronDown, ChevronUp } from '@/components/ui/icons';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,6 +1,6 @@
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { CONVERSATION_TITLE_MAX_CHARS, type ConversationListItem } from '@kilocode/kilo-chat';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { MessageSquare, MoreVertical } from '@/components/ui/icons';
 import { Alert, Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';

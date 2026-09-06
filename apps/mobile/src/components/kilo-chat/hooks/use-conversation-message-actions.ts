@@ -1,6 +1,6 @@
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Clipboard from 'expo-clipboard';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import {
   clearPendingAction,
   type PendingAction,

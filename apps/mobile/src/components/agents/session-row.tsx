@@ -1,5 +1,5 @@
 import { useActionSheet } from '@expo/react-native-action-sheet';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { useEffect, useState } from 'react';
 import { Platform, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

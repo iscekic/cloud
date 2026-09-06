@@ -240,7 +240,10 @@
     "returnSendsMessage": "Sətirsonu düyməsi mesaj göndərir",
     "returnSendsMessageSubtitle": "Bu seçim deaktiv olduqda sətirsonu düyməsi agentin mesaj sahəsinə yeni sətir əlavə edir.",
     "biometricUnlock": "Biometrik məlumatlarla kilidi aç",
-    "biometricUnlockSubtitle": "Tətbiq başladıqda və arxa planda beş dəqiqə qaldıqdan sonra kilidi açmaq tələb olunur."
+    "biometricUnlockSubtitle": "Tətbiq başladıqda və arxa planda beş dəqiqə qaldıqdan sonra kilidi açmaq tələb olunur.",
+    "hapticFeedback": "Haptik əks əlaqə",
+    "hapticFull": "Tam",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Birləşdirmə sorğusu əlçatan deyil",

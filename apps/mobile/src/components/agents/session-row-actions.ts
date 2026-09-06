@@ -1,6 +1,6 @@
 import { type ActionSheetOptions } from '@expo/react-native-action-sheet';
 import * as Clipboard from 'expo-clipboard';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Alert } from 'react-native';
 import { toast } from 'sonner-native';
 

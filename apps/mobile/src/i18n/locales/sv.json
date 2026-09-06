@@ -240,7 +240,10 @@
     "returnSendsMessage": "Returtangenten skickar meddelanden",
     "returnSendsMessageSubtitle": "När detta är avstängt infogar returtangenten en radbrytning i agenternas meddelandefält.",
     "biometricUnlock": "Lås upp med biometri",
-    "biometricUnlockSubtitle": "Upplåsning krävs när appen startas och efter fem minuter i bakgrunden."
+    "biometricUnlockSubtitle": "Upplåsning krävs när appen startas och efter fem minuter i bakgrunden.",
+    "hapticFeedback": "Haptisk feedback",
+    "hapticFull": "Full",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "PR:en är inte tillgänglig",

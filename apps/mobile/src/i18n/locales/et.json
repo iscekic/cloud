@@ -240,7 +240,10 @@
     "returnSendsMessage": "Sisestusklahv saadab sõnumi",
     "returnSendsMessageSubtitle": "Kui see on välja lülitatud, lisab sisestusklahv agentide sõnumi sisestusväljadel reavahetuse.",
     "biometricUnlock": "Biomeetriline lukust avamine",
-    "biometricUnlockSubtitle": "Rakendus tuleb lukust avada käivitamisel ja pärast viit minutit taustal olemist."
+    "biometricUnlockSubtitle": "Rakendus tuleb lukust avada käivitamisel ja pärast viit minutit taustal olemist.",
+    "hapticFeedback": "Haptiline tagasiside",
+    "hapticFull": "Täis",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Tõmbetaotlus pole saadaval",

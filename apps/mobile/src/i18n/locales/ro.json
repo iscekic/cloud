@@ -240,7 +240,10 @@
     "returnSendsMessage": "Tasta Enter trimite mesajul",
     "returnSendsMessageSubtitle": "Când opțiunea este dezactivată, tasta Enter inserează o linie nouă în câmpurile de mesaj ale agenților.",
     "biometricUnlock": "Deblocare prin autentificare biometrică",
-    "biometricUnlockSubtitle": "Deblocarea este necesară la pornirea aplicației și după cinci minute în fundal."
+    "biometricUnlockSubtitle": "Deblocarea este necesară la pornirea aplicației și după cinci minute în fundal.",
+    "hapticFeedback": "Feedback haptic",
+    "hapticFull": "Complet",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "PR indisponibil",

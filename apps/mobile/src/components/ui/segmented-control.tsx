@@ -1,11 +1,20 @@
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Pressable } from 'react-native';
 
 import { RadioGroup, radioItemA11y } from '@/components/ui/radio-group';
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 
-type SegmentedControlOption<T extends string> = { value: T; label: string };
+type SegmentedControlOption<T extends string> = {
+  value: T;
+  label: string;
+  /**
+   * Screen-reader label for this radio; defaults to the visible label. Set it
+   * when the visible label alone is ambiguous on the screen — VoiceOver
+   * announces the radio label, not the section header above it.
+   */
+  accessibilityLabel?: string;
+};
 
 type SegmentedControlProps<T extends string> = {
   options: readonly SegmentedControlOption<T>[];
@@ -33,7 +42,10 @@ export function SegmentedControl<T extends string>({
         return (
           <Pressable
             key={option.value}
-            {...radioItemA11y({ label: option.label, checked: selected })}
+            {...radioItemA11y({
+              label: option.accessibilityLabel ?? option.label,
+              checked: selected,
+            })}
             onPress={() => {
               if (selected) {
                 return;

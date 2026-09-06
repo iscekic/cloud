@@ -240,7 +240,10 @@
     "returnSendsMessage": "Enter tuşu mesaj gönderir",
     "returnSendsMessageSubtitle": "Kapalıyken Enter tuşu, ajanla konuşurken mesaj alanına yeni satır ekler.",
     "biometricUnlock": "Biyometrik doğrulama ile kilit açma",
-    "biometricUnlockSubtitle": "Uygulama başlatıldığında ve arka planda beş dakika kaldıktan sonra kilidin açılması gerekir."
+    "biometricUnlockSubtitle": "Uygulama başlatıldığında ve arka planda beş dakika kaldıktan sonra kilidin açılması gerekir.",
+    "hapticFeedback": "Dokunsal geri bildirim",
+    "hapticFull": "Tam",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "notifications": {
     "liveActivities": "Canlı etkinlikler",

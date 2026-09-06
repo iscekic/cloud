@@ -1,5 +1,5 @@
 import { useFocusEffect, useRouter } from 'expo-router';
-import * as Haptics from 'expo-haptics';
+import * as Haptics from '@/lib/haptics';
 import { Check, Cloud, Server, Terminal } from '@/components/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo, useRef, useState } from 'react';

@@ -240,7 +240,10 @@
     "returnSendsMessage": "Tasti Enter dërgon mesazhin",
     "returnSendsMessageSubtitle": "Kur ky opsion është i çaktivizuar, tasti Enter shton një rresht të ri në fushën e mesazhit për agjentin.",
     "biometricUnlock": "Zhbllokim me biometri",
-    "biometricUnlockSubtitle": "Zhbllokimi kërkohet kur hap aplikacionin dhe pasi ai qëndron pesë minuta në sfond."
+    "biometricUnlockSubtitle": "Zhbllokimi kërkohet kur hap aplikacionin dhe pasi ai qëndron pesë minuta në sfond.",
+    "hapticFeedback": "Reagim haptik",
+    "hapticFull": "E plotë",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Kërkesa për bashkim nuk është e disponueshme",

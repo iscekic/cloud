@@ -240,7 +240,10 @@
     "returnSendsMessage": "Ievades taustiņš nosūta ziņojumu",
     "returnSendsMessageSubtitle": "Ja šī opcija ir izslēgta, ievades taustiņš aģenta ziņojuma ievades laukā ievieto jaunu rindu.",
     "biometricUnlock": "Biometriskā atbloķēšana",
-    "biometricUnlockSubtitle": "Atbloķēšana ir nepieciešama, palaižot lietotni un pēc piecām fonā pavadītām minūtēm."
+    "biometricUnlockSubtitle": "Atbloķēšana ir nepieciešama, palaižot lietotni un pēc piecām fonā pavadītām minūtēm.",
+    "hapticFeedback": "Haptiskā atgriezeniskā saite",
+    "hapticFull": "Pilna",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Izmaiņu pieprasījums nav pieejams",

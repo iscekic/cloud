@@ -240,7 +240,10 @@
     "prReviewAttribution": "Add app attribution to PR reviews",
     "prReviewAttributionSubtitle": "Append a Reviewed via Kilo footer when you submit a review.",
     "returnSendsMessage": "Return key sends message",
-    "returnSendsMessageSubtitle": "When off, Return inserts a newline in agent composers."
+    "returnSendsMessageSubtitle": "When off, Return inserts a newline in agent composers.",
+    "hapticFeedback": "Haptic feedback",
+    "hapticFull": "Full",
+    "hapticLight": "$t(preferences.hapticFeedback), $t(preferences.appearanceLight)"
   },
   "prReview": {
     "pullRequestUnavailable": "Pull request unavailable",
