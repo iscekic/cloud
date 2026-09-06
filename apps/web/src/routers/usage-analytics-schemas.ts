@@ -66,7 +66,19 @@ const FiltersShape = {
   excludedProjects: z.array(z.string()).optional(),
 } as const;
 
-export const UsageAnalyticsFiltersSchema = z.object(FiltersShape);
+export const UsageAnalyticsFiltersSchema = z
+  .object(FiltersShape)
+  .superRefine((filters, context) => {
+    // An inverted window cannot match any usage row, so it would otherwise
+    // return a silently empty result instead of a clear client error.
+    if (new Date(filters.endDate).getTime() < new Date(filters.startDate).getTime()) {
+      context.addIssue({
+        code: 'custom',
+        path: ['endDate'],
+        message: 'endDate must not be before startDate',
+      });
+    }
+  });
 export type UsageAnalyticsFilters = z.infer<typeof UsageAnalyticsFiltersSchema>;
 
 export const SummaryOutputSchema = z.object({

@@ -206,6 +206,36 @@ describe('usage analytics organization breakdown', () => {
   });
 });
 
+describe('usage analytics date range validation', () => {
+  const invertedFilters = {
+    ...baseFilters,
+    startDate: '2026-06-05T00:00:00.000Z',
+    endDate: '2026-06-04T00:00:00.000Z',
+  };
+
+  it('rejects an end date before the start date on the endDate field', () => {
+    const result = UsageAnalyticsFiltersSchema.safeParse(invertedFilters);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0]).toMatchObject({
+        path: ['endDate'],
+        message: 'endDate must not be before startDate',
+      });
+    }
+  });
+
+  it('keeps valid ranges accepted, including an empty single-instant window', () => {
+    expect(UsageAnalyticsFiltersSchema.safeParse(baseFilters).success).toBe(true);
+    expect(
+      UsageAnalyticsFiltersSchema.safeParse({
+        ...baseFilters,
+        startDate: '2026-06-04T10:00:00.000Z',
+        endDate: '2026-06-04T10:00:00.000Z',
+      }).success
+    ).toBe(true);
+  });
+});
+
 describe('usage analytics procedures', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -313,6 +343,24 @@ describe('usage analytics procedures', () => {
     await expect(caller().getTable({ ...baseFilters, groupBy: [] })).resolves.toMatchObject({
       rows: [],
     });
+  });
+
+  it('rejects an inverted date range with a 400 carrying the specific message', async () => {
+    await expect(
+      caller().getSummary({
+        ...baseFilters,
+        startDate: '2026-06-05T00:00:00.000Z',
+        endDate: '2026-06-04T00:00:00.000Z',
+      })
+    ).rejects.toMatchObject({
+      code: 'BAD_REQUEST',
+      cause: {
+        issues: [
+          { code: 'custom', path: ['endDate'], message: 'endDate must not be before startDate' },
+        ],
+      },
+    });
+    expect(mockExecuteSnowflakeStatement).not.toHaveBeenCalled();
   });
 
   it.each([
