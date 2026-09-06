@@ -1,4 +1,5 @@
 /* eslint-disable typescript-eslint/no-deprecated -- react-test-renderer is the DOM-free renderer used to mount React/RN trees under vitest (same pattern as image-viewer-modal.mounted.test.tsx) */
+/* oxlint-disable max-lines -- this screen's mounted suite grew past 300 lines with the feature-flag debug surface cases */
 import { type ElementType } from 'react';
 import { act, type ReactTestRenderer } from 'react-test-renderer';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -10,6 +11,15 @@ import { renderWithProviders } from '@/test/render-with-providers';
 
 const push = vi.hoisted(() => vi.fn());
 const setLanguagePickerBridge = vi.hoisted(() => vi.fn());
+// The screen mounts the feature-flag debug surface, which reads PostHog flag
+// statuses; seed an empty registry so the section stays out of these tests'
+// snapshots unless a case opts in.
+const posthog = vi.hoisted(() => ({
+  statuses: [] as Record<string, unknown>[],
+}));
+vi.mock('@/lib/analytics/posthog', () => ({
+  useFeatureFlagStatuses: () => posthog.statuses,
+}));
 const native = vi.hoisted(() => ({
   hasHardwareAsync: vi.fn(),
   isEnrolledAsync: vi.fn(),
@@ -135,6 +145,7 @@ async function mountPreferences(raw: string | null = null): Promise<ReactTestRen
 beforeEach(() => {
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   vi.resetAllMocks();
+  posthog.statuses = [];
   storage.setItemAsync.mockImplementation(async (_key: string, value: string) => {
     await Promise.resolve();
     storage.value = value;
@@ -213,6 +224,44 @@ describe('PreferencesScreen Return-sends switch', () => {
     expect(
       texts.some(t => t.props.children === 'When off, Return inserts a newline in agent composers.')
     ).toBe(true);
+  });
+});
+
+describe('PreferencesScreen feature-flag debug surface', () => {
+  it('lists which flags the build applies and which it skips, with reasons', async () => {
+    posthog.statuses = [
+      {
+        key: 'mobile-pr-review',
+        minAppVersion: '1.0.4',
+        defaultValue: true,
+        appVersion: '1.0.5',
+        applied: true,
+        value: true,
+        reason: 'applied',
+        loaded: true,
+      },
+      {
+        key: 'mobile-quick-chat',
+        minAppVersion: '1.0.6',
+        defaultValue: false,
+        appVersion: '1.0.5',
+        applied: false,
+        value: false,
+        reason: 'build-too-old',
+        loaded: true,
+      },
+    ];
+    const renderer = await mountPreferences();
+
+    const lines = renderer.root
+      .findAll(node => typeof node.type === 'string' && (node.type as string) === 'Text')
+      .map(node => [node.props.children].flat().join(''));
+    expect(lines).toContain('Feature flags');
+    expect(lines).toContain('mobile-pr-review');
+    expect(lines).toContain('Enabled · remote · ≥ 1.0.4');
+    expect(lines).toContain('mobile-quick-chat');
+    expect(lines).toContain('Off · default · < 1.0.6');
+    expect(lines).toContain('v1.0.5');
   });
 });
 
