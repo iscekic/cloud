@@ -28,6 +28,7 @@ import { ActiveKiloclawsTable } from './ActiveKiloclawsTable';
 import { UsageDataErrorState } from './UsageDataErrorState';
 import { UsageDataPendingState } from './UsageDataPendingState';
 import { resolveUsageDashboardState, usageQueryOutcome } from './usageDataState';
+import { usageTableEmptyMessage } from './usageEmptyMessage';
 import {
   PERSONAL_VIEW_ALL_USAGE,
   PERSONAL_VIEW_PERSONAL_ONLY,
@@ -938,7 +939,10 @@ export function UsageAnalyticsDashboard(props: UsageAnalyticsDashboardProps) {
                       title="Detailed Breakdown"
                       columns={tableColumns}
                       data={tableRows}
-                      emptyMessage={tableLoading ? 'Loading…' : 'No usage data.'}
+                      emptyMessage={usageTableEmptyMessage({
+                        isLoading: tableLoading,
+                        isPersonalContext: !isOrgContext,
+                      })}
                       sortable
                       defaultSort={{ key: 'datetime', direction: 'desc' }}
                       headerActions={
