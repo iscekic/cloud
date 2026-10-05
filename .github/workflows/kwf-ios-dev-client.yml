@@ -1,0 +1,150 @@
+# Build the iOS simulator dev client of the cloud mobile app for the E2E iOS lane.
+# The verification job dispatches this workflow when the Expo native fingerprint has no artifact.
+# The workflow uploads gs://kwf-planner-kilocode-us-central1/ios-dev-client/<fingerprint>.app.tar.gz.
+# The tarball root contains Kilo.app. The workflow uses the fingerprint input as given and does not compute it again.
+name: kwf-ios-dev-client
+run-name: ios-dev-client ${{ inputs.fingerprint }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      cloud_repository:
+        description: Cloud repository (owner/name)
+        required: true
+        type: string
+      cloud_ref:
+        description: Cloud commit to build
+        required: true
+        type: string
+      fingerprint:
+        description: Expo native fingerprint of apps/mobile for iOS
+        required: true
+        type: string
+
+# Runs for the same fingerprint wait for each other. A queued run then finds the object and skips the build.
+concurrency:
+  group: ios-dev-client-${{ inputs.fingerprint }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 90
+    env:
+      CLOUD_REPOSITORY: ${{ inputs.cloud_repository }}
+      CLOUD_REF: ${{ inputs.cloud_ref }}
+      FINGERPRINT: ${{ inputs.fingerprint }}
+      OBJECT: gs://kwf-planner-kilocode-us-central1/ios-dev-client/${{ inputs.fingerprint }}.app.tar.gz
+      # The upload identity can only get and create objects under ios-dev-client/. gcloud storage cp also lists the
+      # bucket, so the steps call the JSON API directly. The validated fingerprint needs no other encoding.
+      OBJECT_URL: https://storage.googleapis.com/storage/v1/b/kwf-planner-kilocode-us-central1/o/ios-dev-client%2F${{ inputs.fingerprint }}.app.tar.gz
+      UPLOAD_URL: https://storage.googleapis.com/upload/storage/v1/b/kwf-planner-kilocode-us-central1/o?uploadType=media&ifGenerationMatch=0&name=ios-dev-client%2F${{ inputs.fingerprint }}.app.tar.gz
+    steps:
+      - name: Validate inputs
+        run: |
+          set -euo pipefail
+          [[ "$CLOUD_REPOSITORY" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || { echo "::error::cloud_repository must be owner/name"; exit 1; }
+          [[ "$CLOUD_REF" =~ ^[A-Za-z0-9_./-]+$ ]] || { echo "::error::cloud_ref has characters that are not permitted"; exit 1; }
+          [[ "$FINGERPRINT" =~ ^[A-Za-z0-9_.-]{1,128}$ ]] || { echo "::error::fingerprint has characters that are not permitted"; exit 1; }
+
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          credentials_json: ${{ secrets.GCP_KWF_IOS_UPLOAD_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3.0.1
+
+      - name: Find an existing artifact
+        id: existing
+        run: |
+          set -euo pipefail
+          token=
+          for attempt in 1 2 3; do
+            token=$(gcloud auth print-access-token) && break
+            sleep $((attempt * 5))
+          done
+          [[ -n "$token" ]] || { echo "::error::No access token"; exit 1; }
+          status=$(curl -sS --retry 3 --retry-connrefused -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $token" "$OBJECT_URL")
+          case "$status" in
+            200)
+              echo "found=true" >> "$GITHUB_OUTPUT"
+              echo "::notice::$OBJECT exists. The build is skipped."
+              ;;
+            404) echo "found=false" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "::error::The artifact check returned HTTP $status"
+              exit 1
+              ;;
+          esac
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        if: steps.existing.outputs.found == 'false'
+        with:
+          repository: ${{ inputs.cloud_repository }}
+          ref: ${{ inputs.cloud_ref }}
+          token: ${{ secrets.KWF_CLOUD_TOKEN }}
+          path: cloud
+          lfs: true
+          persist-credentials: false
+
+      - name: Setup pnpm
+        if: steps.existing.outputs.found == 'false'
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          package_json_file: cloud/package.json
+
+      - name: Setup Node
+        if: steps.existing.outputs.found == 'false'
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version-file: cloud/.nvmrc
+          cache: pnpm
+          cache-dependency-path: cloud/pnpm-lock.yaml
+
+      - name: Install dependencies
+        if: steps.existing.outputs.found == 'false'
+        working-directory: cloud
+        run: pnpm install --frozen-lockfile
+
+      - name: Build trpc types
+        if: steps.existing.outputs.found == 'false'
+        working-directory: cloud
+        run: pnpm --filter @kilocode/trpc run build
+
+      - name: Expo prebuild
+        if: steps.existing.outputs.found == 'false'
+        working-directory: cloud
+        run: CI=1 pnpm --filter kilo-app exec expo prebuild --platform ios
+
+      - name: Build
+        if: steps.existing.outputs.found == 'false'
+        working-directory: cloud
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -workspace apps/mobile/ios/Kilo.xcworkspace \
+            -scheme Kilo \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            build
+
+      # A tarball keeps the executable bit. The precondition refuses to replace an existing object.
+      - name: Upload
+        if: steps.existing.outputs.found == 'false'
+        run: |
+          set -euo pipefail
+          products="$RUNNER_TEMP/DerivedData/Build/Products/Debug-iphonesimulator"
+          tar -C "$products" -czf "$RUNNER_TEMP/dev-client.app.tar.gz" Kilo.app
+          token=
+          for attempt in 1 2 3; do
+            token=$(gcloud auth print-access-token) && break
+            sleep $((attempt * 5))
+          done
+          [[ -n "$token" ]] || { echo "::error::No access token"; exit 1; }
+          curl -sS --fail-with-body --retry 3 --retry-connrefused -H "Authorization: Bearer $token" -H 'Content-Type: application/gzip' \
+            --data-binary "@$RUNNER_TEMP/dev-client.app.tar.gz" "$UPLOAD_URL"
+          echo "::notice::Uploaded $OBJECT"
