@@ -938,7 +938,7 @@ export function UsageAnalyticsDashboard(props: UsageAnalyticsDashboardProps) {
                       title="Detailed Breakdown"
                       columns={tableColumns}
                       data={tableRows}
-                      emptyMessage={tableLoading ? 'Loading…' : 'No usage data.'}
+                      emptyMessage={tableLoading ? 'Loading usage…' : 'No usage data for this period.'}
                       sortable
                       defaultSort={{ key: 'datetime', direction: 'desc' }}
                       headerActions={
