@@ -6,8 +6,12 @@ import {
 
 describe('usageTableEmptyMessage', () => {
   it('shows the loading copy while the table query is in flight', () => {
-    expect(usageTableEmptyMessage({ isLoading: true, isPersonalContext: true })).toBe('Loading…');
-    expect(usageTableEmptyMessage({ isLoading: true, isPersonalContext: false })).toBe('Loading…');
+    expect(usageTableEmptyMessage({ isLoading: true, isPersonalContext: true })).toBe(
+      'Loading usage…'
+    );
+    expect(usageTableEmptyMessage({ isLoading: true, isPersonalContext: false })).toBe(
+      'Loading usage…'
+    );
   });
 
   it('shows the new personal copy when a personal account has no usage rows', () => {
@@ -16,14 +20,14 @@ describe('usageTableEmptyMessage', () => {
     );
   });
 
-  it('keeps the existing organization copy for organization usage', () => {
+  it('keeps the reworded organization copy for organization usage', () => {
     expect(usageTableEmptyMessage({ isLoading: false, isPersonalContext: false })).toBe(
-      'No usage data.'
+      'No usage data for this period.'
     );
   });
 
   it('exports the exact personal and organization messages', () => {
     expect(PERSONAL_USAGE_EMPTY_MESSAGE).toBe('No usage yet. Your first request will appear here.');
-    expect(ORGANIZATION_USAGE_EMPTY_MESSAGE).toBe('No usage data.');
+    expect(ORGANIZATION_USAGE_EMPTY_MESSAGE).toBe('No usage data for this period.');
   });
 });

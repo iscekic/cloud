@@ -939,10 +939,16 @@ export function UsageAnalyticsDashboard(props: UsageAnalyticsDashboardProps) {
                       title="Detailed Breakdown"
                       columns={tableColumns}
                       data={tableRows}
-                      emptyMessage={usageTableEmptyMessage({
-                        isLoading: tableLoading,
-                        isPersonalContext: !isOrgContext,
-                      })}
+                      emptyMessage={
+                        isOrgContext
+                          ? tableLoading
+                            ? 'Loading usage…'
+                            : 'No usage data for this period.'
+                          : usageTableEmptyMessage({
+                              isLoading: tableLoading,
+                              isPersonalContext: !isOrgContext,
+                            })
+                      }
                       sortable
                       defaultSort={{ key: 'datetime', direction: 'desc' }}
                       headerActions={
