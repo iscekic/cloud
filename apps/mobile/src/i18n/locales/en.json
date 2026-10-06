@@ -167,7 +167,7 @@
     "signInWithPasskey": "Sign in with a passkey",
     "emailAddress": "Email address",
     "emailPlaceholder": "you@example.com",
-    "continueWithEmail": "Continue with email",
+    "continueWithEmail": "Send sign-in code",
     "enterCodeSentTo": "Enter the code sent to {{email}}",
     "codeArrivalHint": "If this address is eligible, the code arrives within a minute.",
     "verifyCode": "Verify code",

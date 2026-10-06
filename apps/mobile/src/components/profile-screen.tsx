@@ -405,7 +405,7 @@ export function ProfileScreen() {
                   icon={KeyRound}
                   title={providerLabel(p.provider)}
                   subtitle={p.email}
-                  subtitleNumberOfLines={2}
+                  subtitleNumberOfLines={3}
                   hue="moss"
                   className="rounded-lg bg-secondary px-3"
                   last={index === data.providers.length - 1}
