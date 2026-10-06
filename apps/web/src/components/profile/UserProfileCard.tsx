@@ -53,7 +53,7 @@ export function UserProfileCard({
             <h2 className="text-foreground truncate text-xl font-semibold">{name}</h2>
             <p className="text-muted-foreground flex items-center text-sm">
               <Mail className="mr-1.5 h-3.5 w-3.5 shrink-0" />
-              <span className="truncate">{email}</span>
+              <span className="break-all">{email}</span>
             </p>
             {contributorChampionTier ? (
               <div className="mt-2">
