@@ -55,7 +55,7 @@ export default async function ProfilePage({ searchParams }: AppPageProps) {
 
   const remainingCreditsText = customerInfo.hasOrganizations
     ? 'Remaining Personal Credits'
-    : 'Remaining Credits';
+    : 'Remaining credits';
   return (
     // NOTE: When making changes to this structure, make sure to also update the structure in the loading.tsx file
     <PageLayout title="Profile">
