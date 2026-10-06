@@ -198,7 +198,7 @@
     "prReviewSubtitle": "Review pull requests on mobile",
     "couldNotLoadOrganization": "Could not load organization",
     "couldNotLoadOrganizationDescription": "Organization and agent settings are unavailable until this loads.",
-    "linkedAccounts": "Linked accounts",
+    "linkedAccounts": "Linked sign-in accounts",
     "couldNotLoadAccounts": "Could not load accounts",
     "app": "App",
     "preferencesSubtitle": "Appearance, notifications, thinking, and screen behavior",
