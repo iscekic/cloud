@@ -1,7 +1,9 @@
-# Build the iOS simulator dev client of the cloud mobile app for the E2E iOS lane.
-# The verification job dispatches this workflow when the Expo native fingerprint has no artifact.
+# Build the iOS simulator app of the cloud mobile app for the kwf iOS lane.
+# The verification job dispatches the Debug dev client when the Expo native fingerprint has no artifact.
+# The explorer supervisor dispatches a Release build with its app env and the private CA of its TLS proxy.
 # The workflow uploads gs://kwf-planner-kilocode-us-central1/ios-dev-client/<fingerprint>.app.tar.gz.
-# The tarball root contains Kilo.app. The workflow uses the fingerprint input as given and does not compute it again.
+# The tarball root contains Kilo.app, and ca.crt when the dispatch gives a CA. The workflow uses the fingerprint input
+# As given and does not compute it again.
 name: kwf-ios-dev-client
 run-name: ios-dev-client ${{ inputs.fingerprint }}
 
@@ -17,8 +19,24 @@ on:
         required: true
         type: string
       fingerprint:
-        description: Expo native fingerprint of apps/mobile for iOS
+        description: Expo native fingerprint of apps/mobile for iOS, or the explorer build key
         required: true
+        type: string
+      configuration:
+        description: Xcode configuration; Release embeds the JS bundle
+        required: false
+        default: Debug
+        type: choice
+        options: [Debug, Release]
+      mobile_env:
+        description: Base64 of apps/mobile/.env.local for a Release build
+        required: false
+        default: ""
+        type: string
+      ca:
+        description: Base64 of the PEM CA that the app's TLS proxy uses; it goes into the tarball as ca.crt
+        required: false
+        default: ""
         type: string
 
 # Runs for the same fingerprint wait for each other. A queued run then finds the object and skips the build.
@@ -32,11 +50,14 @@ permissions:
 jobs:
   build:
     runs-on: macos-26
-    timeout-minutes: 90
+    timeout-minutes: 150
     env:
       CLOUD_REPOSITORY: ${{ inputs.cloud_repository }}
       CLOUD_REF: ${{ inputs.cloud_ref }}
       FINGERPRINT: ${{ inputs.fingerprint }}
+      CONFIGURATION: ${{ inputs.configuration }}
+      MOBILE_ENV: ${{ inputs.mobile_env }}
+      CA_PEM: ${{ inputs.ca }}
       OBJECT: gs://kwf-planner-kilocode-us-central1/ios-dev-client/${{ inputs.fingerprint }}.app.tar.gz
       # The upload identity can only get and create objects under ios-dev-client/. gcloud storage cp also lists the
       # bucket, so the steps call the JSON API directly. The validated fingerprint needs no other encoding.
@@ -49,6 +70,9 @@ jobs:
           [[ "$CLOUD_REPOSITORY" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || { echo "::error::cloud_repository must be owner/name"; exit 1; }
           [[ "$CLOUD_REF" =~ ^[A-Za-z0-9_./-]+$ ]] || { echo "::error::cloud_ref has characters that are not permitted"; exit 1; }
           [[ "$FINGERPRINT" =~ ^[A-Za-z0-9_.-]{1,128}$ ]] || { echo "::error::fingerprint has characters that are not permitted"; exit 1; }
+          [[ "$CONFIGURATION" == Debug || "$CONFIGURATION" == Release ]] || { echo "::error::configuration must be Debug or Release"; exit 1; }
+          [[ "$MOBILE_ENV" =~ ^[A-Za-z0-9+/=]*$ ]] || { echo "::error::mobile_env must be base64"; exit 1; }
+          [[ "$CA_PEM" =~ ^[A-Za-z0-9+/=]*$ ]] || { echo "::error::ca must be base64"; exit 1; }
 
       - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
         with:
@@ -113,20 +137,33 @@ jobs:
         working-directory: cloud
         run: pnpm --filter @kilocode/trpc run build
 
+      # A Release build embeds the bundle, which imports the built harness SDK, and reads the app env at build time.
+      - name: Prepare the Release bundle
+        if: steps.existing.outputs.found == 'false' && inputs.configuration == 'Release'
+        working-directory: cloud
+        run: |
+          set -euo pipefail
+          [[ -n "$MOBILE_ENV" ]] || { echo "::error::A Release build needs mobile_env"; exit 1; }
+          printf '%s' "$MOBILE_ENV" | base64 --decode > apps/mobile/.env.local
+          pnpm --filter @kilocode/harness-sdk run build
+
       - name: Expo prebuild
         if: steps.existing.outputs.found == 'false'
         working-directory: cloud
         run: CI=1 pnpm --filter kilo-app exec expo prebuild --platform ios
 
+      # The Release build never ships, so it uploads no source maps and needs no Sentry token.
       - name: Build
         if: steps.existing.outputs.found == 'false'
         working-directory: cloud
+        env:
+          SENTRY_DISABLE_AUTO_UPLOAD: ${{ inputs.configuration == 'Release' && 'true' || '' }}
         run: |
           set -euo pipefail
           xcodebuild \
             -workspace apps/mobile/ios/Kilo.xcworkspace \
             -scheme Kilo \
-            -configuration Debug \
+            -configuration "$CONFIGURATION" \
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
@@ -137,8 +174,13 @@ jobs:
         if: steps.existing.outputs.found == 'false'
         run: |
           set -euo pipefail
-          products="$RUNNER_TEMP/DerivedData/Build/Products/Debug-iphonesimulator"
-          tar -C "$products" -czf "$RUNNER_TEMP/dev-client.app.tar.gz" Kilo.app
+          products="$RUNNER_TEMP/DerivedData/Build/Products/$CONFIGURATION-iphonesimulator"
+          members=(Kilo.app)
+          if [[ -n "$CA_PEM" ]]; then
+            printf '%s' "$CA_PEM" | base64 --decode > "$products/ca.crt"
+            members+=(ca.crt)
+          fi
+          tar -C "$products" -czf "$RUNNER_TEMP/dev-client.app.tar.gz" "${members[@]}"
           token=
           for attempt in 1 2 3; do
             token=$(gcloud auth print-access-token) && break
